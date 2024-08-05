@@ -1,0 +1,14 @@
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/var/
+/vendor/
+
+/.parcel-cache
+/node_modules
+
+/.phpunit.result.cache
+/coverage
+
+/public/dev_assets

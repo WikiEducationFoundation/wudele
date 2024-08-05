@@ -1,0 +1,25 @@
+{
+  "name": "pollaris",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "watch": "parcel watch --no-hmr --dist-dir public/dev_assets assets/*/application.*",
+    "build": "parcel build --dist-dir public/assets src/assets/*/application.*"
+  },
+  "targets": {
+    "default": {
+      "sourceMap": {
+        "inline": false,
+        "inlineSources": false,
+        "sourceRoot": ""
+      }
+    }
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo": "^8.0.5"
+  }
+}

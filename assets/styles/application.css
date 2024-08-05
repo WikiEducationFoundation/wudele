@@ -1,0 +1,43 @@
+/* This file is part of Pollaris. */
+/* Copyright 2024 Marien Fressinaud */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+@import "./_reset.css";
+@import "./variables/colors.css";
+@import "./variables/sizes.css";
+@import "./utils/flow.css";
+@import "./utils/fonts.css";
+@import "./utils/wrapper.css";
+@import "./components/anchors.css";
+@import "./layout/body.css";
+@import "./layout/header.css";
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 110%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    color: var(--color-grey12);
+    font-family:
+        Lexend,
+        system-ui,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen-Sans,
+        Ubuntu,
+        Cantarell,
+        "Helvetica Neue",
+        sans-serif;
+
+    background-color: var(--color-grey1);
+}

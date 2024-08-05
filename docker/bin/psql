@@ -1,7 +1,10 @@
 #!/bin/bash
+# This file is part of Pollaris.
+# Copyright 2024 Marien Fressinaud
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 SCRIPT_PATH=$(dirname $(realpath -s $0))
 export COMPOSE_PROJECT_NAME=pollaris
-export COMPOSE_FILE=$SCRIPT_PATH/../docker-compose.yml
+export COMPOSE_FILE=$SCRIPT_PATH/../development/docker-compose.yml
 
 docker compose exec database psql -U postgres "$@"

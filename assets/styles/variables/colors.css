@@ -1,0 +1,57 @@
+/* This file is part of Pollaris. */
+/* Copyright 2024 Marien Fressinaud */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+:root {
+    --color-iris1: #fdfdff;
+    --color-iris2: #f8f8ff;
+    --color-iris3: #f0f1fe;
+    --color-iris4: #e6e7ff;
+    --color-iris5: #dadcff;
+    --color-iris6: #cbcdff;
+    --color-iris7: #b8baf8;
+    --color-iris8: #9b9ef0;
+    --color-iris9: #5b5bd6;
+    --color-iris10: #5151cd;
+    --color-iris11: #5753c6;
+    --color-iris12: #3e3882;
+
+    --color-mauve1: #fdfcfd;
+    --color-mauve2: #faf9fb;
+    --color-mauve3: #f2eff3;
+    --color-mauve4: #eae7ec;
+    --color-mauve5: #e3dfe6;
+    --color-mauve6: #dbd8e0;
+    --color-mauve7: #d0cdd7;
+    --color-mauve8: #bcbac7;
+    --color-mauve9: #8e8c99;
+    --color-mauve10: #84828e;
+    --color-mauve11: #65636d;
+    --color-mauve12: #211f26;
+
+    --color-primary1: var(--color-iris1);
+    --color-primary2: var(--color-iris2);
+    --color-primary3: var(--color-iris3);
+    --color-primary4: var(--color-iris4);
+    --color-primary5: var(--color-iris5);
+    --color-primary6: var(--color-iris6);
+    --color-primary7: var(--color-iris7);
+    --color-primary8: var(--color-iris8);
+    --color-primary9: var(--color-iris9);
+    --color-primary10: var(--color-iris10);
+    --color-primary11: var(--color-iris11);
+    --color-primary12: var(--color-iris12);
+
+    --color-grey1: var(--color-mauve1);
+    --color-grey2: var(--color-mauve2);
+    --color-grey3: var(--color-mauve3);
+    --color-grey4: var(--color-mauve4);
+    --color-grey5: var(--color-mauve5);
+    --color-grey6: var(--color-mauve6);
+    --color-grey7: var(--color-mauve7);
+    --color-grey8: var(--color-mauve8);
+    --color-grey9: var(--color-mauve9);
+    --color-grey10: var(--color-mauve10);
+    --color-grey11: var(--color-mauve11);
+    --color-grey12: var(--color-mauve12);
+}
