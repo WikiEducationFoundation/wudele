@@ -1,0 +1,28 @@
+services:
+    php:
+        image: pollaris:dev
+        build: .
+        restart: unless-stopped
+        volumes:
+            - ..:/var/www/html:z
+        user: $USER
+        links:
+            - database
+
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ..:/var/www/html:z
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf:z
+        links:
+            - php
+
+    database:
+        image: postgres:15-alpine
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
