@@ -1,3 +1,5 @@
 Error: Error
+proposal.label.max_length: 'Enter a proposal of less than {limit} characters.'
+proposal.label.required: 'Enter a proposal.'
 poll.title.max_length: 'Enter a title of less than {limit} characters.'
 poll.title.required: 'Enter a title.'

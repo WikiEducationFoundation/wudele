@@ -19,5 +19,13 @@
                 {{ poll.description }}
             </p>
         {% endif %}
+
+        <ul>
+            {% for proposal in poll.proposals %}
+                <li>
+                    {{ proposal.label }}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

@@ -53,3 +53,20 @@ button:hover,
 .button--small {
     --button-padding: var(--space-smaller) var(--space-large);
 }
+
+.button--ghost {
+    --button-background-color: transparent;
+
+    font-weight: normal;
+
+    border: none;
+}
+
+.button--block {
+    --button-padding: var(--space-small) var(--space-smaller);
+
+    display: block;
+    width: 100%;
+
+    text-align: left;
+}

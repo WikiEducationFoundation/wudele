@@ -10,6 +10,7 @@ use App\ActivityMonitor;
 use App\Doctrine;
 use App\Repository;
 use App\Utils;
+use Doctrine\Common\Collections;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Translation\TranslatableMessage;
@@ -49,10 +50,21 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    /** @var Collections\Collection<int, Proposal> */
+    #[ORM\OneToMany(
+        targetEntity: Proposal::class,
+        mappedBy: 'poll',
+        cascade: ['persist'],
+        orphanRemoval: true,
+    )]
+    #[Assert\Valid]
+    private Collections\Collection $proposals;
+
     public function __construct()
     {
         $this->title = '';
         $this->description = '';
+        $this->proposals = new Collections\ArrayCollection();
     }
 
     public function getId(): ?string
@@ -104,6 +116,35 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collections\Collection<int, Proposal>
+     */
+    public function getProposals(): Collections\Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): static
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals->add($proposal);
+            $proposal->setPoll($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposal(Proposal $proposal): static
+    {
+        if ($this->proposals->removeElement($proposal)) {
+            if ($proposal->getPoll() === $this) {
+                $proposal->setPoll(null);
+            }
+        }
 
         return $this;
     }
