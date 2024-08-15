@@ -1,0 +1,81 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% use "form_div_layout.html.twig" %}
+
+{%- block form_widget_compound -%}
+    {%- if form is rootform -%}
+        {{ form_errors(form) }}
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
+    {%- else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- block('form_rows') -}}
+            {{- form_rest(form) -}}
+        </div>
+    {%- endif -%}
+{%- endblock form_widget_compound -%}
+
+{%- block submit_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('button--primary'))|trim}) -%}
+    {{- parent() -}}
+{%- endblock submit_widget %}
+
+{%- block form_row -%}
+    {%- set row_class = row_class|default(row_attr.class|default('flow flow--small')|trim) -%}
+    {%- set row_attr = row_attr|merge({class: row_class}) -%}
+    {{- parent() -}}
+{%- endblock form_row %}
+
+{%- block button_row -%}
+    <div{% with {attr: row_attr|merge({class: row_attr.class|default('text--right')|trim})} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row %}
+
+{%- block form_errors -%}
+    {%- if errors|length == 1 -%}
+        <p class="form__error" role="alert" id="{{ id ~ '_error' }}">
+            <span class="sr-only">{{ 'forms.error' | trans }}</span>
+
+            {{ errors[0].message }}
+        </p>
+    {%- elseif errors|length > 1 -%}
+        <div class="form__error" role="alert" id="{{ id ~ '_error' }}">
+            <span class="sr-only">{{ 'forms.error' | trans }}</span>
+
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block widget_attributes -%}
+    {%- if not valid %}
+        {% set attr = attr|merge({'aria-invalid': 'true', 'aria-errormessage': id ~ '_error'}) %}
+    {% endif -%}
+    {{ parent() }}
+{%- endblock widget_attributes -%}
+
+{%- block form_label_content -%}
+    {{- parent() -}}
+    {%- if not required and attr.maxlength is defined -%}
+        <span class="text--secondary text--small">
+            {{ 'forms.labels.optional_and_max_length' | trans({ length: attr.maxlength }) }}
+        </span>
+    {%- elseif not required -%}
+        <span class="text--secondary text--small">
+            {{ 'forms.labels.optional' | trans }}
+        </span>
+    {%- elseif attr.maxlength is defined -%}
+        <span class="text--secondary text--small">
+            {{ 'forms.labels.max_length' | trans({ length: attr.maxlength }) }}
+        </span>
+    {%- endif %}
+{%- endblock -%}
