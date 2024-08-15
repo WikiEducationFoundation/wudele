@@ -15,5 +15,11 @@
         <p>
             {{ 'home.intro' | trans }}
         </p>
+
+        <p>
+            <a class="button button--primary" href="{{ path('new poll') }}">
+                {{ 'home.create_poll' | trans }}
+            </a>
+        </p>
     </div>
 {% endblock %}

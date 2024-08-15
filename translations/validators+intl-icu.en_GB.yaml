@@ -1,1 +1,3 @@
 Error: Error
+poll.title.max_length: 'Enter a title of less than {limit} characters.'
+poll.title.required: 'Enter a title.'

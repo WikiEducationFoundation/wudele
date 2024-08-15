@@ -1,1 +1,3 @@
 Error: Erreur
+poll.title.max_length: 'Saisissez un titre de moins de {limit} caractères.'
+poll.title.required: 'Saisissez un titre.'

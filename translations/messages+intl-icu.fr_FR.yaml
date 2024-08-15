@@ -3,5 +3,10 @@ forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
 forms.labels.optional: (facultatif)
 forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
+forms.poll_form.description.label: Description
+forms.poll_form.submit.label: 'Créer le sondage'
+forms.poll_form.title.label: 'Nom de votre sondage'
+home.create_poll: 'Créer un nouveau sondage'
 home.intro: 'Grâce à notre outil de sondage, planifiez, organisez et prenez des décisions rapidement, simplement et sans inscription.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
+polls.new.title: 'Création de sondage'

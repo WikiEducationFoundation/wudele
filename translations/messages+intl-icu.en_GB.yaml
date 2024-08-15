@@ -3,5 +3,10 @@ forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
+forms.poll_form.description.label: Description
+forms.poll_form.submit.label: 'Create the poll'
+forms.poll_form.title.label: 'Name of your poll'
+home.create_poll: 'Create a new poll'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
+polls.new.title: 'Poll creation'
