@@ -1,0 +1,5 @@
+.form__error {
+    color: var(--color-error11);
+    font-size: var(--font-size-small);
+    font-weight: 500;
+}

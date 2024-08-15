@@ -1,0 +1,72 @@
+/* This file is part of Pollaris. */
+/* Copyright 2024 Marien Fressinaud */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+/**
+ * Accessible custom checkboxes and radio buttons.
+ * @see https://www.a11ywithlindsey.com/blog/create-custom-keyboard-accesible-checkboxes
+ */
+input[type="radio"] {
+    position: absolute;
+
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+
+    width: 1px;
+    height: 1px;
+}
+
+input[type="radio"] + label {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+}
+
+input[type="radio"] + label::before {
+    content: "";
+
+    position: relative;
+
+    width: 20px;
+    height: 20px;
+    margin-right: var(--space-small);
+
+    flex-shrink: 0;
+
+    background-color: var(--color-grey1);
+    border: 1px solid var(--color-grey12);
+    border-radius: 50%;
+
+    transition:
+        border-color 0.2s ease-in-out,
+        background-color 0.2s ease-in-out;
+}
+
+input[type="radio"]:focus + label {
+    outline: var(--outline-width) solid var(--outline-color);
+    outline-offset: var(--outline-offset);
+}
+
+input[type="radio"]:checked + label::after {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+
+    background-color: var(--color-grey12);
+    border-radius: 100%;
+}
+
+input[type="radio"][disabled] + label {
+    color: var(--color-corduroy);
+    font-weight: normal;
+}
+
+input[type="radio"][disabled] + label::before {
+    border-color: var(--color-corduroy);
+}
