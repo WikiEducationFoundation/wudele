@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Poll implements ActivityMonitor\TrackableEntityInterface
 {
     public const MAX_TITLE_LENGTH = 200;
+    public const MAX_AUTHOR_NAME_LENGTH = 100;
 
     #[ORM\Id]
     #[ORM\Column(length: 20)]
@@ -50,6 +51,19 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(length: self::MAX_AUTHOR_NAME_LENGTH)]
+    #[Assert\Length(
+        max: self::MAX_AUTHOR_NAME_LENGTH,
+        maxMessage: new TranslatableMessage('poll.author_name.max_length', domain: 'validators'),
+    )]
+    private ?string $authorName = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\Email(
+    message: new TranslatableMessage('poll.author_email.invalid', domain: 'validators'),
+    )]
+    private ?string $authorEmail = null;
+
     /** @var Collections\Collection<int, Proposal> */
     #[ORM\OneToMany(
         targetEntity: Proposal::class,
@@ -64,6 +78,8 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     {
         $this->title = '';
         $this->description = '';
+        $this->authorName = '';
+        $this->authorEmail = '';
         $this->proposals = new Collections\ArrayCollection();
     }
 
@@ -120,6 +136,30 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
+    public function getAuthorName(): ?string
+    {
+        return $this->authorName;
+    }
+
+    public function setAuthorName(string $authorName): static
+    {
+        $this->authorName = $authorName;
+
+        return $this;
+    }
+
+    public function getAuthorEmail(): ?string
+    {
+        return $this->authorEmail;
+    }
+
+    public function setAuthorEmail(string $authorEmail): static
+    {
+        $this->authorEmail = $authorEmail;
+
+        return $this;
+    }
+
     /**
      * @return Collections\Collection<int, Proposal>
      */
@@ -158,5 +198,13 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setAdminToken(): void
     {
         $this->adminToken = Utils\Random::hex(20);
+    }
+
+    public function isCreated(): bool
+    {
+        return (
+            count($this->proposals) > 0 &&
+            !empty($this->authorName)
+        );
     }
 }

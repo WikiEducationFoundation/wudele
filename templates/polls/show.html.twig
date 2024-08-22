@@ -10,12 +10,18 @@
 
 {% block body %}
     <div class="wrapper wrapper--small wrapper--center flow flow--larger">
-        <h1>
-            {{ poll.title }}
-        </h1>
+        <div class="text--center flow">
+            <h1>
+                {{ poll.title }}
+            </h1>
+
+            <p class="text--secondary">
+                {{ 'polls.show.created' | trans({ by: poll.authorName, at: poll.createdAt | dateShort }) }}
+            </p>
+        </div>
 
         {% if poll.description %}
-            <p>
+            <p class="panel panel--rounded">
                 {{ poll.description }}
             </p>
         {% endif %}

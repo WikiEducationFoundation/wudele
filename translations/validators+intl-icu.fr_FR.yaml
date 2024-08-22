@@ -1,5 +1,7 @@
 Error: Erreur
 proposal.label.max_length: 'Saisissez une proposition de moins de {limit} caractères.'
 proposal.label.required: 'Saisissez une proposition.'
+poll.author_email.invalid: 'Saisissez une adresse email valide.'
+poll.author_name.max_length: 'Saisissez un pseudo de moins de {limit} caractères.'
 poll.title.max_length: 'Saisissez un titre de moins de {limit} caractères.'
 poll.title.required: 'Saisissez un titre.'

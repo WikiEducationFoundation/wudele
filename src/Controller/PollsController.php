@@ -43,7 +43,7 @@ class PollsController extends BaseController
     #[Route('/polls/{id:poll}', name: 'poll')]
     public function show(Entity\Poll $poll): Response
     {
-        if (count($poll->getProposals()) === 0) {
+        if (!$poll->isCreated()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
@@ -71,12 +71,50 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
+            return $this->redirectToRoute('edit poll author', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        return $this->render('polls/proposals.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/author', name: 'edit poll author')]
+    public function author(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        if (count($poll->getProposals()) === 0) {
+            return $this->redirectToRoute('edit poll proposals', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        $form = $this->createNamedForm('poll_author', Form\PollAuthorForm::class, $poll);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $poll = $form->getData();
+
+            $pollRepository->save($poll);
+
             return $this->redirectToRoute('poll', [
                 'id' => $poll->getId(),
             ]);
         }
 
-        return $this->render('polls/proposals.html.twig', [
+        return $this->render('polls/author.html.twig', [
             'poll' => $poll,
             'form' => $form,
         ]);

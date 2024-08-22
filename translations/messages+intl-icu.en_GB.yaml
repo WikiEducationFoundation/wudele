@@ -3,6 +3,9 @@ forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
+forms.poll_author_form.author_email.label: 'Your email address'
+forms.poll_author_form.author_name.label: 'Your nickname'
+forms.poll_author_form.submit.label: 'Submit your identity'
 forms.poll_form.description.label: Description
 forms.poll_form.submit.label: 'Create the poll'
 forms.poll_form.title.label: 'Name of your poll'
@@ -13,5 +16,7 @@ forms.proposal_type.label.label_pattern: 'Proposal __number__'
 home.create_poll: 'Create a new poll'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
+polls.author.title: 'Who you are'
 polls.new.title: 'Poll creation'
 polls.proposals.title: 'Choose the proposals'
+polls.show.created: 'Created by {by}, on {at}'
