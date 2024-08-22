@@ -7,6 +7,7 @@
 namespace App\Entity;
 
 use App\ActivityMonitor;
+use App\Doctrine;
 use App\Repository;
 use Doctrine\Common\Collections;
 use Doctrine\DBAL\Types\Types;
@@ -14,15 +15,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: Repository\ProposalRepository::class)]
-class Proposal implements ActivityMonitor\TrackableEntityInterface
+#[ORM\Entity(repositoryClass: Repository\VoteRepository::class)]
+class Vote implements ActivityMonitor\TrackableEntityInterface
 {
-    public const MAX_LABEL_LENGTH = 200;
+    public const MAX_AUTHOR_NAME_LENGTH = 100;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(length: 20)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: Doctrine\HexIdGenerator::class)]
+    private ?string $id = null;
 
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -30,35 +32,36 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'proposals')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private ?Poll $poll = null;
-
-    #[ORM\Column(length: self::MAX_LABEL_LENGTH)]
+    #[ORM\Column(length: self::MAX_AUTHOR_NAME_LENGTH)]
     #[Assert\NotBlank(
-        message: new TranslatableMessage('proposal.label.required', domain: 'validators'),
+        message: new TranslatableMessage('vote.author_name.required', domain: 'validators'),
     )]
     #[Assert\Length(
-        max: self::MAX_LABEL_LENGTH,
-        maxMessage: new TranslatableMessage('proposal.label.max_length', domain: 'validators'),
+        max: self::MAX_AUTHOR_NAME_LENGTH,
+        maxMessage: new TranslatableMessage('vote.author_name.max_length', domain: 'validators'),
     )]
-    private ?string $label = null;
+    private ?string $authorName = null;
+
+    #[ORM\ManyToOne(inversedBy: 'votes')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Poll $poll = null;
 
     /** @var Collections\Collection<int, Answer> */
     #[ORM\OneToMany(
         targetEntity: Answer::class,
-        mappedBy: 'proposal',
+        mappedBy: 'vote',
+        cascade: ['persist'],
         orphanRemoval: true,
     )]
+    #[Assert\Valid]
     private Collections\Collection $answers;
 
     public function __construct()
     {
-        $this->label = '';
         $this->answers = new Collections\ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -87,6 +90,18 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
+    public function getAuthorName(): ?string
+    {
+        return $this->authorName;
+    }
+
+    public function setAuthorName(string $authorName): static
+    {
+        $this->authorName = $authorName;
+
+        return $this;
+    }
+
     public function getPoll(): ?Poll
     {
         return $this->poll;
@@ -95,18 +110,6 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     public function setPoll(?Poll $poll): static
     {
         $this->poll = $poll;
-
-        return $this;
-    }
-
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    public function setLabel(string $label): static
-    {
-        $this->label = $label;
 
         return $this;
     }
@@ -123,7 +126,7 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     {
         if (!$this->answers->contains($answer)) {
             $this->answers->add($answer);
-            $answer->setProposal($this);
+            $answer->setVote($this);
         }
 
         return $this;
@@ -132,8 +135,8 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     public function removeAnswer(Answer $answer): static
     {
         if ($this->answers->removeElement($answer)) {
-            if ($answer->getProposal() === $this) {
-                $answer->setProposal(null);
+            if ($answer->getVote() === $this) {
+                $answer->setVote(null);
             }
         }
 

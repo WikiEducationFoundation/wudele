@@ -1,3 +1,6 @@
+answers.value.maybe: Maybe
+answers.value.no: 'No'
+answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
 forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
@@ -13,6 +16,8 @@ forms.poll_proposals_form.add_proposal: 'Add a proposal'
 forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
 forms.poll_proposals_form.submit.label: 'Submit the proposals'
 forms.proposal_type.label.label_pattern: 'Proposal __number__'
+forms.vote_form.author_name.label: 'Your nickname'
+forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
@@ -20,3 +25,9 @@ polls.author.title: 'Who you are'
 polls.new.title: 'Poll creation'
 polls.proposals.title: 'Choose the proposals'
 polls.show.created: 'Created by {by}, on {at}'
+polls.show.go_to_vote: 'Take part in the poll'
+votes.new.cancel: Cancel
+votes.show.answer: '{proposal}: {answer}'
+votes.show.back_to_poll: 'Back to results'
+votes.show.success: '{name}, your vote has been taken into account!'
+votes.show.summary_answers: 'Here’s a summary of your vote:'

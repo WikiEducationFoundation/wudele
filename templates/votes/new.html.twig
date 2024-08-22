@@ -1,0 +1,49 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'poll.html.twig' %}
+
+{% block poll_body %}
+    {{ form_start(form) }}
+        {{ form_row(form.authorName) }}
+
+        {% for answer in form.answers %}
+            <div class="panel panel--primary panel--rounded flow">
+                {{ form_label(answer.value) }}
+
+                <div class="cols cols--gap cols--always">
+                    {% for choice in answer.value.vars.choices %}
+                        <div class="col--extend">
+                            <input
+                                id="{{ field_id(answer.value, choice.value) }}"
+                                type="radio"
+                                name="{{ field_name(answer.value) }}"
+                                value="{{ choice.value }}"
+                                {{ choice.value == field_value(answer.value) ? 'selected' }}
+                            />
+
+                            <label for="{{ field_id(answer.value, choice.value) }}">
+                                {{ choice.label | trans }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="cols cols--gap cols--center">
+            <div class="col--extend">
+                <a class="button" href="{{ path('poll', { id: poll.id }) }}">
+                    {{ 'votes.new.cancel' | trans }}
+                </a>
+            </div>
+
+            <div class="col--extend">
+                {{ form_row(form.submit) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

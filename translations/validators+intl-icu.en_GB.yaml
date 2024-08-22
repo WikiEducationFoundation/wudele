@@ -5,3 +5,7 @@ poll.author_email.invalid: 'Enter a valid email address.'
 poll.author_name.max_length: 'Enter a nickname of less than {limit} characters.'
 poll.title.max_length: 'Enter a title of less than {limit} characters.'
 poll.title.required: 'Enter a title.'
+vote.author_name.required: __vote.author_name.required
+vote.author_name.max_length: __vote.author_name.max_length
+answer.value.required: __answer.value.required
+answer.value.invalid: __answer.value.invalid

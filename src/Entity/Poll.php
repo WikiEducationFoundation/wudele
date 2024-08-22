@@ -60,7 +60,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\Email(
-    message: new TranslatableMessage('poll.author_email.invalid', domain: 'validators'),
+        message: new TranslatableMessage('poll.author_email.invalid', domain: 'validators'),
     )]
     private ?string $authorEmail = null;
 
@@ -74,6 +74,14 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[Assert\Valid]
     private Collections\Collection $proposals;
 
+    /** @var Collections\Collection<int, Vote> */
+    #[ORM\OneToMany(
+        targetEntity: Vote::class,
+        mappedBy: 'poll',
+        orphanRemoval: true,
+    )]
+    private Collections\Collection $votes;
+
     public function __construct()
     {
         $this->title = '';
@@ -81,6 +89,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->authorName = '';
         $this->authorEmail = '';
         $this->proposals = new Collections\ArrayCollection();
+        $this->votes = new Collections\ArrayCollection();
     }
 
     public function getId(): ?string
@@ -206,5 +215,34 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
             count($this->proposals) > 0 &&
             !empty($this->authorName)
         );
+    }
+
+    /**
+     * @return Collections\Collection<int, Vote>
+     */
+    public function getVotes(): Collections\Collection
+    {
+        return $this->votes;
+    }
+
+    public function addVote(Vote $vote): static
+    {
+        if (!$this->votes->contains($vote)) {
+            $this->votes->add($vote);
+            $vote->setPoll($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVote(Vote $vote): static
+    {
+        if ($this->votes->removeElement($vote)) {
+            if ($vote->getPoll() === $this) {
+                $vote->setPoll(null);
+            }
+        }
+
+        return $this;
     }
 }
