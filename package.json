@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "watch": "parcel watch --no-hmr --dist-dir public/dev_assets assets/*/application.*",
-    "build": "parcel build --dist-dir public/assets src/assets/*/application.*"
+    "build": "parcel build --dist-dir public/assets assets/*/application.*"
   },
   "targets": {
     "default": {
