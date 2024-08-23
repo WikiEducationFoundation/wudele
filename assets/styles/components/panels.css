@@ -15,3 +15,9 @@
 .panel--primary {
     background-color: var(--color-primary3);
 }
+
+.panel--success {
+    color: var(--color-success12);
+
+    background-color: var(--color-success3);
+}

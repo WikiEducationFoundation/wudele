@@ -3,6 +3,19 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 :root {
+    --color-grass1: #fbfefb;
+    --color-grass2: #f5fbf5;
+    --color-grass3: #e9f6e9;
+    --color-grass4: #daf1db;
+    --color-grass5: #c9e8ca;
+    --color-grass6: #b2ddb5;
+    --color-grass7: #94ce9a;
+    --color-grass8: #65ba74;
+    --color-grass9: #46a758;
+    --color-grass10: #3e9b4f;
+    --color-grass11: #2a7e3b;
+    --color-grass12: #203c25;
+
     --color-iris1: #fdfdff;
     --color-iris2: #f8f8ff;
     --color-iris3: #f0f1fe;
@@ -67,6 +80,19 @@
     --color-grey10: var(--color-mauve10);
     --color-grey11: var(--color-mauve11);
     --color-grey12: var(--color-mauve12);
+
+    --color-success1: var(--color-grass1);
+    --color-success2: var(--color-grass2);
+    --color-success3: var(--color-grass3);
+    --color-success4: var(--color-grass4);
+    --color-success5: var(--color-grass5);
+    --color-success6: var(--color-grass6);
+    --color-success7: var(--color-grass7);
+    --color-success8: var(--color-grass8);
+    --color-success9: var(--color-grass9);
+    --color-success10: var(--color-grass10);
+    --color-success11: var(--color-grass11);
+    --color-success12: var(--color-grass12);
 
     --color-error1: var(--color-red1);
     --color-error2: var(--color-red2);
