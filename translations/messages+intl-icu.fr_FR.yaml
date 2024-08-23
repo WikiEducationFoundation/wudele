@@ -29,5 +29,11 @@ polls.show.go_to_vote: 'Participer au sondage'
 votes.new.cancel: Annuler
 votes.show.answer: "{proposal}\_: {answer}"
 votes.show.back_to_poll: 'Retourner aux résultats'
+polls.show.results: Résultats
+polls.show.results.answer: "{name}\_: {answer}"
+polls.show.results.answer.none: 'Personne n’a encore répondu au sondage.'
+polls.show.results.maybe: "{count}\_Peut-être"
+polls.show.results.no: "{count}\_Non"
+polls.show.results.yes: "{count}\_Oui"
 votes.show.success: "{name}, votre vote a bien été pris en compte\_!"
 votes.show.summary_answers: "Voici le résumé de votre vote\_:"

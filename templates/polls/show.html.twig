@@ -12,4 +12,50 @@
             {{ 'polls.show.go_to_vote' | trans }}
         </a>
     </p>
+
+    <div class="flow">
+        <h2>{{ 'polls.show.results' | trans }}</h2>
+
+        <div>
+            {% for proposal in poll.proposals %}
+                <details class="accordion">
+                    <summary class="accordion__title flow">
+                        <h3>
+                            {{ proposal.label }}
+                        </h3>
+
+                        <ul class="list--nostyle cols cols--gap cols--always">
+                            <li>
+                                {{ 'polls.show.results.yes' | trans({ count: proposal.countAnswers('yes') }) }}
+                            </li>
+
+                            <li>
+                                {{ 'polls.show.results.maybe' | trans({ count: proposal.countAnswers('maybe') }) }}
+                            </li>
+
+                            <li>
+                                {{ 'polls.show.results.no' | trans({ count: proposal.countAnswers('no') }) }}
+                            </li>
+                        </ul>
+                    </summary>
+
+                    <div class="accordion__body">
+                        {% if proposal.answers | length > 0 %}
+                            <ul>
+                                {% for answer in proposal.answers %}
+                                    <li>
+                                        {{ 'polls.show.results.answer' | trans({ name: answer.vote.authorName, answer: answer.humanValue }) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="panel panel--rounded">
+                                {{ 'polls.show.results.answer.none' | trans }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </details>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
