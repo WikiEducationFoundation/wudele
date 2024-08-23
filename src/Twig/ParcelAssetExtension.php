@@ -31,7 +31,7 @@ class ParcelAssetExtension extends AbstractExtension
         $assetStrategy = new Utils\AssetsMtimeStrategy($this->pathToPublic);
         $assetPackage = new Asset\Package($assetStrategy);
 
-        $assetPathname = "{$this->pathToAssets}/{$assetPath}";
+        $assetPathname = "/{$this->pathToAssets}/{$assetPath}";
 
         return $assetPackage->getUrl($assetPathname);
     }
