@@ -1,11 +1,11 @@
 Error: Erreur
+answer.value.invalid: 'Sélectionnez un choix depuis la liste.'
+answer.value.required: 'Sélectionnez un choix.'
 proposal.label.max_length: 'Saisissez une proposition de moins de {limit} caractères.'
 proposal.label.required: 'Saisissez une proposition.'
 poll.author_email.invalid: 'Saisissez une adresse email valide.'
 poll.author_name.max_length: 'Saisissez un pseudo de moins de {limit} caractères.'
 poll.title.max_length: 'Saisissez un titre de moins de {limit} caractères.'
 poll.title.required: 'Saisissez un titre.'
-vote.author_name.required: __vote.author_name.required
-vote.author_name.max_length: __vote.author_name.max_length
-answer.value.required: __answer.value.required
-answer.value.invalid: __answer.value.invalid
+vote.author_name.max_length: 'Saisissez un pseudo de moins de {limit} caractères.'
+vote.author_name.required: 'Saisissez un pseudo.'
