@@ -26,6 +26,7 @@ polls.new.title: 'Création de sondage'
 polls.proposals.title: 'Choisissez les propositions'
 polls.show.created: 'Créé par {by}, le {at}'
 polls.show.go_to_vote: 'Participer au sondage'
+polls.steps: 'Étape {step} sur {total}'
 votes.new.cancel: Annuler
 votes.show.answer: "{proposal}\_: {answer}"
 votes.show.back_to_poll: 'Retourner aux résultats'

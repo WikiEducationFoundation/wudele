@@ -10,9 +10,15 @@
 
 {% block body %}
     <div class="wrapper wrapper--small wrapper--center flow flow--larger">
-        <h1>
-            {{ 'polls.proposals.title' | trans }}
-        </h1>
+        <div class="flow">
+            <h1>
+                {{ 'polls.proposals.title' | trans }}
+            </h1>
+
+            <p class="text--secondary">
+                {{ 'polls.steps' | trans({ step: 2, total: 3 }) }}
+            </p>
+        </div>
 
         {{ form_start(form) }}
             <div

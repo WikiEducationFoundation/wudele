@@ -35,5 +35,6 @@ polls.show.results.answer.none: 'No one has replied to the poll yet.'
 polls.show.results.maybe: "{count}\_Maybe"
 polls.show.results.no: "{count}\_No"
 polls.show.results.yes: "{count}\_Yes"
+polls.steps: 'Step {step} on {total}'
 votes.show.success: '{name}, your vote has been taken into account!'
 votes.show.summary_answers: 'Here’s a summary of your vote:'
