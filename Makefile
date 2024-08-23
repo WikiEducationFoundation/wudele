@@ -106,6 +106,18 @@ lint-fix: ## Fix the errors detected by the linters
 	$(PHP) vendor/bin/rector process --config .rector.php
 	$(PHP) vendor/bin/phpcbf
 
+.PHONY: release
+release: ## Release a new version (take a VERSION argument)
+ifndef VERSION
+	$(error You need to provide a "VERSION" argument)
+endif
+	echo $(VERSION) > VERSION.txt
+	$(NPM) run build
+	$(EDITOR) CHANGELOG.md
+	git add .
+	git commit -m "release: Publish version $(VERSION)"
+	git tag -a $(VERSION) -m "Release version $(VERSION)"
+
 .PHONY: help
 help:
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
