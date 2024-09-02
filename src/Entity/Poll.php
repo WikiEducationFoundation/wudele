@@ -188,6 +188,10 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         foreach ($this->proposals as $proposal) {
             $countYes = $proposal->countAnswers('yes');
 
+            if ($countYes === 0) {
+                continue;
+            }
+
             if ($countYes > $maxYes) {
                 $maxYes = $countYes;
                 $bestProposals = [$proposal];
