@@ -102,8 +102,10 @@ class Vote implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
-    public function getPoll(): ?Poll
+    public function getPoll(): Poll
     {
+        assert($this->poll !== null);
+
         return $this->poll;
     }
 
