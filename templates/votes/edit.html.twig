@@ -9,6 +9,6 @@
 {% block poll_body %}
     {{ include('votes/_form.html.twig', {
         form: form,
-        urlCancel: path('poll', { id: poll.id }),
+        urlCancel: path('vote', { pollId: poll.id, id: vote.id }),
     }) }}
 {% endblock %}

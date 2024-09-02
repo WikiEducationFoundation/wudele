@@ -27,9 +27,15 @@
         </ul>
     </div>
 
-    <p class="text--center">
+    <div class="cols cols--gap cols--center cols--always">
+        <div class="col--extend">
+            <a class="button" href="{{ path('edit vote', { pollId: poll.id, id: vote.id }) }}">
+                {{ 'votes.show.edit' | trans }}
+            </a>
+        </div>
+
         <a class="button button--primary" href="{{ path('poll', { id: poll.id }) }}">
             {{ 'votes.show.back_to_poll' | trans }}
         </a>
-    </p>
+    </div>
 {% endblock %}

@@ -37,5 +37,6 @@ polls.steps: 'Step {step} on {total}'
 votes.new.cancel: Cancel
 votes.show.answer: '{proposal}: {answer}'
 votes.show.back_to_poll: 'Back to results'
+votes.show.edit: Edit
 votes.show.success: '{name}, your vote has been taken into account!'
 votes.show.summary_answers: 'Here’s a summary of your vote:'

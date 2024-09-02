@@ -40,8 +40,12 @@ class VoteForm extends AbstractType
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
-            $form = $event->getForm();
             $vote = $event->getData();
+
+            if (count($vote->getAnswers()) > 0) {
+                return;
+            }
+
             $poll = $vote->getPoll();
             $proposals = $poll->getProposals();
 

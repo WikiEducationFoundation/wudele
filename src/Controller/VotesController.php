@@ -60,4 +60,37 @@ class VotesController extends BaseController
             'vote' => $vote,
         ]);
     }
+
+    #[Route('/polls/{pollId:poll}/votes/{id:vote}/edit', name: 'edit vote')]
+    public function edit(
+        #[MapEntity(mapping: ['poll' => 'id'])]
+        Entity\Poll $poll,
+        Entity\Vote $vote,
+        Request $request,
+        Repository\VoteRepository $voteRepository,
+    ): Response {
+        if ($poll->getId() !== $vote->getPoll()->getId()) {
+            throw $this->createNotFoundException('Vote is not part of the poll');
+        }
+
+        $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vote = $form->getData();
+
+            $voteRepository->save($vote);
+
+            return $this->redirectToRoute('vote', [
+                'pollId' => $poll->getId(),
+                'id' => $vote->getId(),
+            ]);
+        }
+
+        return $this->render('votes/edit.html.twig', [
+            'poll' => $poll,
+            'vote' => $vote,
+            'form' => $form,
+        ]);
+    }
 }
