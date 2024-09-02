@@ -31,6 +31,7 @@ polls.show.results.answer: '{name}: {answer}'
 polls.show.results.answer.none: 'No one has replied to the poll yet.'
 polls.show.results.maybe: "{count}\_Maybe"
 polls.show.results.no: "{count}\_No"
+polls.show.results.preferred: '(⭐ preferred)'
 polls.show.results.yes: "{count}\_Yes"
 polls.steps: 'Step {step} on {total}'
 votes.new.cancel: Cancel

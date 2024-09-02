@@ -31,6 +31,7 @@ polls.show.results.answer: "{name}\_: {answer}"
 polls.show.results.answer.none: 'Personne n’a encore répondu au sondage.'
 polls.show.results.maybe: "{count}\_Peut-être"
 polls.show.results.no: "{count}\_Non"
+polls.show.results.preferred: '(⭐ préféré)'
 polls.show.results.yes: "{count}\_Oui"
 polls.steps: 'Étape {step} sur {total}'
 votes.new.cancel: Annuler

@@ -177,6 +177,28 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this->proposals;
     }
 
+    /**
+     * @return Proposal[]
+     */
+    public function getBestProposals(): array
+    {
+        $maxYes = 0;
+        $bestProposals = [];
+
+        foreach ($this->proposals as $proposal) {
+            $countYes = $proposal->countAnswers('yes');
+
+            if ($countYes > $maxYes) {
+                $maxYes = $countYes;
+                $bestProposals = [$proposal];
+            } elseif ($countYes === $maxYes) {
+                $bestProposals[] = $proposal;
+            }
+        }
+
+        return $bestProposals;
+    }
+
     public function addProposal(Proposal $proposal): static
     {
         if (!$this->proposals->contains($proposal)) {

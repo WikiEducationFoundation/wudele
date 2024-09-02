@@ -17,11 +17,19 @@
         <h2>{{ 'polls.show.results' | trans }}</h2>
 
         <div>
+            {% set bestProposals = poll.bestProposals %}
+
             {% for proposal in poll.proposals %}
+                {% set isBestProposal = proposal in bestProposals %}
+
                 <details class="accordion">
                     <summary class="accordion__title flow">
-                        <h3>
+                        <h3 class="{{ isBestProposal ? 'text--bolder' }}">
                             {{ proposal.label }}
+
+                            {% if proposal in bestProposals %}
+                                {{ 'polls.show.results.preferred' | trans }}
+                            {% endif %}
                         </h3>
 
                         <ul class="list--nostyle cols cols--gap cols--always">
