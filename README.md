@@ -5,7 +5,7 @@ Pollaris is a polling tool to plan, organise and make decisions quickly, easily 
 It is written with [Symfony](https://symfony.com/) and works with [PHP](https://www.php.net/) 8.2 or 8.3.
 The only supported database for now is PostgreSQL >= 15.
 
-Pollaris is licensed under [GNU Affero General Public License v3.0 or later](https://framagit.org/framasoft/pollaris/-/blob/main/LICENSE.txt).
+Pollaris is licensed under [GNU Affero General Public License v3.0 or later](https://framagit.org/pollaris/pollaris/-/blob/main/LICENSE.txt).
 
 ## Documentation
 
@@ -23,7 +23,7 @@ The `docker` command must be executable by your normal user.
 Clone the repository:
 
 ```console
-$ git clone https://framagit.org/framasoft/pollaris.git
+$ git clone https://framagit.org/pollaris/pollaris.git
 ```
 
 Install the dependencies:
