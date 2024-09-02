@@ -102,9 +102,7 @@ class Answer implements ActivityMonitor\TrackableEntityInterface
 
     public function getValue(): string
     {
-        assert($this->value !== null);
-
-        return $this->value;
+        return $this->value ?? '';
     }
 
     public function getHumanValue(): TranslatableMessage
