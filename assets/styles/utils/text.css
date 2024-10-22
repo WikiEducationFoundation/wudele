@@ -43,6 +43,7 @@
 }
 
 h1 {
+    color: var(--color-primary12);
     font-size: var(--font-size-bigger);
 }
 
