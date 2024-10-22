@@ -29,8 +29,8 @@ input[type="radio"] + label::before {
 
     position: relative;
 
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     margin-right: var(--space-small);
 
     flex-shrink: 0;
@@ -49,16 +49,20 @@ input[type="radio"]:focus + label {
     outline-offset: var(--outline-offset);
 }
 
+input[type="radio"]:checked + label::before {
+    border-color: var(--color-primary11);
+}
+
 input[type="radio"]:checked + label::after {
     content: "";
 
     position: absolute;
 
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     margin-left: 5px;
 
-    background-color: var(--color-grey12);
+    background-color: var(--color-primary11);
     border-radius: 100%;
 }
 
