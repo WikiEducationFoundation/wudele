@@ -8,14 +8,16 @@ namespace App\Twig;
 
 use App\Utils;
 use Symfony\Component\Asset;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class ParcelAssetExtension extends AbstractExtension
 {
     public function __construct(
-        private string $pathToPublic,
         private string $pathToAssets,
+        #[Autowire('%app.public_directory%')]
+        private string $pathToPublic,
     ) {
     }
 
