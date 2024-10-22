@@ -4,6 +4,8 @@
 
 .icon {
     display: inline-block;
+    margin-right: var(--space-smaller);
+    margin-left: var(--space-smaller);
     aspect-ratio: 1;
 
     vertical-align: text-top;
