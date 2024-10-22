@@ -2,6 +2,7 @@ answers.value.maybe: Maybe
 answers.value.no: 'No'
 answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
+forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
@@ -9,19 +10,32 @@ forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
 forms.poll_author_form.author_email.label: 'Your email address'
 forms.poll_author_form.author_name.label: 'Your nickname'
 forms.poll_author_form.submit.label: 'Submit your identity'
+forms.poll_dates_form.add_date: 'Add a date'
+forms.poll_dates_form.remove_date: 'Remove the date'
+forms.poll_dates_form.submit.label: 'Submit the dates'
 forms.poll_form.description.label: Description
 forms.poll_form.submit.label: 'Create the poll'
 forms.poll_form.title.label: 'Name of your poll'
 forms.poll_proposals_form.add_proposal: 'Add a proposal'
 forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
 forms.poll_proposals_form.submit.label: 'Submit the proposals'
+forms.poll_slots_form.add_slot: 'Add a time slot'
+forms.poll_slots_form.remove_slot: 'Remove the time slot'
+forms.poll_slots_form.submit.label: 'Submit the time slots'
 forms.proposal_type.label.label_pattern: 'Proposal __number__'
+forms.slot_type.label.label_pattern: 'Time slot __number__'
+forms.slots_form.day: Day
 forms.vote_form.author_name.label: 'Your nickname'
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 polls.author.title: 'Who you are'
+polls.choose.classic: 'Poll classic'
+polls.choose.date: 'Poll date'
+polls.choose.next: Next
+polls.choose.title: 'Choose the type of poll'
+polls.dates.title: 'Choose the dates'
 polls.new.title: 'Poll creation'
 polls.proposals.title: 'Choose the proposals'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with {countYes} “yes” is:} other {The preferred choices with {countYes} “yes” are:} }'
@@ -34,6 +48,7 @@ polls.show.results.answer.none: 'No one has replied to the poll yet.'
 polls.show.results.maybe: "{count}\_Maybe"
 polls.show.results.no: "{count}\_No"
 polls.show.results.yes: "{count}\_Yes"
+polls.slots.title: 'Choose the time slots'
 polls.steps: 'Step {step} on {total}'
 votes.new.cancel: Cancel
 votes.show.answer: '{proposal}: {answer}'

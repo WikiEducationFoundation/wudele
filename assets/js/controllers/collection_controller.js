@@ -5,7 +5,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ['proposalsContainer', 'proposalPrototype']
+    static targets = ['container', 'prototype']
 
     static values = {
         index: Number,
@@ -16,28 +16,28 @@ export default class extends Controller {
         this.refreshLabels();
     }
 
-    addProposal () {
-        const proposal = this.proposalPrototypeTarget.content.firstElementChild.cloneNode(true);
-        proposal.innerHTML = proposal.innerHTML.replace(/__name__/g, this.indexValue);
+    addElement () {
+        const element = this.prototypeTarget.content.firstElementChild.cloneNode(true);
+        element.innerHTML = element.innerHTML.replace(/__name__/g, this.indexValue);
 
-        this.proposalsContainerTarget.appendChild(proposal);
+        this.containerTarget.appendChild(element);
 
         this.indexValue++;
 
         this.refreshLabels();
     }
 
-    removeProposal (event) {
+    removeElement (event) {
         const target = event.target;
-        const proposal = target.closest('[data-item="proposal"]');
+        const element = target.closest('[data-item="element"]');
 
-        proposal.remove();
+        element.remove();
 
         this.refreshLabels();
     }
 
     refreshLabels () {
-        const labels = this.proposalsContainerTarget.querySelectorAll('label');
+        const labels = this.containerTarget.querySelectorAll('label');
         labels.forEach((label, index) => {
             // Update the labels with the correct number.
             let labelPattern = label.dataset.labelPattern;

@@ -2,6 +2,7 @@ answers.value.maybe: Peut-être
 answers.value.no: Non
 answers.value.yes: Oui
 base.default_title: "Bienvenue sur Pollaris\_!"
+forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
 forms.labels.optional: (facultatif)
@@ -9,19 +10,32 @@ forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
 forms.poll_author_form.author_email.label: 'Votre adresse email'
 forms.poll_author_form.author_name.label: 'Votre pseudonyme'
 forms.poll_author_form.submit.label: 'Valider votre identité'
+forms.poll_dates_form.add_date: 'Ajouter une date'
+forms.poll_dates_form.remove_date: 'Retirer la date'
+forms.poll_dates_form.submit.label: 'Valider les dates'
 forms.poll_form.description.label: Description
 forms.poll_form.submit.label: 'Créer le sondage'
 forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.submit.label: 'Valider les propositions'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
+forms.poll_slots_form.add_slot: 'Ajouter un horaire'
+forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
+forms.poll_slots_form.submit.label: 'Valider les horaires'
 forms.proposal_type.label.label_pattern: 'Proposition __number__'
+forms.slot_type.label.label_pattern: 'Horaire __number__'
+forms.slots_form.day: Journée
 forms.vote_form.author_name.label: 'Votre pseudonyme'
 forms.vote_form.submit.label: Voter
 home.create_poll: 'Créer un nouveau sondage'
 home.intro: 'Grâce à notre outil de sondage, planifiez, organisez et prenez des décisions rapidement, simplement et sans inscription.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
 polls.author.title: 'Votre identité'
+polls.choose.classic: 'Sondage classique'
+polls.choose.date: 'Sondage date'
+polls.choose.next: Suivant
+polls.choose.title: 'Choisissez le type de sondage'
+polls.dates.title: 'Choisissez les dates'
 polls.new.title: 'Création de sondage'
 polls.proposals.title: 'Choisissez les propositions'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec {countYes} «\_oui\_» est\_:} other {Les choix préférés avec {countYes} «\_oui\_» sont\_:} }"
@@ -34,6 +48,7 @@ polls.show.results.answer.none: 'Personne n’a encore répondu au sondage.'
 polls.show.results.maybe: "{count}\_Peut-être"
 polls.show.results.no: "{count}\_Non"
 polls.show.results.yes: "{count}\_Oui"
+polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
 votes.new.cancel: Annuler
 votes.show.answer: "{proposal}\_: {answer}"

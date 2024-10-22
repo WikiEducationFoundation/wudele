@@ -1,0 +1,101 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'polls.slots.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <div class="flow">
+            <h1>
+                {{ 'polls.slots.title' | trans }}
+            </h1>
+
+            <p class="text--secondary">
+                {{ 'polls.steps' | trans({ step: currentStep, total: poll.totalSteps }) }}
+            </p>
+        </div>
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {% for date in form.dates %}
+                <fieldset class="panel panel--primary panel--rounded">
+                    <legend>{{ date.vars.data.value | dateTrans('EEEE d MMMM yyyy') }}</legend>
+
+                    <div
+                        class="flow"
+                        data-controller="collection"
+                        data-collection-index-value="{{ date.proposals|length > 0 ? date.proposals|last.vars.name + 1 : 0 }}"
+                    >
+                        <div data-collection-target="container" class="flow">
+                            {% for proposal in date.proposals %}
+                                <div class="flow flow--small" data-item="element">
+                                    {{ form_label(proposal.label) }}
+
+                                    {{ form_errors(proposal.label) }}
+
+                                    <div class="cols cols--always cols--gap">
+                                        {{ form_widget(proposal.label) }}
+
+                                        {% if not loop.first %}
+                                            <button
+                                                type="button"
+                                                class="button--ghost"
+                                                data-action="collection#removeElement"
+                                            >
+                                                {{ icon('trash') }}
+
+                                                <span class="sr-only">
+                                                    {{ 'forms.poll_slots_form.remove_slot' | trans }}
+                                                </span>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <template data-collection-target="prototype">
+                            <div class="flow flow--small" data-item="element">
+                                {{ form_label(date.proposals.vars.prototype.label) }}
+
+                                {{ form_errors(date.proposals.vars.prototype.label) }}
+
+                                <div class="cols cols--always cols--gap">
+                                    {{ form_widget(date.proposals.vars.prototype.label) }}
+
+                                    <button
+                                        type="button"
+                                        class="button--ghost"
+                                        data-action="collection#removeElement"
+                                    >
+                                        {{ icon('trash') }}
+
+                                        <span class="sr-only">
+                                            {{ 'forms.poll_slots_form.remove_slot' | trans }}
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <button
+                            type="button"
+                            class="button--menuitem"
+                            data-action="collection#addElement"
+                        >
+                            {{ icon('circle-plus') }}
+
+                            {{ 'forms.poll_slots_form.add_slot' | trans }}
+                        </button>
+                    </div>
+                </fieldset>
+            {% endfor %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

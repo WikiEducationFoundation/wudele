@@ -7,6 +7,7 @@
 namespace App\Form;
 
 use App\Entity;
+use App\Service;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,16 +18,22 @@ use Symfony\Component\Translation\TranslatableMessage;
 
 class AnswerForm extends AbstractType
 {
+    public function __construct(
+        private Service\ProposalService $proposalService,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $form = $event->getForm();
             $answer = $event->getData();
             $proposal = $answer->getProposal();
+            $proposalLabel = $this->proposalService->getFullLabel($proposal);
 
             $form->add('value', Type\ChoiceType::class, [
                 'choices' => Entity\Answer::VALID_VALUES,
-                'label' => $proposal->getLabel(),
+                'label' => $proposalLabel,
                 'empty_data' => 'no',
                 'expanded' => true,
 

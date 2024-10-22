@@ -74,3 +74,31 @@ input[type="radio"][disabled] + label {
 input[type="radio"][disabled] + label::before {
     border-color: var(--color-corduroy);
 }
+
+.radio-container label {
+    width: 100%;
+    padding: var(--space-medium);
+
+    background-color: var(--color-primary3);
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+}
+
+.radio-container input[type="radio"]:checked + label {
+    border-color: var(--color-primary11);
+}
+
+.radio-container input[type="radio"] + label::before {
+    position: absolute;
+    right: var(--space-small);
+
+    margin-right: 0;
+    margin-left: var(--space-small);
+}
+
+.radio-container input[type="radio"]:checked + label::after {
+    right: var(--space-small);
+
+    margin-right: 5px;
+    margin-left: 0;
+}

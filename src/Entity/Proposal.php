@@ -52,6 +52,10 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     )]
     private Collections\Collection $answers;
 
+    #[ORM\ManyToOne(inversedBy: 'proposals')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    private ?Date $date = null;
+
     public function __construct()
     {
         $this->label = '';
@@ -147,5 +151,17 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
         $criteria->where($expr);
 
         return count($this->answers->matching($criteria));
+    }
+
+    public function getDate(): ?Date
+    {
+        return $this->date;
+    }
+
+    public function setDate(?Date $date): static
+    {
+        $this->date = $date;
+
+        return $this;
     }
 }

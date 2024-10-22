@@ -21,6 +21,7 @@ final class PollFactory extends PersistentObjectFactory
     {
         return [
             'title' => self::faker()->words(3, true),
+            'type' => 'classic',
         ];
     }
 
@@ -32,6 +33,16 @@ final class PollFactory extends PersistentObjectFactory
     public static function class(): string
     {
         return Entity\Poll::class;
+    }
+
+    public function classic(): self
+    {
+        return $this->with(['type' => 'classic']);
+    }
+
+    public function date(): self
+    {
+        return $this->with(['type' => 'date']);
     }
 
     public function created(): self
@@ -49,8 +60,23 @@ final class PollFactory extends PersistentObjectFactory
             'poll' => $this,
         ]);
 
-        return $this->with([
-            'proposals' => [$proposal],
+        return $this
+            ->classic()
+            ->with([
+                'proposals' => [$proposal],
+            ]);
+    }
+
+    public function withDate(): self
+    {
+        $date = DateFactory::new([
+            'poll' => $this,
         ]);
+
+        return $this
+            ->date()
+            ->with([
+                'dates' => [$date],
+            ]);
     }
 }

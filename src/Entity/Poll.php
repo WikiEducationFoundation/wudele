@@ -23,6 +23,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public const MAX_TITLE_LENGTH = 200;
     public const MAX_AUTHOR_NAME_LENGTH = 100;
 
+    public const TYPES = ['date', 'classic'];
+    public const DEFAULT_TYPE = 'classic';
+
     #[ORM\Id]
     #[ORM\Column(length: 20)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -37,6 +40,13 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
 
     #[ORM\Column(length: 20)]
     private ?string $adminToken = null;
+
+    #[ORM\Column(length: 20, options: ['default' => self::DEFAULT_TYPE])]
+    #[Assert\Choice(
+        choices: self::TYPES,
+        message: new TranslatableMessage('poll.type.invalid', domain: 'validators'),
+    )]
+    private ?string $type = null;
 
     #[ORM\Column(length: self::MAX_TITLE_LENGTH)]
     #[Assert\NotBlank(
@@ -74,6 +84,19 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[Assert\Valid]
     private Collections\Collection $proposals;
 
+    /**
+     * @var Collections\Collection<int, Date>
+     */
+    #[ORM\OneToMany(
+        targetEntity: Date::class,
+        mappedBy: 'poll',
+        cascade: ['persist'],
+        orphanRemoval: true,
+    )]
+    #[ORM\OrderBy(['value' => 'ASC'])]
+    #[Assert\Valid]
+    private Collections\Collection $dates;
+
     /** @var Collections\Collection<int, Vote> */
     #[ORM\OneToMany(
         targetEntity: Vote::class,
@@ -84,12 +107,14 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
 
     public function __construct()
     {
+        $this->type = self::DEFAULT_TYPE;
         $this->title = '';
         $this->description = '';
         $this->authorName = '';
         $this->authorEmail = '';
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
+        $this->dates = new Collections\ArrayCollection();
     }
 
     public function getId(): ?string
@@ -119,6 +144,28 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function isClassicPoll(): bool
+    {
+        return $this->type === 'classic';
+    }
+
+    public function isDatePoll(): bool
+    {
+        return $this->type === 'date';
     }
 
     public function getTitle(): ?string
@@ -224,6 +271,35 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
+    /**
+     * @return Collections\Collection<int, Date>
+     */
+    public function getDates(): Collections\Collection
+    {
+        return $this->dates;
+    }
+
+    public function addDate(Date $date): static
+    {
+        if (!$this->dates->contains($date)) {
+            $this->dates->add($date);
+            $date->setPoll($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDate(Date $date): static
+    {
+        if ($this->dates->removeElement($date)) {
+            if ($date->getPoll() === $this) {
+                $date->setPoll(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getAdminToken(): ?string
     {
         return $this->adminToken;
@@ -270,5 +346,10 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         }
 
         return $this;
+    }
+
+    public function getTotalSteps(): int
+    {
+        return $this->type === 'classic' ? 3 : 4;
     }
 }

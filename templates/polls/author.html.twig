@@ -16,7 +16,7 @@
             </h1>
 
             <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: 3, total: 3 }) }}
+                {{ 'polls.steps' | trans({ step: currentStep, total: poll.totalSteps }) }}
             </p>
         </div>
 

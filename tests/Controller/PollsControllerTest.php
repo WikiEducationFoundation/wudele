@@ -20,6 +20,16 @@ class PollsControllerTest extends WebTestCase
     use Helper\CsrfHelper;
     use Helper\FactoryHelper;
 
+    public function testGetChooseRendersCorrectly(): void
+    {
+        $client = static::createClient();
+
+        $client->request(Request::METHOD_GET, '/polls/choose');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Choose the type of poll');
+    }
+
     public function testGetNewRendersCorrectly(): void
     {
         $client = static::createClient();
@@ -48,11 +58,33 @@ class PollsControllerTest extends WebTestCase
         $this->assertNotNull($poll);
         $this->assertSame($title, $poll->getTitle());
         $this->assertSame($description, $poll->getDescription());
+        $this->assertSame('classic', $poll->getType());
         $id = $poll->getId();
         $adminToken = $poll->getAdminToken();
         $this->assertSame(20, strlen($id ?? ''));
         $this->assertSame(20, strlen($adminToken ?? ''));
         $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/proposals", 302);
+    }
+
+    public function testPostNewDatePollRedirectsToPollDates(): void
+    {
+        $client = static::createClient();
+        $title = 'My poll';
+
+        $client->request(Request::METHOD_POST, '/polls/new?type=date', [
+            'poll' => [
+                '_token' => $this->getCsrf($client, 'poll'),
+                'title' => $title,
+            ],
+        ]);
+
+        $poll = Factory\PollFactory::last();
+        $this->assertNotNull($poll);
+        $this->assertSame($title, $poll->getTitle());
+        $this->assertSame('date', $poll->getType());
+        $id = $poll->getId();
+        $adminToken = $poll->getAdminToken();
+        $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/dates", 302);
     }
 
     public function testPostNewFailsIfCsrfIsInvalid(): void
@@ -120,7 +152,7 @@ class PollsControllerTest extends WebTestCase
     public function testGetProposalsRendersCorrectly(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::createOne();
+        $poll = Factory\PollFactory::new()->classic()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals");
 
@@ -128,10 +160,20 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Choose the proposals');
     }
 
+    public function testGetProposalsRedirectIfTypeIsDate(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", 302);
+    }
+
     public function testGetProposalsFailsIfAdminTokenDoesNotMatch(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::createOne();
+        $poll = Factory\PollFactory::new()->classic()->create();
 
         $this->expectException(NotFoundHttpException::class);
 
@@ -142,7 +184,7 @@ class PollsControllerTest extends WebTestCase
     public function testPostProposalsCreatesProposals(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::createOne();
+        $poll = Factory\PollFactory::new()->classic()->create();
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", [
             'poll_proposals' => [
@@ -157,15 +199,16 @@ class PollsControllerTest extends WebTestCase
         $proposals = Factory\ProposalFactory::all();
         $this->assertSame(2, count($proposals));
         $this->assertSame('Foo', $proposals[0]->getLabel());
-        $this->assertSame($poll->getId(), $proposals[0]->getPoll()?->getId());
+        $this->assertSame($poll, $proposals[0]->getPoll());
         $this->assertSame('Bar', $proposals[1]->getLabel());
-        $this->assertSame($poll->getId(), $proposals[1]->getPoll()?->getId());
+        $this->assertSame($poll, $proposals[1]->getPoll());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
     }
 
     public function testPostProposalsReplacesExistingProposals(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::createOne();
+        $poll = Factory\PollFactory::new()->classic()->create();
         $proposal1 = Factory\ProposalFactory::createOne([
             'label' => 'Bar',
             'poll' => $poll,
@@ -188,16 +231,16 @@ class PollsControllerTest extends WebTestCase
         $proposals = Factory\ProposalFactory::all();
         $this->assertSame(2, count($proposals));
         $this->assertSame('Bar', $proposals[0]->getLabel());
-        $this->assertSame($poll->getId(), $proposals[0]->getPoll()?->getId());
-        $this->assertSame($proposal1->getId(), $proposals[0]->getId());
+        $this->assertSame($poll, $proposals[0]->getPoll());
+        $this->assertSame($proposal1, $proposals[0]);
         $this->assertSame('Foo', $proposals[1]->getLabel());
-        $this->assertSame($poll->getId(), $proposals[1]->getPoll()?->getId());
+        $this->assertSame($poll, $proposals[1]->getPoll());
     }
 
     public function testPostProposalsFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::createOne();
+        $poll = Factory\PollFactory::new()->classic()->create();
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", [
             'poll_proposals' => [
@@ -210,6 +253,193 @@ class PollsControllerTest extends WebTestCase
         ]);
 
         $this->assertSelectorTextContains('#poll_proposals_error', 'The CSRF token is invalid');
+        Factory\ProposalFactory::assert()->count(0);
+    }
+
+    public function testGetDatesRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Choose the dates');
+    }
+
+    public function testGetDatesRedirectsIfTypeIsClassic(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->classic()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+    }
+
+    public function testGetDatesFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/dates");
+    }
+
+    public function testPostDatesCreatesDates(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates", [
+            'poll_dates' => [
+                '_token' => $this->getCsrf($client, 'poll_dates'),
+                'dates' => [
+                    ['value' => '2024-11-01'],
+                    ['value' => '2024-11-02'],
+                ],
+            ],
+        ]);
+
+        $dates = Factory\DateFactory::all();
+        $this->assertSame(2, count($dates));
+        $this->assertSame('2024-11-01', $dates[0]->getValue()?->format('Y-m-d'));
+        $this->assertSame($poll, $dates[0]->getPoll());
+        $this->assertSame('2024-11-02', $dates[1]->getValue()?->format('Y-m-d'));
+        $this->assertSame($poll, $dates[1]->getPoll());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", 302);
+    }
+
+    public function testPostDatesFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates", [
+            'poll_dates' => [
+                '_token' => 'not the token',
+                'dates' => [
+                    ['value' => '2024-11-01'],
+                    ['value' => '2024-11-02'],
+                ],
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#poll_dates_error', 'The CSRF token is invalid');
+        Factory\DateFactory::assert()->count(0);
+    }
+
+    public function testGetSlotsRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withDate()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Choose the time slots');
+    }
+
+    public function testGetSlotsRedirectsIfTypeIsClassic(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->classic()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+    }
+
+    public function testGetSlotsRedirectsIfThereAreNoDates(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates", 302);
+    }
+
+    public function testGetSlotsFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withDate()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/slots");
+    }
+
+    public function testPostSlotsCreatesAProposal(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+        $date = Factory\DateFactory::createOne([
+            'poll' => $poll,
+        ]);
+        $slot1 = '19h';
+        $slot2 = '20h';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", [
+            'poll_slots' => [
+                '_token' => $this->getCsrf($client, 'poll_slots'),
+                'dates' => [
+                    [
+                        'proposals' => [
+                            ['label' => $slot1],
+                            ['label' => $slot2],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->refresh($poll);
+        $proposals = $poll->getProposals()->toArray();
+        $this->assertSame(2, count($proposals));
+        $this->assertSame($slot1, $proposals[0]->getLabel());
+        $this->assertSame($date, $proposals[0]->getDate());
+        $this->assertSame($slot2, $proposals[1]->getLabel());
+        $this->assertSame($date, $proposals[1]->getDate());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+    }
+
+    public function testPostSlotsFailsIfCsrfTokenIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+        $date1 = Factory\DateFactory::createOne([
+            'poll' => $poll,
+        ]);
+        $date2 = Factory\DateFactory::createOne([
+            'poll' => $poll,
+        ]);
+        $slot1 = '19h';
+        $slot2 = '20h';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", [
+            'poll_slots' => [
+                '_token' => 'not the token',
+                'dates' => [
+                    [
+                        'proposals' => [
+                            ['label' => $slot1],
+                            ['label' => $slot2],
+                        ],
+                    ],
+                    [
+                        'proposals' => [
+                            ['label' => $slot2],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#poll_slots_error', 'The CSRF token is invalid');
         Factory\ProposalFactory::assert()->count(0);
     }
 

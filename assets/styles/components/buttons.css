@@ -58,6 +58,13 @@ button:hover,
     width: 100%;
 }
 
+.button--ghost {
+    --button-padding: var(--space-small) var(--space-smaller);
+    --button-background-color: transparent;
+
+    border: none;
+}
+
 .button--menuitem {
     --button-padding: var(--space-small) var(--space-smaller);
     --button-background-color: transparent;
@@ -65,7 +72,6 @@ button:hover,
     display: block;
     width: 100%;
 
-    font-weight: normal;
     text-align: left;
 
     border: none;

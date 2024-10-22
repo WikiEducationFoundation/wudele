@@ -21,7 +21,10 @@
         <ul>
             {% for answer in vote.answers %}
                 <li>
-                    {{ 'votes.show.answer' | trans({ proposal: answer.proposal.label, answer: answer.humanValue }) }}
+                    {{ 'votes.show.answer' | trans({
+                        proposal: answer.proposal | proposalFullLabel,
+                        answer: answer.humanValue,
+                    }) }}
                 </li>
             {% endfor %}
         </ul>

@@ -15,12 +15,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PollsController extends BaseController
 {
+    #[Route('/polls/choose', name: 'choose poll type')]
+    public function choose(): Response
+    {
+        return $this->render('polls/choose.html.twig');
+    }
+
     #[Route('/polls/new', name: 'new poll')]
     public function new(
         Request $request,
         Repository\PollRepository $pollRepository,
     ): Response {
+        $type = $request->query->getString('type');
+
+        if (!in_array($type, Entity\Poll::TYPES)) {
+            $type = Entity\Poll::DEFAULT_TYPE;
+        }
+
         $poll = new Entity\Poll();
+        $poll->setType($type);
+
         $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
 
         $form->handleRequest($request);
@@ -29,14 +43,23 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirectToRoute('edit poll proposals', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+            if ($poll->isClassicPoll()) {
+                return $this->redirectToRoute('edit poll proposals', [
+                    'id' => $poll->getId(),
+                    'token' => $poll->getAdminToken(),
+                ]);
+            } else {
+                return $this->redirectToRoute('edit poll dates', [
+                    'id' => $poll->getId(),
+                    'token' => $poll->getAdminToken(),
+                ]);
+            }
         }
 
         return $this->render('polls/new.html.twig', [
+            'poll' => $poll,
             'form' => $form,
+            'currentStep' => 1,
         ]);
     }
 
@@ -63,6 +86,13 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
+        if ($poll->isDatePoll()) {
+            return $this->redirectToRoute('edit poll slots', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
         $form = $this->createNamedForm('poll_proposals', Form\PollProposalsForm::class, $poll);
 
         $form->handleRequest($request);
@@ -80,6 +110,92 @@ class PollsController extends BaseController
         return $this->render('polls/proposals.html.twig', [
             'poll' => $poll,
             'form' => $form,
+            'currentStep' => 2,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/dates', name: 'edit poll dates')]
+    public function dates(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        if ($poll->isClassicPoll()) {
+            return $this->redirectToRoute('edit poll proposals', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        $form = $this->createNamedForm('poll_dates', Form\PollDatesForm::class, $poll);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $poll = $form->getData();
+
+            $pollRepository->save($poll);
+
+            return $this->redirectToRoute('edit poll slots', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        return $this->render('polls/dates.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+            'currentStep' => 2,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/slots', name: 'edit poll slots')]
+    public function slots(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        if ($poll->isClassicPoll()) {
+            return $this->redirectToRoute('edit poll proposals', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        if (count($poll->getDates()) === 0) {
+            return $this->redirectToRoute('edit poll dates', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        $form = $this->createNamedForm('poll_slots', Form\PollSlotsForm::class, $poll);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $poll = $form->getData();
+
+            $pollRepository->save($poll);
+
+            return $this->redirectToRoute('edit poll author', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
+        return $this->render('polls/slots.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+            'currentStep' => 3,
         ]);
     }
 
@@ -117,6 +233,7 @@ class PollsController extends BaseController
         return $this->render('polls/author.html.twig', [
             'poll' => $poll,
             'form' => $form,
+            'currentStep' => $poll->getTotalSteps(),
         ]);
     }
 }

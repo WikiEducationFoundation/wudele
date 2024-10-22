@@ -31,7 +31,7 @@
                     }) }}
 
                     {% if preferredChoices|length == 1 %}
-                        <strong>{{ firstChoice.label }}</strong>
+                        <strong>{{ firstChoice | proposalFullLabel }}</strong>
                     {% endif %}
                 </p>
 
@@ -39,7 +39,7 @@
                     <ul class="flow flow--small">
                         {% for choice in preferredChoices %}
                             <li>
-                                <strong>{{ choice.label }}</strong>
+                                <strong>{{ choice | proposalFullLabel }}</strong>
                             </li>
                         {% endfor %}
                     </ul>
@@ -55,7 +55,7 @@
             {% for proposal in poll.proposals %}
                 <details class="accordion">
                     <summary class="accordion__title flow">
-                        <p class="text--bold">{{ proposal.label }}</p>
+                        <p class="text--bold">{{ proposal | proposalFullLabel }}</p>
 
                         <ul class="list--nostyle cols cols--gap cols--always">
                             <li>
