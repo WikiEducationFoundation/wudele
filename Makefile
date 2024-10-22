@@ -86,6 +86,10 @@ translations: ## Update the translations from the code
 	$(CONSOLE) translation:extract --format=yaml --force --clean en_GB
 	$(CONSOLE) translation:extract --format=yaml --force --clean fr_FR
 
+.PHONY: icons
+icons: ## Build the icons asset
+	$(NPM) run build:icons
+
 .PHONY: test
 test: ## Run the test suite
 	$(PHP) ./vendor/bin/phpunit \

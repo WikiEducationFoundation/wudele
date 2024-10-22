@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "watch": "parcel watch --no-hmr --dist-dir public/dev_assets assets/*/application.*",
-    "build": "parcel build --dist-dir public/assets assets/*/application.*"
+    "build": "parcel build --dist-dir public/assets assets/*/application.*",
+    "build:icons": "svg-sprite --config .svg-sprite.json assets/icons/*.svg"
   },
   "targets": {
     "default": {
@@ -16,7 +17,8 @@
     }
   },
   "devDependencies": {
-    "parcel": "^2.12.0"
+    "parcel": "^2.12.0",
+    "svg-sprite": "^2.0.4"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
