@@ -72,7 +72,7 @@ List of feeds for Pollaris:
 - [Symfony](https://github.com/symfony/symfony/releases.atom) ([releases](https://github.com/symfony/symfony/releases))
 - [Turbo](https://github.com/hotwired/turbo/releases.atom) ([releases](https://github.com/hotwired/turbo/releases))
 - [Stimulus](https://github.com/hotwired/stimulus/releases.atom) ([releases](https://github.com/hotwired/stimulus/releases))
-- [Parcel](https://github.com/parcel-bundler/parcel/releases.atom) ([releases](https://github.com/parcel-bundler/parcel/releases))
+- [esbuild](https://github.com/evanw/esbuild/releases.atom) ([releases](https://github.com/evanw/esbuild/releases))
 - [Foundry](https://github.com/zenstruck/foundry/releases.atom) ([releases](https://github.com/zenstruck/foundry/releases))
 - [PHPUnit](https://github.com/sebastianbergmann/phpunit/releases.atom) ([releases](https://github.com/sebastianbergmann/phpunit/releases))
 - [PHPStan](https://github.com/phpstan/phpstan/releases.atom) ([releases](https://github.com/phpstan/phpstan/releases))

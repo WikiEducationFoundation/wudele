@@ -16,7 +16,7 @@ Pollaris relies on a bunch of other projects:
 - [Composer](https://getcomposer.org/)
 - [Doctrine](https://www.doctrine-project.org/)
 - [Foundry](https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html)
-- [Parcel](https://parceljs.org/)
+- [esbuild](https://esbuild.github.io/)
 - [PHP](https://www.php.net/)
 - [PHP\_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 - [PHPStan](https://phpstan.org/)

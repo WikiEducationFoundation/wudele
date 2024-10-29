@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class ParcelAssetExtension extends AbstractExtension
+class EsbuildAssetExtension extends AbstractExtension
 {
     public function __construct(
         private string $pathToAssets,
@@ -24,11 +24,11 @@ class ParcelAssetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('parcel_asset', [$this, 'parcelAsset']),
+            new TwigFunction('esbuild_asset', [$this, 'esbuildAsset']),
         ];
     }
 
-    public function parcelAsset(string $assetPath): string
+    public function esbuildAsset(string $assetPath): string
     {
         $assetStrategy = new Utils\AssetsMtimeStrategy($this->pathToPublic);
         $assetPackage = new Asset\Package($assetStrategy);

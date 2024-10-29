@@ -17,11 +17,11 @@
         {% endif %}
 
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ parcel_asset('styles/application.css') }}" data-turbo-track="reload">
+            <link rel="stylesheet" href="{{ esbuild_asset('styles/application.css') }}" data-turbo-track="reload">
         {% endblock %}
 
         {% block javascripts %}
-            <script src="{{ parcel_asset('js/application.js') }}" defer data-turbo-track="reload"></script>
+            <script src="{{ esbuild_asset('js/application.js') }}" defer data-turbo-track="reload"></script>
         {% endblock %}
     </head>
 

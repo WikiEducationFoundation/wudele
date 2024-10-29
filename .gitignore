@@ -5,7 +5,6 @@
 /var/
 /vendor/
 
-/.parcel-cache
 /node_modules
 
 /.phpunit.result.cache
