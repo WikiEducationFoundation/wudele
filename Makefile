@@ -20,34 +20,23 @@ else
 	NPM = ./docker/bin/npm
 endif
 
-ifndef COVERAGE
-	COVERAGE = --coverage-html ./coverage
-endif
-
-ifdef FILE
-	PHPUNIT_FILE = $(FILE)
-else
-	PHPUNIT_FILE = ./tests
-endif
-
-ifdef FILTER
-	PHPUNIT_FILTER = --filter=$(FILTER)
-else
-	PHPUNIT_FILTER =
-endif
-
 .PHONY: docker-start
-docker-start: ## Start a development server
-	@echo "Running webserver on http://localhost:8000"
+docker-start: PORT ?= 8000
+docker-start: ## Start a development server (can take a PORT argument)
+	@echo "Running webserver on http://localhost:$(PORT)"
 	$(DOCKER_COMPOSE) up
 
 .PHONY: docker-build
-docker-build: ## Rebuild the Docker containers
-	$(DOCKER_COMPOSE) build
+docker-build: ## Rebuild the Docker development images
+	$(DOCKER_COMPOSE) build --pull
+
+.PHONY: docker-pull
+docker-pull: ## Pull the Docker images from the Docker Hub
+	$(DOCKER_COMPOSE) pull --ignore-buildable
 
 .PHONY: docker-clean
 docker-clean: ## Clean the Docker stuff
-	$(DOCKER_COMPOSE) down
+	$(DOCKER_COMPOSE) down -v
 
 .PHONY: install
 install: INSTALLER ?= all
@@ -73,7 +62,7 @@ db-rollback: ## Rollback the database to the previous version
 	$(CONSOLE) doctrine:migrations:migrate --no-interaction prev
 
 .PHONY: db-reset
-db-reset: ## Reset the database
+db-reset: ## Reset the database (take a FORCE argument)
 ifndef FORCE
 	$(error Please run the operation with FORCE=true)
 endif
@@ -96,24 +85,43 @@ icons: ## Build the icons asset
 	$(NPM) run build:icons
 
 .PHONY: test
-test: ## Run the test suite
+test: FILE ?= ./tests
+ifdef FILTER
+test: override FILTER := --filter=$(FILTER)
+endif
+test: COVERAGE ?= --coverage-html ./coverage
+test: ## Run the test suite (can take FILE, FILTER and COVERAGE arguments)
 	$(PHP) ./vendor/bin/phpunit \
 		-c .phpunit.xml.dist \
 		$(COVERAGE) \
-		$(PHPUNIT_FILTER) \
-		$(PHPUNIT_FILE)
+		$(FILTER) \
+		$(FILE)
 
 .PHONY: lint
-lint: ## Execute the linters
+lint: LINTER ?= all
+lint: ## Execute the linters (can take a LINTER argument)
+ifeq ($(LINTER), $(filter $(LINTER), all phpstan))
 	$(PHP) vendor/bin/phpstan analyse --memory-limit 512M -c .phpstan.neon
+endif
+ifeq ($(LINTER), $(filter $(LINTER), all rector))
 	$(PHP) vendor/bin/rector process --dry-run --config .rector.php
+endif
+ifeq ($(LINTER), $(filter $(LINTER), all phpcs))
 	$(PHP) vendor/bin/phpcs
+endif
+ifeq ($(LINTER), $(filter $(LINTER), all container))
 	$(CONSOLE) lint:container
+endif
 
 .PHONY: lint-fix
-lint-fix: ## Fix the errors detected by the linters
+lint-fix: LINTER ?= all
+lint-fix: ## Fix the errors detected by the linters (can take a LINTER argument)
+ifeq ($(LINTER), $(filter $(LINTER), all rector))
 	$(PHP) vendor/bin/rector process --config .rector.php
+endif
+ifeq ($(LINTER), $(filter $(LINTER), all phpcs))
 	$(PHP) vendor/bin/phpcbf
+endif
 
 .PHONY: release
 release: ## Release a new version (take a VERSION argument)
