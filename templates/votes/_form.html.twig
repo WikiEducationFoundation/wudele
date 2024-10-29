@@ -5,6 +5,8 @@
  #}
 
 {{ form_start(form) }}
+    {{ form_errors(form) }}
+
     {{ form_row(form.authorName) }}
 
     {% for answer in form.answers %}
