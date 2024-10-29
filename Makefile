@@ -105,7 +105,7 @@ test: ## Run the test suite
 
 .PHONY: lint
 lint: ## Execute the linters
-	$(PHP) vendor/bin/phpstan analyse -c .phpstan.neon
+	$(PHP) vendor/bin/phpstan analyse --memory-limit 512M -c .phpstan.neon
 	$(PHP) vendor/bin/rector process --dry-run --config .rector.php
 	$(PHP) vendor/bin/phpcs
 	$(CONSOLE) lint:container
