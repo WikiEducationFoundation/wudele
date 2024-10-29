@@ -13,14 +13,14 @@ variables:
 
     NODOCKER: true
     COVERAGE: --coverage-text
-    DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/pollaris?serverVersion=13&charset=utf8"
+    DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/pollaris?serverVersion=15&charset=utf8"
 
 workflow:
     rules:
         - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 services:
-    - postgres:13-alpine
+    - postgres:15-alpine
 
 before_script:
     - apt-get update
