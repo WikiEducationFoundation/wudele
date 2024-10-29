@@ -33,4 +33,24 @@ final class PollFactory extends PersistentObjectFactory
     {
         return Entity\Poll::class;
     }
+
+    public function created(): self
+    {
+        return $this
+            ->withProposal()
+            ->with([
+                'authorName' => self::faker()->name(),
+            ]);
+    }
+
+    public function withProposal(): self
+    {
+        $proposal = ProposalFactory::new([
+            'poll' => $this,
+        ]);
+
+        return $this->with([
+            'proposals' => [$proposal],
+        ]);
+    }
 }
