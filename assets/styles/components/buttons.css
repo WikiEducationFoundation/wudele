@@ -15,7 +15,6 @@ button,
     color: var(--button-color);
     font-family: inherit;
     font-size: var(--font-size-normal);
-    font-weight: 500;
     line-height: 1.5;
     text-decoration: none;
 
@@ -54,19 +53,20 @@ button:hover,
     --button-padding: var(--space-smaller) var(--space-large);
 }
 
-.button--ghost {
-    --button-background-color: transparent;
-
-    font-weight: normal;
-
-    border: none;
+.button--block {
+    display: block;
+    width: 100%;
 }
 
-.button--block {
+.button--menuitem {
     --button-padding: var(--space-small) var(--space-smaller);
+    --button-background-color: transparent;
 
     display: block;
     width: 100%;
 
+    font-weight: normal;
     text-align: left;
+
+    border: none;
 }

@@ -36,9 +36,10 @@
                             {% if not loop.first %}
                                 <button
                                     type="button"
-                                    class="button--ghost button--block"
+                                    class="button--menuitem"
                                     data-action="form-proposals#removeProposal"
                                 >
+                                    {{ icon('trash') }}
                                     {{ 'forms.poll_proposals_form.remove_proposal' | trans }}
                                 </button>
                             {% endif %}
@@ -52,9 +53,10 @@
 
                         <button
                             type="button"
-                            class="button--ghost button--block"
+                            class="button--menuitem"
                             data-action="form-proposals#removeProposal"
                         >
+                            {{ icon('trash') }}
                             {{ 'forms.poll_proposals_form.remove_proposal' | trans }}
                         </button>
                     </div>
@@ -62,6 +64,7 @@
 
                 <button
                     type="button"
+                    class="button--small button--block"
                     data-action="form-proposals#addProposal"
                 >
                     {{ 'forms.poll_proposals_form.add_proposal' | trans }}
