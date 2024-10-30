@@ -1,0 +1,25 @@
+<?php
+
+// This file is part of Pollaris.
+// Copyright 2024 Marien Fressinaud
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+namespace App\Tests\Helper;
+
+use App\Repository;
+use Zenstruck\Foundry;
+
+trait FactoryHelper
+{
+    /**
+     * @template T of object
+     *
+     * @param T $entity
+     */
+    public function refresh(object $entity): void
+    {
+        /** @var Repository\BaseRepository<T> */
+        $repository = Foundry\Persistence\repository($entity::class);
+        $repository->refresh($entity);
+    }
+}

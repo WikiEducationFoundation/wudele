@@ -54,4 +54,13 @@ abstract class BaseRepository extends ServiceEntityRepository
             $entityManager->flush();
         }
     }
+
+    /**
+     * @param T $entity
+     */
+    public function refresh(object $entity): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->refresh($entity);
+    }
 }
