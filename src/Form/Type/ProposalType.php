@@ -4,7 +4,7 @@
 // Copyright 2024 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Entity;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatableMessage;
 
-class ProposalForm extends AbstractType
+class ProposalType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

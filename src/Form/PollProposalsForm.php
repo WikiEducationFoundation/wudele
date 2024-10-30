@@ -7,6 +7,7 @@
 namespace App\Form;
 
 use App\Entity;
+use App\Form\Type as AppType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,10 +21,7 @@ class PollProposalsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('proposals', Type\CollectionType::class, [
-            'entry_type' => ProposalForm::class,
-            'entry_options' => [
-                'label' => false,
-            ],
+            'entry_type' => AppType\ProposalType::class,
             'label' => false,
             'allow_add' => true,
             'allow_delete' => true,
