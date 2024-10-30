@@ -13,24 +13,49 @@
         </a>
     </p>
 
+    {% set preferredChoices = poll.preferredChoices %}
+    {% if preferredChoices %}
+        {% set firstChoice = preferredChoices|first %}
+
+        <div class="flow">
+            <h2>
+                {{ 'polls.show.best_proposals.title' | trans(count: preferredChoices|length) }}
+                <span aria-hidden="true">⭐</span>
+            </h2>
+
+            <div class="panel panel--primary panel--rounded flow">
+                <p>
+                    {{ 'polls.show.best_proposals.info' | trans({
+                        countChoices: preferredChoices|length,
+                        countYes: firstChoice.countAnswers('yes'),
+                    }) }}
+
+                    {% if preferredChoices|length == 1 %}
+                        <strong>{{ firstChoice.label }}</strong>
+                    {% endif %}
+                </p>
+
+                {% if preferredChoices|length > 1 %}
+                    <ul>
+                        {% for choice in preferredChoices %}
+                            <li>
+                                <strong>{{ choice.label }}</strong>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
     <div class="flow">
         <h2>{{ 'polls.show.results' | trans }}</h2>
 
-        <div>
-            {% set bestProposals = poll.bestProposals %}
-
+        <div class="panel panel--primary panel--rounded">
             {% for proposal in poll.proposals %}
-                {% set isBestProposal = proposal in bestProposals %}
-
                 <details class="accordion">
                     <summary class="accordion__title flow">
-                        <h3 class="{{ isBestProposal ? 'text--bolder' }}">
-                            {{ proposal.label }}
-
-                            {% if proposal in bestProposals %}
-                                {{ 'polls.show.results.preferred' | trans }}
-                            {% endif %}
-                        </h3>
+                        <p class="text--bold">{{ proposal.label }}</p>
 
                         <ul class="list--nostyle cols cols--gap cols--always">
                             <li>

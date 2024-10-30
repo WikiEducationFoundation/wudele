@@ -24,6 +24,8 @@ home.title: 'Organise events or gather opinions from friends and family, simply 
 polls.author.title: 'Who you are'
 polls.new.title: 'Poll creation'
 polls.proposals.title: 'Choose the proposals'
+polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with {countYes} “yes” is:} other {The preferred choices with {countYes} “yes” are:} }'
+polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
 polls.show.created: 'Created by {by}, on {at}'
 polls.show.go_to_vote: 'Take part in the poll'
 polls.show.results: Results
@@ -31,7 +33,6 @@ polls.show.results.answer: '{name}: {answer}'
 polls.show.results.answer.none: 'No one has replied to the poll yet.'
 polls.show.results.maybe: "{count}\_Maybe"
 polls.show.results.no: "{count}\_No"
-polls.show.results.preferred: '(⭐ preferred)'
 polls.show.results.yes: "{count}\_Yes"
 polls.steps: 'Step {step} on {total}'
 votes.new.cancel: Cancel

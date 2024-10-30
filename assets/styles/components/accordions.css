@@ -3,12 +3,8 @@
 /* Copyright 2024 Marien Fressinaud */
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
-.accordion {
+.accordion:not(:last-child) {
     border-bottom: 2px solid var(--color-grey6);
-}
-
-.accordion:first-child {
-    border-top: 2px solid var(--color-grey6);
 }
 
 .accordion__title {

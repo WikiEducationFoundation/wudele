@@ -180,10 +180,10 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     /**
      * @return Proposal[]
      */
-    public function getBestProposals(): array
+    public function getPreferredChoices(): array
     {
         $maxYes = 0;
-        $bestProposals = [];
+        $preferredChoices = [];
 
         foreach ($this->proposals as $proposal) {
             $countYes = $proposal->countAnswers('yes');
@@ -194,13 +194,13 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
 
             if ($countYes > $maxYes) {
                 $maxYes = $countYes;
-                $bestProposals = [$proposal];
+                $preferredChoices = [$proposal];
             } elseif ($countYes === $maxYes) {
-                $bestProposals[] = $proposal;
+                $preferredChoices[] = $proposal;
             }
         }
 
-        return $bestProposals;
+        return $preferredChoices;
     }
 
     public function addProposal(Proposal $proposal): static

@@ -24,6 +24,8 @@ home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, s
 polls.author.title: 'Votre identité'
 polls.new.title: 'Création de sondage'
 polls.proposals.title: 'Choisissez les propositions'
+polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec {countYes} «\_oui\_» est\_:} other {Les choix préférés avec {countYes} «\_oui\_» sont\_:} }"
+polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
 polls.show.created: 'Créé par {by}, le {at}'
 polls.show.go_to_vote: 'Participer au sondage'
 polls.show.results: Résultats
@@ -31,7 +33,6 @@ polls.show.results.answer: "{name}\_: {answer}"
 polls.show.results.answer.none: 'Personne n’a encore répondu au sondage.'
 polls.show.results.maybe: "{count}\_Peut-être"
 polls.show.results.no: "{count}\_Non"
-polls.show.results.preferred: '(⭐ préféré)'
 polls.show.results.yes: "{count}\_Oui"
 polls.steps: 'Étape {step} sur {total}'
 votes.new.cancel: Annuler
