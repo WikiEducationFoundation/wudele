@@ -23,6 +23,10 @@ class VotesController extends BaseController
         Request $request,
         Repository\VoteRepository $voteRepository,
     ): Response {
+        if (!$poll->isCreated()) {
+            throw $this->createNotFoundException('The poll doesn’t exist (yet).');
+        }
+
         $vote = new Entity\Vote();
         $vote->setPoll($poll);
         $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
