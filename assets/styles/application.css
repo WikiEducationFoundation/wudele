@@ -22,6 +22,8 @@
 @import "./components/forms/texts.css";
 @import "./components/icons.css";
 @import "./components/lists.css";
+@import "./components/loaders.css";
+@import "./components/modal.css";
 @import "./components/panels.css";
 @import "./layout/body.css";
 @import "./layout/header.css";
