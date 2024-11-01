@@ -61,8 +61,12 @@ button:hover,
 .button--ghost {
     --button-padding: var(--space-small) var(--space-smaller);
     --button-background-color: transparent;
+    --button-border-color: transparent;
+}
 
-    border: none;
+.button--ghost:hover {
+    --button-background-color: transparent;
+    --button-border-color: var(--color-primary6);
 }
 
 .button--menuitem {
