@@ -58,6 +58,16 @@
                             {% endfor %}
                         </div>
 
+                        <button
+                            type="button"
+                            class="button--menuitem"
+                            data-action="collection#addElement"
+                        >
+                            {{ icon('circle-plus') }}
+
+                            {{ 'forms.poll_slots_form.add_slot' | trans }}
+                        </button>
+
                         <template data-collection-target="prototype">
                             <div class="flow flow--small" data-item="element">
                                 {{ form_label(date.proposals.vars.prototype.label) }}
@@ -81,16 +91,6 @@
                                 </div>
                             </div>
                         </template>
-
-                        <button
-                            type="button"
-                            class="button--menuitem"
-                            data-action="collection#addElement"
-                        >
-                            {{ icon('circle-plus') }}
-
-                            {{ 'forms.poll_slots_form.add_slot' | trans }}
-                        </button>
                     </div>
                 </fieldset>
             {% endfor %}
