@@ -4,6 +4,8 @@
 
 import { Controller } from '@hotwired/stimulus';
 
+import { FOCUSABLE_ELEMENTS } from '../query_selectors.js';
+
 export default class extends Controller {
     static targets = ['container', 'prototype']
 
@@ -25,6 +27,11 @@ export default class extends Controller {
         this.indexValue++;
 
         this.refreshLabels();
+
+        const focusableElements = Array.from(element.querySelectorAll(FOCUSABLE_ELEMENTS));
+        if (focusableElements.length >= 1) {
+            focusableElements[0].focus();
+        }
     }
 
     removeElement (event) {
