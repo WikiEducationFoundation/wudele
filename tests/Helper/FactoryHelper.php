@@ -18,8 +18,9 @@ trait FactoryHelper
      */
     public function refresh(object $entity): void
     {
-        /** @var Repository\BaseRepository<T> */
-        $repository = Foundry\Persistence\repository($entity::class);
+        $repositoryDecorator = Foundry\Persistence\repository($entity::class);
+        /** @var Repository\BaseRepository */
+        $repository = $repositoryDecorator->inner();
         $repository->refresh($entity);
     }
 }
