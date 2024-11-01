@@ -2,6 +2,8 @@ answers.value.maybe: Maybe
 answers.value.no: 'No'
 answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
+forms.apply: Apply
+forms.cancel: Cancel
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
@@ -49,6 +51,8 @@ polls.show.results.answer.none: 'No one has replied to the poll yet.'
 polls.show.results.maybe: "{count}\_Maybe"
 polls.show.results.no: "{count}\_No"
 polls.show.results.yes: "{count}\_Yes"
+polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
+polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'
 polls.steps: 'Step {step} on {total}'
 votes.new.cancel: Cancel

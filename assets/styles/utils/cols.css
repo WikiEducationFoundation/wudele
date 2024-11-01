@@ -26,6 +26,10 @@
     justify-content: center;
 }
 
+.cols--always.cols--hend {
+    justify-content: end;
+}
+
 @media (min-width: 800px) {
     .cols--center {
         align-items: center;
@@ -37,6 +41,10 @@
 
     .cols--hcenter {
         justify-content: center;
+    }
+
+    .cols--hend {
+        justify-content: end;
     }
 }
 

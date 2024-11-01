@@ -2,6 +2,8 @@ answers.value.maybe: Peut-être
 answers.value.no: Non
 answers.value.yes: Oui
 base.default_title: "Bienvenue sur Pollaris\_!"
+forms.apply: Appliquer
+forms.cancel: Annuler
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
@@ -49,6 +51,8 @@ polls.show.results.answer.none: 'Personne n’a encore répondu au sondage.'
 polls.show.results.maybe: "{count}\_Peut-être"
 polls.show.results.no: "{count}\_Non"
 polls.show.results.yes: "{count}\_Oui"
+polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
+polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
 votes.new.cancel: Annuler
