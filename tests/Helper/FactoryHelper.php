@@ -19,7 +19,7 @@ trait FactoryHelper
     public function refresh(object $entity): void
     {
         $repositoryDecorator = Foundry\Persistence\repository($entity::class);
-        /** @var Repository\BaseRepository */
+        /** @var Repository\BaseRepository<T> */
         $repository = $repositoryDecorator->inner();
         $repository->refresh($entity);
     }
