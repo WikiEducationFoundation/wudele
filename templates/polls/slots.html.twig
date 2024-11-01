@@ -28,7 +28,7 @@
                     <legend>{{ date.vars.data.value | dateTrans('EEEE d MMMM yyyy') }}</legend>
 
                     <div
-                        class="flow"
+                        class="flow flow--ignore-empty"
                         data-controller="collection"
                         data-collection-index-value="{{ date.proposals|length > 0 ? date.proposals|last.vars.name + 1 : 0 }}"
                     >
@@ -42,19 +42,17 @@
                                     <div class="cols cols--always cols--gap">
                                         {{ form_widget(proposal.label) }}
 
-                                        {% if not loop.first %}
-                                            <button
-                                                type="button"
-                                                class="button--ghost"
-                                                data-action="collection#removeElement"
-                                            >
-                                                {{ icon('trash') }}
+                                        <button
+                                            type="button"
+                                            class="button--ghost"
+                                            data-action="collection#removeElement"
+                                        >
+                                            {{ icon('trash') }}
 
-                                                <span class="sr-only">
-                                                    {{ 'forms.poll_slots_form.remove_slot' | trans }}
-                                                </span>
-                                            </button>
-                                        {% endif %}
+                                            <span class="sr-only">
+                                                {{ 'forms.poll_slots_form.remove_slot' | trans }}
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             {% endfor %}

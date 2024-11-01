@@ -33,9 +33,10 @@ class SlotsForm extends AbstractType
             'by_reference' => false,
         ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
             $form = $event->getForm();
             $date = $event->getData();
+            $poll = $date->getPoll();
 
             if (count($date->getProposals()) === 0) {
                 $proposal = new Entity\Proposal();
@@ -43,12 +44,6 @@ class SlotsForm extends AbstractType
                 $proposal->setLabel($label);
                 $date->addProposal($proposal);
             }
-        });
-
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
-            $form = $event->getForm();
-            $date = $event->getData();
-            $poll = $date->getPoll();
 
             foreach ($date->getProposals() as $proposal) {
                 $proposal->setPoll($poll);

@@ -407,6 +407,33 @@ class PollsControllerTest extends WebTestCase
         $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
     }
 
+    public function testPostSlotsCreatesADefaultProposalIfNoneArePosted(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+        $date = Factory\DateFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", [
+            'poll_slots' => [
+                '_token' => $this->getCsrf($client, 'poll_slots'),
+                'dates' => [
+                    [
+                        'proposals' => [],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->refresh($poll);
+        $proposals = $poll->getProposals()->toArray();
+        $this->assertSame(1, count($proposals));
+        $this->assertSame('Day', $proposals[0]->getLabel());
+        $this->assertSame($date, $proposals[0]->getDate());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+    }
+
     public function testPostSlotsFailsIfCsrfTokenIsInvalid(): void
     {
         $client = static::createClient();

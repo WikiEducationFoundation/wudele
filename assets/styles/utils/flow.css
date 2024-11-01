@@ -22,6 +22,10 @@
     --flow-size: var(--space-larger);
 }
 
-.flow > * + * {
+.flow:not(.flow--ignore-empty) > * + * {
+    margin-top: var(--flow-size);
+}
+
+.flow--ignore-empty > *:has(*) + * {
     margin-top: var(--flow-size);
 }
