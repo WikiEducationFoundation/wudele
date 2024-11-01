@@ -22,6 +22,9 @@ class PollProposalsForm extends AbstractType
     {
         $builder->add('proposals', Type\CollectionType::class, [
             'entry_type' => AppType\ProposalType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
             'label' => false,
             'allow_add' => true,
             'allow_delete' => true,
