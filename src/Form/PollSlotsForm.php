@@ -35,7 +35,7 @@ class PollSlotsForm extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => [
-                'class' => 'form--standard',
+                'class' => 'form--standard flow flow--larger',
             ],
             'data_class' => Entity\Poll::class,
             'cascade_validation' => true,
