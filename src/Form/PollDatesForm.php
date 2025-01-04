@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PollDatesForm extends AbstractType
 {
@@ -28,6 +29,12 @@ class PollDatesForm extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
+            'constraints' => [
+                new Assert\Count(
+                    min: 1,
+                    minMessage: new TranslatableMessage('poll.dates.required', domain: 'validators'),
+                ),
+            ],
         ]);
 
         $builder->add('submit', Type\SubmitType::class, [
