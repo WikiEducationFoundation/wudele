@@ -38,6 +38,10 @@
     font-size: var(--font-size-bigger);
 }
 
+.text--primary {
+    color: var(--color-primary12);
+}
+
 .text--secondary {
     color: var(--color-grey11);
 }
