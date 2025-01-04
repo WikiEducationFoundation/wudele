@@ -2,6 +2,8 @@ answers.value.maybe: Peut-être
 answers.value.no: Non
 answers.value.yes: Oui
 base.default_title: "Bienvenue sur Pollaris\_!"
+calendar.patterns.next_month: 'Mois suivant (__date__)'
+calendar.patterns.previous_month: 'Mois précédent (__date__)'
 forms.apply: Appliquer
 forms.cancel: Annuler
 forms.date_type.label.label_pattern: 'Date __number__'
@@ -13,8 +15,10 @@ forms.poll_author_form.author_email.label: 'Votre adresse email'
 forms.poll_author_form.author_name.label: 'Votre pseudonyme'
 forms.poll_author_form.submit.label: 'Valider votre identité'
 forms.poll_dates_form.add_date: 'Ajouter une date'
+forms.poll_dates_form.enter_manually: 'Saisir les dates manuellement'
 forms.poll_dates_form.remove_date: 'Retirer la date'
 forms.poll_dates_form.submit.label: 'Valider les dates'
+forms.poll_dates_form.use_calendar: 'Sélectionner les dates depuis un calendrier'
 forms.poll_form.description.label: Description
 forms.poll_form.submit.label: 'Créer le sondage'
 forms.poll_form.title.label: 'Nom de votre sondage'

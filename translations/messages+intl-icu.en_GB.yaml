@@ -2,6 +2,8 @@ answers.value.maybe: Maybe
 answers.value.no: 'No'
 answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
+calendar.patterns.next_month: 'Next month (__date__)'
+calendar.patterns.previous_month: 'Previous month (__date__)'
 forms.apply: Apply
 forms.cancel: Cancel
 forms.date_type.label.label_pattern: 'Date __number__'
@@ -13,8 +15,10 @@ forms.poll_author_form.author_email.label: 'Your email address'
 forms.poll_author_form.author_name.label: 'Your nickname'
 forms.poll_author_form.submit.label: 'Submit your identity'
 forms.poll_dates_form.add_date: 'Add a date'
+forms.poll_dates_form.enter_manually: 'Enter the dates manually'
 forms.poll_dates_form.remove_date: 'Remove the date'
 forms.poll_dates_form.submit.label: 'Submit the dates'
+forms.poll_dates_form.use_calendar: 'Select the dates from a calendar'
 forms.poll_form.description.label: Description
 forms.poll_form.submit.label: 'Create the poll'
 forms.poll_form.title.label: 'Name of your poll'

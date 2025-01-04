@@ -20,6 +20,9 @@ class DateForm extends AbstractType
         $builder->add('value', Type\DateType::class, [
             'input' => 'datetime_immutable',
             'label' => new TranslatableMessage('forms.date_type.label.label_pattern'),
+            'attr' => [
+                'data-calendar-target' => 'source',
+            ],
         ]);
     }
 
