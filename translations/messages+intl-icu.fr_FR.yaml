@@ -11,6 +11,7 @@ forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
 forms.labels.optional: (facultatif)
 forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
+forms.poll_author_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
 forms.poll_author_form.author_email.label: 'Votre adresse email'
 forms.poll_author_form.author_name.label: 'Votre pseudonyme'
 forms.poll_author_form.submit.label: 'Valider votre identité'

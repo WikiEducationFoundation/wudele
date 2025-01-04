@@ -31,6 +31,7 @@ class PollAuthorForm extends AbstractType
             'trim' => true,
             'empty_data' => '',
             'label' => new TranslatableMessage('forms.poll_author_form.author_email.label'),
+            'help' => new TranslatableMessage('forms.poll_author_form.author_email.help'),
         ]);
 
         $builder->add('submit', Type\SubmitType::class, [

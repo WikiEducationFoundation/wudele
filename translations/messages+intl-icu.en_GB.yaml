@@ -11,6 +11,7 @@ forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
+forms.poll_author_form.author_email.help: 'Your address will not be shared with other poll participants. It will only be used to enable you to find your poll if you lose its address and to notify you when new votes are made.'
 forms.poll_author_form.author_email.label: 'Your email address'
 forms.poll_author_form.author_name.label: 'Your nickname'
 forms.poll_author_form.submit.label: 'Submit your identity'
