@@ -2,7 +2,7 @@
 
 // This file is part of Pollaris.
 // Copyright 2022-2024 Probesys (Bileto)
-// Copyright 2024 Marien Fressinaud
+// Copyright 2024-2025 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 namespace App\Utils;
