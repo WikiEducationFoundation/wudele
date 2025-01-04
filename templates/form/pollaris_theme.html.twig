@@ -24,10 +24,30 @@
     {{- parent() -}}
 {%- endblock submit_widget %}
 
+{% block form_help -%}
+    {%- if help is not empty -%}
+        {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' text--secondary text--small')|trim}) -%}
+        <p id="{{ field_id(id, 'help') }}"{% with { attr: help_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{- block('form_help_content') -}}
+        </p>
+    {%- endif -%}
+{%- endblock form_help %}
+
 {%- block form_row -%}
     {%- set row_class = row_class|default(row_attr.class|default('flow flow--small')|trim) -%}
     {%- set row_attr = row_attr|merge({class: row_class}) -%}
-    {{- parent() -}}
+
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': field_id(id, 'help')}} -%}
+    {%- endif -%}
+
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_label(form) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+    </div>
 {%- endblock form_row %}
 
 {%- block button_row -%}
