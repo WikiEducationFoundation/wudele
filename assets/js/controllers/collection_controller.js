@@ -34,11 +34,71 @@ export default class extends Controller {
         }
     }
 
+    addValue (value) {
+        const elements = Array.from(this.containerTarget.querySelectorAll('[data-item="element"]'));
+
+        let element = elements.find((element) => {
+            const input = element.querySelector('input');
+
+            if (!input) {
+                return false;
+            }
+
+            return input.value === '';
+        });
+
+        if (!element) {
+            this.addElement();
+
+            element = this.containerTarget.lastChild;
+        }
+
+        if (!element) {
+            return;
+        }
+
+        const input = element.querySelector('input');
+
+        if (!input) {
+            return;
+        }
+
+        input.value = value;
+    }
+
+    ensureAtLeastOneElement () {
+        const elements = this.containerTarget.querySelectorAll('[data-item="element"]');
+
+        if (elements.length === 0) {
+            this.addElement();
+        }
+    }
+
     removeElement (event) {
         const target = event.target;
         const element = target.closest('[data-item="element"]');
 
         element.remove();
+
+        this.refreshLabels();
+    }
+
+    removeByValue (value) {
+        const elements = this.containerTarget.querySelectorAll('[data-item="element"]');
+
+        elements.forEach((element) => {
+            const input = element.querySelector('input');
+
+            if (!input) {
+                return;
+            }
+
+            if (input.value !== value) {
+                return;
+            }
+
+            element.remove();
+        });
 
         this.refreshLabels();
     }
