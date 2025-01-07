@@ -8,6 +8,7 @@ namespace App\Controller;
 
 use App\Entity;
 use App\Form;
+use App\Process;
 use App\Repository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class PollsController extends BaseController
     public function new(
         Request $request,
         Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
     ): Response {
         $type = $request->query->getString('type');
 
@@ -35,6 +37,8 @@ class PollsController extends BaseController
         $poll = new Entity\Poll();
         $poll->setType($type);
 
+        $process = $pollProcessBuilder->build($poll);
+
         $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
 
         $form->handleRequest($request);
@@ -43,30 +47,24 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            if ($poll->isClassicPoll()) {
-                return $this->redirectToRoute('edit poll proposals', [
-                    'id' => $poll->getId(),
-                    'token' => $poll->getAdminToken(),
-                ]);
-            } else {
-                return $this->redirectToRoute('edit poll dates', [
-                    'id' => $poll->getId(),
-                    'token' => $poll->getAdminToken(),
-                ]);
-            }
+            return $this->redirect($process->getNextStepUrl('init'));
         }
 
         return $this->render('polls/new.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'currentStep' => 1,
+            'process' => $process,
         ]);
     }
 
     #[Route('/polls/{id:poll}', name: 'poll')]
-    public function show(Entity\Poll $poll): Response
-    {
-        if (!$poll->isCreated()) {
+    public function show(
+        Entity\Poll $poll,
+        Process\PollProcessBuilder $pollProcessBuilder,
+    ): Response {
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('end')) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
@@ -81,16 +79,20 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        if ($poll->isDatePoll()) {
-            return $this->redirectToRoute('edit poll slots', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+        if (!$poll->isClassicPoll()) {
+            throw $this->createNotFoundException('The poll must be of type classic');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('proposals')) {
+            return $this->redirect($process->getPreviousStepUrl('proposals'));
         }
 
         $form = $this->createNamedForm('poll_proposals', Form\PollProposalsForm::class, $poll);
@@ -101,16 +103,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirectToRoute('edit poll author', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+            return $this->redirect($process->getNextStepUrl('proposals'));
         }
 
         return $this->render('polls/proposals.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'currentStep' => 2,
+            'process' => $process,
         ]);
     }
 
@@ -120,16 +119,20 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        if ($poll->isClassicPoll()) {
-            return $this->redirectToRoute('edit poll proposals', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+        if (!$poll->isDatePoll()) {
+            throw $this->createNotFoundException('The poll must be of type date');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('dates')) {
+            return $this->redirect($process->getPreviousStepUrl('dates'));
         }
 
         $form = $this->createNamedForm('poll_dates', Form\PollDatesForm::class, $poll);
@@ -140,16 +143,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirectToRoute('edit poll slots', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+            return $this->redirect($process->getNextStepUrl('dates'));
         }
 
         return $this->render('polls/dates.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'currentStep' => 2,
+            'process' => $process,
         ]);
     }
 
@@ -159,23 +159,20 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        if ($poll->isClassicPoll()) {
-            return $this->redirectToRoute('edit poll proposals', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+        if (!$poll->isDatePoll()) {
+            throw $this->createNotFoundException('The poll must be of type date');
         }
 
-        if (count($poll->getDates()) === 0) {
-            return $this->redirectToRoute('edit poll dates', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('slots')) {
+            return $this->redirect($process->getPreviousStepUrl('slots'));
         }
 
         $form = $this->createNamedForm('poll_slots', Form\PollSlotsForm::class, $poll);
@@ -186,16 +183,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirectToRoute('edit poll author', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+            return $this->redirect($process->getNextStepUrl('slots'));
         }
 
         return $this->render('polls/slots.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'currentStep' => 3,
+            'process' => $process,
         ]);
     }
 
@@ -205,16 +199,16 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        if (count($poll->getProposals()) === 0) {
-            return $this->redirectToRoute('edit poll proposals', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('author')) {
+            return $this->redirect($process->getPreviousStepUrl('author'));
         }
 
         $form = $this->createNamedForm('poll_author', Form\PollAuthorForm::class, $poll);
@@ -225,15 +219,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirectToRoute('poll', [
-                'id' => $poll->getId(),
-            ]);
+            return $this->redirect($process->getNextStepUrl('author'));
         }
 
         return $this->render('polls/author.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'currentStep' => $poll->getTotalSteps(),
+            'process' => $process,
         ]);
     }
 }

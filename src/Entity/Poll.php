@@ -180,6 +180,11 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
+    public function isTitleSet(): bool
+    {
+        return $this->title !== null && $this->title !== '';
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -214,6 +219,11 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->authorEmail = $authorEmail;
 
         return $this;
+    }
+
+    public function isAuthorSet(): bool
+    {
+        return $this->authorName !== null && $this->authorName !== '';
     }
 
     /**
@@ -311,14 +321,6 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->adminToken = Utils\Random::hex(20);
     }
 
-    public function isCreated(): bool
-    {
-        return (
-            count($this->proposals) > 0 &&
-            !empty($this->authorName)
-        );
-    }
-
     /**
      * @return Collections\Collection<int, Vote>
      */
@@ -346,10 +348,5 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         }
 
         return $this;
-    }
-
-    public function getTotalSteps(): int
-    {
-        return $this->type === 'classic' ? 3 : 4;
     }
 }

@@ -160,14 +160,15 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Choose the proposals');
     }
 
-    public function testGetProposalsRedirectIfTypeIsDate(): void
+    public function testGetProposalsFailsIfTypeIsDate(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new()->date()->create();
 
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals");
+        $this->expectException(NotFoundHttpException::class);
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", 302);
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals");
     }
 
     public function testGetProposalsFailsIfAdminTokenDoesNotMatch(): void
@@ -267,14 +268,15 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Choose the dates');
     }
 
-    public function testGetDatesRedirectsIfTypeIsClassic(): void
+    public function testGetDatesFailsIfTypeIsClassic(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new()->classic()->create();
 
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates");
+        $this->expectException(NotFoundHttpException::class);
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates");
     }
 
     public function testGetDatesFailsIfAdminTokenDoesNotMatch(): void
@@ -342,14 +344,15 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Choose the time slots');
     }
 
-    public function testGetSlotsRedirectsIfTypeIsClassic(): void
+    public function testGetSlotsFailsIfTypeIsClassic(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new()->classic()->create();
 
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots");
+        $this->expectException(NotFoundHttpException::class);
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots");
     }
 
     public function testGetSlotsRedirectsIfThereAreNoDates(): void
