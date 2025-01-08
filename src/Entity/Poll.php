@@ -38,6 +38,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $completedAt = null;
+
     #[ORM\Column(length: 20)]
     private ?string $adminToken = null;
 
@@ -142,6 +145,23 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->completedAt !== null;
+    }
+
+    public function getCompletedAt(): ?\DateTimeImmutable
+    {
+        return $this->completedAt;
+    }
+
+    public function setCompletedAt(?\DateTimeImmutable $completedAt): static
+    {
+        $this->completedAt = $completedAt;
 
         return $this;
     }

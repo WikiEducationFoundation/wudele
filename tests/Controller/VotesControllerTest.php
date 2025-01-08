@@ -25,7 +25,7 @@ class VotesControllerTest extends WebTestCase
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
-        ])->created()->create();
+        ])->completed()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/new");
 
@@ -33,11 +33,11 @@ class VotesControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'My poll');
     }
 
-    public function testGetNewFailsIfPollIsNotCreated(): void
+    public function testGetNewFailsIfPollIsNotCompleted(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::createOne([
-            'title' => 'My poll',
+            'completedAt' => null,
         ]);
 
         $this->expectException(NotFoundHttpException::class);
@@ -49,7 +49,7 @@ class VotesControllerTest extends WebTestCase
     public function testPostNewCreatesAVote(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->created()->create();
+        $poll = Factory\PollFactory::new()->completed()->create();
         $proposal = $poll->getProposals()->first();
         $name = 'Alix';
 
@@ -78,7 +78,7 @@ class VotesControllerTest extends WebTestCase
     public function testPostNewFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->created()->create();
+        $poll = Factory\PollFactory::new()->completed()->create();
         $proposal = $poll->getProposals()->first();
         $name = 'Alix';
 
@@ -101,7 +101,7 @@ class VotesControllerTest extends WebTestCase
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
-        ])->created()->create();
+        ])->completed()->create();
         $vote = Factory\VoteFactory::createOne([
             'poll' => $poll,
         ]);
@@ -115,8 +115,8 @@ class VotesControllerTest extends WebTestCase
     public function testGetShowFailsIfPollIdDoesNotMatch(): void
     {
         $client = static::createClient();
-        $poll1 = Factory\PollFactory::new()->created()->create();
-        $poll2 = Factory\PollFactory::new()->created()->create();
+        $poll1 = Factory\PollFactory::new()->completed()->create();
+        $poll2 = Factory\PollFactory::new()->completed()->create();
         $vote = Factory\VoteFactory::createOne([
             'poll' => $poll1,
         ]);
@@ -132,7 +132,7 @@ class VotesControllerTest extends WebTestCase
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
-        ])->created()->create();
+        ])->completed()->create();
         $vote = Factory\VoteFactory::createOne([
             'poll' => $poll,
         ]);
@@ -146,8 +146,8 @@ class VotesControllerTest extends WebTestCase
     public function testGetEditFailsIfPollIdDoesNotMatch(): void
     {
         $client = static::createClient();
-        $poll1 = Factory\PollFactory::new()->created()->create();
-        $poll2 = Factory\PollFactory::new()->created()->create();
+        $poll1 = Factory\PollFactory::new()->completed()->create();
+        $poll2 = Factory\PollFactory::new()->completed()->create();
         $vote = Factory\VoteFactory::createOne([
             'poll' => $poll1,
         ]);
@@ -161,7 +161,7 @@ class VotesControllerTest extends WebTestCase
     public function testPostEditChangesTheVoteValues(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->created()->create();
+        $poll = Factory\PollFactory::new()->completed()->create();
         $proposal = $poll->getProposals()->first();
         $oldName = 'Alix';
         $newName = 'Benedict';
@@ -196,7 +196,7 @@ class VotesControllerTest extends WebTestCase
     public function testPostEditFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->created()->create();
+        $poll = Factory\PollFactory::new()->completed()->create();
         $proposal = $poll->getProposals()->first();
         $oldName = 'Alix';
         $newName = 'Benedict';

@@ -110,7 +110,7 @@ class PollsControllerTest extends WebTestCase
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
-        ])->created()->create();
+        ])->completed()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}");
 
@@ -118,29 +118,11 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'My poll');
     }
 
-    public function testGetShowFailsIfAuthorNameIsEmpty(): void
+    public function testGetShowFailsIfPollIsNotComplete(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::createOne([
-            'title' => 'My poll',
-            'authorName' => '',
-        ]);
-        $proposal = Factory\ProposalFactory::createOne([
-            'poll' => $poll,
-        ]);
-
-        $this->expectException(NotFoundHttpException::class);
-
-        $client->catchExceptions(false);
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}");
-    }
-
-    public function testGetShowFailsIfProposalsAreEmpty(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::createOne([
-            'title' => 'My poll',
-            'authorName' => 'Alix',
+            'completedAt' => null,
         ]);
 
         $this->expectException(NotFoundHttpException::class);
@@ -523,6 +505,7 @@ class PollsControllerTest extends WebTestCase
         $this->refresh($poll);
         $this->assertSame($name, $poll->getAuthorName());
         $this->assertSame($email, $poll->getAuthorEmail());
+        $this->assertTrue($poll->isCompleted());
     }
 
     public function testPostAuthorFailsIfCsrfIsInvalid(): void

@@ -7,6 +7,7 @@
 namespace App\Tests\Factory;
 
 use App\Entity;
+use App\Utils;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -45,12 +46,13 @@ final class PollFactory extends PersistentObjectFactory
         return $this->with(['type' => 'date']);
     }
 
-    public function created(): self
+    public function completed(): self
     {
         return $this
             ->withProposal()
             ->with([
                 'authorName' => self::faker()->name(),
+                'completedAt' => Utils\Time::now(),
             ]);
     }
 

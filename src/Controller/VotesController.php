@@ -23,7 +23,7 @@ class VotesController extends BaseController
         Request $request,
         Repository\VoteRepository $voteRepository,
     ): Response {
-        if (!$poll->isCreated()) {
+        if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 

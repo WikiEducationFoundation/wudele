@@ -10,6 +10,7 @@ use App\Entity;
 use App\Form;
 use App\Process;
 use App\Repository;
+use App\Utils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,13 +59,9 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}', name: 'poll')]
-    public function show(
-        Entity\Poll $poll,
-        Process\PollProcessBuilder $pollProcessBuilder,
-    ): Response {
-        $process = $pollProcessBuilder->build($poll);
-
-        if (!$process->isAccessible('end')) {
+    public function show(Entity\Poll $poll): Response
+    {
+        if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
@@ -216,6 +213,8 @@ class PollsController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
+
+            $poll->setCompletedAt(Utils\Time::now());
 
             $pollRepository->save($poll);
 
