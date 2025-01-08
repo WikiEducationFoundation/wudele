@@ -122,6 +122,16 @@
                     </button>
                 </div>
             </div>
+
+            <div class="cols cols--always cols--gap">
+                <a class="button" href="{{ process.previousStepUrl('dates') }}">
+                    {{ 'forms.previous' | trans }}
+                </a>
+
+                <div class="col--extend"></div>
+
+                {{ form_row(form.submit) }}
+            </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

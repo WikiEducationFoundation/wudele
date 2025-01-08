@@ -50,12 +50,6 @@
     </div>
 {%- endblock form_row %}
 
-{%- block button_row -%}
-    <div{% with {attr: row_attr|merge({class: row_attr.class|default('text--right')|trim})} %}{{ block('attributes') }}{% endwith %}>
-        {{- form_widget(form) -}}
-    </div>
-{%- endblock button_row %}
-
 {%- block form_errors -%}
     {%- if errors|length == 1 -%}
         <p class="form__error" role="alert" id="{{ id ~ '_error' }}">

@@ -20,6 +20,21 @@
             </p>
         </div>
 
-        {{ form(form) }}
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.authorName) }}
+            {{ form_row(form.authorEmail) }}
+
+            <div class="cols cols--always cols--gap">
+                <a class="button" href="{{ process.previousStepUrl('author') }}">
+                    {{ 'forms.previous' | trans }}
+                </a>
+
+                <div class="col--extend"></div>
+
+                {{ form_row(form.submit) }}
+            </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

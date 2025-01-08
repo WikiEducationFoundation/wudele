@@ -25,6 +25,7 @@ forms.poll_proposals_form.add_proposal: 'Add a proposal'
 forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
 forms.poll_slots_form.add_slot: 'Add a time slot'
 forms.poll_slots_form.remove_slot: 'Remove the time slot'
+forms.previous: Previous
 forms.proposal_type.label.label_pattern: 'Proposal __number__'
 forms.slot_type.label.label_pattern: 'Time slot __number__'
 forms.slots_form.day: Day

@@ -20,6 +20,15 @@
             </p>
         </div>
 
-        {{ form(form) }}
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+
+            <div class="text--right">
+                {{ form_row(form.submit) }}
+            </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

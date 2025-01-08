@@ -105,6 +105,16 @@
                     </div>
                 </fieldset>
             {% endfor %}
+
+            <div class="cols cols--always cols--gap">
+                <a class="button" href="{{ process.previousStepUrl('slots') }}">
+                    {{ 'forms.previous' | trans }}
+                </a>
+
+                <div class="col--extend"></div>
+
+                {{ form_row(form.submit) }}
+            </div>
         {{ form_end(form) }}
 
         {{ include('polls/_slots_applier_modal.html.twig') }}

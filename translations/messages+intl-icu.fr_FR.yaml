@@ -25,6 +25,7 @@ forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
+forms.previous: Précédent
 forms.proposal_type.label.label_pattern: 'Proposition __number__'
 forms.slot_type.label.label_pattern: 'Horaire __number__'
 forms.slots_form.day: Journée
