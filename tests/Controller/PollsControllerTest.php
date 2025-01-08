@@ -131,6 +131,80 @@ class PollsControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}");
     }
 
+    public function testGetEditRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::createOne();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/edit");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Poll creation');
+    }
+
+    public function testGetEditFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::createOne();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/edit");
+    }
+
+    public function testPostEditChangesTheTitleAndDescription(): void
+    {
+        $client = static::createClient();
+        $oldTitle = 'The poll';
+        $newTitle = 'My poll';
+        $oldDescription = 'Outdated description';
+        $newDescription = 'The new description';
+        $poll = Factory\PollFactory::new()->classic()->create([
+            'title' => $oldTitle,
+            'description' => $oldDescription,
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/edit", [
+            'poll' => [
+                '_token' => $this->getCsrf($client, 'poll'),
+                'title' => $newTitle,
+                'description' => $newDescription,
+            ],
+        ]);
+
+        $this->refresh($poll);
+        $this->assertSame($newTitle, $poll->getTitle());
+        $this->assertSame($newDescription, $poll->getDescription());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+    }
+
+    public function testPostEditFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $oldTitle = 'The poll';
+        $newTitle = 'My poll';
+        $oldDescription = 'Outdated description';
+        $newDescription = 'The new description';
+        $poll = Factory\PollFactory::new()->classic()->create([
+            'title' => $oldTitle,
+            'description' => $oldDescription,
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/edit", [
+            'poll' => [
+                '_token' => 'not the token',
+                'title' => $newTitle,
+                'description' => $newDescription,
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#poll_error', 'The CSRF token is invalid');
+        $this->refresh($poll);
+        $this->assertSame($oldTitle, $poll->getTitle());
+        $this->assertSame($oldDescription, $poll->getDescription());
+    }
+
     public function testGetProposalsRendersCorrectly(): void
     {
         $client = static::createClient();

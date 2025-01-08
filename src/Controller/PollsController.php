@@ -70,6 +70,38 @@ class PollsController extends BaseController
         ]);
     }
 
+    #[Route('/polls/{id:poll}/{token}/edit', name: 'edit poll')]
+    public function edit(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $poll = $form->getData();
+
+            $pollRepository->save($poll);
+
+            return $this->redirect($process->getNextStepUrl('init'));
+        }
+
+        return $this->render('polls/new.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+            'process' => $process,
+        ]);
+    }
+
     #[Route('/polls/{id:poll}/{token}/proposals', name: 'edit poll proposals')]
     public function proposals(
         Entity\Poll $poll,
