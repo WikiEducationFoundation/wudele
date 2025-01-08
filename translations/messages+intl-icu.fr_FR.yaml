@@ -11,24 +11,20 @@ forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
 forms.labels.optional: (facultatif)
 forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
+forms.next: Suivant
 forms.poll_author_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
 forms.poll_author_form.author_email.label: 'Votre adresse email'
 forms.poll_author_form.author_name.label: 'Votre pseudonyme'
-forms.poll_author_form.submit.label: 'Valider votre identité'
 forms.poll_dates_form.add_date: 'Ajouter une date'
 forms.poll_dates_form.enter_manually: 'Saisir les dates manuellement'
 forms.poll_dates_form.remove_date: 'Retirer la date'
-forms.poll_dates_form.submit.label: 'Valider les dates'
 forms.poll_dates_form.use_calendar: 'Sélectionner les dates depuis un calendrier'
 forms.poll_form.description.label: Description
-forms.poll_form.submit.label: 'Créer le sondage'
 forms.poll_form.title.label: 'Nom de votre sondage'
-forms.poll_proposals_form.submit.label: 'Valider les propositions'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
-forms.poll_slots_form.submit.label: 'Valider les horaires'
 forms.proposal_type.label.label_pattern: 'Proposition __number__'
 forms.slot_type.label.label_pattern: 'Horaire __number__'
 forms.slots_form.day: Journée

@@ -11,24 +11,20 @@ forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
+forms.next: Next
 forms.poll_author_form.author_email.help: 'Your address will not be shared with other poll participants. It will only be used to enable you to find your poll if you lose its address and to notify you when new votes are made.'
 forms.poll_author_form.author_email.label: 'Your email address'
 forms.poll_author_form.author_name.label: 'Your nickname'
-forms.poll_author_form.submit.label: 'Submit your identity'
 forms.poll_dates_form.add_date: 'Add a date'
 forms.poll_dates_form.enter_manually: 'Enter the dates manually'
 forms.poll_dates_form.remove_date: 'Remove the date'
-forms.poll_dates_form.submit.label: 'Submit the dates'
 forms.poll_dates_form.use_calendar: 'Select the dates from a calendar'
 forms.poll_form.description.label: Description
-forms.poll_form.submit.label: 'Create the poll'
 forms.poll_form.title.label: 'Name of your poll'
 forms.poll_proposals_form.add_proposal: 'Add a proposal'
 forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
-forms.poll_proposals_form.submit.label: 'Submit the proposals'
 forms.poll_slots_form.add_slot: 'Add a time slot'
 forms.poll_slots_form.remove_slot: 'Remove the time slot'
-forms.poll_slots_form.submit.label: 'Submit the time slots'
 forms.proposal_type.label.label_pattern: 'Proposal __number__'
 forms.slot_type.label.label_pattern: 'Time slot __number__'
 forms.slots_form.day: Day

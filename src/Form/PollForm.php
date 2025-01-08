@@ -37,7 +37,7 @@ class PollForm extends AbstractType
         ]);
 
         $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.poll_form.submit.label'),
+            'label' => new TranslatableMessage('forms.next'),
         ]);
     }
 

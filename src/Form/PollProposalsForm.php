@@ -32,7 +32,7 @@ class PollProposalsForm extends AbstractType
         ]);
 
         $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.poll_proposals_form.submit.label'),
+            'label' => new TranslatableMessage('forms.next'),
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
