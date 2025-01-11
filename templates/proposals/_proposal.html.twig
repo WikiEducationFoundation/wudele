@@ -35,8 +35,7 @@
 
     <div class="panel__separator"></div>
 
-    <ul class="list--nostyle flow flow--small">
-
+    <ul class="list--nostyle flow flow--small" data-view-target="view" data-view-value="simple">
         <li class="votebar votebar--yes">
             <span class="votebar__label">
                 {{ 'polls.votes.yes' | trans }}
@@ -80,7 +79,7 @@
         </li>
     </ul>
 
-    <div class="flow flow--small">
+    <div class="flow flow--small" data-view-target="view" data-view-value="details" hidden>
         {% for answers in proposal.answers | groupAnswersByValues %}
             {% if answers | length > 0 %}
                 <ul class="list--nostyle">

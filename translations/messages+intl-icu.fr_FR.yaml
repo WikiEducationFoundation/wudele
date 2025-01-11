@@ -56,6 +56,8 @@ polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préfér�
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
 polls.show.created_by: 'Sondage créé par {by}'
 polls.show.poll: Sondage
+polls.show.view_details: 'Vue détaillée'
+polls.show.view_simple: 'Vue simple'
 polls.show.vote: Voter
 polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'

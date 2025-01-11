@@ -56,6 +56,8 @@ polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choi
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
 polls.show.created_by: 'Poll created by {by}'
 polls.show.poll: Poll
+polls.show.view_details: 'Detailed view'
+polls.show.view_simple: 'Simple view'
 polls.show.vote: Vote
 polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
