@@ -16,6 +16,7 @@ class ClassicPollProcess extends Process
         'init',
         'proposals',
         'author',
+        'summary',
         'end',
     ];
 
@@ -36,6 +37,8 @@ class ClassicPollProcess extends Process
             return !$this->poll->getProposals()->isEmpty();
         } elseif ($stepName === 'author') {
             return $this->poll->isAuthorSet();
+        } elseif ($stepName === 'summary') {
+            return $this->poll->isCompleted();
         } else {
             throw new \LogicException("{$stepName} is an invalid step name");
         }
@@ -58,9 +61,15 @@ class ClassicPollProcess extends Process
                 'id' => $this->poll->getId(),
                 'token' => $this->poll->getAdminToken(),
             ]);
-        } elseif ($stepName === 'end') {
-            return $this->urlGenerator->generate('poll', [
+        } elseif ($stepName === 'summary') {
+            return $this->urlGenerator->generate('poll summary', [
                 'id' => $this->poll->getId(),
+                'token' => $this->poll->getAdminToken(),
+            ]);
+        } elseif ($stepName === 'end') {
+            return $this->urlGenerator->generate('poll complete', [
+                'id' => $this->poll->getId(),
+                'token' => $this->poll->getAdminToken(),
             ]);
         } else {
             throw new \LogicException("{$stepName} is an invalid step name");

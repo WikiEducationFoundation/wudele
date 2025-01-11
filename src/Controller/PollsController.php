@@ -246,8 +246,6 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $poll->setCompletedAt(Utils\Time::now());
-
             $pollRepository->save($poll);
 
             return $this->redirect($process->getNextStepUrl('author'));
@@ -256,6 +254,64 @@ class PollsController extends BaseController
         return $this->render('polls/author.html.twig', [
             'poll' => $poll,
             'form' => $form,
+            'process' => $process,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/summary', name: 'poll summary')]
+    public function summary(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('summary')) {
+            return $this->redirect($process->getPreviousStepUrl('summary'));
+        }
+
+        $form = $this->createNamedForm('poll_summary', Form\PollSummaryForm::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $poll->setCompletedAt(Utils\Time::now());
+
+            $pollRepository->save($poll);
+
+            return $this->redirect($process->getNextStepUrl('summary'));
+        }
+
+        return $this->render('polls/summary.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+            'process' => $process,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/complete', name: 'poll complete')]
+    public function complete(
+        Entity\Poll $poll,
+        string $token,
+        Process\PollProcessBuilder $pollProcessBuilder,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('end')) {
+            return $this->redirect($process->getPreviousStepUrl('end'));
+        }
+
+        return $this->render('polls/complete.html.twig', [
+            'poll' => $poll,
             'process' => $process,
         ]);
     }

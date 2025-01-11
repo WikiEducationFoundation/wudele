@@ -579,7 +579,6 @@ class PollsControllerTest extends WebTestCase
         $this->refresh($poll);
         $this->assertSame($name, $poll->getAuthorName());
         $this->assertSame($email, $poll->getAuthorEmail());
-        $this->assertTrue($poll->isCompleted());
     }
 
     public function testPostAuthorFailsIfCsrfIsInvalid(): void
@@ -601,5 +600,100 @@ class PollsControllerTest extends WebTestCase
         $this->refresh($poll);
         $this->assertSame('', $poll->getAuthorName());
         $this->assertSame('', $poll->getAuthorEmail());
+    }
+
+    public function testGetSummaryRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Summary of your poll');
+    }
+
+    public function testGetSummaryRedirectsIfThereAreNoAuthor(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+    }
+
+    public function testGetSummaryFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/summary");
+    }
+
+    public function testPostSummaryCompletesThePoll(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", [
+            'poll_summary' => [
+                '_token' => $this->getCsrf($client, 'poll_summary'),
+            ]
+        ]);
+
+        $this->refresh($poll);
+        $this->assertTrue($poll->isCompleted());
+    }
+
+    public function testPostSummaryFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", [
+            'poll_summary' => [
+                '_token' => 'not the token',
+            ]
+        ]);
+
+        $this->assertSelectorTextContains('#poll_summary_error', 'The CSRF token is invalid');
+        $this->refresh($poll);
+        $this->assertFalse($poll->isCompleted());
+    }
+
+    public function testGetCompleteRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/complete");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Your poll is ready');
+    }
+
+    public function testGetCompleteRedirectsIfNotCompleted(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/complete");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+    }
+
+    public function testGetCompleteFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/complete");
     }
 }

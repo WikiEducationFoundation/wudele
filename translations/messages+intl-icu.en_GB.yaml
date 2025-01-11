@@ -6,6 +6,7 @@ calendar.patterns.next_month: 'Next month (__date__)'
 calendar.patterns.previous_month: 'Previous month (__date__)'
 forms.apply: Apply
 forms.cancel: Cancel
+forms.complete: Complete
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
@@ -40,6 +41,13 @@ polls.choose.classic: 'Poll classic'
 polls.choose.date: 'Poll date'
 polls.choose.next: Next
 polls.choose.title: 'Choose the type of poll'
+polls.complete.copy: Copy
+polls.complete.copied: Copied!
+polls.complete.consult: 'Consult your poll now'
+polls.complete.created: 'The poll “{poll}” is created. You can invite your contacts to take part by sharing the link below.'
+polls.complete.public_link: 'Public sharing link'
+polls.complete.see: 'See my poll'
+polls.complete.title: 'Your poll is ready!'
 polls.dates.title: 'Choose the dates'
 polls.new.title: 'Poll creation'
 polls.proposals.title: 'Choose the proposals'
@@ -57,6 +65,14 @@ polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'
 polls.steps: 'Step {step} on {total}'
+polls.summary.author.email: 'Email address'
+polls.summary.author.name: Nickname
+polls.summary.author.no_email: 'No address given'
+polls.summary.author.title: 'My nickname and my email address'
+polls.summary.edit: Edit
+polls.summary.information.title: 'General information'
+polls.summary.proposals.title: 'My proposals'
+polls.summary.title: 'Summary of your poll'
 votes.new.cancel: Cancel
 votes.show.answer: '{proposal}: {answer}'
 votes.show.back_to_poll: 'Back to results'

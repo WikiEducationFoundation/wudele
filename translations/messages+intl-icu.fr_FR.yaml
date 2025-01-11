@@ -6,6 +6,7 @@ calendar.patterns.next_month: 'Mois suivant (__date__)'
 calendar.patterns.previous_month: 'Mois précédent (__date__)'
 forms.apply: Appliquer
 forms.cancel: Annuler
+forms.complete: Finaliser
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
@@ -40,6 +41,13 @@ polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
 polls.choose.next: Suivant
 polls.choose.title: 'Choisissez le type de sondage'
+polls.complete.copy: Copier
+polls.complete.copied: "Copié\_!"
+polls.complete.consult: 'Consultez votre sondage dès maintenant'
+polls.complete.created: "Le sondage «\_{poll}\_» est créé. Vous pouvez inviter vos contacts à y participer en partageant le lien ci-dessous."
+polls.complete.public_link: 'Lien de partage public'
+polls.complete.see: 'Voir mon sondage'
+polls.complete.title: "Votre sondage est prêt\_!"
 polls.dates.title: 'Choisissez les dates'
 polls.new.title: 'Création de sondage'
 polls.proposals.title: 'Choisissez les propositions'
@@ -57,6 +65,14 @@ polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
+polls.summary.author.email: 'Adresse email'
+polls.summary.author.name: Pseudonyme
+polls.summary.author.no_email: 'Aucune adresse renseignée'
+polls.summary.author.title: 'Mon pseudonyme et mon adresse email'
+polls.summary.edit: Modifier
+polls.summary.information.title: 'Informations générales'
+polls.summary.proposals.title: 'Mes propositions'
+polls.summary.title: 'Résumé de votre sondage'
 votes.new.cancel: Annuler
 votes.show.answer: "{proposal}\_: {answer}"
 votes.show.back_to_poll: 'Retourner aux résultats'

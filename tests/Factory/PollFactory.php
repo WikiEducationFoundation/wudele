@@ -46,16 +46,6 @@ final class PollFactory extends PersistentObjectFactory
         return $this->with(['type' => 'date']);
     }
 
-    public function completed(): self
-    {
-        return $this
-            ->withProposal()
-            ->with([
-                'authorName' => self::faker()->name(),
-                'completedAt' => Utils\Time::now(),
-            ]);
-    }
-
     public function withProposal(): self
     {
         $proposal = ProposalFactory::new([
@@ -79,6 +69,23 @@ final class PollFactory extends PersistentObjectFactory
             ->date()
             ->with([
                 'dates' => [$date],
+            ]);
+    }
+
+    public function withAuthor(): self
+    {
+        return $this->with([
+            'authorName' => self::faker()->name(),
+        ]);
+    }
+
+    public function completed(): self
+    {
+        return $this
+            ->withProposal()
+            ->withAuthor()
+            ->with([
+                'completedAt' => Utils\Time::now(),
             ]);
     }
 }

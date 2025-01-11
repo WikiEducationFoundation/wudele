@@ -1,0 +1,143 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'polls.summary.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <div class="flow">
+            <h1>
+                {{ 'polls.summary.title' | trans }}
+            </h1>
+
+            <p class="text--secondary">
+                {{ 'polls.steps' | trans({ step: process.stepNumber('summary'), total: process.totalSteps }) }}
+            </p>
+        </div>
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="flow">
+                <h2 class="text--primary">{{ 'polls.summary.information.title' | trans }}</h2>
+
+                <div class="panel panel--rounded panel--primary flow">
+                    <div class="flow">
+                        <p class="text--bold">
+                            {{ poll.title }}
+                        </p>
+
+                        {% if poll.description %}
+                            <p>
+                                {{ poll.description }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="panel__separator"></div>
+
+                    <a class="button button--menuitem" href="{{ process.stepUrl('init') }}">
+                        {{ icon('pen-to-square') }}
+                        {{ 'polls.summary.edit' | trans }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="flow">
+                <h2 class="text--primary">{{ 'polls.summary.proposals.title' | trans }}</h2>
+
+                <div class="panel panel--rounded panel--primary flow">
+                    {% if poll.isDatePoll %}
+                        <ul class="list--nostyle flow">
+                            {% for date in poll.dates %}
+                                <li class="flow flow--small">
+                                    <h3>
+                                        {{ date.value | dateTrans('EEEE d MMMM yyyy') }}
+                                    </h3>
+
+                                    <ul class="list--nostyle flow flow--smaller">
+                                        {% for proposal in date.proposals %}
+                                            <li>{{ proposal.label }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="panel__separator"></div>
+
+                        <a class="button button--menuitem" href="{{ process.stepUrl('dates') }}">
+                            {{ icon('pen-to-square') }}
+                            {{ 'polls.summary.edit' | trans }}
+                        </a>
+                    {% else %}
+                        <ul class="list--nostyle flow">
+                            {% for proposal in poll.proposals %}
+                                <li>
+                                    <h3>{{ proposal.label }}</h3>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="panel__separator"></div>
+
+                        <a class="button button--menuitem" href="{{ process.stepUrl('proposals') }}">
+                            {{ icon('pen-to-square') }}
+                            {{ 'polls.summary.edit' | trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="flow">
+                <h2 class="text--primary">{{ 'polls.summary.author.title' | trans }}</h2>
+
+                <div class="panel panel--rounded panel--primary flow">
+                    <dl class="list--nostyle flow">
+                        <dt class="flow flow--small text--bold">
+                            {{ 'polls.summary.author.name' | trans }}
+                        </dt>
+
+                        <dd>
+                            {{ poll.authorName }}
+                        </dd>
+
+                        <dt class="flow flow--small text--bold">
+                            {{ 'polls.summary.author.email' | trans }}
+                        </dt>
+
+                        <dd>
+                            {% if poll.authorEmail %}
+                                {{ poll.authorEmail }}
+                            {% else %}
+                                {{ 'polls.summary.author.no_email' | trans }}
+                            {% endif %}
+                        </dd>
+                    </dl>
+
+                    <div class="panel__separator"></div>
+
+                    <a class="button button--menuitem" href="{{ process.stepUrl('author') }}">
+                        {{ icon('pen-to-square') }}
+                        {{ 'polls.summary.edit' | trans }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="cols cols--always cols--gap">
+                <a class="button" href="{{ process.previousStepUrl('summary') }}">
+                    {{ 'forms.previous' | trans }}
+                </a>
+
+                <div class="col--extend"></div>
+
+                {{ form_row(form.submit) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
