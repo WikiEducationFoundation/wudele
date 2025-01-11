@@ -46,6 +46,10 @@
     color: var(--color-grey11);
 }
 
+.text--success {
+    color: var(--color-success11);
+}
+
 h1 {
     color: var(--color-primary12);
     font-size: var(--font-size-bigger);
