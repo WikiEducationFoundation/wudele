@@ -103,23 +103,31 @@
             data-view-first-value="simple"
             data-view-second-value="details"
         >
+            {% set maxCount = poll.maxCount %}
+
             <div class="cols cols--always cols--center cols--gap-small">
                 <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
 
-                <button class="button--ghost" data-action="view#switch">
-                    <span data-view-target="view" data-view-value="simple">
-                        {{ icon('magnifying-glass-chart') }}
-                        {{ 'polls.show.view_details' | trans }}
-                    </span>
+                {% if maxCount > 0 %}
+                    <button class="button--ghost" data-action="view#switch">
+                        <span data-view-target="view" data-view-value="simple">
+                            {{ icon('magnifying-glass-chart') }}
+                            {{ 'polls.show.view_details' | trans }}
+                        </span>
 
-                    <span data-view-target="view" data-view-value="details" hidden>
-                        {{ icon('chart-simple') }}
-                        {{ 'polls.show.view_simple' | trans }}
-                    </span>
-                </button>
+                        <span data-view-target="view" data-view-value="details" hidden>
+                            {{ icon('chart-simple') }}
+                            {{ 'polls.show.view_simple' | trans }}
+                        </span>
+                    </button>
+                {% endif %}
             </div>
 
-            {% set maxCount = poll.maxCount %}
+            {% if maxCount == 0 %}
+                <p class="panel panel--primary panel--rounded panel--border text--primary">
+                    {{ 'polls.show.no_vote' | trans }}
+                </p>
+            {% endif %}
 
             {% if poll.isClassicPoll %}
                 {% for proposal in poll.proposals %}

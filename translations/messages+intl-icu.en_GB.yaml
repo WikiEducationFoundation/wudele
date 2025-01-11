@@ -55,6 +55,7 @@ polls.proposals.title: 'Choose the proposals'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with {countYes} yes is:} other {The preferred choices with {countYes} yes are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
 polls.show.created_by: 'Poll created by {by}'
+polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
 polls.show.view_details: 'Detailed view'
 polls.show.view_simple: 'Simple view'

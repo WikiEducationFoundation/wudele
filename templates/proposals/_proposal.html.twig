@@ -33,91 +33,93 @@
         {% endif %}
     </div>
 
-    <div class="panel__separator"></div>
+    {% if maxCount > 0 %}
+        <div class="panel__separator"></div>
 
-    <ul class="list--nostyle flow flow--small" data-view-target="view" data-view-value="simple">
-        <li class="votebar votebar--yes">
-            <span class="votebar__label">
-                {{ 'polls.votes.yes' | trans }}
-            </span>
-
-            {% if countYes > 0 %}
-                <span class="votebar__container">
-                    <span class="votebar__bar" style="--votebar-width: {{ countYes * 100 / maxCount }}%">
-                        {{ countYes }}
-                    </span>
+        <ul class="list--nostyle flow flow--small" data-view-target="view" data-view-value="simple">
+            <li class="votebar votebar--yes">
+                <span class="votebar__label">
+                    {{ 'polls.votes.yes' | trans }}
                 </span>
-            {% endif %}
-        </li>
 
-        <li class="votebar votebar--maybe">
-            <span class="votebar__label">
-                {{ 'polls.votes.maybe' | trans }}
-            </span>
-
-            {% if countMaybe > 0 %}
-                <span class="votebar__container">
-                    <span class="votebar__bar" style="--votebar-width: {{ countMaybe * 100 / maxCount }}%">
-                        {{ countMaybe }}
+                {% if countYes > 0 %}
+                    <span class="votebar__container">
+                        <span class="votebar__bar" style="--votebar-width: {{ countYes * 100 / maxCount }}%">
+                            {{ countYes }}
+                        </span>
                     </span>
+                {% endif %}
+            </li>
+
+            <li class="votebar votebar--maybe">
+                <span class="votebar__label">
+                    {{ 'polls.votes.maybe' | trans }}
                 </span>
-            {% endif %}
-        </li>
 
-        <li class="votebar votebar--no">
-            <span class="votebar__label">
-                {{ 'polls.votes.no' | trans }}
-            </span>
-
-            {% if countNo > 0 %}
-                <span class="votebar__container">
-                    <span class="votebar__bar" style="--votebar-width: {{ countNo * 100 / maxCount }}%">
-                        {{ countNo }}
+                {% if countMaybe > 0 %}
+                    <span class="votebar__container">
+                        <span class="votebar__bar" style="--votebar-width: {{ countMaybe * 100 / maxCount }}%">
+                            {{ countMaybe }}
+                        </span>
                     </span>
+                {% endif %}
+            </li>
+
+            <li class="votebar votebar--no">
+                <span class="votebar__label">
+                    {{ 'polls.votes.no' | trans }}
                 </span>
-            {% endif %}
-        </li>
-    </ul>
 
-    <div class="flow flow--small" data-view-target="view" data-view-value="details" hidden>
-        {% for answers in proposal.answers | groupAnswersByValues %}
-            {% if answers | length > 0 %}
-                <ul class="list--nostyle">
-                    {% for answer in answers %}
-                        {% if answer.value == 'yes' %}
-                            <li class="vote vote--yes">
-                                {{ icon('square-check') }}
+                {% if countNo > 0 %}
+                    <span class="votebar__container">
+                        <span class="votebar__bar" style="--votebar-width: {{ countNo * 100 / maxCount }}%">
+                            {{ countNo }}
+                        </span>
+                    </span>
+                {% endif %}
+            </li>
+        </ul>
 
-                                {{ answer.vote.authorName }}
+        <div class="flow flow--small" data-view-target="view" data-view-value="details" hidden>
+            {% for answers in proposal.answers | groupAnswersByValues %}
+                {% if answers | length > 0 %}
+                    <ul class="list--nostyle">
+                        {% for answer in answers %}
+                            {% if answer.value == 'yes' %}
+                                <li class="vote vote--yes">
+                                    {{ icon('square-check') }}
 
-                                <span class="sr-only">
-                                    {{ 'polls.votes.yes' | trans }}
-                                </span>
-                            </li>
-                        {% elseif answer.value == 'no' %}
-                            <li class="vote vote--no">
-                                {{ icon('square-xmark') }}
+                                    {{ answer.vote.authorName }}
 
-                                {{ answer.vote.authorName }}
+                                    <span class="sr-only">
+                                        {{ 'polls.votes.yes' | trans }}
+                                    </span>
+                                </li>
+                            {% elseif answer.value == 'no' %}
+                                <li class="vote vote--no">
+                                    {{ icon('square-xmark') }}
 
-                                <span class="sr-only">
-                                    {{ 'polls.votes.no' | trans }}
-                                </span>
-                            </li>
-                        {% elseif answer.value == 'maybe' %}
-                            <li class="vote vote--maybe">
-                                {{ icon('square-minus') }}
+                                    {{ answer.vote.authorName }}
 
-                                {{ answer.vote.authorName }}
+                                    <span class="sr-only">
+                                        {{ 'polls.votes.no' | trans }}
+                                    </span>
+                                </li>
+                            {% elseif answer.value == 'maybe' %}
+                                <li class="vote vote--maybe">
+                                    {{ icon('square-minus') }}
 
-                                <span class="sr-only">
-                                    {{ 'polls.votes.maybe' | trans }}
-                                </span>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endfor %}
-    </div>
+                                    {{ answer.vote.authorName }}
+
+                                    <span class="sr-only">
+                                        {{ 'polls.votes.maybe' | trans }}
+                                    </span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
