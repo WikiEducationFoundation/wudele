@@ -3,12 +3,13 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 .icon {
-    display: inline-block;
+    display: inline;
+    width: 1.1em;
+    height: auto;
     margin-right: var(--space-smaller);
     margin-left: var(--space-smaller);
-    aspect-ratio: 1;
 
-    vertical-align: text-top;
+    vertical-align: text-bottom;
 
     fill: currentcolor;
 }
