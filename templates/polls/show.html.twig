@@ -4,91 +4,132 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
-{% extends 'poll.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block poll_body %}
-    <p class="text--center">
-        <a class="button button--primary" href="{{ path('new vote', { pollId: poll.id }) }}">
-            {{ 'polls.show.go_to_vote' | trans }}
-        </a>
-    </p>
+{% block title %}{{ poll.title }}{% endblock %}
 
-    {% set preferredChoices = poll.preferredChoices %}
-    {% if preferredChoices %}
-        {% set firstChoice = preferredChoices|first %}
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <div class="panel panel--primary panel--rounded flow flow--large">
+            <div class="flow flow--small">
+                <h1>
+                    {{ poll.title }}
+                </h1>
 
-        <div class="flow">
-            <h2>
-                {{ 'polls.show.best_proposals.title' | trans(count: preferredChoices|length) }}
-                <span aria-hidden="true">⭐</span>
-            </h2>
-
-            <div class="panel panel--primary panel--rounded flow">
-                <p>
-                    {{ 'polls.show.best_proposals.info' | trans({
-                        countChoices: preferredChoices|length,
-                        countYes: firstChoice.countAnswers('yes'),
-                    }) }}
-
-                    {% if preferredChoices|length == 1 %}
-                        <strong>{{ firstChoice | proposalFullLabel }}</strong>
-                    {% endif %}
-                </p>
-
-                {% if preferredChoices|length > 1 %}
-                    <ul class="flow flow--small">
-                        {% for choice in preferredChoices %}
-                            <li>
-                                <strong>{{ choice | proposalFullLabel }}</strong>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                {% if poll.description %}
+                    <p>
+                        {{ poll.description }}
+                    </p>
                 {% endif %}
+
+                <p class="text--secondary">
+                    {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
+                </p>
             </div>
+
+            <p>
+                <a class="button button--primary" href="{{ path('new vote', { pollId: poll.id }) }}">
+                    {{ 'polls.show.vote' | trans }}
+                </a>
+            </p>
         </div>
-    {% endif %}
 
-    <div class="flow">
-        <h2>{{ 'polls.show.results' | trans }}</h2>
+        {% set preferredChoices = poll.preferredChoices %}
+        {% if preferredChoices %}
+            {% set firstChoice = preferredChoices|first %}
 
-        <div class="panel panel--primary panel--rounded">
-            {% for proposal in poll.proposals %}
-                <details class="accordion">
-                    <summary class="accordion__title flow">
-                        <p class="text--bold">{{ proposal | proposalFullLabel }}</p>
+            <div class="flow">
+                <h2 class="text--primary">
+                    {{ 'polls.show.best_proposals.title' | trans(count: preferredChoices|length) }}
+                </h2>
 
-                        <ul class="list--nostyle cols cols--gap cols--always">
-                            <li>
-                                {{ 'polls.show.results.yes' | trans({ count: proposal.countAnswers('yes') }) }}
-                            </li>
+                <div class="panel panel--primary panel--rounded flow">
+                    <p>
+                        {{ 'polls.show.best_proposals.info' | trans({
+                            countChoices: preferredChoices|length,
+                            countYes: firstChoice.countAnswers('yes'),
+                        }) }}
+                    </p>
 
-                            <li>
-                                {{ 'polls.show.results.maybe' | trans({ count: proposal.countAnswers('maybe') }) }}
-                            </li>
-
-                            <li>
-                                {{ 'polls.show.results.no' | trans({ count: proposal.countAnswers('no') }) }}
-                            </li>
-                        </ul>
-                    </summary>
-
-                    <div class="accordion__body">
-                        {% if proposal.answers | length > 0 %}
-                            <ul>
-                                {% for answer in proposal.answers %}
-                                    <li>
-                                        {{ 'polls.show.results.answer' | trans({ name: answer.vote.authorName, answer: answer.humanValue }) }}
+                    <div class="panel panel--success panel--rounded panel--border">
+                        {% if preferredChoices|length == 1 %}
+                            <p class="flow flow--small">
+                                {% set date = firstChoice.date %}
+                                {% if date %}
+                                    <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
+                                    <span class="text--block">{{ firstChoice.label }}</span>
+                                {% else %}
+                                    <span class="text--bold">{{ firstChoice.label }}</span>
+                                {% endif %}
+                            </p>
+                        {% elseif poll.isClassicPoll %}
+                            <ul class="list--nostyle flow flow--small">
+                                {% for choice in preferredChoices %}
+                                    <li class="text--bold">
+                                        {{ choice.label }}
                                     </li>
                                 {% endfor %}
                             </ul>
-                        {% else %}
-                            <p class="panel panel--rounded">
-                                {{ 'polls.show.results.answer.none' | trans }}
-                            </p>
+                        {% elseif poll.isDatePoll %}
+                            <ul class="list--nostyle flow flow--small">
+                                {% for dateAndChoices in preferredChoices|groupDateProposals %}
+                                    {% set date = dateAndChoices[0] %}
+                                    {% set choices = dateAndChoices[1] %}
+
+                                    <li class="flow flow--small">
+                                        <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
+
+                                        {% if choices|length == 1 %}
+                                            <span class="text--block">{{ choices[0].label }}</span>
+                                        {% else %}
+                                            <ul class="list--nostyle flow flow--small">
+                                                {% for choice in choices %}
+                                                    <li>{{ choice.label }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         {% endif %}
                     </div>
-                </details>
-            {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="flow">
+            <h2 class="text--primary">{{ 'polls.show.poll' | trans }}</h2>
+
+            {% set maxCount = poll.maxCount %}
+
+            {% if poll.isClassicPoll %}
+                {% for proposal in poll.proposals %}
+                    <div class="panel panel--primary panel--rounded">
+                        {{ include('proposals/_proposal.html.twig', {
+                            proposal: proposal,
+                            isPreferred: preferredChoices and proposal in preferredChoices,
+                            maxCount: maxCount,
+                        }) }}
+                    </div>
+                {% endfor %}
+            {% elseif poll.isDatePoll %}
+                {% for dateAndProposals in poll.proposals|groupDateProposals %}
+                    {% set date = dateAndProposals[0] %}
+                    {% set proposals = dateAndProposals[1] %}
+
+                    <div class="panel panel--primary panel--rounded flow">
+                        <h3>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</h3>
+
+                        {% for proposal in proposals %}
+                            {{ include('proposals/_proposal.html.twig', {
+                                proposal: proposal,
+                                isPreferred: preferredChoices and proposal in preferredChoices,
+                                maxCount: maxCount,
+                            }) }}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

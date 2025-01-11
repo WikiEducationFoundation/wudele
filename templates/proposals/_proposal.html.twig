@@ -1,0 +1,124 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% set countYes = proposal.countAnswers('yes') %}
+{% set countMaybe = proposal.countAnswers('maybe') %}
+{% set countNo = proposal.countAnswers('no') %}
+
+<div class="panel panel--white panel--rounded flow">
+    <div class="cols cols--always">
+        {% if proposal.date %}
+            <h4 class="col--extend">{{ proposal.label }}</h4>
+        {% else %}
+            <h3 class="col--extend">{{ proposal.label }}</h3>
+        {% endif %}
+
+        {% if isPreferred %}
+            <p class="text--success">
+                {{ icon('star') }}
+
+                {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
+
+                <span class="sr-only">
+                    {{ 'polls.proposals.best' | trans }}
+                </span>
+            </p>
+        {% elseif countYes > 0 %}
+            <p>
+                {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="panel__separator"></div>
+
+    <ul class="list--nostyle flow flow--small">
+
+        <li class="votebar votebar--yes">
+            <span class="votebar__label">
+                {{ 'polls.votes.yes' | trans }}
+            </span>
+
+            {% if countYes > 0 %}
+                <span class="votebar__container">
+                    <span class="votebar__bar" style="--votebar-width: {{ countYes * 100 / maxCount }}%">
+                        {{ countYes }}
+                    </span>
+                </span>
+            {% endif %}
+        </li>
+
+        <li class="votebar votebar--maybe">
+            <span class="votebar__label">
+                {{ 'polls.votes.maybe' | trans }}
+            </span>
+
+            {% if countMaybe > 0 %}
+                <span class="votebar__container">
+                    <span class="votebar__bar" style="--votebar-width: {{ countMaybe * 100 / maxCount }}%">
+                        {{ countMaybe }}
+                    </span>
+                </span>
+            {% endif %}
+        </li>
+
+        <li class="votebar votebar--no">
+            <span class="votebar__label">
+                {{ 'polls.votes.no' | trans }}
+            </span>
+
+            {% if countNo > 0 %}
+                <span class="votebar__container">
+                    <span class="votebar__bar" style="--votebar-width: {{ countNo * 100 / maxCount }}%">
+                        {{ countNo }}
+                    </span>
+                </span>
+            {% endif %}
+        </li>
+    </ul>
+
+    <div class="flow flow--small">
+        {% for answers in proposal.answers | groupAnswersByValues %}
+            {% if answers | length > 0 %}
+                <ul class="list--nostyle">
+                    {% for answer in answers %}
+                        {% if answer.value == 'yes' %}
+                            <li class="vote vote--yes">
+                                {{ icon('square-check') }}
+
+                                {{ answer.vote.authorName }}
+
+                                <span class="sr-only">
+                                    {{ 'polls.votes.yes' | trans }}
+                                </span>
+                            </li>
+                        {% elseif answer.value == 'no' %}
+                            <li class="vote vote--no">
+                                {{ icon('square-xmark') }}
+
+                                {{ answer.vote.authorName }}
+
+                                <span class="sr-only">
+                                    {{ 'polls.votes.no' | trans }}
+                                </span>
+                            </li>
+                        {% elseif answer.value == 'maybe' %}
+                            <li class="vote vote--maybe">
+                                {{ icon('square-minus') }}
+
+                                {{ answer.vote.authorName }}
+
+                                <span class="sr-only">
+                                    {{ 'polls.votes.maybe' | trans }}
+                                </span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

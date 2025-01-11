@@ -1,0 +1,93 @@
+/* This file is part of Pollaris. */
+/* Copyright 2024-2025 Marien Fressinaud */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+.vote {
+    --vote-color: inherit;
+    --vote-border-color: currentcolor;
+    --vote-background-color: transparent;
+
+    display: inline-block;
+    padding: var(--space-smaller);
+
+    color: var(--vote-color);
+
+    border: 1px solid var(--vote-border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--vote-background-color);
+}
+
+.vote--yes {
+    --vote-color: var(--color-success12);
+    --vote-border-color: var(--color-success11);
+    --vote-background-color: var(--color-success3);
+}
+
+.vote--no {
+    --vote-color: var(--color-error12);
+    --vote-border-color: var(--color-error11);
+    --vote-background-color: var(--color-error3);
+}
+
+.vote--maybe {
+    --vote-color: var(--color-warning12);
+    --vote-border-color: var(--color-warning11);
+    --vote-background-color: var(--color-warning2);
+}
+
+.vote .icon {
+    margin-right: 0;
+    margin-left: 0;
+
+    color: var(--vote-border-color);
+}
+
+.votebar {
+    display: flex;
+
+    align-items: center;
+}
+
+.votebar__label {
+    width: 5rem;
+    margin-right: var(--space-small);
+
+    flex-shrink: 0;
+
+    text-align: right;
+}
+
+.votebar__container {
+    flex: 1;
+}
+
+.votebar__bar {
+    display: inline-block;
+    width: var(--votebar-width, 0);
+    min-width: 2ch;
+
+    color: var(--votebar-color);
+    text-align: center;
+
+    background-color: var(--votebar-background-color);
+    border: 1px solid var(--votebar-border-color);
+    border-radius: var(--border-radius);
+}
+
+.votebar--yes .votebar__bar {
+    --votebar-color: var(--color-success12);
+    --votebar-border-color: var(--color-success11);
+    --votebar-background-color: var(--color-success3);
+}
+
+.votebar--maybe .votebar__bar {
+    --votebar-color: var(--color-warning12);
+    --votebar-border-color: var(--color-warning11);
+    --votebar-background-color: var(--color-warning3);
+}
+
+.votebar--no .votebar__bar {
+    --votebar-color: var(--color-error12);
+    --votebar-border-color: var(--color-error11);
+    --votebar-background-color: var(--color-error3);
+}

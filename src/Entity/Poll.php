@@ -280,6 +280,29 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $preferredChoices;
     }
 
+    public function getMaxCount(): int
+    {
+        $maxCount = 0;
+
+        foreach ($this->proposals as $proposal) {
+            $countYes = $proposal->countAnswers('yes');
+            if ($countYes > $maxCount) {
+                $maxCount = $countYes;
+            }
+
+            $countMaybe = $proposal->countAnswers('yes');
+            if ($countMaybe > $maxCount) {
+                $maxCount = $countMaybe;
+            }
+
+            $countNo = $proposal->countAnswers('yes');
+            if ($countNo > $maxCount) {
+                $maxCount = $countNo;
+            }
+        }
+
+        return $maxCount;
+    }
     public function addProposal(Proposal $proposal): static
     {
         if (!$this->proposals->contains($proposal)) {

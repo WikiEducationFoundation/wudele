@@ -50,17 +50,13 @@ polls.complete.see: 'Voir mon sondage'
 polls.complete.title: "Votre sondage est prêt\_!"
 polls.dates.title: 'Choisissez les dates'
 polls.new.title: 'Création de sondage'
+polls.proposals.best: 'Choix préféré'
 polls.proposals.title: 'Choisissez les propositions'
-polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec {countYes} «\_oui\_» est\_:} other {Les choix préférés avec {countYes} «\_oui\_» sont\_:} }"
+polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec {countYes} oui est\_:} other {Les choix préférés avec {countYes} oui sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
-polls.show.created: 'Créé par {by}, le {at}'
-polls.show.go_to_vote: 'Participer au sondage'
-polls.show.results: Résultats
-polls.show.results.answer: "{name}\_: {answer}"
-polls.show.results.answer.none: 'Personne n’a encore répondu au sondage.'
-polls.show.results.maybe: "{count}\_Peut-être"
-polls.show.results.no: "{count}\_Non"
-polls.show.results.yes: "{count}\_Oui"
+polls.show.created_by: 'Sondage créé par {by}'
+polls.show.poll: Sondage
+polls.show.vote: Voter
 polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'
@@ -73,6 +69,10 @@ polls.summary.edit: Modifier
 polls.summary.information.title: 'Informations générales'
 polls.summary.proposals.title: 'Mes propositions'
 polls.summary.title: 'Résumé de votre sondage'
+polls.votes.maybe: Peut-être
+polls.votes.no: Non
+polls.votes.yes: Oui
+polls.votes.yes.count: "{count}\_Oui"
 votes.new.cancel: Annuler
 votes.show.answer: "{proposal}\_: {answer}"
 votes.show.back_to_poll: 'Retourner aux résultats'

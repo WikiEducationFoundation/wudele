@@ -50,17 +50,13 @@ polls.complete.see: 'See my poll'
 polls.complete.title: 'Your poll is ready!'
 polls.dates.title: 'Choose the dates'
 polls.new.title: 'Poll creation'
+polls.proposals.best: 'Preferred choice'
 polls.proposals.title: 'Choose the proposals'
-polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with {countYes} “yes” is:} other {The preferred choices with {countYes} “yes” are:} }'
+polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with {countYes} yes is:} other {The preferred choices with {countYes} yes are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
-polls.show.created: 'Created by {by}, on {at}'
-polls.show.go_to_vote: 'Take part in the poll'
-polls.show.results: Results
-polls.show.results.answer: '{name}: {answer}'
-polls.show.results.answer.none: 'No one has replied to the poll yet.'
-polls.show.results.maybe: "{count}\_Maybe"
-polls.show.results.no: "{count}\_No"
-polls.show.results.yes: "{count}\_Yes"
+polls.show.created_by: 'Poll created by {by}'
+polls.show.poll: Poll
+polls.show.vote: Vote
 polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'
@@ -73,6 +69,10 @@ polls.summary.edit: Edit
 polls.summary.information.title: 'General information'
 polls.summary.proposals.title: 'My proposals'
 polls.summary.title: 'Summary of your poll'
+polls.votes.maybe: Maybe
+polls.votes.no: No
+polls.votes.yes: Yes
+polls.votes.yes.count: "{count}\_Yes"
 votes.new.cancel: Cancel
 votes.show.answer: '{proposal}: {answer}'
 votes.show.back_to_poll: 'Back to results'
