@@ -74,6 +74,7 @@ polls.summary.proposals.title: 'Mes propositions'
 polls.summary.title: 'Résumé de votre sondage'
 polls.votes.maybe: Peut-être
 polls.votes.no: Non
+polls.votes.none: Aucun
 polls.votes.yes: Oui
 polls.votes.yes.count: "{count}\_Oui"
 votes.new.cancel: Annuler

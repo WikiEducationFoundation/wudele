@@ -36,51 +36,66 @@
     {% if maxCount > 0 %}
         <div class="panel__separator"></div>
 
-        <ul class="list--nostyle flow flow--small" data-view-target="view" data-view-value="simple">
-            <li class="votebar votebar--yes">
-                <span class="votebar__label">
+        <ul class="list--nostyle flow" data-view-target="view" data-view-value="simple">
+            <li class="votebar votebar--yes cols cols--gap-small">
+                <span class="col--size2 col--noshrink votebar__label">
                     {{ 'polls.votes.yes' | trans }}
                 </span>
 
-                {% if countYes > 0 %}
-                    <span class="votebar__container">
+                <span class="col--extend">
+                    {% if countYes > 0 %}
                         <span class="votebar__bar" style="--votebar-width: {{ countYes * 100 / maxCount }}%">
                             {{ countYes }}
                         </span>
-                    </span>
-                {% endif %}
+                    {% else %}
+                        –
+                        <span class="sr-only">
+                            {{ 'polls.votes.none' | trans }}
+                        </span>
+                    {% endif %}
+                </span>
             </li>
 
-            <li class="votebar votebar--maybe">
-                <span class="votebar__label">
+            <li class="votebar votebar--maybe cols cols--gap-small">
+                <span class="col--size2 col--noshrink votebar__label">
                     {{ 'polls.votes.maybe' | trans }}
                 </span>
 
-                {% if countMaybe > 0 %}
-                    <span class="votebar__container">
+                <span class="col--extend">
+                    {% if countMaybe > 0 %}
                         <span class="votebar__bar" style="--votebar-width: {{ countMaybe * 100 / maxCount }}%">
                             {{ countMaybe }}
                         </span>
-                    </span>
-                {% endif %}
+                    {% else %}
+                        –
+                        <span class="sr-only">
+                            {{ 'polls.votes.none' | trans }}
+                        </span>
+                    {% endif %}
+                </span>
             </li>
 
-            <li class="votebar votebar--no">
-                <span class="votebar__label">
+            <li class="votebar votebar--no cols cols--gap-small">
+                <span class="col--size2 col--noshrink votebar__label">
                     {{ 'polls.votes.no' | trans }}
                 </span>
 
-                {% if countNo > 0 %}
-                    <span class="votebar__container">
+                <span class="col--extend">
+                    {% if countNo > 0 %}
                         <span class="votebar__bar" style="--votebar-width: {{ countNo * 100 / maxCount }}%">
                             {{ countNo }}
                         </span>
-                    </span>
-                {% endif %}
+                    {% else %}
+                        –
+                        <span class="sr-only">
+                            {{ 'polls.votes.none' | trans }}
+                        </span>
+                    {% endif %}
+                </span>
             </li>
         </ul>
 
-        <div class="flow flow--small" data-view-target="view" data-view-value="details" hidden>
+        <div class="flow" data-view-target="view" data-view-value="details" hidden>
             {% for answers in proposal.answers | groupAnswersByValues %}
                 {% if answers | length > 0 %}
                     <ul class="list--nostyle">

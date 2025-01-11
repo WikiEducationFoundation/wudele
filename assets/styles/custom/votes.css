@@ -9,6 +9,7 @@
 
     display: inline-block;
     padding: var(--space-smaller);
+    margin-bottom: var(--space-smaller);
 
     color: var(--vote-color);
 
@@ -42,23 +43,10 @@
     color: var(--vote-border-color);
 }
 
-.votebar {
-    display: flex;
-
-    align-items: center;
-}
-
-.votebar__label {
-    width: 5rem;
-    margin-right: var(--space-small);
-
-    flex-shrink: 0;
-
-    text-align: right;
-}
-
-.votebar__container {
-    flex: 1;
+@media (min-width: 800px) {
+    .votebar__label {
+        text-align: right;
+    }
 }
 
 .votebar__bar {

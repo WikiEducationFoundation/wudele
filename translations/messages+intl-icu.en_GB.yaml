@@ -73,8 +73,9 @@ polls.summary.information.title: 'General information'
 polls.summary.proposals.title: 'My proposals'
 polls.summary.title: 'Summary of your poll'
 polls.votes.maybe: Maybe
-polls.votes.no: No
-polls.votes.yes: Yes
+polls.votes.no: 'No'
+polls.votes.none: None
+polls.votes.yes: 'Yes'
 polls.votes.yes.count: "{count}\_Yes"
 votes.new.cancel: Cancel
 votes.show.answer: '{proposal}: {answer}'
