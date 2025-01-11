@@ -50,6 +50,10 @@
     color: var(--color-success11);
 }
 
+.text--block {
+    display: block;
+}
+
 h1 {
     color: var(--color-primary12);
     font-size: var(--font-size-bigger);
