@@ -21,3 +21,10 @@
 
     background-color: var(--color-success3);
 }
+
+.panel__separator {
+    margin-right: calc(-1 * var(--space-medium));
+    margin-left:  calc(-1 * var(--space-medium));
+
+    border-top: 2px solid var(--color-primary5);
+}
