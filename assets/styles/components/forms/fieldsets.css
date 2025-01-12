@@ -6,6 +6,13 @@ fieldset {
     border: none;
 }
 
+fieldset fieldset {
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 fieldset legend {
     font-size: var(--font-size-big);
     font-weight: bold;
