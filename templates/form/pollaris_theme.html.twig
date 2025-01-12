@@ -34,6 +34,9 @@
 {%- endblock form_help %}
 
 {%- block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
     {%- set row_class = row_class|default(row_attr.class|default('flow flow--small')|trim) -%}
     {%- set row_attr = row_attr|merge({class: row_class}) -%}
 
@@ -42,12 +45,12 @@
         {%- set widget_attr = {attr: {'aria-describedby': field_id(id, 'help')}} -%}
     {%- endif -%}
 
-    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+    <{{ element|default('div') }}{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
         {{- form_label(form) -}}
         {{- form_help(form) -}}
         {{- form_errors(form) -}}
         {{- form_widget(form, widget_attr) -}}
-    </div>
+    </{{ element|default('div') }}>
 {%- endblock form_row %}
 
 {%- block form_errors -%}
@@ -76,6 +79,19 @@
     {% endif -%}
     {{ parent() }}
 {%- endblock widget_attributes -%}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
+        {%- if compound is defined and compound -%}
+            {%- set element = 'legend' -%}
+        {%- else -%}
+            {%- set row_class = row_class|default(row_attr.class|default('')) -%}
+            {%- set label_attr = label_attr|merge({for: id}) -%}
+        {%- endif -%}
+    {%- endif -%}
+    {{- parent() -}}
+{%- endblock form_label %}
 
 {%- block form_label_content -%}
     {{- parent() -}}
