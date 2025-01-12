@@ -1,5 +1,52 @@
 # Changelog
 
+## 2025-01-12 - 0.3.0
+
+### New
+
+- Allow to select dates with a calendar ([c874ec3](https://framagit.org/pollaris/pollaris/-/commit/c874ec3))
+- Add a summary screen to the poll creation steps ([ad6fa64](https://framagit.org/pollaris/pollaris/-/commit/ad6fa64))
+
+### Improvements
+
+- Improve the design of the poll screen ([87d441f](https://framagit.org/pollaris/pollaris/-/commit/87d441f))
+- Add a button to switch between simple/details vote views ([089b5cc](https://framagit.org/pollaris/pollaris/-/commit/089b5cc))
+- Redesign the vote form ([762438b](https://framagit.org/pollaris/pollaris/-/commit/762438b))
+- Improve the workflow after voting ([daadabd](https://framagit.org/pollaris/pollaris/-/commit/daadabd))
+- Allow to edit poll's title and description ([5882bdc](https://framagit.org/pollaris/pollaris/-/commit/5882bdc))
+- Block access to poll while creation is not complete ([1ba84b2](https://framagit.org/pollaris/pollaris/-/commit/1ba84b2))
+- Replace the submit labels by "Next" ([d537836](https://framagit.org/pollaris/pollaris/-/commit/d537836))
+- Add a "previous" buttons to the forms ([f58f6b1](https://framagit.org/pollaris/pollaris/-/commit/f58f6b1))
+- Explain how the email is used in the interface ([24bd672](https://framagit.org/pollaris/pollaris/-/commit/24bd672))
+- Increase the global border radius ([e6dc7c0](https://framagit.org/pollaris/pollaris/-/commit/e6dc7c0))
+- Make "Apply same slot to all dates" more visible ([d2b802b](https://framagit.org/pollaris/pollaris/-/commit/d2b802b))
+- Validate dates are not empty in form ([20211f3](https://framagit.org/pollaris/pollaris/-/commit/20211f3))
+
+### Developers
+
+- Add a notification component ([172c4ae](https://framagit.org/pollaris/pollaris/-/commit/172c4ae))
+- Add a copy-to-clipboard Stimulus controller ([6459a1a](https://framagit.org/pollaris/pollaris/-/commit/6459a1a))
+- Add more icons ([d1a2a61](https://framagit.org/pollaris/pollaris/-/commit/d1a2a61), [799509b](https://framagit.org/pollaris/pollaris/-/commit/799509b), [c2b1f4c](https://framagit.org/pollaris/pollaris/-/commit/c2b1f4c))
+- Add a warning color to CSS ([d12fe12](https://framagit.org/pollaris/pollaris/-/commit/d12fe12))
+- Generate fieldsets for compound form rows ([e082e1a](https://framagit.org/pollaris/pollaris/-/commit/e082e1a))
+- Add CSS for the "vote" radio buttons ([5028201](https://framagit.org/pollaris/pollaris/-/commit/5028201))
+- Remove padding/margin on fieldsets in fieldset ([2ec3a4b](https://framagit.org/pollaris/pollaris/-/commit/2ec3a4b))
+- Add a text-block CSS class ([cc6b0a5](https://framagit.org/pollaris/pollaris/-/commit/cc6b0a5))
+- Add CSS classes for panels ([0014002](https://framagit.org/pollaris/pollaris/-/commit/0014002))
+- Add style to h4 titles ([0887839](https://framagit.org/pollaris/pollaris/-/commit/0887839))
+- Change style of h3 titles ([491bb07](https://framagit.org/pollaris/pollaris/-/commit/491bb07))
+- Add a CSS text--success class ([ca94254](https://framagit.org/pollaris/pollaris/-/commit/ca94254))
+- Add a separator to the panel component ([24e72e1](https://framagit.org/pollaris/pollaris/-/commit/24e72e1))
+- Improve style of dl lists ([b6f6796](https://framagit.org/pollaris/pollaris/-/commit/b6f6796))
+- Fix icons to better adapt to adjacent text ([fc57375](https://framagit.org/pollaris/pollaris/-/commit/fc57375))
+- Add style for a "success" button ([e4ce252](https://framagit.org/pollaris/pollaris/-/commit/e4ce252))
+- Add functions to Stimulus "collection" controller ([0a325d8](https://framagit.org/pollaris/pollaris/-/commit/0a325d8))
+- Add a CSS class text--secondary ([9e9fb97](https://framagit.org/pollaris/pollaris/-/commit/9e9fb97))
+- Allow to rotate the icons ([63c1e9f](https://framagit.org/pollaris/pollaris/-/commit/63c1e9f))
+- Refactor the handling of poll creation process ([0f4ee8d](https://framagit.org/pollaris/pollaris/-/commit/0f4ee8d))
+- Set the look of "help" messages in forms ([ea69b4f](https://framagit.org/pollaris/pollaris/-/commit/ea69b4f))
+- Update the copyright year ([6abf59a](https://framagit.org/pollaris/pollaris/-/commit/6abf59a))
+
 ## 2024-11-01 - 0.2.0
 
 ### New
