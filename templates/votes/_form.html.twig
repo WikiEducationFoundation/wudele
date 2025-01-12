@@ -7,41 +7,35 @@
 {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    {{ form_row(form.authorName) }}
+    <div class="panel panel--primary panel--rounded">
+        {{ form_row(form.authorName) }}
+    </div>
 
-    {% for answer in form.answers %}
-        <fieldset class="panel panel--primary panel--rounded flow">
-            <legend>{{ field_label(answer.value) }}</legend>
-
-            <div class="cols cols--gap cols--always">
-                {% for choice in answer.value.vars.choices %}
-                    <div class="col--extend">
-                        <input
-                            id="{{ field_id(answer.value, choice.value) }}"
-                            type="radio"
-                            name="{{ field_name(answer.value) }}"
-                            value="{{ choice.value }}"
-                            {{ choice.value == field_value(answer.value) ? 'checked' }}
-                        />
-
-                        <label for="{{ field_id(answer.value, choice.value) }}">
-                            {{ choice.label | trans }}
-                        </label>
-                    </div>
-                {% endfor %}
+    {% if poll.isClassicPoll %}
+        {% for answer in form.answers %}
+            <div class="panel panel--primary panel--rounded">
+                {{ form_row(answer) }}
             </div>
-        </fieldset>
-    {% endfor %}
+        {% endfor %}
+    {% elseif poll.isDatePoll %}
+        {% for date, answers in form.answers | groupAnswerFormsByDate %}
+            <fieldset class="panel panel--primary panel--rounded">
+                <legend>{{ date }}</legend>
 
-    <div class="cols cols--gap cols--center cols--always">
-        <div class="col--extend">
-            <a class="button" href="{{ urlCancel }}">
-                {{ 'votes.new.cancel' | trans }}
-            </a>
-        </div>
+                {% for answer in answers %}
+                    {{ form_row(answer) }}
+                {% endfor %}
+            </fieldset>
+        {% endfor %}
+    {% endif %}
 
-        <div class="col--extend">
-            {{ form_row(form.submit) }}
-        </div>
+    <div class="cols cols--always cols--gap">
+        <a class="button" href="{{ urlCancel }}" data-turbo-method="get" data-turbo-confirm="{{ cancelConfirm }}">
+            {{ 'forms.cancel' | trans }}
+        </a>
+
+        <div class="col--extend"></div>
+
+        {{ form_row(form.submit) }}
     </div>
 {{ form_end(form) }}

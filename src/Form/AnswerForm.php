@@ -19,7 +19,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 class AnswerForm extends AbstractType
 {
     public function __construct(
-        private Service\ProposalService $proposalService,
+        private Service\DateTranslator $dateTranslator,
     ) {
     }
 
@@ -29,17 +29,37 @@ class AnswerForm extends AbstractType
             $form = $event->getForm();
             $answer = $event->getData();
             $proposal = $answer->getProposal();
-            $proposalLabel = $this->proposalService->getFullLabel($proposal);
+
+            $date = $proposal->getDate();
+            $proposalDate = '';
+            if ($date && $date->getValue()) {
+                $proposalDate = $this->dateTranslator->format($date->getValue(), 'EEEE d MMMM yyyy');
+            }
 
             $form->add('value', Type\ChoiceType::class, [
                 'choices' => Entity\Answer::VALID_VALUES,
-                'label' => $proposalLabel,
+                'label' => $proposal->getLabel(),
                 'empty_data' => 'no',
                 'expanded' => true,
 
                 'choice_label' => function (string $choice): TranslatableMessage {
                     return Entity\Answer::translateValue($choice);
                 },
+
+                'choice_attr' => function (string $choice): array {
+                    return [
+                        'class' => "radio--vote radio--vote-{$choice}",
+                    ];
+                },
+
+                'attr' => [
+                    'class' => 'cols cols--always cols--gap',
+                    'data-date' => $proposalDate,
+                ],
+
+                'label_attr' => [
+                    'class' => 'text--normal',
+                ],
             ]);
         });
     }

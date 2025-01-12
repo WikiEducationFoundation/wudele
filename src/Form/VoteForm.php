@@ -37,6 +37,9 @@ class VoteForm extends AbstractType
 
         $builder->add('submit', Type\SubmitType::class, [
             'label' => new TranslatableMessage('forms.vote_form.submit.label'),
+            'attr' => [
+                'class' => 'button--success',
+            ],
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {

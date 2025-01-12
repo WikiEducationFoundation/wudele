@@ -9,6 +9,7 @@ namespace App\Twig;
 use App\Entity;
 use App\Service;
 use Doctrine\Common\Collections;
+use Symfony\Component\Form\FormView;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -25,6 +26,7 @@ class PollExtension extends AbstractExtension
             new TwigFilter('proposalFullLabel', [$this, 'proposalFullLabel']),
             new TwigFilter('groupDateProposals', [$this, 'groupDateProposals']),
             new TwigFilter('groupAnswersByValues', [$this, 'groupAnswersByValues']),
+            new TwigFilter('groupAnswerFormsByDate', [$this, 'groupAnswerFormsByDate']),
         ];
     }
 
@@ -79,5 +81,36 @@ class PollExtension extends AbstractExtension
         }
 
         return $answersByValues;
+    }
+
+    /**
+     * @return array<string, FormView[]>
+     */
+    public function groupAnswerFormsByDate(FormView $formView): array
+    {
+        $formViewsByDates = [];
+
+        foreach ($formView->children as $childFormView) {
+            if (!isset($childFormView->children['value'])) {
+                throw new \LogicException('The child form must contain a "value" field');
+            }
+
+            $valueForm = $childFormView->children['value'];
+
+            if (!isset($valueForm->vars['attr']['data-date'])) {
+                throw new \LogicException('The value field must contain a "data-date" attribute');
+            }
+
+            /** @var string */
+            $date = $valueForm->vars['attr']['data-date'];
+
+            if (!isset($formViewsByDates[$date])) {
+                $formViewsByDates[$date] = [];
+            }
+
+            $formViewsByDates[$date][] = $childFormView;
+        }
+
+        return $formViewsByDates;
     }
 }

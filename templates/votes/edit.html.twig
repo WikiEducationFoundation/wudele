@@ -4,11 +4,20 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
-{% extends 'poll.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block poll_body %}
-    {{ include('votes/_form.html.twig', {
-        form: form,
-        urlCancel: path('vote', { pollId: poll.id, id: vote.id }),
-    }) }}
+{% block title %}{{ 'votes.edit.title' | trans }} – {{ poll.title }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <h1>
+            {{ 'votes.edit.title' | trans }}
+        </h1>
+
+        {{ include('votes/_form.html.twig', {
+            form: form,
+            urlCancel: path('vote', { pollId: poll.id, id: vote.id }),
+            cancelConfirm: 'votes.edit.cancel' | trans,
+        }) }}
+    </div>
 {% endblock %}

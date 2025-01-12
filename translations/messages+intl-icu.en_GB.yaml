@@ -77,7 +77,10 @@ polls.votes.no: 'No'
 polls.votes.none: None
 polls.votes.yes: 'Yes'
 polls.votes.yes.count: "{count}\_Yes"
-votes.new.cancel: Cancel
+votes.edit.cancel: 'All your changes will be deleted. Do you really want to cancel?'
+votes.edit.title: 'Edit your vote'
+votes.new.cancel: 'All your choices will be deleted. Do you really want to cancel?'
+votes.new.title: 'Choose your preferences'
 votes.show.answer: '{proposal}: {answer}'
 votes.show.back_to_poll: 'Back to results'
 votes.show.edit: Edit

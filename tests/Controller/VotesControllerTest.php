@@ -23,14 +23,12 @@ class VotesControllerTest extends WebTestCase
     public function testGetNewRendersCorrectly(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new([
-            'title' => 'My poll',
-        ])->completed()->create();
+        $poll = Factory\PollFactory::new()->completed()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/new");
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'My poll');
+        $this->assertSelectorTextContains('h1', 'Choose your preferences');
     }
 
     public function testGetNewFailsIfPollIsNotCompleted(): void
@@ -130,9 +128,7 @@ class VotesControllerTest extends WebTestCase
     public function testGetEditRendersCorrectly(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new([
-            'title' => 'My poll',
-        ])->completed()->create();
+        $poll = Factory\PollFactory::new()->completed()->create();
         $vote = Factory\VoteFactory::createOne([
             'poll' => $poll,
         ]);
@@ -140,7 +136,7 @@ class VotesControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/{$vote->getId()}/edit");
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'My poll');
+        $this->assertSelectorTextContains('h1', 'Edit your vote');
     }
 
     public function testGetEditFailsIfPollIdDoesNotMatch(): void
