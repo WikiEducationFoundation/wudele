@@ -59,14 +59,18 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}', name: 'poll')]
-    public function show(Entity\Poll $poll): Response
+    public function show(Entity\Poll $poll, Request $request): Response
     {
         if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
+        $session = $request->getSession();
+        $voteId = $session->get("vote-{$poll->getId()}");
+
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
+            'voteId' => $voteId,
         ]);
     }
 

@@ -94,37 +94,6 @@ class VotesControllerTest extends WebTestCase
         Factory\VoteFactory::assert()->count(0);
     }
 
-    public function testGetShowRendersCorrectly(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new([
-            'title' => 'My poll',
-        ])->completed()->create();
-        $vote = Factory\VoteFactory::createOne([
-            'poll' => $poll,
-        ]);
-
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/{$vote->getId()}");
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'My poll');
-    }
-
-    public function testGetShowFailsIfPollIdDoesNotMatch(): void
-    {
-        $client = static::createClient();
-        $poll1 = Factory\PollFactory::new()->completed()->create();
-        $poll2 = Factory\PollFactory::new()->completed()->create();
-        $vote = Factory\VoteFactory::createOne([
-            'poll' => $poll1,
-        ]);
-
-        $this->expectException(NotFoundHttpException::class);
-
-        $client->catchExceptions(false);
-        $client->request(Request::METHOD_GET, "/polls/{$poll2->getId()}/votes/{$vote->getId()}");
-    }
-
     public function testGetEditRendersCorrectly(): void
     {
         $client = static::createClient();

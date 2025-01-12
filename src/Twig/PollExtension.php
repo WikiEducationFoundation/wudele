@@ -7,7 +7,6 @@
 namespace App\Twig;
 
 use App\Entity;
-use App\Service;
 use Doctrine\Common\Collections;
 use Symfony\Component\Form\FormView;
 use Twig\Extension\AbstractExtension;
@@ -15,24 +14,13 @@ use Twig\TwigFilter;
 
 class PollExtension extends AbstractExtension
 {
-    public function __construct(
-        private Service\ProposalService $proposalService,
-    ) {
-    }
-
     public function getFilters(): array
     {
         return [
-            new TwigFilter('proposalFullLabel', [$this, 'proposalFullLabel']),
             new TwigFilter('groupDateProposals', [$this, 'groupDateProposals']),
             new TwigFilter('groupAnswersByValues', [$this, 'groupAnswersByValues']),
             new TwigFilter('groupAnswerFormsByDate', [$this, 'groupAnswerFormsByDate']),
         ];
-    }
-
-    public function proposalFullLabel(Entity\Proposal $proposal): string
-    {
-        return $this->proposalService->getFullLabel($proposal);
     }
 
     /**

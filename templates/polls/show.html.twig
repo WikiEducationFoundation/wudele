@@ -10,6 +10,14 @@
 
 {% block body %}
     <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        {% for message in app.flashes('success') %}
+            {% if message == 'vote.created' %}
+                {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.created' | trans }) }}
+            {% elseif message == 'vote.updated' %}
+                {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.updated' | trans }) }}
+            {% endif %}
+        {% endfor %}
+
         <div class="panel panel--primary panel--rounded flow flow--large">
             <div class="flow flow--small">
                 <h1>
@@ -28,9 +36,15 @@
             </div>
 
             <p>
-                <a class="button button--primary" href="{{ path('new vote', { pollId: poll.id }) }}">
-                    {{ 'polls.show.vote' | trans }}
-                </a>
+                {% if voteId %}
+                    <a class="button button--primary" href="{{ path('edit vote', { pollId: poll.id, id: voteId }) }}">
+                        {{ 'polls.show.vote_edit' | trans }}
+                    </a>
+                {% else %}
+                    <a class="button button--primary" href="{{ path('new vote', { pollId: poll.id }) }}">
+                        {{ 'polls.show.vote' | trans }}
+                    </a>
+                {% endif %}
             </p>
         </div>
 

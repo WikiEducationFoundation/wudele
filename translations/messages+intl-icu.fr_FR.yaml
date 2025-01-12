@@ -36,6 +36,7 @@ home.create_poll: 'Créer un nouveau sondage'
 home.intro: 'Grâce à notre outil de sondage, planifiez, organisez et prenez des décisions rapidement, simplement et sans inscription.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
 layout.modal.close: Fermer
+notifications.close: Fermer
 polls.author.title: 'Votre identité'
 polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
@@ -60,6 +61,9 @@ polls.show.poll: Sondage
 polls.show.view_details: 'Vue détaillée'
 polls.show.view_simple: 'Vue simple'
 polls.show.vote: Voter
+polls.show.vote.created: 'Votre vote est confirmé. Vous pouvez encore le modifier si vous le souhaitez.'
+polls.show.vote.updated: 'Votre vote a bien été modifié.'
+polls.show.vote_edit: 'Modifier mon vote'
 polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'
@@ -81,8 +85,3 @@ votes.edit.cancel: "Toutes vos modifications seront effacées. Souhaitez-vous vr
 votes.edit.title: 'Modifiez votre vote'
 votes.new.cancel: "Tous vos choix seront effacés. Souhaitez-vous vraiment annuler\_?"
 votes.new.title: 'Choisissez vos préférences'
-votes.show.answer: "{proposal}\_: {answer}"
-votes.show.back_to_poll: 'Retourner aux résultats'
-votes.show.edit: Modifier
-votes.show.success: "{name}, votre vote a bien été pris en compte\_!"
-votes.show.summary_answers: "Voici le résumé de votre vote\_:"

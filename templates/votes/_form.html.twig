@@ -30,7 +30,7 @@
     {% endif %}
 
     <div class="cols cols--always cols--gap">
-        <a class="button" href="{{ urlCancel }}" data-turbo-method="get" data-turbo-confirm="{{ cancelConfirm }}">
+        <a class="button" href="{{ path('poll', { id: poll.id }) }}" data-turbo-method="get" data-turbo-confirm="{{ cancelConfirm }}">
             {{ 'forms.cancel' | trans }}
         </a>
 

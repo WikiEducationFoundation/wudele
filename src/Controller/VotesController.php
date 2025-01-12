@@ -37,31 +37,19 @@ class VotesController extends BaseController
 
             $voteRepository->save($vote);
 
-            return $this->redirectToRoute('vote', [
-                'pollId' => $poll->getId(),
-                'id' => $vote->getId(),
+            $session = $request->getSession();
+            $session->set("vote-{$poll->getId()}", $vote->getId());
+
+            $this->addFlash('success', 'vote.created');
+
+            return $this->redirectToRoute('poll', [
+                'id' => $poll->getId(),
             ]);
         }
 
         return $this->render('votes/new.html.twig', [
             'poll' => $poll,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/polls/{pollId:poll}/votes/{id:vote}', name: 'vote')]
-    public function show(
-        #[MapEntity(mapping: ['poll' => 'id'])]
-        Entity\Poll $poll,
-        Entity\Vote $vote,
-    ): Response {
-        if ($poll->getId() !== $vote->getPoll()->getId()) {
-            throw $this->createNotFoundException('Vote is not part of the poll');
-        }
-
-        return $this->render('votes/show.html.twig', [
-            'poll' => $poll,
-            'vote' => $vote,
         ]);
     }
 
@@ -85,9 +73,13 @@ class VotesController extends BaseController
 
             $voteRepository->save($vote);
 
-            return $this->redirectToRoute('vote', [
-                'pollId' => $poll->getId(),
-                'id' => $vote->getId(),
+            $session = $request->getSession();
+            $session->set("vote-{$poll->getId()}", $vote->getId());
+
+            $this->addFlash('success', 'vote.updated');
+
+            return $this->redirectToRoute('poll', [
+                'id' => $poll->getId(),
             ]);
         }
 

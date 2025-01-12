@@ -36,6 +36,7 @@ home.create_poll: 'Create a new poll'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.modal.close: Close
+notifications.close: Close
 polls.author.title: 'Who you are'
 polls.choose.classic: 'Poll classic'
 polls.choose.date: 'Poll date'
@@ -60,6 +61,9 @@ polls.show.poll: Poll
 polls.show.view_details: 'Detailed view'
 polls.show.view_simple: 'Simple view'
 polls.show.vote: Vote
+polls.show.vote.created: 'Your vote is confirmed. You can still change it if you wish.'
+polls.show.vote.updated: 'Your vote has been changed.'
+polls.show.vote_edit: 'Edit my vote'
 polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'
@@ -81,8 +85,3 @@ votes.edit.cancel: 'All your changes will be deleted. Do you really want to canc
 votes.edit.title: 'Edit your vote'
 votes.new.cancel: 'All your choices will be deleted. Do you really want to cancel?'
 votes.new.title: 'Choose your preferences'
-votes.show.answer: '{proposal}: {answer}'
-votes.show.back_to_poll: 'Back to results'
-votes.show.edit: Edit
-votes.show.success: '{name}, your vote has been taken into account!'
-votes.show.summary_answers: 'Here’s a summary of your vote:'

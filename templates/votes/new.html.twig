@@ -16,7 +16,6 @@
 
         {{ include('votes/_form.html.twig', {
             form: form,
-            urlCancel: path('poll', { id: poll.id }),
             cancelConfirm: 'votes.new.cancel' | trans,
         }) }}
     </div>
