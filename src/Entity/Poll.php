@@ -290,12 +290,12 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
                 $maxCount = $countYes;
             }
 
-            $countMaybe = $proposal->countAnswers('yes');
+            $countMaybe = $proposal->countAnswers('maybe');
             if ($countMaybe > $maxCount) {
                 $maxCount = $countMaybe;
             }
 
-            $countNo = $proposal->countAnswers('yes');
+            $countNo = $proposal->countAnswers('no');
             if ($countNo > $maxCount) {
                 $maxCount = $countNo;
             }
