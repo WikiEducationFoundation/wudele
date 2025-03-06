@@ -42,9 +42,9 @@ polls.choose.classic: 'Poll classic'
 polls.choose.date: 'Poll date'
 polls.choose.next: Next
 polls.choose.title: 'Choose the type of poll'
-polls.complete.copy: Copy
-polls.complete.copied: Copied!
 polls.complete.consult: 'Consult your poll now'
+polls.complete.copied: Copied!
+polls.complete.copy: Copy
 polls.complete.created: 'The poll “{poll}” is created. You can invite your contacts to take part by sharing the link below.'
 polls.complete.public_link: 'Public sharing link'
 polls.complete.see: 'See my poll'

@@ -42,9 +42,9 @@ polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
 polls.choose.next: Suivant
 polls.choose.title: 'Choisissez le type de sondage'
-polls.complete.copy: Copier
-polls.complete.copied: "Copié\_!"
 polls.complete.consult: 'Consultez votre sondage dès maintenant'
+polls.complete.copied: "Copié\_!"
+polls.complete.copy: Copier
 polls.complete.created: "Le sondage «\_{poll}\_» est créé. Vous pouvez inviter vos contacts à y participer en partageant le lien ci-dessous."
 polls.complete.public_link: 'Lien de partage public'
 polls.complete.see: 'Voir mon sondage'

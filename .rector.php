@@ -18,8 +18,9 @@ return RectorConfig::configure()
     ->withSets([
         SetList::PHP_82,
         SetList::PHP_83,
+        SetList::PHP_84,
         SetList::TYPE_DECLARATION,
-        SymfonySetList::SYMFONY_71,
+        SymfonySetList::SYMFONY_72,
         SymfonySetList::SYMFONY_CODE_QUALITY,
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
     ]);
