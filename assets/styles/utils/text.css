@@ -2,6 +2,10 @@
 /* Copyright 2024-2025 Marien Fressinaud */
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
+.text--nobold {
+    font-weight: normal;
+}
+
 .text--bold {
     font-weight: 600;
 }

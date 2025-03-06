@@ -16,43 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VotesController extends BaseController
 {
-    #[Route('/polls/{pollId:poll}/votes/new', name: 'new vote')]
-    public function new(
-        #[MapEntity(mapping: ['poll' => 'id'])]
-        Entity\Poll $poll,
-        Request $request,
-        Repository\VoteRepository $voteRepository,
-    ): Response {
-        if (!$poll->isCompleted()) {
-            throw $this->createNotFoundException('The poll doesn’t exist (yet).');
-        }
-
-        $vote = new Entity\Vote();
-        $vote->setPoll($poll);
-        $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $vote = $form->getData();
-
-            $voteRepository->save($vote);
-
-            $session = $request->getSession();
-            $session->set("vote-{$poll->getId()}", $vote->getId());
-
-            $this->addFlash('success', 'vote.created');
-
-            return $this->redirectToRoute('poll', [
-                'id' => $poll->getId(),
-            ]);
-        }
-
-        return $this->render('votes/new.html.twig', [
-            'poll' => $poll,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/polls/{pollId:poll}/votes/{id:vote}/edit', name: 'edit vote')]
     public function edit(
         #[MapEntity(mapping: ['poll' => 'id'])]
@@ -83,10 +46,11 @@ class VotesController extends BaseController
             ]);
         }
 
-        return $this->render('votes/edit.html.twig', [
+        return $this->render('polls/show.html.twig', [
             'poll' => $poll,
-            'vote' => $vote,
-            'form' => $form,
+            'voteId' => $vote->getId(),
+            'voteForm' => $form,
+            'preserveScroll' => true,
         ]);
     }
 }

@@ -38,7 +38,7 @@ class AnswerForm extends AbstractType
 
             $form->add('value', Type\ChoiceType::class, [
                 'choices' => Entity\Answer::VALID_VALUES,
-                'label' => $proposal->getLabel(),
+                'label' => false,
                 'empty_data' => 'no',
                 'expanded' => true,
 
@@ -54,6 +54,7 @@ class AnswerForm extends AbstractType
 
                 'attr' => [
                     'class' => 'cols cols--always cols--gap',
+                    'data-proposal-id' => $proposal->getId(),
                     'data-date' => $proposalDate,
                 ],
 

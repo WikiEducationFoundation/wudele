@@ -58,9 +58,6 @@ polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other 
 polls.show.created_by: 'Poll created by {by}'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
-polls.show.view_details: 'Detailed view'
-polls.show.view_simple: 'Simple view'
-polls.show.vote: Vote
 polls.show.vote.created: 'Your vote is confirmed. You can still change it if you wish.'
 polls.show.vote.updated: 'Your vote has been changed.'
 polls.show.vote_edit: 'Edit my vote'
@@ -81,7 +78,3 @@ polls.votes.no: 'No'
 polls.votes.none: None
 polls.votes.yes: 'Yes'
 polls.votes.yes.count: "{count}\_Yes"
-votes.edit.cancel: 'All your changes will be deleted. Do you really want to cancel?'
-votes.edit.title: 'Edit your vote'
-votes.new.cancel: 'All your choices will be deleted. Do you really want to cancel?'
-votes.new.title: 'Choose your preferences'

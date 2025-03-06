@@ -20,84 +20,12 @@ class VotesControllerTest extends WebTestCase
     use Helper\CsrfHelper;
     use Helper\FactoryHelper;
 
-    public function testGetNewRendersCorrectly(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->completed()->create();
-
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/new");
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Choose your preferences');
-    }
-
-    public function testGetNewFailsIfPollIsNotCompleted(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::createOne([
-            'completedAt' => null,
-        ]);
-
-        $this->expectException(NotFoundHttpException::class);
-
-        $client->catchExceptions(false);
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/new");
-    }
-
-    public function testPostNewCreatesAVote(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->completed()->create();
-        $proposal = $poll->getProposals()->first();
-        $name = 'Alix';
-
-        $this->assertNotFalse($proposal);
-
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/votes/new", [
-            'vote' => [
-                '_token' => $this->getCsrf($client, 'vote'),
-                'authorName' => $name,
-                'answers' => [
-                    ['value' => 'yes'],
-                ],
-            ],
-        ]);
-
-        $votes = Factory\VoteFactory::all();
-        $this->assertSame(1, count($votes));
-        $this->assertSame($name, $votes[0]->getAuthorName());
-        $this->assertSame($poll->getId(), $votes[0]->getPoll()->getId());
-        $answers = $votes[0]->getAnswers()->toArray();
-        $this->assertSame(1, count($answers));
-        $this->assertSame('yes', $answers[0]->getValue());
-        $this->assertSame($proposal->getId(), $answers[0]->getProposal()?->getId());
-    }
-
-    public function testPostNewFailsIfCsrfIsInvalid(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->completed()->create();
-        $proposal = $poll->getProposals()->first();
-        $name = 'Alix';
-
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/votes/new", [
-            'vote' => [
-                '_token' => 'not the token',
-                'authorName' => $name,
-                'answers' => [
-                    ['value' => 'yes'],
-                ],
-            ],
-        ]);
-
-        $this->assertSelectorTextContains('#vote_error', 'The CSRF token is invalid');
-        Factory\VoteFactory::assert()->count(0);
-    }
-
     public function testGetEditRendersCorrectly(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->completed()->create();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+        ])->completed()->create();
         $vote = Factory\VoteFactory::createOne([
             'poll' => $poll,
         ]);
@@ -105,7 +33,7 @@ class VotesControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/{$vote->getId()}/edit");
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Edit your vote');
+        $this->assertSelectorTextContains('h1', 'My poll');
     }
 
     public function testGetEditFailsIfPollIdDoesNotMatch(): void

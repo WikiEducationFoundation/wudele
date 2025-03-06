@@ -8,13 +8,9 @@
 {% set countMaybe = proposal.countAnswers('maybe') %}
 {% set countNo = proposal.countAnswers('no') %}
 
-<div class="panel panel--white panel--rounded flow">
+<fieldset class="panel panel--white panel--rounded flow">
     <div class="cols cols--always">
-        {% if proposal.date %}
-            <h4 class="col--extend">{{ proposal.label }}</h4>
-        {% else %}
-            <h3 class="col--extend">{{ proposal.label }}</h3>
-        {% endif %}
+        <legend class="col--extend text--nobold">{{ proposal.label }}</legend>
 
         {% if isPreferred %}
             <p class="text--success">
@@ -32,6 +28,11 @@
             </p>
         {% endif %}
     </div>
+
+    {% if voteForm %}
+        {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
+        {{ form_row(answerForm) }}
+    {% endif %}
 
     {% if maxCount > 0 %}
         <div class="panel__separator"></div>
@@ -137,4 +138,4 @@
             {% endfor %}
         </div>
     {% endif %}
-</div>
+</fieldset>

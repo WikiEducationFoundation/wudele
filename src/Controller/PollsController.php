@@ -59,8 +59,11 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}', name: 'poll')]
-    public function show(Entity\Poll $poll, Request $request): Response
-    {
+    public function show(
+        Entity\Poll $poll,
+        Request $request,
+        Repository\VoteRepository $voteRepository,
+    ): Response {
         if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
@@ -68,9 +71,34 @@ class PollsController extends BaseController
         $session = $request->getSession();
         $voteId = $session->get("vote-{$poll->getId()}");
 
+        $voteForm = null;
+
+        if (!$voteId) {
+            $vote = new Entity\Vote();
+            $vote->setPoll($poll);
+            $voteForm = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
+
+            $voteForm->handleRequest($request);
+            if ($voteForm->isSubmitted() && $voteForm->isValid()) {
+                $vote = $voteForm->getData();
+
+                $voteRepository->save($vote);
+
+                $session = $request->getSession();
+                $session->set("vote-{$poll->getId()}", $vote->getId());
+
+                $this->addFlash('success', 'vote.created');
+
+                return $this->redirectToRoute('poll', [
+                    'id' => $poll->getId(),
+                ]);
+            }
+        }
+
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
             'voteId' => $voteId,
+            'voteForm' => $voteForm,
         ]);
     }
 

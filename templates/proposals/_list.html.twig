@@ -11,6 +11,7 @@
                 proposal: proposal,
                 isPreferred: preferredChoices and proposal in preferredChoices,
                 maxCount: maxCount,
+                voteForm: voteForm,
             }) }}
         </div>
     {% endfor %}
@@ -19,16 +20,19 @@
         {% set date = dateAndProposals[0] %}
         {% set proposals = dateAndProposals[1] %}
 
-        <div class="panel panel--primary panel--rounded flow">
-            <h3>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</h3>
+        <fieldset class="panel panel--primary panel--rounded flow">
+            <div>
+                <legend>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</legend>
+            </div>
 
             {% for proposal in proposals %}
                 {{ include('proposals/_proposal.html.twig', {
                     proposal: proposal,
                     isPreferred: preferredChoices and proposal in preferredChoices,
                     maxCount: maxCount,
+                    voteForm: voteForm,
                 }) }}
             {% endfor %}
-        </div>
+        </fieldset>
     {% endfor %}
 {% endif %}

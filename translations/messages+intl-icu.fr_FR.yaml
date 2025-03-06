@@ -58,9 +58,6 @@ polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other 
 polls.show.created_by: 'Sondage créé par {by}'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"
 polls.show.poll: Sondage
-polls.show.view_details: 'Vue détaillée'
-polls.show.view_simple: 'Vue simple'
-polls.show.vote: Voter
 polls.show.vote.created: 'Votre vote est confirmé. Vous pouvez encore le modifier si vous le souhaitez.'
 polls.show.vote.updated: 'Votre vote a bien été modifié.'
 polls.show.vote_edit: 'Modifier mon vote'
@@ -81,7 +78,3 @@ polls.votes.no: Non
 polls.votes.none: Aucun
 polls.votes.yes: Oui
 polls.votes.yes.count: "{count}\_Oui"
-votes.edit.cancel: "Toutes vos modifications seront effacées. Souhaitez-vous vraiment annuler\_?"
-votes.edit.title: 'Modifiez votre vote'
-votes.new.cancel: "Tous vos choix seront effacés. Souhaitez-vous vraiment annuler\_?"
-votes.new.title: 'Choisissez vos préférences'

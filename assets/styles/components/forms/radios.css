@@ -78,7 +78,7 @@ input[type="radio"][disabled] + label::before {
 input.radio--vote + label {
     --radio-vote-color: var(--color-primary11);
     --radio-vote-border-color: transparent;
-    --radio-vote-background-color: var(--color-primary1);
+    --radio-vote-background-color: var(--color-primary3);
 
     padding: var(--space-medium) var(--space-smaller);
 

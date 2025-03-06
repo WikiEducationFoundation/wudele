@@ -23,6 +23,9 @@
         {% block javascripts %}
             <script src="{{ esbuild_asset('js/application.js') }}" defer data-turbo-track="reload"></script>
         {% endblock %}
+
+        {% block additional_head_tags %}
+        {% endblock %}
     </head>
 
     <body>

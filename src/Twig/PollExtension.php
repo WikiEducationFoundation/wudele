@@ -17,10 +17,41 @@ class PollExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
+            new TwigFilter('getAnswerFormForProposal', [$this, 'getAnswerFormForProposal']),
             new TwigFilter('groupDateProposals', [$this, 'groupDateProposals']),
             new TwigFilter('groupAnswersByValues', [$this, 'groupAnswersByValues']),
-            new TwigFilter('groupAnswerFormsByDate', [$this, 'groupAnswerFormsByDate']),
         ];
+    }
+
+    /**
+     * Return an AnswerForm corresponding to a proposal in the given VoteForm.
+     */
+    public function getAnswerFormForProposal(FormView $voteForm, Entity\Proposal $proposal): FormView
+    {
+        if (!isset($voteForm->children['answers'])) {
+            throw new \LogicException('Expected a VoteForm in argument.');
+        }
+
+        $answers = $voteForm->children['answers'];
+
+        foreach ($answers->children as $childFormView) {
+            if (!isset($childFormView->children['value'])) {
+                continue;
+            }
+
+            $valueForm = $childFormView->children['value'];
+
+            if (
+                !isset($valueForm->vars['attr']['data-proposal-id']) ||
+                $valueForm->vars['attr']['data-proposal-id'] !== $proposal->getId()
+            ) {
+                continue;
+            }
+
+            return $childFormView;
+        }
+
+        throw new \LogicException('Proposal not found');
     }
 
     /**
@@ -69,36 +100,5 @@ class PollExtension extends AbstractExtension
         }
 
         return $answersByValues;
-    }
-
-    /**
-     * @return array<string, FormView[]>
-     */
-    public function groupAnswerFormsByDate(FormView $formView): array
-    {
-        $formViewsByDates = [];
-
-        foreach ($formView->children as $childFormView) {
-            if (!isset($childFormView->children['value'])) {
-                throw new \LogicException('The child form must contain a "value" field');
-            }
-
-            $valueForm = $childFormView->children['value'];
-
-            if (!isset($valueForm->vars['attr']['data-date'])) {
-                throw new \LogicException('The value field must contain a "data-date" attribute');
-            }
-
-            /** @var string */
-            $date = $valueForm->vars['attr']['data-date'];
-
-            if (!isset($formViewsByDates[$date])) {
-                $formViewsByDates[$date] = [];
-            }
-
-            $formViewsByDates[$date][] = $childFormView;
-        }
-
-        return $formViewsByDates;
     }
 }

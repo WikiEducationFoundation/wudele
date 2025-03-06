@@ -8,6 +8,13 @@
 
 {% block title %}{{ poll.title }}{% endblock %}
 
+{% block additional_head_tags %}
+    {% if preserveScroll is defined and preserveScroll %}
+        <meta name="turbo-refresh-method" content="morph">
+        <meta name="turbo-refresh-scroll" content="preserve">
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <div class="wrapper wrapper--small wrapper--center flow flow--larger">
         {% for message in app.flashes('success') %}
@@ -34,18 +41,6 @@
                     {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
                 </p>
             </div>
-
-            <p>
-                {% if voteId %}
-                    <a class="button button--primary" href="{{ path('edit vote', { pollId: poll.id, id: voteId }) }}">
-                        {{ 'polls.show.vote_edit' | trans }}
-                    </a>
-                {% else %}
-                    <a class="button button--primary" href="{{ path('new vote', { pollId: poll.id }) }}">
-                        {{ 'polls.show.vote' | trans }}
-                    </a>
-                {% endif %}
-            </p>
         </div>
 
         {% set preferredChoices = poll.preferredChoices %}
@@ -116,6 +111,24 @@
 
             <div class="cols cols--always cols--center cols--gap-small">
                 <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
+
+                {% if voteId and not voteForm %}
+                    <a
+                        class="button button--small"
+                        href="{{ path('edit vote', { pollId: poll.id, id: voteId }) }}"
+                        data-turbo-action="replace"
+                    >
+                        {{ 'polls.show.vote_edit' | trans }}
+                    </a>
+                {% elseif voteId and voteForm %}
+                    <a
+                        class="button button--small"
+                        href="{{ path('poll', { id: poll.id }) }}"
+                        data-turbo-action="replace"
+                    >
+                        {{ 'forms.cancel' | trans }}
+                    </a>
+                {% endif %}
             </div>
 
             {% if maxCount == 0 %}
@@ -124,12 +137,36 @@
                 </p>
             {% endif %}
 
-            {{ include('proposals/_list.html.twig', {
-                proposals: poll.proposals,
-                displayMode: poll.type,
-                preferredChoices: preferredChoices,
-                maxCount: maxCount,
-            }) }}
+            {% if voteForm %}
+                {{ form_start(voteForm) }}
+                    {{ form_errors(voteForm) }}
+
+                    {{ include('proposals/_list.html.twig', {
+                        proposals: poll.proposals,
+                        displayMode: poll.type,
+                        preferredChoices: preferredChoices,
+                        maxCount: maxCount,
+                        voteForm: voteForm,
+                    }) }}
+
+                    <div class="panel panel--primary panel--rounded">
+                        {{ form_row(voteForm.authorName) }}
+                    </div>
+
+                    <div class="cols cols--always cols--gap">
+                        <div class="col--extend"></div>
+
+                        {{ form_row(voteForm.submit) }}
+                    </div>
+                {{ form_end(voteForm) }}
+            {% else %}
+                {{ include('proposals/_list.html.twig', {
+                    proposals: poll.proposals,
+                    displayMode: poll.type,
+                    preferredChoices: preferredChoices,
+                    maxCount: maxCount,
+                }) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
