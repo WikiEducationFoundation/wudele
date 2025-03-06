@@ -92,6 +92,8 @@ input.radio--vote + label {
     background-color: var(--radio-vote-background-color);
     border: 2px solid transparent;
     border-radius: var(--border-radius);
+
+    cursor: pointer;
 }
 
 @media (max-width: 500px) {
