@@ -55,7 +55,6 @@ class PollsControllerTest extends WebTestCase
         ]);
 
         $poll = Factory\PollFactory::last();
-        $this->assertNotNull($poll);
         $this->assertSame($title, $poll->getTitle());
         $this->assertSame($description, $poll->getDescription());
         $this->assertSame('classic', $poll->getType());
@@ -79,7 +78,6 @@ class PollsControllerTest extends WebTestCase
         ]);
 
         $poll = Factory\PollFactory::last();
-        $this->assertNotNull($poll);
         $this->assertSame($title, $poll->getTitle());
         $this->assertSame('date', $poll->getType());
         $id = $poll->getId();
