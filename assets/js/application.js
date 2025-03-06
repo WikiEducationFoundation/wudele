@@ -9,7 +9,6 @@ import ModalController from './controllers/modal_controller.js';
 import ModalOpenerController from './controllers/modal_opener_controller.js';
 import NotificationController from './controllers/notification_controller.js';
 import SlotsApplierController from './controllers/slots_applier_controller.js';
-import ViewController from './controllers/view_controller.js';
 
 const application = Application.start();
 application.register('calendar', CalendarController);
@@ -20,4 +19,3 @@ application.register('modal', ModalController);
 application.register('modal-opener', ModalOpenerController);
 application.register('notification', NotificationController);
 application.register('slots-applier', SlotsApplierController);
-application.register('view', ViewController);

@@ -36,7 +36,7 @@
     {% if maxCount > 0 %}
         <div class="panel__separator"></div>
 
-        <ul class="list--nostyle flow" data-view-target="view" data-view-value="simple">
+        <ul class="list--nostyle flow flow--smaller">
             <li class="votebar votebar--yes cols cols--gap-small">
                 <span class="col--size2 col--noshrink votebar__label">
                     {{ 'polls.votes.yes' | trans }}
@@ -95,7 +95,7 @@
             </li>
         </ul>
 
-        <div class="flow" data-view-target="view" data-view-value="details" hidden>
+        <div class="flow flow--smaller">
             {% for answers in proposal.answers | groupAnswersByValues %}
                 {% if answers | length > 0 %}
                     <ul class="list--nostyle">

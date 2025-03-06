@@ -12,6 +12,7 @@
     margin-bottom: var(--space-smaller);
 
     color: var(--vote-color);
+    font-size: var(--font-size-smaller);
 
     border: 1px solid var(--vote-border-color);
     border-radius: var(--border-radius);
