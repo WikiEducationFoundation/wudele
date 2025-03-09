@@ -124,34 +124,12 @@
                 </p>
             {% endif %}
 
-            {% if poll.isClassicPoll %}
-                {% for proposal in poll.proposals %}
-                    <div class="panel panel--primary panel--rounded">
-                        {{ include('proposals/_proposal.html.twig', {
-                            proposal: proposal,
-                            isPreferred: preferredChoices and proposal in preferredChoices,
-                            maxCount: maxCount,
-                        }) }}
-                    </div>
-                {% endfor %}
-            {% elseif poll.isDatePoll %}
-                {% for dateAndProposals in poll.proposals|groupDateProposals %}
-                    {% set date = dateAndProposals[0] %}
-                    {% set proposals = dateAndProposals[1] %}
-
-                    <div class="panel panel--primary panel--rounded flow">
-                        <h3>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</h3>
-
-                        {% for proposal in proposals %}
-                            {{ include('proposals/_proposal.html.twig', {
-                                proposal: proposal,
-                                isPreferred: preferredChoices and proposal in preferredChoices,
-                                maxCount: maxCount,
-                            }) }}
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            {% endif %}
+            {{ include('proposals/_list.html.twig', {
+                proposals: poll.proposals,
+                displayMode: poll.type,
+                preferredChoices: preferredChoices,
+                maxCount: maxCount,
+            }) }}
         </div>
     </div>
 {% endblock %}

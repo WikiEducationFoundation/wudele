@@ -1,0 +1,34 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% if displayMode == 'classic' %}
+    {% for proposal in proposals %}
+        <div class="panel panel--primary panel--rounded">
+            {{ include('proposals/_proposal.html.twig', {
+                proposal: proposal,
+                isPreferred: preferredChoices and proposal in preferredChoices,
+                maxCount: maxCount,
+            }) }}
+        </div>
+    {% endfor %}
+{% elseif displayMode == 'date' %}
+    {% for dateAndProposals in proposals|groupDateProposals %}
+        {% set date = dateAndProposals[0] %}
+        {% set proposals = dateAndProposals[1] %}
+
+        <div class="panel panel--primary panel--rounded flow">
+            <h3>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</h3>
+
+            {% for proposal in proposals %}
+                {{ include('proposals/_proposal.html.twig', {
+                    proposal: proposal,
+                    isPreferred: preferredChoices and proposal in preferredChoices,
+                    maxCount: maxCount,
+                }) }}
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endif %}
