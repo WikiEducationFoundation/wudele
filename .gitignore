@@ -7,7 +7,7 @@
 
 /node_modules
 
-/.phpunit.result.cache
+/.phpunit-cache
 /coverage
 
 /public/dev_assets
