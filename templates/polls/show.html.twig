@@ -57,7 +57,7 @@
                         {{ 'polls.show.best_proposals.info' | trans({
                             countChoices: preferredChoices|length,
                             countYes: firstChoice.countAnswers('yes'),
-                        }) }}
+                        }) | raw }}
                     </p>
 
                     <div class="panel panel--success panel--rounded panel--border">

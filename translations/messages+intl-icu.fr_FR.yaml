@@ -53,7 +53,7 @@ polls.dates.title: 'Choisissez les dates'
 polls.new.title: 'Création de sondage'
 polls.proposals.best: 'Choix préféré'
 polls.proposals.title: 'Choisissez les propositions'
-polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec {countYes} oui est\_:} other {Les choix préférés avec {countYes} oui sont\_:} }"
+polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
 polls.show.created_by: 'Sondage créé par {by}'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"
