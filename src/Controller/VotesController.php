@@ -16,9 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VotesController extends BaseController
 {
-    #[Route('/polls/{pollId:poll}/votes/{id:vote}/edit', name: 'edit vote')]
+    #[Route('/polls/{slug:poll}/votes/{id:vote}/edit', name: 'edit vote')]
     public function edit(
-        #[MapEntity(mapping: ['poll' => 'id'])]
+        #[MapEntity(mapping: ['poll' => 'slug'])]
         Entity\Poll $poll,
         Entity\Vote $vote,
         Request $request,
@@ -42,7 +42,7 @@ class VotesController extends BaseController
             $this->addFlash('success', 'vote.updated');
 
             return $this->redirectToRoute('poll', [
-                'id' => $poll->getId(),
+                'slug' => $poll->getSlug(),
             ]);
         }
 

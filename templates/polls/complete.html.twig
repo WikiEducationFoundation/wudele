@@ -39,7 +39,7 @@
                         <input
                             id="poll-link"
                             type="url"
-                            value="{{ url('poll', { id: poll.id }) }}"
+                            value="{{ url('poll', { slug: poll.slug }) }}"
                             readonly
                             data-copy-to-clipboard-target="copyable"
                         />
@@ -63,7 +63,7 @@
             </p>
 
             <p>
-                <a class="button button--primary button--block text--center" href="{{ path('poll', { id: poll.id }) }}">
+                <a class="button button--primary button--block text--center" href="{{ path('poll', { slug: poll.slug }) }}">
                     {{ 'polls.complete.see' | trans }}
                 </a>
             </p>

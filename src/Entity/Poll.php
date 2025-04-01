@@ -12,16 +12,24 @@ use App\Repository;
 use App\Utils;
 use Doctrine\Common\Collections;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: Repository\PollRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(
+    fields: 'slug',
+    message: new TranslatableMessage('poll.slug.already_used', domain: 'validators'),
+)]
 class Poll implements ActivityMonitor\TrackableEntityInterface
 {
     public const MAX_TITLE_LENGTH = 200;
     public const MAX_AUTHOR_NAME_LENGTH = 100;
+    public const MAX_SLUG_LENGTH = 20;
+    public const SLUG_PATTERN = '/^[\w\-]+$/';
 
     public const TYPES = ['date', 'classic'];
     public const DEFAULT_TYPE = 'classic';
@@ -40,6 +48,17 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
 
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $completedAt = null;
+
+    #[ORM\Column(length: 20, unique: true, nullable: true)]
+    #[Assert\Length(
+        max: self::MAX_TITLE_LENGTH,
+        maxMessage: new TranslatableMessage('poll.slug.max_length', domain: 'validators'),
+    )]
+    #[Assert\Regex(
+        pattern: self::SLUG_PATTERN,
+        message: new TranslatableMessage('poll.slug.pattern', domain: 'validators'),
+    )]
+    private ?string $slug = null;
 
     #[ORM\Column(length: 20)]
     private ?string $adminToken = null;
@@ -351,6 +370,27 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         }
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    #[ORM\PostPersist]
+    public function setDefaultSlug(PostPersistEventArgs $eventArgs): void
+    {
+        if (!$this->slug) {
+            $this->setSlug($this->getId());
+            $eventArgs->getObjectManager()->flush();
+        }
     }
 
     public function getAdminToken(): ?string

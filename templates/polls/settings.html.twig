@@ -1,0 +1,46 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'polls.settings.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <div class="flow">
+            <h1>
+                {{ 'polls.settings.title' | trans }}
+            </h1>
+
+            <p class="text--secondary">
+                {{ 'polls.steps' | trans({ step: process.stepNumber('settings'), total: process.totalSteps }) }}
+                {{ 'polls.steps.optional' | trans }}
+            </p>
+        </div>
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            <div class="panel panel--rounded panel--primary flow">
+                <h2 class="text--primary">
+                    {{ 'polls.settings.slug.title' | trans }}
+                </h2>
+
+                {{ form_row(form.slug) }}
+            </div>
+
+            <div class="cols cols--always cols--gap">
+                <a class="button" href="{{ process.previousStepUrl('settings') }}">
+                    {{ 'forms.previous' | trans }}
+                </a>
+
+                <div class="col--extend"></div>
+
+                {{ form_row(form.submit) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

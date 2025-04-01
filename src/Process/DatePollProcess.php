@@ -16,6 +16,7 @@ class DatePollProcess extends Process
         'init',
         'dates',
         'slots',
+        'settings',
         'author',
         'summary',
         'end',
@@ -36,7 +37,7 @@ class DatePollProcess extends Process
             return $this->poll->isTitleSet();
         } elseif ($stepName === 'dates') {
             return !$this->poll->getDates()->isEmpty();
-        } elseif ($stepName === 'slots') {
+        } elseif ($stepName === 'slots' || $stepName === 'settings') {
             return !$this->poll->getProposals()->isEmpty();
         } elseif ($stepName === 'author') {
             return $this->poll->isAuthorSet();
@@ -61,6 +62,11 @@ class DatePollProcess extends Process
             ]);
         } elseif ($stepName === 'slots') {
             return $this->urlGenerator->generate('edit poll slots', [
+                'id' => $this->poll->getId(),
+                'token' => $this->poll->getAdminToken(),
+            ]);
+        } elseif ($stepName === 'settings') {
+            return $this->urlGenerator->generate('edit poll settings', [
                 'id' => $this->poll->getId(),
                 'token' => $this->poll->getAdminToken(),
             ]);

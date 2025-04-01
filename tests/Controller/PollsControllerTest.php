@@ -110,7 +110,21 @@ class PollsControllerTest extends WebTestCase
             'title' => 'My poll',
         ])->completed()->create();
 
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}");
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'My poll');
+    }
+
+    public function testGetShowWithCustomSlugRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'slug' => 'my-slug',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_GET, '/polls/my-slug');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'My poll');
@@ -126,7 +140,7 @@ class PollsControllerTest extends WebTestCase
         $this->expectException(NotFoundHttpException::class);
 
         $client->catchExceptions(false);
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}");
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
     }
 
     public function testPostShowCreatesAVote(): void
@@ -138,7 +152,7 @@ class PollsControllerTest extends WebTestCase
 
         $this->assertNotFalse($proposal);
 
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}", [
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
             'vote' => [
                 '_token' => $this->getCsrf($client, 'vote'),
                 'authorName' => $name,
@@ -165,7 +179,7 @@ class PollsControllerTest extends WebTestCase
         $proposal = $poll->getProposals()->first();
         $name = 'Alix';
 
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}", [
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
             'vote' => [
                 '_token' => 'not the token',
                 'authorName' => $name,
@@ -307,7 +321,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($poll, $proposals[0]->getPoll());
         $this->assertSame('Bar', $proposals[1]->getLabel());
         $this->assertSame($poll, $proposals[1]->getPoll());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
     }
 
     public function testPostProposalsReplacesExistingProposals(): void
@@ -511,7 +525,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($date, $proposals[0]->getDate());
         $this->assertSame($slot2, $proposals[1]->getLabel());
         $this->assertSame($date, $proposals[1]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
     }
 
     public function testPostSlotsCreatesADefaultProposalIfNoneArePosted(): void
@@ -538,7 +552,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($proposals));
         $this->assertSame('Day', $proposals[0]->getLabel());
         $this->assertSame($date, $proposals[0]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
     }
 
     public function testPostSlotsFailsIfCsrfTokenIsInvalid(): void
@@ -577,6 +591,73 @@ class PollsControllerTest extends WebTestCase
         Factory\ProposalFactory::assert()->count(0);
     }
 
+    public function testGetSettingsRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Configure the poll');
+    }
+
+    public function testGetSettingsRedirectsIfThereAreNoProposals(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::createOne();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+    }
+
+    public function testGetSettingsFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/settings");
+    }
+
+    public function testPostSettingsCanChangeTheSlug(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->create();
+        $slug = 'my-slug';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
+            'poll_settings' => [
+                '_token' => $this->getCsrf($client, 'poll_settings'),
+                'slug' => $slug,
+            ]
+        ]);
+
+        $this->refresh($poll);
+        $this->assertSame($slug, $poll->getSlug());
+    }
+
+    public function testPostSettingsFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->create();
+        $slug = 'my-slug';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
+            'poll_settings' => [
+                '_token' => 'not the token',
+                'slug' => $slug,
+            ]
+        ]);
+
+        $this->assertSelectorTextContains('#poll_settings_error', 'The CSRF token is invalid');
+        $this->refresh($poll);
+        $this->assertSame($poll->getId(), $poll->getSlug());
+    }
+
     public function testGetAuthorRendersCorrectly(): void
     {
         $client = static::createClient();
@@ -595,7 +676,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/author");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
     }
 
     public function testGetAuthorFailsIfAdminTokenDoesNotMatch(): void

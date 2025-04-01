@@ -109,3 +109,13 @@
         </span>
     {%- endif %}
 {%- endblock -%}
+
+{%- block urlprefix_widget -%}
+    <div class="cols cols--center input input--urlprefix">
+        <p class="col--noshrink input__prefix">
+            {{ url('home') }}polls/
+        </p>
+
+        {{- form_widget(form, { 'attr': { 'class': 'input__url' } }) -}}
+    </div>
+{%- endblock urlprefix_widget -%}

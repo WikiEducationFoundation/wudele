@@ -115,7 +115,7 @@
                 {% if voteId and not voteForm %}
                     <a
                         class="button button--small"
-                        href="{{ path('edit vote', { pollId: poll.id, id: voteId }) }}"
+                        href="{{ path('edit vote', { slug: poll.slug, id: voteId }) }}"
                         data-turbo-action="replace"
                     >
                         {{ 'polls.show.vote_edit' | trans }}
@@ -123,7 +123,7 @@
                 {% elseif voteId and voteForm %}
                     <a
                         class="button button--small"
-                        href="{{ path('poll', { id: poll.id }) }}"
+                        href="{{ path('poll', { slug: poll.slug }) }}"
                         data-turbo-action="replace"
                     >
                         {{ 'forms.cancel' | trans }}

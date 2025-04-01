@@ -58,7 +58,7 @@ class PollsController extends BaseController
         ]);
     }
 
-    #[Route('/polls/{id:poll}', name: 'poll')]
+    #[Route('/polls/{slug:poll}', name: 'poll')]
     public function show(
         Entity\Poll $poll,
         Request $request,
@@ -90,7 +90,7 @@ class PollsController extends BaseController
                 $this->addFlash('success', 'vote.created');
 
                 return $this->redirectToRoute('poll', [
-                    'id' => $poll->getId(),
+                    'slug' => $poll->getSlug(),
                 ]);
             }
         }
@@ -128,6 +128,42 @@ class PollsController extends BaseController
         }
 
         return $this->render('polls/new.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+            'process' => $process,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/settings', name: 'edit poll settings')]
+    public function settings(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('settings')) {
+            return $this->redirect($process->getPreviousStepUrl('settings'));
+        }
+
+        $form = $this->createNamedForm('poll_settings', Form\PollSettingsForm::class, $poll);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $poll = $form->getData();
+
+            $pollRepository->save($poll);
+
+            return $this->redirect($process->getNextStepUrl('settings'));
+        }
+
+        return $this->render('polls/settings.html.twig', [
             'poll' => $poll,
             'form' => $form,
             'process' => $process,

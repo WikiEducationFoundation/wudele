@@ -30,7 +30,7 @@ class VotesControllerTest extends WebTestCase
             'poll' => $poll,
         ]);
 
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/votes/{$vote->getId()}/edit");
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/votes/{$vote->getId()}/edit");
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'My poll');
@@ -48,7 +48,7 @@ class VotesControllerTest extends WebTestCase
         $this->expectException(NotFoundHttpException::class);
 
         $client->catchExceptions(false);
-        $client->request(Request::METHOD_GET, "/polls/{$poll2->getId()}/votes/{$vote->getId()}/edit");
+        $client->request(Request::METHOD_GET, "/polls/{$poll2->getSlug()}/votes/{$vote->getId()}/edit");
     }
 
     public function testPostEditChangesTheVoteValues(): void
@@ -70,7 +70,7 @@ class VotesControllerTest extends WebTestCase
             'value' => $oldValue,
         ]);
 
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/votes/{$vote->getId()}/edit", [
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/votes/{$vote->getId()}/edit", [
             'vote' => [
                 '_token' => $this->getCsrf($client, 'vote'),
                 'authorName' => $newName,
@@ -105,7 +105,7 @@ class VotesControllerTest extends WebTestCase
             'value' => $oldValue,
         ]);
 
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/votes/{$vote->getId()}/edit", [
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/votes/{$vote->getId()}/edit", [
             'vote' => [
                 '_token' => 'not the token',
                 'authorName' => $newName,

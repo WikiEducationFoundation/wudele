@@ -24,6 +24,8 @@ forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
+forms.poll_settings_form.slug.help: 'Attention, modifier le lien de votre sondage le rend plus facilement accessible à tout le monde.'
+forms.poll_settings_form.slug.label: 'Saisissez le lien de votre sondage'
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
 forms.previous: Précédent
@@ -53,6 +55,8 @@ polls.dates.title: 'Choisissez les dates'
 polls.new.title: 'Création de sondage'
 polls.proposals.best: 'Choix préféré'
 polls.proposals.title: 'Choisissez les propositions'
+polls.settings.slug.title: 'Personnaliser le lien du sondage'
+polls.settings.title: 'Paramétrez le sondage'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
 polls.show.created_by: 'Sondage créé par {by}'
@@ -65,6 +69,7 @@ polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
+polls.steps.optional: (facultative)
 polls.summary.author.email: 'Adresse email'
 polls.summary.author.name: Pseudonyme
 polls.summary.author.no_email: 'Aucune adresse renseignée'
