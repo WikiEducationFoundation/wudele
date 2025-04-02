@@ -26,6 +26,7 @@
 @import "./components/loaders.css";
 @import "./components/modal.css";
 @import "./components/panels.css";
+@import "./custom/proposals.css";
 @import "./custom/votes.css";
 @import "./layout/body.css";
 @import "./layout/header.css";

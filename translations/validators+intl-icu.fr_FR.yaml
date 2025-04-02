@@ -16,3 +16,4 @@ proposal.label.max_length: 'Saisissez une proposition de moins de {limit} caract
 proposal.label.required: 'Saisissez une proposition.'
 vote.author_name.max_length: 'Saisissez un pseudo de moins de {limit} caractères.'
 vote.author_name.required: 'Saisissez un pseudo.'
+vote.max_votes.limited: 'Il y a déjà eu {max} vote(s) pour cette proposition, vous ne pouvez pas voter pour elle.'

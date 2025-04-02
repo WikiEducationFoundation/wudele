@@ -18,6 +18,11 @@ class PollSettingsForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder->add('maxVotes', Type\IntegerType::class, [
+            'label' => new TranslatableMessage('forms.poll_settings_form.max_votes.label'),
+            'required' => false,
+        ]);
+
         $builder->add('slug', Type\TextType::class, [
             'trim' => true,
             'empty_data' => '',

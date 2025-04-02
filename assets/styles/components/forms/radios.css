@@ -96,6 +96,13 @@ input.radio--vote + label {
     cursor: pointer;
 }
 
+input.radio--vote[disabled]:not(:checked) + label {
+    --radio-vote-color: var(--color-grey9);
+    --radio-vote-background-color: var(--color-grey3);
+
+    text-decoration: line-through;
+}
+
 @media (max-width: 500px) {
     input.radio--vote + label {
         font-size: var(--font-size-small);

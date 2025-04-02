@@ -172,6 +172,41 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($proposal->getId(), $answers[0]->getProposal()?->getId());
     }
 
+    public function testPostShowFailsIfMaxVoteIsReached(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'maxVotes' => 1,
+        ])->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+        $answer = Factory\AnswerFactory::createOne([
+            'vote' => $vote,
+            'proposal' => $proposal,
+            'value' => 'yes',
+        ]);
+        $name = 'Alix';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => $name,
+                'answers' => [
+                    ['value' => 'yes'],
+                ],
+            ],
+        ]);
+
+        $this->assertSelectorTextContains(
+            '#vote_answers_0_value_error',
+            'There have already been 1 vote(s) for this proposal, you cannot vote for it.'
+        );
+        $votes = Factory\VoteFactory::all();
+        $this->assertSame(1, count($votes));
+    }
+
     public function testPostShowFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
@@ -623,20 +658,23 @@ class PollsControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/settings");
     }
 
-    public function testPostSettingsCanChangeTheSlug(): void
+    public function testPostSettingsCanChangeOptions(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new()->withProposal()->create();
+        $maxVotes = 1;
         $slug = 'my-slug';
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
             'poll_settings' => [
                 '_token' => $this->getCsrf($client, 'poll_settings'),
+                'maxVotes' => $maxVotes,
                 'slug' => $slug,
             ]
         ]);
 
         $this->refresh($poll);
+        $this->assertSame($maxVotes, $poll->getMaxVotes());
         $this->assertSame($slug, $poll->getSlug());
     }
 

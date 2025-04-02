@@ -144,11 +144,20 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
-    public function countAnswers(string $answerValue): int
+    public function countAnswers(string $answerValue, ?Vote $excludeVote = null): int
     {
-        $criteria = Collections\Criteria::create();
-        $expr = Collections\Criteria::expr()->eq('value', $answerValue);
-        $criteria->where($expr);
+        $expressionBuilder = Collections\Criteria::expr();
+
+        if ($excludeVote === null) {
+            $expression = $expressionBuilder->eq('value', $answerValue);
+        } else {
+            $expression = $expressionBuilder->andX(
+                $expressionBuilder->eq('value', $answerValue),
+                $expressionBuilder->neq('vote', $excludeVote),
+            );
+        }
+
+        $criteria = new Collections\Criteria($expression);
 
         return count($this->answers->matching($criteria));
     }

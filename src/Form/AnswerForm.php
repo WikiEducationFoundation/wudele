@@ -8,6 +8,7 @@ namespace App\Form;
 
 use App\Entity;
 use App\Service;
+use Doctrine\Common\Collections;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,11 +30,23 @@ class AnswerForm extends AbstractType
             $form = $event->getForm();
             $answer = $event->getData();
             $proposal = $answer->getProposal();
+            $poll = $proposal->getPoll();
 
             $date = $proposal->getDate();
             $proposalDate = '';
             if ($date && $date->getValue()) {
                 $proposalDate = $this->dateTranslator->format($date->getValue(), 'EEEE d MMMM yyyy');
+            }
+
+            $yesDisabled = false;
+            $maxVotes = $poll->getMaxVotes();
+
+            if ($maxVotes !== null && $maxVotes > 0) {
+                $vote = $answer->getVote();
+                $excludeVote = $vote->getId() !== null ? $vote : null;
+                $countYes = $proposal->countAnswers('yes', excludeVote: $excludeVote);
+
+                $yesDisabled = $countYes >= $maxVotes;
             }
 
             $form->add('value', Type\ChoiceType::class, [
@@ -46,10 +59,16 @@ class AnswerForm extends AbstractType
                     return Entity\Answer::translateValue($choice);
                 },
 
-                'choice_attr' => function (string $choice): array {
-                    return [
+                'choice_attr' => function (string $choice) use ($yesDisabled): array {
+                    $attrs = [
                         'class' => "radio--vote radio--vote-{$choice}",
                     ];
+
+                    if ($choice === 'yes' && $yesDisabled) {
+                        $attrs['disabled'] = true;
+                    }
+
+                    return $attrs;
                 },
 
                 'attr' => [

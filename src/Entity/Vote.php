@@ -9,6 +9,7 @@ namespace App\Entity;
 use App\ActivityMonitor;
 use App\Doctrine;
 use App\Repository;
+use App\Validator as AppAssert;
 use Doctrine\Common\Collections;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +17,9 @@ use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: Repository\VoteRepository::class)]
+#[AppAssert\MaxVotes(
+    message: new TranslatableMessage('vote.max_votes.limited', domain: 'validators'),
+)]
 class Vote implements ActivityMonitor\TrackableEntityInterface
 {
     public const MAX_AUTHOR_NAME_LENGTH = 100;

@@ -127,6 +127,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     )]
     private Collections\Collection $votes;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $maxVotes = null;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -429,6 +432,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
                 $vote->setPoll(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMaxVotes(): ?int
+    {
+        return $this->maxVotes;
+    }
+
+    public function setMaxVotes(?int $maxVotes): static
+    {
+        $this->maxVotes = $maxVotes;
 
         return $this;
     }

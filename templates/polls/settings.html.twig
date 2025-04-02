@@ -26,6 +26,14 @@
 
             <div class="panel panel--rounded panel--primary flow">
                 <h2 class="text--primary">
+                    {{ 'polls.settings.max_votes.title' | trans }}
+                </h2>
+
+                {{ form_row(form.maxVotes) }}
+            </div>
+
+            <div class="panel panel--rounded panel--primary flow">
+                <h2 class="text--primary">
                     {{ 'polls.settings.slug.title' | trans }}
                 </h2>
 
