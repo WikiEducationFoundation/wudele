@@ -167,6 +167,10 @@ input.radio--vote + label::after {
     display: none;
 }
 
+input.radio--vote + label .label__details {
+    display: none;
+}
+
 .radio-container label {
     width: 100%;
     padding: var(--space-medium);

@@ -54,6 +54,8 @@ class AnswerForm extends AbstractType
                 'label' => false,
                 'empty_data' => 'no',
                 'expanded' => true,
+                'required' => false,
+                'placeholder' => false,
 
                 'choice_label' => function (string $choice): TranslatableMessage {
                     return Entity\Answer::translateValue($choice);
