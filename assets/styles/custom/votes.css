@@ -93,6 +93,7 @@ input.radio--vote + label {
     gap: var(--space-medium);
 
     color: var(--radio-vote-color);
+    font-size: var(--font-size-small);
     text-align: center;
 
     background-color: var(--radio-vote-background-color);
@@ -138,7 +139,7 @@ input.radio--vote-no:checked + label {
 }
 
 input.radio--vote + label::before {
-    width: 2rem;
+    width: 1.5rem;
     height: auto;
     margin-right: 0;
 
@@ -151,10 +152,14 @@ input.radio--vote + label::before {
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: cover;
+
+    opacity: 0.4;
 }
 
 input.radio--vote:checked + label::before {
     background-color: var(--radio-vote-border-color);
+
+    opacity: 1;
 }
 
 input.radio--vote-yes + label::before {
