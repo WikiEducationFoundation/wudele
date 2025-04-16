@@ -1,5 +1,37 @@
 # Changelog
 
+## 2025-04-16 - 0.4.0
+
+### New
+
+- Allow to customise the links to the polls ([78010c3](https://framagit.org/pollaris/pollaris/-/commit/78010c3))
+- Allow to limit the number of "yes" answers ([57ceb96](https://framagit.org/pollaris/pollaris/-/commit/57ceb96))
+- Allow to display the polls as tables ([510a027](https://framagit.org/pollaris/pollaris/-/commit/510a027))
+
+### Improvements
+
+- Move the vote on the poll page ([32e9a40](https://framagit.org/pollaris/pollaris/-/commit/32e9a40))
+- Always display poll details and summary ([fa79228](https://framagit.org/pollaris/pollaris/-/commit/fa79228))
+- Change the vote cursor by a pointer ([8e3b2ca](https://framagit.org/pollaris/pollaris/-/commit/8e3b2ca))
+- Display count of preferred choices in bold ([ed71e8b](https://framagit.org/pollaris/pollaris/-/commit/ed71e8b))
+- Improve the look of the vote icons ([0192af6](https://framagit.org/pollaris/pollaris/-/commit/0192af6))
+- Increase contrast of "maybe" votes ([ef60fe7](https://framagit.org/pollaris/pollaris/-/commit/ef60fe7))
+
+### Bug fixes
+
+- Allow to vote without selecting options ([2430897](https://framagit.org/pollaris/pollaris/-/commit/2430897))
+
+### Technical
+
+- Update the dependencies ([1e1976f](https://framagit.org/pollaris/pollaris/-/commit/1e1976f), [a1d89d7](https://framagit.org/pollaris/pollaris/-/commit/a1d89d7), [9312639](https://framagit.org/pollaris/pollaris/-/commit/9312639), [43a26d3](https://framagit.org/pollaris/pollaris/-/commit/43a26d3), [fb9f0f5](https://framagit.org/pollaris/pollaris/-/commit/fb9f0f5), [d573ffb](https://framagit.org/pollaris/pollaris/-/commit/d573ffb), [33e86f9](https://framagit.org/pollaris/pollaris/-/commit/33e86f9), [f4f5436](https://framagit.org/pollaris/pollaris/-/commit/f4f5436), [15243c1](https://framagit.org/pollaris/pollaris/-/commit/15243c1), [2933866](https://framagit.org/pollaris/pollaris/-/commit/2933866))
+
+### Developers
+
+- Add a `.no-mobile` class ([05c9426](https://framagit.org/pollaris/pollaris/-/commit/05c9426))
+- Move `.radio--vote` class to custom/votes.css ([a4f649d](https://framagit.org/pollaris/pollaris/-/commit/a4f649d))
+- Extract a `proposals/_list` partial template ([bcdfc67](https://framagit.org/pollaris/pollaris/-/commit/bcdfc67))
+- Fix running local tests ([fb8b5df](https://framagit.org/pollaris/pollaris/-/commit/fb8b5df))
+
 ## 2025-01-12 - 0.3.0
 
 ### New
