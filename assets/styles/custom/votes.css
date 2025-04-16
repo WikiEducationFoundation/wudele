@@ -34,7 +34,7 @@
 .vote--maybe {
     --vote-color: var(--color-warning12);
     --vote-border-color: var(--color-warning11);
-    --vote-background-color: var(--color-warning2);
+    --vote-background-color: var(--color-warning3);
 }
 
 .vote .icon {
