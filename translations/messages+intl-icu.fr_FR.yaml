@@ -62,6 +62,8 @@ polls.settings.title: 'Paramétrez le sondage'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
 polls.show.created_by: 'Sondage créé par {by}'
+polls.show.display_list: 'Affichage liste'
+polls.show.display_table: 'Affichage tableau'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"
 polls.show.poll: Sondage
 polls.show.vote.created: 'Votre vote est confirmé. Vous pouvez encore le modifier si vous le souhaitez.'
@@ -85,3 +87,4 @@ polls.votes.no: Non
 polls.votes.none: Aucun
 polls.votes.yes: Oui
 polls.votes.yes.count: "{count}\_Oui"
+polls.votes.yours: 'Votre vote'

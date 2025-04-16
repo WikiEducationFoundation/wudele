@@ -62,6 +62,8 @@ polls.settings.title: 'Configure the poll'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
 polls.show.created_by: 'Poll created by {by}'
+polls.show.display_list: 'List view'
+polls.show.display_table: 'Table view'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
 polls.show.vote.created: 'Your vote is confirmed. You can still change it if you wish.'
@@ -85,3 +87,4 @@ polls.votes.no: 'No'
 polls.votes.none: None
 polls.votes.yes: 'Yes'
 polls.votes.yes.count: "{count}\_Yes"
+polls.votes.yours: 'Your vote'

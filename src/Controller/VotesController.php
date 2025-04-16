@@ -28,6 +28,8 @@ class VotesController extends BaseController
             throw $this->createNotFoundException('Vote is not part of the poll');
         }
 
+        $displayMode = $request->query->get('display', 'list');
+
         $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
 
         $form->handleRequest($request);
@@ -51,6 +53,7 @@ class VotesController extends BaseController
             'voteId' => $vote->getId(),
             'voteForm' => $form,
             'preserveScroll' => true,
+            'displayMode' => $displayMode,
         ]);
     }
 }

@@ -1,0 +1,96 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+<div class="proposals-table-container" data-controller="proposals-table">
+    <table class="proposals-table">
+        {% if displayMode == 'classic' %}
+            <tr>
+                <td class="proposals-table__sticky-cell"></td>
+
+                {% for proposal in proposals %}
+                    <th>
+                        <span class="proposal__label">{{ proposal.label }}</span>
+                    </th>
+                {% endfor %}
+            </tr>
+        {% elseif displayMode == 'date' %}
+            <tr>
+                <td class="proposals-table__sticky-cell"></td>
+
+                {% for dateAndProposals in proposals|groupDateProposals %}
+                    {% set date = dateAndProposals[0] %}
+                    {% set dateProposals = dateAndProposals[1] %}
+
+                    {% for proposal in dateProposals %}
+                        <th>
+                            <span class="proposal__day-week">{{ date.value | dateTrans('EEE') }}</span>
+                            <span class="proposal__day-month">{{ date.value | dateTrans('d') }}</span>
+                            <span class="proposal__month">{{ date.value | dateTrans('MMM y') }}</span>
+                            <span class="proposal__label">{{ proposal.label }}</span>
+                        </th>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        {% endif %}
+
+        {% for vote in votes %}
+            <tr>
+                <th class="proposals-table__sticky-cell">
+                    <div class="proposals-table__author">
+                        {{ vote.authorName }}
+                    </div>
+                </th>
+
+                {% for answer in vote.answers %}
+                    <td class="text--center">
+                        {% if answer.value == 'yes' %}
+                            <span class="vote vote--yes">
+                                {{ icon('square-check') }}
+
+                                <span class="sr-only">
+                                    {{ 'polls.votes.yes' | trans }}
+                                </span>
+                            </span>
+                        {% elseif answer.value == 'no' %}
+                            <span class="vote vote--no">
+                                {{ icon('square-xmark') }}
+
+                                <span class="sr-only">
+                                    {{ 'polls.votes.no' | trans }}
+                                </span>
+                            </span>
+                        {% elseif answer.value == 'maybe' %}
+                            <span class="vote vote--maybe">
+                                {{ icon('square-minus') }}
+
+                                <span class="sr-only">
+                                    {{ 'polls.votes.maybe' | trans }}
+                                </span>
+                            </span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+        {% if voteForm %}
+            <tr>
+                <th class="proposals-table__sticky-cell">
+                    <div class="proposals-table__author proposals-table__author--new">
+                        {{ 'polls.votes.yours' | trans }}
+                    </div>
+                </th>
+
+                {% for proposal in proposals %}
+                    <td>
+                        {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
+                        {{ form_row(answerForm) }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endif %}
+    </table>
+</div>

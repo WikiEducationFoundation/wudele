@@ -5,3 +5,94 @@
 .panel--proposal:has(.form__error) {
     box-shadow: 0 0 2px 1px var(--color-error9);
 }
+
+.proposals-table-container {
+    position: relative;
+
+    padding-top: var(--space-medium);
+    padding-bottom: var(--space-medium);
+
+    overflow-x: auto;
+}
+
+.proposals-table {
+    margin-right: auto;
+    margin-left: auto;
+
+    border-collapse: separate;
+    border-spacing: var(--space-medium) var(--space-smaller);
+}
+
+.proposals-table td {
+    padding: var(--space-smaller);
+}
+
+.proposals-table .proposal__day-week,
+.proposals-table .proposal__day-month,
+.proposals-table .proposal__month,
+.proposals-table .proposal__label {
+    display: block;
+    width: 150px;
+
+    font-size: var(--font-size-small);
+}
+
+.proposals-table .proposal__day-week,
+.proposals-table .proposal__day-month,
+.proposals-table .proposal__month {
+    color: var(--color-grey11);
+    font-weight: normal;
+}
+
+.proposals-table .proposal__label {
+    margin-top: var(--space-medium);
+    margin-bottom: var(--space-medium);
+}
+
+.proposals-table .vote {
+    display: block;
+    width: 150px;
+    margin-bottom: 0;
+    padding: var(--space-small) var(--space-smaller);
+
+    font-size: var(--font-size-normal);
+
+    border: none;
+}
+
+.proposals-table .vote__choices {
+    flex-direction: column;
+    gap: var(--space-smaller);
+}
+
+.proposals-table input.radio--vote + label {
+    width: 150px;
+    padding: var(--space-smaller);
+
+    flex-direction: row;
+    gap: var(--space-small);
+}
+
+.proposals-table__sticky-cell {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+
+    background-color: var(--color-grey1);
+}
+
+.proposals-table__sticky-cell:not(:empty) {
+    border-right: 2px solid var(--color-grey6);
+}
+
+.proposals-table__author {
+    width: 150px;
+    padding: var(--space-small);
+
+    font-weight: normal;
+    text-align: right;
+}
+
+.proposals-table__author--new {
+    font-weight: bold;
+}

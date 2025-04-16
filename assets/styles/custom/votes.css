@@ -81,6 +81,13 @@
     --votebar-background-color: var(--color-error3);
 }
 
+.vote__choices {
+    display: flex;
+
+    align-items: stretch;
+    gap: var(--space-medium);
+}
+
 input.radio--vote + label {
     --radio-vote-color: var(--color-primary11);
     --radio-vote-border-color: transparent;

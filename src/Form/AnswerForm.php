@@ -74,7 +74,7 @@ class AnswerForm extends AbstractType
                 },
 
                 'attr' => [
-                    'class' => 'cols cols--always cols--gap',
+                    'class' => 'vote__choices',
                     'data-proposal-id' => $proposal->getId(),
                     'data-date' => $proposalDate,
                 ],

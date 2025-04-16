@@ -63,9 +63,6 @@ class VoteForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'attr' => [
-                'class' => 'form--standard',
-            ],
             'data_class' => Entity\Vote::class,
         ]);
     }

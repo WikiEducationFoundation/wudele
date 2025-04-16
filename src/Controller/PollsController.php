@@ -68,6 +68,8 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
+        $displayMode = $request->query->get('display', 'list');
+
         $session = $request->getSession();
         $voteId = $session->get("vote-{$poll->getId()}");
 
@@ -99,6 +101,7 @@ class PollsController extends BaseController
             'poll' => $poll,
             'voteId' => $voteId,
             'voteForm' => $voteForm,
+            'displayMode' => $displayMode,
         ]);
     }
 
