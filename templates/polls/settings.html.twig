@@ -40,6 +40,14 @@
                 {{ form_row(form.slug) }}
             </div>
 
+            <div class="panel panel--rounded panel--primary flow">
+                <h2 class="text--primary">
+                    {{ 'polls.settings.password.title' | trans }}
+                </h2>
+
+                {{ form_row(form.plainPassword) }}
+            </div>
+
             <div class="cols cols--always cols--gap">
                 <a class="button" href="{{ process.previousStepUrl('settings') }}">
                     {{ 'forms.previous' | trans }}

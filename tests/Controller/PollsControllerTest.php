@@ -6,6 +6,8 @@
 
 namespace App\Tests\Controller;
 
+use App\Security;
+use App\Service;
 use App\Tests\Helper;
 use App\Tests\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -130,6 +132,38 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'My poll');
     }
 
+    public function testGetShowDoesNotRedirectIfAuthenticatedToPasswordProtectedPoll(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+        $session = $this->getSession($client);
+        /** @var Security\PollSecurity */
+        $pollSecurity = $client->getContainer()->get(Security\PollSecurity::class);
+        $pollSecurity->authenticate($session, $poll);
+        $session->save();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'My poll');
+    }
+
+    public function testGetShowRedirectsIfNotAuthenticatedToPasswordProtectedPoll(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/authenticate", 302);
+    }
+
     public function testGetShowFailsIfPollIsNotComplete(): void
     {
         $client = static::createClient();
@@ -226,6 +260,117 @@ class PollsControllerTest extends WebTestCase
 
         $this->assertSelectorTextContains('#vote_error', 'The CSRF token is invalid');
         Factory\VoteFactory::assert()->count(0);
+    }
+
+    public function testGetAuthenticateRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/authenticate");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Authentication to a protected poll');
+    }
+
+    public function testGetAuthenticateRedirectsIfPollIsNotPasswordProtected(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => '',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/authenticate");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}", 302);
+    }
+
+    public function testGetAuthenticateRedirectsIfAlreadyAuthenticated(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+        $session = $this->getSession($client);
+        /** @var Security\PollSecurity */
+        $pollSecurity = $client->getContainer()->get(Security\PollSecurity::class);
+        $pollSecurity->authenticate($session, $poll);
+        $session->save();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/authenticate");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}", 302);
+    }
+
+    public function testPostAuthenticateAuthenticatesAndRedirects(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/authenticate", [
+            'poll_authentication' => [
+                '_token' => $this->getCsrf($client, 'poll_authentication'),
+                'password' => 'secret',
+            ],
+        ]);
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}", 302);
+        $session = $this->getSession($client);
+        /** @var Security\PollSecurity */
+        $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
+        $this->assertTrue($pollSecurity->isAuthenticated($session, $poll));
+    }
+
+    public function testPostAuthenticateFailsIfPasswordIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/authenticate", [
+            'poll_authentication' => [
+                '_token' => $this->getCsrf($client, 'poll_authentication'),
+                'password' => 'not the password',
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#poll_authentication_password_error', 'The password is incorrect');
+        $session = $this->getSession($client);
+        /** @var Security\PollSecurity */
+        $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
+        $this->assertFalse($pollSecurity->isAuthenticated($session, $poll));
+    }
+
+    public function testPostAuthenticateFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/authenticate", [
+            'poll_authentication' => [
+                '_token' => 'not the token',
+                'password' => 'secret',
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#poll_authentication_error', 'The CSRF token is invalid');
+        $session = $this->getSession($client);
+        /** @var Security\PollSecurity */
+        $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
+        $this->assertFalse($pollSecurity->isAuthenticated($session, $poll));
     }
 
     public function testGetEditRendersCorrectly(): void
@@ -710,12 +855,46 @@ class PollsControllerTest extends WebTestCase
                 '_token' => $this->getCsrf($client, 'poll_settings'),
                 'maxVotes' => $maxVotes,
                 'slug' => $slug,
+                'plainPassword' => [
+                    'first' => 'secret',
+                    'second' => 'secret',
+                ],
             ]
         ]);
 
         $this->refresh($poll);
         $this->assertSame($maxVotes, $poll->getMaxVotes());
         $this->assertSame($slug, $poll->getSlug());
+        /** @var Service\PollPassword */
+        $pollPassword = static::getContainer()->get(Service\PollPassword::class);
+        $this->assertTrue($pollPassword->verify($poll->getPassword() ?? '', 'secret'));
+    }
+
+    public function testPostSettingsDoesNotChangePasswordIfNotSet(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'password' => 'secret',
+        ])->withProposal()->create();
+        $maxVotes = 1;
+        $slug = 'my-slug';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
+            'poll_settings' => [
+                '_token' => $this->getCsrf($client, 'poll_settings'),
+                'maxVotes' => $maxVotes,
+                'slug' => $slug,
+                'plainPassword' => [
+                    'first' => '',
+                    'second' => '',
+                ],
+            ]
+        ]);
+
+        $this->refresh($poll);
+        /** @var Service\PollPassword */
+        $pollPassword = static::getContainer()->get(Service\PollPassword::class);
+        $this->assertTrue($pollPassword->verify($poll->getPassword() ?? '', 'secret'));
     }
 
     public function testPostSettingsFailsIfCsrfIsInvalid(): void

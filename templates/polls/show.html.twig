@@ -23,6 +23,8 @@
                     {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.created' | trans }) }}
                 {% elseif message == 'vote.updated' %}
                     {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.updated' | trans }) }}
+                {% elseif message == 'poll.authenticated' %}
+                    {{ include('notifications/_success.html.twig', { message: 'polls.show.authenticated' | trans }) }}
                 {% endif %}
             {% endfor %}
 

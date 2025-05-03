@@ -9,6 +9,7 @@ namespace App\Controller;
 use App\Entity;
 use App\Form;
 use App\Repository;
+use App\Security;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +24,16 @@ class VotesController extends BaseController
         Entity\Vote $vote,
         Request $request,
         Repository\VoteRepository $voteRepository,
+        Security\PollSecurity $pollSecurity,
     ): Response {
         if ($poll->getId() !== $vote->getPoll()->getId()) {
             throw $this->createNotFoundException('Vote is not part of the poll');
+        }
+
+        if (!$pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+            return $this->redirectToRoute('authenticate poll', [
+                'slug' => $poll->getSlug(),
+            ]);
         }
 
         $displayMode = $request->query->get('display', 'list');

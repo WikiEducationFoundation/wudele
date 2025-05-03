@@ -10,6 +10,7 @@ use App\Entity;
 use App\Form;
 use App\Process;
 use App\Repository;
+use App\Security;
 use App\Utils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,9 +64,16 @@ class PollsController extends BaseController
         Entity\Poll $poll,
         Request $request,
         Repository\VoteRepository $voteRepository,
+        Security\PollSecurity $pollSecurity,
     ): Response {
         if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
+        }
+
+        if (!$pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+            return $this->redirectToRoute('authenticate poll', [
+                'slug' => $poll->getSlug(),
+            ]);
         }
 
         $displayMode = $request->query->get('display', 'list');
@@ -103,6 +111,43 @@ class PollsController extends BaseController
             'voteId' => $voteId,
             'voteForm' => $voteForm,
             'displayMode' => $displayMode,
+        ]);
+    }
+
+    #[Route('/polls/{slug:poll}/authenticate', name: 'authenticate poll')]
+    public function authenticate(
+        Entity\Poll $poll,
+        Request $request,
+        Security\PollSecurity $pollSecurity,
+    ): Response {
+        if (!$poll->isCompleted()) {
+            throw $this->createNotFoundException('The poll doesn’t exist (yet).');
+        }
+
+        if (!$poll->isPasswordProtected() || $pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+            return $this->redirectToRoute('poll', [
+                'slug' => $poll->getSlug(),
+            ]);
+        }
+
+        $form = $this->createNamedForm('poll_authentication', Form\PollAuthenticationForm::class, options: [
+            'poll' => $poll,
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pollSecurity->authenticate($request->getSession(), $poll);
+
+            $this->addFlash('success', 'poll.authenticated');
+
+            return $this->redirectToRoute('poll', [
+                'slug' => $poll->getSlug(),
+            ]);
+        }
+
+        return $this->render('polls/authenticate.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
         ]);
     }
 
@@ -145,6 +190,7 @@ class PollsController extends BaseController
         Request $request,
         Repository\PollRepository $pollRepository,
         Process\PollProcessBuilder $pollProcessBuilder,
+        Security\PollSecurity $pollSecurity,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -163,6 +209,10 @@ class PollsController extends BaseController
             $poll = $form->getData();
 
             $pollRepository->save($poll);
+
+            if ($poll->isPasswordProtected()) {
+                $pollSecurity->authenticate($request->getSession(), $poll);
+            }
 
             return $this->redirect($process->getNextStepUrl('settings'));
         }

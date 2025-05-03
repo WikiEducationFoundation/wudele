@@ -7,6 +7,7 @@
 namespace App\Tests\Factory;
 
 use App\Entity;
+use App\Service;
 use App\Utils;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
@@ -15,6 +16,12 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class PollFactory extends PersistentObjectFactory
 {
+    public function __construct(
+        private Service\PollPassword $pollPassword,
+    ) {
+        parent::__construct();
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -28,7 +35,14 @@ final class PollFactory extends PersistentObjectFactory
 
     protected function initialize(): static
     {
-        return $this;
+        return $this->afterInstantiate(function (Entity\Poll $poll): void {
+            if (!$poll->getPassword()) {
+                return;
+            }
+
+            $hashedPassword = $this->pollPassword->hash($poll->getPassword());
+            $poll->setPassword($hashedPassword);
+        });
     }
 
     public static function class(): string

@@ -83,6 +83,12 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, options: ['default' => ''])]
+    private ?string $password = null;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isPasswordForVotesOnly = null;
+
     #[ORM\Column(length: self::MAX_AUTHOR_NAME_LENGTH)]
     #[Assert\Length(
         max: self::MAX_AUTHOR_NAME_LENGTH,
@@ -135,6 +141,8 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->type = self::DEFAULT_TYPE;
         $this->title = '';
         $this->description = '';
+        $this->password = '';
+        $this->isPasswordForVotesOnly = false;
         $this->authorName = '';
         $this->authorEmail = '';
         $this->proposals = new Collections\ArrayCollection();
@@ -235,6 +243,35 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function isPasswordProtected(): bool
+    {
+        return $this->password !== '';
+    }
+
+    public function isPasswordForVotesOnly(): ?bool
+    {
+        return $this->isPasswordForVotesOnly;
+    }
+
+    public function setIsPasswordForVotesOnly(bool $isPasswordForVotesOnly): static
+    {
+        $this->isPasswordForVotesOnly = $isPasswordForVotesOnly;
 
         return $this;
     }

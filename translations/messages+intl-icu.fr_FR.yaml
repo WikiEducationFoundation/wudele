@@ -13,6 +13,8 @@ forms.labels.max_length: '(max. {length} caractères)'
 forms.labels.optional: (facultatif)
 forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
 forms.next: Suivant
+forms.poll_authentication_form.password.label: 'Mot de passe'
+forms.poll_authentication_form.submit: S’authentifier
 forms.poll_author_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
 forms.poll_author_form.author_email.label: 'Votre adresse email'
 forms.poll_author_form.author_name.label: 'Votre pseudonyme'
@@ -25,7 +27,9 @@ forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
 forms.poll_settings_form.max_votes.label: 'Nombre maximum de participant·es'
-forms.poll_settings_form.slug.help: 'Attention, modifier le lien de votre sondage le rend plus facilement accessible à tout le monde.'
+forms.poll_settings_form.password.label: 'Mot de passe'
+forms.poll_settings_form.repeat_password.label: 'Confirmer le mot de passe'
+forms.poll_settings_form.slug.help: 'Attention, modifier le lien de votre sondage le rend plus facilement accessible à tout le monde. Il est recommandé de le protéger par un mot de passe.'
 forms.poll_settings_form.slug.label: 'Saisissez le lien de votre sondage'
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
@@ -40,6 +44,7 @@ home.intro: 'Grâce à notre outil de sondage, planifiez, organisez et prenez de
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
 layout.modal.close: Fermer
 notifications.close: Fermer
+polls.authenticate.title: 'Authentification à un sondage protégé'
 polls.author.title: 'Votre identité'
 polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
@@ -57,8 +62,10 @@ polls.new.title: 'Création de sondage'
 polls.proposals.best: 'Choix préféré'
 polls.proposals.title: 'Choisissez les propositions'
 polls.settings.max_votes.title: 'Limiter le nombre de participant·es par proposition'
+polls.settings.password.title: 'Protéger par mot de passe'
 polls.settings.slug.title: 'Personnaliser le lien du sondage'
 polls.settings.title: 'Paramétrez le sondage'
+polls.show.authenticated: 'Vous vous êtes authentifié·e avec succès.'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
 polls.show.created_by: 'Sondage créé par {by}'
