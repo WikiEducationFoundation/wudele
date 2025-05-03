@@ -93,6 +93,7 @@ class PollsController extends BaseController
 
                 return $this->redirectToRoute('poll', [
                     'slug' => $poll->getSlug(),
+                    'display' => $displayMode,
                 ]);
             }
         }
