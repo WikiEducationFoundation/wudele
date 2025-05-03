@@ -128,6 +128,13 @@ class Vote implements ActivityMonitor\TrackableEntityInterface
         return $this->answers;
     }
 
+    public function hasAnswerForProposal(Proposal $proposal): bool
+    {
+        return $this->answers->exists(function ($key, $answer) use ($proposal): bool {
+            return $answer->getProposal() === $proposal;
+        });
+    }
+
     public function addAnswer(Answer $answer): static
     {
         if (!$this->answers->contains($answer)) {

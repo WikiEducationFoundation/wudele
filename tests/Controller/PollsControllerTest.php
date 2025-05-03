@@ -359,6 +359,46 @@ class PollsControllerTest extends WebTestCase
         $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
     }
 
+    public function testPostProposalsSynchronizesExistingVotesWithNewProposals(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->classic()->create();
+        $existingProposal = Factory\ProposalFactory::createOne([
+            'label' => 'Foo',
+            'poll' => $poll,
+        ]);
+        $existingVote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+        $existingAnswer = Factory\AnswerFactory::createOne([
+            'vote' => $existingVote,
+            'proposal' => $existingProposal,
+            'value' => 'yes',
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", [
+            'poll_proposals' => [
+                '_token' => $this->getCsrf($client, 'poll_proposals'),
+                'proposals' => [
+                    ['label' => 'Foo'],
+                    ['label' => 'Bar'],
+                ],
+            ],
+        ]);
+
+        $proposals = Factory\ProposalFactory::all();
+        $this->assertSame(2, count($proposals));
+        $this->assertSame('Foo', $proposals[0]->getLabel());
+        $this->assertSame('Bar', $proposals[1]->getLabel());
+        $this->refresh($existingVote);
+        $voteAnswers = $existingVote->getAnswers()->toArray();
+        $this->assertSame(2, count($voteAnswers));
+        $this->assertSame($proposals[0], $voteAnswers[0]->getProposal());
+        $this->assertSame('yes', $voteAnswers[0]->getValue());
+        $this->assertSame($proposals[1], $voteAnswers[1]->getProposal());
+        $this->assertSame('', $voteAnswers[1]->getValue());
+    }
+
     public function testPostProposalsReplacesExistingProposals(): void
     {
         $client = static::createClient();
