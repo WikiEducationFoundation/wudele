@@ -6,6 +6,16 @@
 
 {% use "form_div_layout.html.twig" %}
 
+{% block checkbox_row -%}
+    {%- set checkbox_layout = true -%}
+    {{- block('form_row') -}}
+{%- endblock checkbox_row %}
+
+{%- block checkbox_label -%}
+    {%- set no_optional = true -%}
+    {{- block('form_label') -}}
+{%- endblock checkbox_label -%}
+
 {%- block form_widget_compound -%}
     {%- if form is rootform -%}
         {{ form_errors(form) }}
@@ -46,10 +56,20 @@
     {%- endif -%}
 
     <{{ element|default('div') }}{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
-        {{- form_label(form) -}}
-        {{- form_help(form) -}}
-        {{- form_errors(form) -}}
-        {{- form_widget(form, widget_attr) -}}
+        {%- set checkbox_layout = checkbox_layout|default(false) -%}
+        {%- if checkbox_layout -%}
+            {{- form_errors(form) -}}
+            <div{{ block('attributes') }}>
+                {{- form_widget(form, widget_attr) -}}
+                {{- form_label(form) -}}
+            </div>
+            {{- form_help(form) -}}
+        {%- else -%}
+            {{- form_label(form) -}}
+            {{- form_help(form) -}}
+            {{- form_errors(form) -}}
+            {{- form_widget(form, widget_attr) -}}
+        {%- endif -%}
     </{{ element|default('div') }}>
 {%- endblock form_row %}
 
@@ -95,11 +115,15 @@
 
 {%- block form_label_content -%}
     {{- parent() -}}
-    {%- if not required and attr.maxlength is defined -%}
+
+    {%- set required = required|default(false) -%}
+    {%- set no_optional = no_optional|default(false) -%}
+
+    {%- if not no_optional and not required and attr.maxlength is defined -%}
         <span class="label__details">
             {{ 'forms.labels.optional_and_max_length' | trans({ length: attr.maxlength }) }}
         </span>
-    {%- elseif not required -%}
+    {%- elseif not no_optional and not required -%}
         <span class="label__details">
             {{ 'forms.labels.optional' | trans }}
         </span>
@@ -109,6 +133,11 @@
         </span>
     {%- endif %}
 {%- endblock -%}
+
+{%- block radio_label -%}
+    {%- set no_optional = true -%}
+    {{- block('form_label') -}}
+{%- endblock radio_label -%}
 
 {%- block urlprefix_widget -%}
     <div class="cols cols--center input input--urlprefix">

@@ -16,6 +16,7 @@
 @import "./components/anchors.css";
 @import "./components/buttons.css";
 @import "./components/calendar.css";
+@import "./components/forms/checkboxes.css";
 @import "./components/forms/errors.css";
 @import "./components/forms/fieldsets.css";
 @import "./components/forms/forms.css";
