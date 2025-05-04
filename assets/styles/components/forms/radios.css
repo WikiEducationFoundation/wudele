@@ -66,15 +66,6 @@ input[type="radio"]:checked + label::after {
     border-radius: 100%;
 }
 
-input[type="radio"][disabled] + label {
-    color: var(--color-corduroy);
-    font-weight: normal;
-}
-
-input[type="radio"][disabled] + label::before {
-    border-color: var(--color-corduroy);
-}
-
 .radio-container label {
     width: 100%;
     padding: var(--space-medium);
