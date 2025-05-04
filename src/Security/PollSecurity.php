@@ -21,7 +21,7 @@ class PollSecurity
 
     public function isAuthenticated(SessionInterface $session, Entity\Poll $poll): bool
     {
-        if (!$poll->isPasswordProtected()) {
+        if (!$poll->isFullPasswordProtected()) {
             return true;
         }
 

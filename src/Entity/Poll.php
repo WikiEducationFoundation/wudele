@@ -264,6 +264,16 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this->password !== '';
     }
 
+    public function isVotePasswordProtected(): bool
+    {
+        return $this->isPasswordProtected() && $this->isPasswordForVotesOnly();
+    }
+
+    public function isFullPasswordProtected(): bool
+    {
+        return $this->isPasswordProtected() && !$this->isPasswordForVotesOnly();
+    }
+
     public function isPasswordForVotesOnly(): ?bool
     {
         return $this->isPasswordForVotesOnly;

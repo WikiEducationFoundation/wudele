@@ -157,8 +157,12 @@
                         voteForm: voteForm,
                     }) }}
 
-                    <div class="panel panel--primary panel--rounded">
+                    <div class="panel panel--primary panel--rounded flow">
                         {{ form_row(voteForm.authorName) }}
+
+                        {% if voteForm.password is defined %}
+                            {{ form_row(voteForm.password) }}
+                        {% endif %}
                     </div>
 
                     <div class="cols cols--always cols--gap cols--center">
@@ -190,8 +194,12 @@
                 }) }}
 
                 <div class="wrapper wrapper--small wrapper--center flow flow--large">
-                    <div class="panel panel--primary panel--rounded">
+                    <div class="panel panel--primary panel--rounded flow">
                         {{ form_row(voteForm.authorName) }}
+
+                        {% if voteForm.password is defined %}
+                            {{ form_row(voteForm.password) }}
+                        {% endif %}
                     </div>
 
                     <div class="cols cols--always cols--gap cols--center">

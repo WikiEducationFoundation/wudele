@@ -59,6 +59,11 @@ class PollSettingsForm extends AbstractType
             'mapped' => false,
         ]);
 
+        $builder->add('isPasswordForVotesOnly', Type\CheckboxType::class, [
+            'label' => new TranslatableMessage('forms.poll_settings_form.password_for_votes_only.label'),
+            'required' => false,
+        ]);
+
         $builder->add('submit', Type\SubmitType::class, [
             'label' => new TranslatableMessage('forms.next'),
         ]);

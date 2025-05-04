@@ -86,6 +86,46 @@ class VotesControllerTest extends WebTestCase
         $this->assertSame($newValue, $answer->getValue());
     }
 
+    public function testPostEditFailsIfRequiredPasswordIsIncorrect(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'password' => 'secret',
+            'isPasswordForVotesOnly' => true,
+        ])->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $oldName = 'Alix';
+        $newName = 'Benedict';
+        $oldValue = 'no';
+        $newValue = 'yes';
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+            'authorName' => $oldName,
+        ]);
+        $answer = Factory\AnswerFactory::createOne([
+            'vote' => $vote,
+            'proposal' => $proposal,
+            'value' => $oldValue,
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/votes/{$vote->getId()}/edit", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => $newName,
+                'answers' => [
+                    ['value' => $newValue],
+                ],
+                'password' => 'not the password',
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#vote_password_error', 'The password is incorrect');
+        $this->refresh($vote);
+        $this->assertSame($oldName, $vote->getAuthorName());
+        $this->refresh($answer);
+        $this->assertSame($oldValue, $answer->getValue());
+    }
+
     public function testPostEditFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();

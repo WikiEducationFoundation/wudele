@@ -7,6 +7,7 @@
 namespace App\Form;
 
 use App\Entity;
+use App\Validator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class VoteForm extends AbstractType
 {
@@ -43,13 +45,32 @@ class VoteForm extends AbstractType
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+            $form = $event->getForm();
             $vote = $event->getData();
+
+            $poll = $vote->getPoll();
+
+            if ($poll->isVotePasswordProtected()) {
+                $form->add('password', Type\PasswordType::class, [
+                    'label' => new TranslatableMessage('forms.vote_form.password.label'),
+                    'help' => new TranslatableMessage('forms.vote_form.password.help'),
+                    'mapped' => false,
+                    'constraints' => [
+                        new Assert\NotBlank(
+                            message: new TranslatableMessage('poll.password.required', domain: 'validators'),
+                        ),
+                        new Validator\PollPassword(
+                            message: new TranslatableMessage('poll.password.incorrect', domain: 'validators'),
+                            poll: $poll,
+                        ),
+                    ],
+                ]);
+            }
 
             if (count($vote->getAnswers()) > 0) {
                 return;
             }
 
-            $poll = $vote->getPoll();
             $proposals = $poll->getProposals();
 
             foreach ($proposals as $proposal) {

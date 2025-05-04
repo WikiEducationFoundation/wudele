@@ -138,6 +138,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
@@ -151,12 +152,28 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'My poll');
     }
 
+    public function testGetShowDoesNotRedirectIfProtectedPollAllowsToSeeResults(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+            'isPasswordForVotesOnly' => true,
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'My poll');
+    }
+
     public function testGetShowRedirectsIfNotAuthenticatedToPasswordProtectedPoll(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
@@ -241,6 +258,33 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($votes));
     }
 
+    public function testPostShowFailsIfRequiredPasswordIsIncorrect(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'password' => 'secret',
+            'isPasswordForVotesOnly' => true,
+        ])->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $name = 'Alix';
+
+        $this->assertNotFalse($proposal);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => $name,
+                'answers' => [
+                    ['value' => 'yes'],
+                ],
+                'password' => 'not the password',
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#vote_password_error', 'The password is incorrect');
+        Factory\VoteFactory::assert()->count(0);
+    }
+
     public function testPostShowFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
@@ -268,6 +312,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/authenticate");
@@ -282,6 +327,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => '',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/authenticate");
@@ -295,6 +341,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
@@ -313,6 +360,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/authenticate", [
@@ -335,6 +383,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/authenticate", [
@@ -357,6 +406,7 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new([
             'title' => 'My poll',
             'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
         ])->completed()->create();
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/authenticate", [

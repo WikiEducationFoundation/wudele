@@ -124,7 +124,7 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
-        if (!$poll->isPasswordProtected() || $pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+        if (!$poll->isFullPasswordProtected() || $pollSecurity->isAuthenticated($request->getSession(), $poll)) {
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
             ]);
@@ -210,7 +210,7 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            if ($poll->isPasswordProtected()) {
+            if ($poll->isFullPasswordProtected()) {
                 $pollSecurity->authenticate($request->getSession(), $poll);
             }
 

@@ -28,6 +28,7 @@ forms.poll_proposals_form.add_proposal: 'Add a proposal'
 forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
 forms.poll_settings_form.max_votes.label: 'Maximum number of participants'
 forms.poll_settings_form.password.label: Password
+forms.poll_settings_form.password_for_votes_only.label: 'Results can be viewed without a password'
 forms.poll_settings_form.repeat_password.label: 'Repeat password'
 forms.poll_settings_form.slug.help: 'Please note that changing the link to your poll makes it more easily accessible to everyone. It is recommended to protect it with a password.'
 forms.poll_settings_form.slug.label: 'Enter the poll link'
@@ -38,6 +39,8 @@ forms.proposal_type.label.label_pattern: 'Proposal __number__'
 forms.slot_type.label.label_pattern: 'Time slot __number__'
 forms.slots_form.day: Day
 forms.vote_form.author_name.label: 'Your nickname'
+forms.vote_form.password.help: 'A password is required to vote in this poll.'
+forms.vote_form.password.label: Password
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
