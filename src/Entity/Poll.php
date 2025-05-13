@@ -136,6 +136,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(nullable: true)]
     private ?int $maxVotes = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $notifyOnVotes = false;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -145,6 +148,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->isPasswordForVotesOnly = false;
         $this->authorName = '';
         $this->authorEmail = '';
+        $this->notifyOnVotes = false;
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
         $this->dates = new Collections\ArrayCollection();
@@ -491,6 +495,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setMaxVotes(?int $maxVotes): static
     {
         $this->maxVotes = $maxVotes;
+
+        return $this;
+    }
+
+    public function isNotifyOnVotes(): bool
+    {
+        return $this->notifyOnVotes;
+    }
+
+    public function setNotifyOnVotes(bool $notifyOnVotes): static
+    {
+        $this->notifyOnVotes = $notifyOnVotes;
 
         return $this;
     }

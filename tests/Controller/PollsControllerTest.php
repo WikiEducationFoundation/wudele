@@ -899,6 +899,8 @@ class PollsControllerTest extends WebTestCase
         $poll = Factory\PollFactory::new()->withProposal()->create();
         $maxVotes = 1;
         $slug = 'my-slug';
+        $password = 'secret';
+        $notifyOnVotes = true;
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
             'poll_settings' => [
@@ -906,18 +908,20 @@ class PollsControllerTest extends WebTestCase
                 'maxVotes' => $maxVotes,
                 'slug' => $slug,
                 'plainPassword' => [
-                    'first' => 'secret',
-                    'second' => 'secret',
+                    'first' => $password,
+                    'second' => $password,
                 ],
+                'notifyOnVotes' => $notifyOnVotes,
             ]
         ]);
 
         $this->refresh($poll);
         $this->assertSame($maxVotes, $poll->getMaxVotes());
         $this->assertSame($slug, $poll->getSlug());
+        $this->assertTrue($poll->isNotifyOnVotes());
         /** @var Service\PollPassword */
         $pollPassword = static::getContainer()->get(Service\PollPassword::class);
-        $this->assertTrue($pollPassword->verify($poll->getPassword() ?? '', 'secret'));
+        $this->assertTrue($pollPassword->verify($poll->getPassword() ?? '', $password));
     }
 
     public function testPostSettingsDoesNotChangePasswordIfNotSet(): void

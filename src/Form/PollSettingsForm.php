@@ -64,6 +64,11 @@ class PollSettingsForm extends AbstractType
             'required' => false,
         ]);
 
+        $builder->add('notifyOnVotes', Type\CheckboxType::class, [
+            'label' => new TranslatableMessage('forms.poll_settings_form.notify_on_votes.label'),
+            'required' => false,
+        ]);
+
         $builder->add('submit', Type\SubmitType::class, [
             'label' => new TranslatableMessage('forms.next'),
         ]);

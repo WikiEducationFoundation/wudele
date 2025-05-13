@@ -50,6 +50,14 @@
                 {{ form_row(form.isPasswordForVotesOnly) }}
             </div>
 
+            <div class="panel panel--rounded panel--primary flow">
+                <h2 class="text--primary">
+                    {{ 'polls.settings.notifications.title' | trans }}
+                </h2>
+
+                {{ form_row(form.notifyOnVotes) }}
+            </div>
+
             <div class="cols cols--always cols--gap">
                 <a class="button" href="{{ process.previousStepUrl('settings') }}">
                     {{ 'forms.previous' | trans }}
