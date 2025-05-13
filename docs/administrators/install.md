@@ -199,7 +199,45 @@ And reload Nginx:
 $ systemctl reload nginx
 ```
 
-Open the Pollaris in your web browser: you should see the home page.
+Open Pollaris in your web browser: you should see the home page.
+
+### Setup the Messenger worker
+
+The Messenger worker performs asynchronous jobs.
+It's a sort of Cron mechanism on steroids.
+We'll use Systemd in this documentation, but note that the only requirement is that a command needs to run in the background.
+
+Create the file `/etc/systemd/system/pollaris-worker.service`:
+
+```systemd
+[Unit]
+Description=The Messenger worker for Pollaris
+
+[Service]
+ExecStart=php /var/www/pollaris/bin/console messenger:consume async --time-limit=3600
+
+User=www-data
+Group=www-data
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target
+```
+
+Enable and start the service:
+
+```console
+# systemctl enable pollaris-worker
+# systemctl start pollaris-worker
+```
+
+You can read the logs with:
+
+```console
+# journalctl -f -u pollaris-worker@service
+```
 
 ## Updating the production environment
 

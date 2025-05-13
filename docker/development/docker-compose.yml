@@ -16,6 +16,16 @@ services:
         links:
             - database
 
+    worker:
+        image: pollaris:php-dev
+        build: .
+        restart: unless-stopped
+        command: php bin/console messenger:consume async -vv
+        volumes:
+            - ../..:/var/www/html:z
+            - ./php-custom.ini:/usr/local/etc/php/conf.d/custom.ini:z
+        user: $USER
+
     bundler:
         image: node:20-alpine
         restart: unless-stopped
@@ -42,3 +52,9 @@ services:
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
+
+    mailserver:
+        image: axllent/mailpit
+        restart: unless-stopped
+        ports:
+            - "${PORT_MAILPIT:-8025}:8025"

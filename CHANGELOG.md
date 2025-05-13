@@ -1,5 +1,14 @@
 # Changelog
 
+## unreleased
+
+### Migration notes
+
+You must configure a mail server to send notifications.
+See the `MAILER_` environment variables in the `.env.sample` file and update your `.env.local` file.
+You also need to configure a Messenger worker to send the emails asynchronously.
+Read [the installation documentation](/docs/administrators/install.md).
+
 ## 2025-04-16 - 0.4.0
 
 ### New

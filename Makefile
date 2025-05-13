@@ -22,7 +22,8 @@ endif
 
 .PHONY: docker-start
 docker-start: PORT ?= 8000
-docker-start: ## Start a development server (can take a PORT argument)
+docker-start: PORT_MAILPIT ?= 8025
+docker-start: ## Start a development server (can take a PORT and PORT_MAILPIT arguments)
 	@echo "Running webserver on http://localhost:$(PORT)"
 	$(DOCKER_COMPOSE) up
 
