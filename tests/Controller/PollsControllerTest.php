@@ -197,7 +197,9 @@ class PollsControllerTest extends WebTestCase
     public function testPostShowCreatesAVote(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->completed()->create();
+        $poll = Factory\PollFactory::new([
+            'authorEmail' => 'charlie@example.com',
+        ])->completed()->create();
         $proposal = $poll->getProposals()->first();
         $name = 'Alix';
 
@@ -221,6 +223,10 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($answers));
         $this->assertSame('yes', $answers[0]->getValue());
         $this->assertSame($proposal->getId(), $answers[0]->getProposal()?->getId());
+        $this->assertEmailCount(1);
+        $email = $this->getMailerMessage();
+        $this->assertNotNull($email);
+        $this->assertEmailTextBodyContains($email, $name);
     }
 
     public function testPostShowFailsIfMaxVoteIsReached(): void

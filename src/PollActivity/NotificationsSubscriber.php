@@ -1,0 +1,59 @@
+<?php
+
+// This file is part of Pollaris.
+// Copyright 2024-2025 Marien Fressinaud
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+namespace App\PollActivity;
+
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+class NotificationsSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            VoteEvent::NEW => 'notifyNewVote',
+        ];
+    }
+
+    public function __construct(
+        private MailerInterface $mailer,
+        private TranslatorInterface $translator,
+    ) {
+    }
+
+    public function notifyNewVote(VoteEvent $event): void
+    {
+        $vote = $event->getVote();
+        $poll = $vote->getPoll();
+
+        if (!$poll->getAuthorEmail()) {
+            return;
+        }
+
+        $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
+        $locale = 'fr_FR';
+
+        $subject = '[Pollaris] ';
+        $subject .= $this->translator->trans('emails.new_vote.subject', locale: $locale);
+
+        $email = (new TemplatedEmail())
+            ->to($to)
+            ->subject($subject)
+            ->textTemplate('emails/new_vote.txt.twig')
+            ->locale($locale)
+            ->context([
+                'admin_name' => $poll->getAuthorName(),
+                'voter_name' => $vote->getAuthorName(),
+                'poll_name' => $poll->getTitle(),
+                'poll_slug' => $poll->getSlug(),
+            ]);
+
+        $this->mailer->send($email);
+    }
+}

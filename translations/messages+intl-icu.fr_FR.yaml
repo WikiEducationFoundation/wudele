@@ -4,6 +4,10 @@ answers.value.yes: Oui
 base.default_title: "Bienvenue sur Pollaris\_!"
 calendar.patterns.next_month: 'Mois suivant (__date__)'
 calendar.patterns.previous_month: 'Mois précédent (__date__)'
+emails.new_vote.hello: 'Bonjour {admin_name},'
+emails.new_vote.link: "Vous pouvez retrouver votre sondage à l’adresse\_: {url}"
+emails.new_vote.subject: 'Nouveau vote sur un sondage'
+emails.new_vote.voted: "{voter_name} vient de voter au sondage «\_{poll_name}\_»."
 forms.apply: Appliquer
 forms.cancel: Annuler
 forms.complete: Finaliser

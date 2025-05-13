@@ -4,6 +4,10 @@ answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
 calendar.patterns.next_month: 'Next month (__date__)'
 calendar.patterns.previous_month: 'Previous month (__date__)'
+emails.new_vote.hello: 'Hello {admin_name},'
+emails.new_vote.link: 'You can find your poll at the link: {url}'
+emails.new_vote.subject: 'New vote on a poll'
+emails.new_vote.voted: '{voter_name} has just voted in the “{poll_name}” poll.'
 forms.apply: Apply
 forms.cancel: Cancel
 forms.complete: Complete

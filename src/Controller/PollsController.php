@@ -8,10 +8,12 @@ namespace App\Controller;
 
 use App\Entity;
 use App\Form;
+use App\PollActivity;
 use App\Process;
 use App\Repository;
 use App\Security;
 use App\Utils;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -65,6 +67,7 @@ class PollsController extends BaseController
         Request $request,
         Repository\VoteRepository $voteRepository,
         Security\PollSecurity $pollSecurity,
+        EventDispatcherInterface $eventDispatcher,
     ): Response {
         if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
@@ -93,6 +96,9 @@ class PollsController extends BaseController
                 $vote = $voteForm->getData();
 
                 $voteRepository->save($vote);
+
+                $voteEvent = new PollActivity\VoteEvent($vote);
+                $eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
 
                 $session = $request->getSession();
                 $session->set("vote-{$poll->getId()}", $vote->getId());

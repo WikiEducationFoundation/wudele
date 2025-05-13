@@ -94,7 +94,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         max: self::MAX_AUTHOR_NAME_LENGTH,
         maxMessage: new TranslatableMessage('poll.author_name.max_length', domain: 'validators'),
     )]
-    private ?string $authorName = null;
+    private string $authorName = '';
 
     #[ORM\Column(length: 255)]
     #[Assert\Email(
@@ -290,7 +290,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
-    public function getAuthorName(): ?string
+    public function getAuthorName(): string
     {
         return $this->authorName;
     }
@@ -316,7 +316,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
 
     public function isAuthorSet(): bool
     {
-        return $this->authorName !== null && $this->authorName !== '';
+        return $this->authorName !== '';
     }
 
     /**
