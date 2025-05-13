@@ -46,3 +46,10 @@ test:8.3:
     script:
         - make lint
         - make test
+
+test:8.4:
+    image: php:8.4-cli
+    stage: test
+    script:
+        - make lint
+        - make test
