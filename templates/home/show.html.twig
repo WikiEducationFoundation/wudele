@@ -8,13 +8,21 @@
 
 {% block body %}
     <div class="wrapper flow flow--larger">
-        <h1>
-            {{ 'home.title' | trans }}
-        </h1>
+        <div class="cols cols--gap-large">
+            <div class="col--extend flow flow--large">
+                <h1>
+                    {{ 'home.title' | trans }}
+                </h1>
 
-        <p>
-            {{ 'home.intro' | trans }}
-        </p>
+                <p class="text--primary text--big">
+                    {{ 'home.intro' | trans }}
+                </p>
+            </div>
+
+            <div>
+                <img alt="" src="{{ asset('calendar.png') }}">
+            </div>
+        </div>
 
         <p>
             <a class="button button--primary" href="{{ path('choose poll type') }}">
