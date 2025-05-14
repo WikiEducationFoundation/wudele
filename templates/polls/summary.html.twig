@@ -37,6 +37,28 @@
                                 {{ poll.description }}
                             </p>
                         {% endif %}
+
+                        <dl class="list--nostyle flow">
+                            <dt class="flow flow--small text--bold">
+                                {{ 'polls.summary.author.name' | trans }}
+                            </dt>
+
+                            <dd>
+                                {{ poll.authorName }}
+                            </dd>
+
+                            <dt class="flow flow--small text--bold">
+                                {{ 'polls.summary.author.email' | trans }}
+                            </dt>
+
+                            <dd>
+                                {% if poll.authorEmail %}
+                                    {{ poll.authorEmail }}
+                                {% else %}
+                                    {{ 'polls.summary.author.no_email' | trans }}
+                                {% endif %}
+                            </dd>
+                        </dl>
                     </div>
 
                     <div class="panel__separator"></div>
@@ -91,41 +113,6 @@
                             {{ 'polls.summary.edit' | trans }}
                         </a>
                     {% endif %}
-                </div>
-            </div>
-
-            <div class="flow">
-                <h2 class="text--primary">{{ 'polls.summary.author.title' | trans }}</h2>
-
-                <div class="panel panel--rounded panel--primary flow">
-                    <dl class="list--nostyle flow">
-                        <dt class="flow flow--small text--bold">
-                            {{ 'polls.summary.author.name' | trans }}
-                        </dt>
-
-                        <dd>
-                            {{ poll.authorName }}
-                        </dd>
-
-                        <dt class="flow flow--small text--bold">
-                            {{ 'polls.summary.author.email' | trans }}
-                        </dt>
-
-                        <dd>
-                            {% if poll.authorEmail %}
-                                {{ poll.authorEmail }}
-                            {% else %}
-                                {{ 'polls.summary.author.no_email' | trans }}
-                            {% endif %}
-                        </dd>
-                    </dl>
-
-                    <div class="panel__separator"></div>
-
-                    <a class="button button--menuitem" href="{{ process.stepUrl('author') }}">
-                        {{ icon('pen-to-square') }}
-                        {{ 'polls.summary.edit' | trans }}
-                    </a>
                 </div>
             </div>
 

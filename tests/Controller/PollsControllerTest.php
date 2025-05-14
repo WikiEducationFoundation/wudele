@@ -47,18 +47,24 @@ class PollsControllerTest extends WebTestCase
         $client = static::createClient();
         $title = 'My poll';
         $description = 'Description of my poll';
+        $name = 'Alix';
+        $email = 'alix@example.org';
 
         $client->request(Request::METHOD_POST, '/polls/new', [
             'poll' => [
                 '_token' => $this->getCsrf($client, 'poll'),
                 'title' => $title,
                 'description' => $description,
+                'authorName' => $name,
+                'authorEmail' => $email,
             ],
         ]);
 
         $poll = Factory\PollFactory::last();
         $this->assertSame($title, $poll->getTitle());
         $this->assertSame($description, $poll->getDescription());
+        $this->assertSame($name, $poll->getAuthorName());
+        $this->assertSame($email, $poll->getAuthorEmail());
         $this->assertSame('classic', $poll->getType());
         $id = $poll->getId();
         $adminToken = $poll->getAdminToken();
@@ -71,11 +77,13 @@ class PollsControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $title = 'My poll';
+        $name = 'Alix';
 
         $client->request(Request::METHOD_POST, '/polls/new?type=date', [
             'poll' => [
                 '_token' => $this->getCsrf($client, 'poll'),
                 'title' => $title,
+                'authorName' => $name,
             ],
         ]);
 
@@ -91,6 +99,7 @@ class PollsControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $title = 'My poll';
+        $name = 'Alix';
         $description = 'Description of my poll';
 
         $client->request(Request::METHOD_POST, '/polls/new', [
@@ -98,6 +107,7 @@ class PollsControllerTest extends WebTestCase
                 '_token' => 'not the token',
                 'title' => $title,
                 'description' => $description,
+                'authorName' => $name,
             ],
         ]);
 
@@ -458,9 +468,15 @@ class PollsControllerTest extends WebTestCase
         $newTitle = 'My poll';
         $oldDescription = 'Outdated description';
         $newDescription = 'The new description';
+        $oldName = 'Alix';
+        $newName = 'Charlie';
+        $oldEmail = 'alix@example.org';
+        $newEmail = 'charlie@example.org';
         $poll = Factory\PollFactory::new()->classic()->create([
             'title' => $oldTitle,
             'description' => $oldDescription,
+            'authorName' => $oldName,
+            'authorEmail' => $oldEmail,
         ]);
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/edit", [
@@ -468,12 +484,16 @@ class PollsControllerTest extends WebTestCase
                 '_token' => $this->getCsrf($client, 'poll'),
                 'title' => $newTitle,
                 'description' => $newDescription,
+                'authorName' => $newName,
+                'authorEmail' => $newEmail,
             ],
         ]);
 
         $this->refresh($poll);
         $this->assertSame($newTitle, $poll->getTitle());
         $this->assertSame($newDescription, $poll->getDescription());
+        $this->assertSame($newName, $poll->getAuthorName());
+        $this->assertSame($newEmail, $poll->getAuthorEmail());
         $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
     }
 
@@ -484,9 +504,15 @@ class PollsControllerTest extends WebTestCase
         $newTitle = 'My poll';
         $oldDescription = 'Outdated description';
         $newDescription = 'The new description';
+        $oldName = 'Alix';
+        $newName = 'Charlie';
+        $oldEmail = 'alix@example.org';
+        $newEmail = 'charlie@example.org';
         $poll = Factory\PollFactory::new()->classic()->create([
             'title' => $oldTitle,
             'description' => $oldDescription,
+            'authorName' => $oldName,
+            'authorEmail' => $oldEmail,
         ]);
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/edit", [
@@ -494,6 +520,8 @@ class PollsControllerTest extends WebTestCase
                 '_token' => 'not the token',
                 'title' => $newTitle,
                 'description' => $newDescription,
+                'authorName' => $newName,
+                'authorEmail' => $newEmail,
             ],
         ]);
 
@@ -501,6 +529,8 @@ class PollsControllerTest extends WebTestCase
         $this->refresh($poll);
         $this->assertSame($oldTitle, $poll->getTitle());
         $this->assertSame($oldDescription, $poll->getDescription());
+        $this->assertSame($oldName, $poll->getAuthorName());
+        $this->assertSame($oldEmail, $poll->getAuthorEmail());
     }
 
     public function testGetProposalsRendersCorrectly(): void
@@ -975,79 +1005,6 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($poll->getId(), $poll->getSlug());
     }
 
-    public function testGetAuthorRendersCorrectly(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->withProposal()->create();
-
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/author");
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Who you are');
-    }
-
-    public function testGetAuthorRedirectsIfThereAreNoProposals(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::createOne();
-
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/author");
-
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
-    }
-
-    public function testGetAuthorFailsIfAdminTokenDoesNotMatch(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->withProposal()->create();
-
-        $this->expectException(NotFoundHttpException::class);
-
-        $client->catchExceptions(false);
-        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/author");
-    }
-
-    public function testPostAuthorChangesTheAuthorNameAndEmail(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->withProposal()->create();
-        $name = 'Alix';
-        $email = 'alix@example.org';
-
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", [
-            'poll_author' => [
-                '_token' => $this->getCsrf($client, 'poll_author'),
-                'authorName' => $name,
-                'authorEmail' => $email,
-            ]
-        ]);
-
-        $this->refresh($poll);
-        $this->assertSame($name, $poll->getAuthorName());
-        $this->assertSame($email, $poll->getAuthorEmail());
-    }
-
-    public function testPostAuthorFailsIfCsrfIsInvalid(): void
-    {
-        $client = static::createClient();
-        $poll = Factory\PollFactory::new()->withProposal()->create();
-        $name = 'Alix';
-        $email = 'alix@example.org';
-
-        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", [
-            'poll_author' => [
-                '_token' => 'not the token',
-                'authorName' => $name,
-                'authorEmail' => $email,
-            ]
-        ]);
-
-        $this->assertSelectorTextContains('#poll_author_error', 'The CSRF token is invalid');
-        $this->refresh($poll);
-        $this->assertSame('', $poll->getAuthorName());
-        $this->assertSame('', $poll->getAuthorEmail());
-    }
-
     public function testGetSummaryRendersCorrectly(): void
     {
         $client = static::createClient();
@@ -1059,14 +1016,14 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Summary of your poll');
     }
 
-    public function testGetSummaryRedirectsIfThereAreNoAuthor(): void
+    public function testGetSummaryRedirectsIfThereAreNoProposals(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->withProposal()->create();
+        $poll = Factory\PollFactory::createOne();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/author", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
     }
 
     public function testGetSummaryFailsIfAdminTokenDoesNotMatch(): void

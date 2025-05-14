@@ -314,11 +314,6 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this;
     }
 
-    public function isAuthorSet(): bool
-    {
-        return $this->authorName !== '';
-    }
-
     /**
      * @return Collections\Collection<int, Proposal>
      */

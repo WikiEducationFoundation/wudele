@@ -19,13 +19,13 @@ forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
 forms.next: Next
 forms.poll_authentication_form.password.label: Password
 forms.poll_authentication_form.submit: Authenticate
-forms.poll_author_form.author_email.help: 'Your address will not be shared with other poll participants. It will only be used to enable you to find your poll if you lose its address and to notify you when new votes are made.'
-forms.poll_author_form.author_email.label: 'Your email address'
-forms.poll_author_form.author_name.label: 'Your nickname'
 forms.poll_dates_form.add_date: 'Add a date'
 forms.poll_dates_form.enter_manually: 'Enter the dates manually'
 forms.poll_dates_form.remove_date: 'Remove the date'
 forms.poll_dates_form.use_calendar: 'Select the dates from a calendar'
+forms.poll_form.author_email.help: 'Your address will not be shared with other poll participants. It will only be used to enable you to find your poll if you lose its address and to notify you when new votes are made.'
+forms.poll_form.author_email.label: 'Your email address'
+forms.poll_form.author_name.label: 'Your nickname'
 forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Name of your poll'
 forms.poll_proposals_form.add_proposal: 'Add a proposal'
@@ -53,7 +53,6 @@ home.title: 'Organise events or gather opinions from friends and family, simply 
 layout.modal.close: Close
 notifications.close: Close
 polls.authenticate.title: 'Authentication to a protected poll'
-polls.author.title: 'Who you are'
 polls.choose.classic: 'Poll classic'
 polls.choose.date: 'Poll date'
 polls.choose.next: Next
@@ -67,6 +66,7 @@ polls.complete.see: 'See my poll'
 polls.complete.title: 'Your poll is ready!'
 polls.dates.title: 'Choose the dates'
 polls.new.title: 'Poll creation'
+polls.new.who_you_are: 'Who you are'
 polls.proposals.best: 'Preferred choice'
 polls.proposals.title: 'Choose the proposals'
 polls.settings.max_votes.title: 'Limit the number of participants per proposal'
@@ -93,7 +93,6 @@ polls.steps.optional: (optional)
 polls.summary.author.email: 'Email address'
 polls.summary.author.name: Nickname
 polls.summary.author.no_email: 'No address given'
-polls.summary.author.title: 'My nickname and my email address'
 polls.summary.edit: Edit
 polls.summary.information.title: 'General information'
 polls.summary.proposals.title: 'My proposals'

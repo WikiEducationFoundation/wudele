@@ -36,6 +36,23 @@ class PollForm extends AbstractType
             ],
         ]);
 
+        $builder->add('authorName', Type\TextType::class, [
+            'trim' => true,
+            'empty_data' => '',
+            'label' => new TranslatableMessage('forms.poll_form.author_name.label'),
+            'attr' => [
+                'maxlength' => Entity\Poll::MAX_AUTHOR_NAME_LENGTH,
+            ],
+        ]);
+
+        $builder->add('authorEmail', Type\EmailType::class, [
+            'required' => false,
+            'trim' => true,
+            'empty_data' => '',
+            'label' => new TranslatableMessage('forms.poll_form.author_email.label'),
+            'help' => new TranslatableMessage('forms.poll_form.author_email.help'),
+        ]);
+
         $builder->add('submit', Type\SubmitType::class, [
             'label' => new TranslatableMessage('forms.next'),
         ]);

@@ -23,8 +23,19 @@
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
-            {{ form_row(form.title) }}
-            {{ form_row(form.description) }}
+            <div class="panel panel--primary panel--rounded flow flow--large">
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+            </div>
+
+            <fieldset class="panel panel--primary panel--rounded">
+                <legend>{{ 'polls.new.who_you_are' | trans }}</legend>
+
+                <div class="flow flow--large">
+                    {{ form_row(form.authorName) }}
+                    {{ form_row(form.authorEmail) }}
+                </div>
+            </fieldset>
 
             <div class="text--right">
                 {{ form_row(form.submit) }}

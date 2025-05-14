@@ -16,7 +16,6 @@ class ClassicPollProcess extends Process
         'init',
         'proposals',
         'settings',
-        'author',
         'summary',
         'end',
     ];
@@ -36,8 +35,6 @@ class ClassicPollProcess extends Process
             return $this->poll->isTitleSet();
         } elseif ($stepName === 'proposals' || $stepName === 'settings') {
             return !$this->poll->getProposals()->isEmpty();
-        } elseif ($stepName === 'author') {
-            return $this->poll->isAuthorSet();
         } elseif ($stepName === 'summary') {
             return $this->poll->isCompleted();
         } else {
@@ -59,11 +56,6 @@ class ClassicPollProcess extends Process
             ]);
         } elseif ($stepName === 'settings') {
             return $this->urlGenerator->generate('edit poll settings', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'author') {
-            return $this->urlGenerator->generate('edit poll author', [
                 'id' => $this->poll->getId(),
                 'token' => $this->poll->getAdminToken(),
             ]);

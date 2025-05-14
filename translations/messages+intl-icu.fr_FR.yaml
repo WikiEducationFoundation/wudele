@@ -19,13 +19,13 @@ forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
 forms.next: Suivant
 forms.poll_authentication_form.password.label: 'Mot de passe'
 forms.poll_authentication_form.submit: S’authentifier
-forms.poll_author_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
-forms.poll_author_form.author_email.label: 'Votre adresse email'
-forms.poll_author_form.author_name.label: 'Votre pseudonyme'
 forms.poll_dates_form.add_date: 'Ajouter une date'
 forms.poll_dates_form.enter_manually: 'Saisir les dates manuellement'
 forms.poll_dates_form.remove_date: 'Retirer la date'
 forms.poll_dates_form.use_calendar: 'Sélectionner les dates depuis un calendrier'
+forms.poll_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
+forms.poll_form.author_email.label: 'Votre adresse email'
+forms.poll_form.author_name.label: 'Votre pseudonyme'
 forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
@@ -53,7 +53,6 @@ home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, s
 layout.modal.close: Fermer
 notifications.close: Fermer
 polls.authenticate.title: 'Authentification à un sondage protégé'
-polls.author.title: 'Votre identité'
 polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
 polls.choose.next: Suivant
@@ -67,6 +66,7 @@ polls.complete.see: 'Voir mon sondage'
 polls.complete.title: "Votre sondage est prêt\_!"
 polls.dates.title: 'Choisissez les dates'
 polls.new.title: 'Création de sondage'
+polls.new.who_you_are: 'Votre identité'
 polls.proposals.best: 'Choix préféré'
 polls.proposals.title: 'Choisissez les propositions'
 polls.settings.max_votes.title: 'Limiter le nombre de participant·es par proposition'
@@ -93,7 +93,6 @@ polls.steps.optional: (facultative)
 polls.summary.author.email: 'Adresse email'
 polls.summary.author.name: Pseudonyme
 polls.summary.author.no_email: 'Aucune adresse renseignée'
-polls.summary.author.title: 'Mon pseudonyme et mon adresse email'
 polls.summary.edit: Modifier
 polls.summary.information.title: 'Informations générales'
 polls.summary.proposals.title: 'Mes propositions'

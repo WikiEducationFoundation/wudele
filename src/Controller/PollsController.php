@@ -350,42 +350,6 @@ class PollsController extends BaseController
         ]);
     }
 
-    #[Route('/polls/{id:poll}/{token}/author', name: 'edit poll author')]
-    public function author(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
-    ): Response {
-        if ($poll->getAdminToken() !== $token) {
-            throw $this->createNotFoundException('The admin token doesn’t match.');
-        }
-
-        $process = $pollProcessBuilder->build($poll);
-
-        if (!$process->isAccessible('author')) {
-            return $this->redirect($process->getPreviousStepUrl('author'));
-        }
-
-        $form = $this->createNamedForm('poll_author', Form\PollAuthorForm::class, $poll);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $poll = $form->getData();
-
-            $pollRepository->save($poll);
-
-            return $this->redirect($process->getNextStepUrl('author'));
-        }
-
-        return $this->render('polls/author.html.twig', [
-            'poll' => $poll,
-            'form' => $form,
-            'process' => $process,
-        ]);
-    }
-
     #[Route('/polls/{id:poll}/{token}/summary', name: 'poll summary')]
     public function summary(
         Entity\Poll $poll,
