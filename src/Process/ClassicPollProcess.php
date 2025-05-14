@@ -15,7 +15,6 @@ class ClassicPollProcess extends Process
     protected array $steps = [
         'init',
         'proposals',
-        'settings',
         'summary',
         'end',
     ];
@@ -33,7 +32,7 @@ class ClassicPollProcess extends Process
     {
         if ($stepName === 'init') {
             return $this->poll->isTitleSet();
-        } elseif ($stepName === 'proposals' || $stepName === 'settings') {
+        } elseif ($stepName === 'proposals') {
             return !$this->poll->getProposals()->isEmpty();
         } elseif ($stepName === 'summary') {
             return $this->poll->isCompleted();
@@ -51,11 +50,6 @@ class ClassicPollProcess extends Process
             ]);
         } elseif ($stepName === 'proposals') {
             return $this->urlGenerator->generate('edit poll proposals', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'settings') {
-            return $this->urlGenerator->generate('edit poll settings', [
                 'id' => $this->poll->getId(),
                 'token' => $this->poll->getAdminToken(),
             ]);

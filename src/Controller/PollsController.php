@@ -204,8 +204,8 @@ class PollsController extends BaseController
 
         $process = $pollProcessBuilder->build($poll);
 
-        if (!$process->isAccessible('settings')) {
-            return $this->redirect($process->getPreviousStepUrl('settings'));
+        if (!$process->isAccessible('summary')) {
+            return $this->redirect($process->getPreviousStepUrl('summary'));
         }
 
         $form = $this->createNamedForm('poll_settings', Form\PollSettingsForm::class, $poll);
@@ -220,13 +220,15 @@ class PollsController extends BaseController
                 $pollSecurity->authenticate($request->getSession(), $poll);
             }
 
-            return $this->redirect($process->getNextStepUrl('settings'));
+            return $this->redirectToRoute('poll summary', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
         }
 
         return $this->render('polls/settings.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
         ]);
     }
 

@@ -89,13 +89,19 @@ polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'
 polls.steps: 'Step {step} on {total}'
-polls.steps.optional: (optional)
 polls.summary.author.email: 'Email address'
 polls.summary.author.name: Nickname
 polls.summary.author.no_email: 'No address given'
 polls.summary.edit: Edit
 polls.summary.information.title: 'General information'
 polls.summary.proposals.title: 'My proposals'
+polls.summary.settings.max_votes: 'A maximum of { number, plural, one {1 participant} other {# participants} } can vote per proposal.'
+polls.summary.settings.notify_on_votes.do: 'I will receive an email each time someone votes in the poll.'
+polls.summary.settings.notify_on_votes.dont: 'I will not receive an email when someone votes in the poll.'
+polls.summary.settings.password_protected.full: 'The poll is protected by a password.'
+polls.summary.settings.password_protected.not: 'The poll is not protected by a password.'
+polls.summary.settings.password_protected.vote: 'The poll is protected by a password (the results are visible without password).'
+polls.summary.settings.title: 'Advanced settings'
 polls.summary.title: 'Summary of your poll'
 polls.votes.maybe: Maybe
 polls.votes.no: 'No'

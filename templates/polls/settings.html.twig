@@ -14,11 +14,6 @@
             <h1>
                 {{ 'polls.settings.title' | trans }}
             </h1>
-
-            <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: process.stepNumber('settings'), total: process.totalSteps }) }}
-                {{ 'polls.steps.optional' | trans }}
-            </p>
         </div>
 
         {{ form_start(form) }}
@@ -59,8 +54,8 @@
             </div>
 
             <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ process.previousStepUrl('settings') }}">
-                    {{ 'forms.previous' | trans }}
+                <a class="button" href="{{ path('poll summary', { id: poll.id, token: poll.adminToken }) }}">
+                    {{ 'forms.cancel' | trans }}
                 </a>
 
                 <div class="col--extend"></div>

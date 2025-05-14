@@ -116,6 +116,43 @@
                 </div>
             </div>
 
+            <div class="flow">
+                <h2 class="text--primary">{{ 'polls.summary.settings.title' | trans }}</h2>
+
+                <div class="panel panel--rounded panel--primary flow">
+                    {% if poll.maxVotes > 0 %}
+                        <p class="text--bold">
+                            {{ 'polls.summary.settings.max_votes' | trans({ number: poll.maxVotes }) }}
+                        </p>
+                    {% endif %}
+
+                    <p class="text--bold">
+                        {% if poll.isFullPasswordProtected %}
+                            {{ 'polls.summary.settings.password_protected.full' | trans }}
+                        {% elseif poll.isVotePasswordProtected %}
+                            {{ 'polls.summary.settings.password_protected.vote' | trans }}
+                        {% else %}
+                            {{ 'polls.summary.settings.password_protected.not' | trans }}
+                        {% endif %}
+                    </p>
+
+                    <p class="text--bold">
+                        {% if poll.notifyOnVotes %}
+                            {{ 'polls.summary.settings.notify_on_votes.do' | trans }}
+                        {% else %}
+                            {{ 'polls.summary.settings.notify_on_votes.dont' | trans }}
+                        {% endif %}
+                    </p>
+
+                    <div class="panel__separator"></div>
+
+                    <a class="button button--menuitem" href="{{ path('edit poll settings', { id: poll.id, token: poll.adminToken }) }}">
+                        {{ icon('pen-to-square') }}
+                        {{ 'polls.summary.edit' | trans }}
+                    </a>
+                </div>
+            </div>
+
             <div class="cols cols--always cols--gap">
                 <a class="button" href="{{ process.previousStepUrl('summary') }}">
                     {{ 'forms.previous' | trans }}

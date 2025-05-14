@@ -587,7 +587,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($poll, $proposals[0]->getPoll());
         $this->assertSame('Bar', $proposals[1]->getLabel());
         $this->assertSame($poll, $proposals[1]->getPoll());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
     }
 
     public function testPostProposalsSynchronizesExistingVotesWithNewProposals(): void
@@ -831,7 +831,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($date, $proposals[0]->getDate());
         $this->assertSame($slot2, $proposals[1]->getLabel());
         $this->assertSame($date, $proposals[1]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
     }
 
     public function testPostSlotsCreatesADefaultProposalIfNoneArePosted(): void
@@ -858,7 +858,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($proposals));
         $this->assertSame('Day', $proposals[0]->getLabel());
         $this->assertSame($date, $proposals[0]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
     }
 
     public function testPostSlotsFailsIfCsrfTokenIsInvalid(): void
@@ -1023,7 +1023,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
     }
 
     public function testGetSummaryFailsIfAdminTokenDoesNotMatch(): void
