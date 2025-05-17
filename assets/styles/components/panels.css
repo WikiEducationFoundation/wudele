@@ -3,14 +3,16 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 .panel {
-    padding: var(--space-medium);
+    --panel-padding: var(--space-medium);
+
+    padding: var(--panel-padding);
 
     background-color: var(--color-grey3);
 }
 
 @media(max-width: 600px) {
     .panel {
-        padding: var(--space-small);
+        --panel-padding: var(--space-small);
     }
 }
 
@@ -45,8 +47,8 @@
 }
 
 .panel__separator {
-    margin-right: calc(-1 * var(--space-medium));
-    margin-left:  calc(-1 * var(--space-medium));
+    margin-right: calc(-1 * var(--panel-padding));
+    margin-left:  calc(-1 * var(--panel-padding));
 
     border-top: 2px solid var(--color-primary5);
 }
