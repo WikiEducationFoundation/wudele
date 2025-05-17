@@ -4,19 +4,19 @@ answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
 calendar.patterns.next_month: 'Next month (__date__)'
 calendar.patterns.previous_month: 'Previous month (__date__)'
-emails.polls_list.here_is_the_list: 'Here is the list of the polls you administrate on Pollaris:'
-emails.polls_list.subject: 'List of your polls'
 emails.new_vote.hello: 'Hello {admin_name},'
 emails.new_vote.link: 'You can find your poll at the link: {url}'
 emails.new_vote.subject: 'New vote on a poll'
 emails.new_vote.voted: '{voter_name} has just voted in the “{poll_name}” poll.'
+emails.polls_list.here_is_the_list: 'Here is the list of the polls you administrate on Pollaris:'
+emails.polls_list.subject: 'List of your polls'
 forms.apply: Apply
 forms.cancel: Cancel
 forms.complete: Complete
 forms.date_type.label.label_pattern: 'Date __number__'
-forms.find_polls_form.email.label: 'Your email address'
-forms.find_polls_form.submit: 'Send'
 forms.error: Error
+forms.find_polls_form.email.label: 'Your email address'
+forms.find_polls_form.submit: Send
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
