@@ -290,8 +290,10 @@ class PollsControllerTest extends WebTestCase
     public function testPostShowCreatesAVote(): void
     {
         $client = static::createClient();
+        $authorEmail = 'charlie@example.com';
         $poll = Factory\PollFactory::new([
-            'authorEmail' => 'charlie@example.com',
+            'authorEmail' => $authorEmail,
+            'notifyOnVotes' => true,
         ])->completed()->create();
         $proposal = $poll->getProposals()->first();
         $name = 'Alix';
@@ -320,6 +322,7 @@ class PollsControllerTest extends WebTestCase
         $email = $this->getMailerMessage();
         $this->assertNotNull($email);
         $this->assertEmailTextBodyContains($email, $name);
+        $this->assertEmailAddressContains($email, 'To', $authorEmail);
     }
 
     public function testPostShowFailsIfMaxVoteIsReached(): void

@@ -32,7 +32,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $vote = $event->getVote();
         $poll = $vote->getPoll();
 
-        if (!$poll->getAuthorEmail()) {
+        if (!$poll->getAuthorEmail() || !$poll->isNotifyOnVotes()) {
             return;
         }
 
