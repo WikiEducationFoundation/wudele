@@ -8,6 +8,12 @@
     background-color: var(--color-grey3);
 }
 
+@media(max-width: 600px) {
+    .panel {
+        padding: var(--space-small);
+    }
+}
+
 .panel--rounded {
     border-radius: var(--border-radius);
 }
