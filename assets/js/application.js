@@ -8,6 +8,7 @@ import DatesFormController from './controllers/dates_form_controller.js';
 import ModalController from './controllers/modal_controller.js';
 import ModalOpenerController from './controllers/modal_opener_controller.js';
 import NotificationController from './controllers/notification_controller.js';
+import PollPasswordController from './controllers/poll_password_controller.js';
 import SlotsApplierController from './controllers/slots_applier_controller.js';
 
 const application = Application.start();
@@ -18,4 +19,5 @@ application.register('dates-form', DatesFormController);
 application.register('modal', ModalController);
 application.register('modal-opener', ModalOpenerController);
 application.register('notification', NotificationController);
+application.register('poll-password', PollPasswordController);
 application.register('slots-applier', SlotsApplierController);

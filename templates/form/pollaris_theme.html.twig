@@ -59,7 +59,7 @@
         {%- set checkbox_layout = checkbox_layout|default(false) -%}
         {%- if checkbox_layout -%}
             {{- form_errors(form) -}}
-            <div{{ block('attributes') }}>
+            <div>
                 {{- form_widget(form, widget_attr) -}}
                 {{- form_label(form) -}}
             </div>

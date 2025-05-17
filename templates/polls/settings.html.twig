@@ -40,9 +40,13 @@
                     {{ 'polls.settings.password.title' | trans }}
                 </h2>
 
-                {{ form_row(form.plainPassword) }}
+                <div class="flow" data-controller="poll-password">
+                    {{ form_row(form.isPasswordProtected) }}
 
-                {{ form_row(form.isPasswordForVotesOnly) }}
+                    {{ form_row(form.plainPassword) }}
+
+                    {{ form_row(form.isPasswordForVotesOnly) }}
+                </div>
             </div>
 
             <div class="panel panel--rounded panel--primary flow">

@@ -33,6 +33,8 @@ forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
 forms.poll_settings_form.max_votes.label: 'Maximum number of participants'
 forms.poll_settings_form.notify_on_votes.label: 'Receive an email for each vote'
 forms.poll_settings_form.password.label: Password
+forms.poll_settings_form.password.leave_empty_to_keep: 'Leave empty to keep the current password.'
+forms.poll_settings_form.password.protect: 'Protect the poll by password'
 forms.poll_settings_form.password_for_votes_only.label: 'Results can be viewed without a password'
 forms.poll_settings_form.repeat_password.label: 'Repeat password'
 forms.poll_settings_form.slug.help: 'Please note that changing the link to your poll makes it more easily accessible to everyone. It is recommended to protect it with a password.'

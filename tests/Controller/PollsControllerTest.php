@@ -943,6 +943,7 @@ class PollsControllerTest extends WebTestCase
                 '_token' => $this->getCsrf($client, 'poll_settings'),
                 'maxVotes' => $maxVotes,
                 'slug' => $slug,
+                'isPasswordProtected' => true,
                 'plainPassword' => [
                     'first' => $password,
                     'second' => $password,
@@ -974,6 +975,7 @@ class PollsControllerTest extends WebTestCase
                 '_token' => $this->getCsrf($client, 'poll_settings'),
                 'maxVotes' => $maxVotes,
                 'slug' => $slug,
+                'isPasswordProtected' => true,
                 'plainPassword' => [
                     'first' => '',
                     'second' => '',
@@ -985,6 +987,31 @@ class PollsControllerTest extends WebTestCase
         /** @var Service\PollPassword */
         $pollPassword = static::getContainer()->get(Service\PollPassword::class);
         $this->assertTrue($pollPassword->verify($poll->getPassword() ?? '', 'secret'));
+    }
+
+    public function testPostSettingsRemovesPasswordIfIsPasswordProtectedIsNotSent(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'password' => 'secret',
+        ])->withProposal()->create();
+        $maxVotes = 1;
+        $slug = 'my-slug';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
+            'poll_settings' => [
+                '_token' => $this->getCsrf($client, 'poll_settings'),
+                'maxVotes' => $maxVotes,
+                'slug' => $slug,
+                'plainPassword' => [
+                    'first' => '',
+                    'second' => '',
+                ],
+            ]
+        ]);
+
+        $this->refresh($poll);
+        $this->assertFalse($poll->isPasswordProtected());
     }
 
     public function testPostSettingsFailsIfCsrfIsInvalid(): void

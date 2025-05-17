@@ -47,21 +47,23 @@ class PollSettingsForm extends AbstractType
             'block_prefix' => 'urlprefix',
         ]);
 
-        $builder->add('plainPassword', Type\RepeatedType::class, [
-            'type' => Type\PasswordType::class,
+        $builder->add('isPasswordProtected', Type\CheckboxType::class, [
+            'label' => new TranslatableMessage('forms.poll_settings_form.password.protect'),
             'required' => false,
-            'first_options'  => [
-                'label' => new TranslatableMessage('forms.poll_settings_form.password.label'),
-            ],
-            'second_options' => [
-                'label' => new TranslatableMessage('forms.poll_settings_form.repeat_password.label'),
-            ],
             'mapped' => false,
+            'attr' => [
+                'data-poll-password-target' => 'isPasswordProtected',
+                'data-action' => 'poll-password#refresh',
+            ],
         ]);
+
 
         $builder->add('isPasswordForVotesOnly', Type\CheckboxType::class, [
             'label' => new TranslatableMessage('forms.poll_settings_form.password_for_votes_only.label'),
             'required' => false,
+            'attr' => [
+                'data-poll-password-target' => 'isPasswordForVotesOnly',
+            ],
         ]);
 
         $builder->add('notifyOnVotes', Type\CheckboxType::class, [
@@ -73,15 +75,62 @@ class PollSettingsForm extends AbstractType
             'label' => new TranslatableMessage('forms.next'),
         ]);
 
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+            $form = $event->getForm();
+            $poll = $event->getData();
+
+            $plainPasswordOptions = [
+                'type' => Type\PasswordType::class,
+                'first_options'  => [
+                    'label' => new TranslatableMessage('forms.poll_settings_form.password.label'),
+                    'attr' => [
+                        'data-poll-password-target' => 'firstPlainPassword',
+                    ],
+                ],
+                'second_options' => [
+                    'label' => new TranslatableMessage('forms.poll_settings_form.repeat_password.label'),
+                    'attr' => [
+                        'data-poll-password-target' => 'secondPlainPassword',
+                    ],
+                ],
+                'mapped' => false,
+            ];
+
+            $isRequired = !$poll->isPasswordProtected();
+
+            if ($isRequired) {
+                $plainPasswordOptions['required'] = true;
+            } else {
+                $plainPasswordOptions['required'] = false;
+                $help = new TranslatableMessage('forms.poll_settings_form.password.leave_empty_to_keep');
+                $plainPasswordOptions['first_options']['help'] = $help;
+            }
+
+            $form->add('plainPassword', Type\RepeatedType::class, $plainPasswordOptions);
+        });
+
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
+            $form = $event->getForm();
+            $poll = $event->getData();
+
+            if ($poll->isPasswordProtected()) {
+                $form->get('isPasswordProtected')->setData(true);
+            }
+        });
+
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
             $form = $event->getForm();
             $poll = $event->getData();
 
+            $isPasswordProtected = $form->get('isPasswordProtected')->getData();
             $plainPassword = $form->get('plainPassword')->getData();
 
-            if ($plainPassword) {
+            if ($isPasswordProtected && $plainPassword) {
                 $hashedPassword = $this->pollPassword->hash($plainPassword);
                 $poll->setPassword($hashedPassword);
+            } elseif (!$isPasswordProtected) {
+                $poll->setPassword('');
+                $poll->setIsPasswordForVotesOnly(false);
             }
         });
     }
