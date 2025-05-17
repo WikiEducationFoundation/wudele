@@ -26,6 +26,15 @@ textarea {
     max-width: 100%;
 }
 
+input:disabled,
+textarea:disabled,
+.input:disabled {
+    color: var(--color-grey11);
+
+    background-color: var(--color-grey3);
+    border-color: var(--color-grey8);
+}
+
 .input--urlprefix {
     padding: 0;
 }
@@ -35,7 +44,7 @@ textarea {
 
     color: var(--color-grey11);
 
-    background-color: var(--color-grey4);
+    background-color: var(--color-grey3);
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
