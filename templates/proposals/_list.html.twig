@@ -4,35 +4,37 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
-{% if displayMode == 'classic' %}
-    {% for proposal in proposals %}
-        <div class="panel panel--primary panel--rounded">
-            {{ include('proposals/_proposal.html.twig', {
-                proposal: proposal,
-                isPreferred: preferredChoices and proposal in preferredChoices,
-                maxCount: maxCount,
-                voteForm: voteForm,
-            }) }}
-        </div>
-    {% endfor %}
-{% elseif displayMode == 'date' %}
-    {% for dateAndProposals in proposals|groupDateProposals %}
-        {% set date = dateAndProposals[0] %}
-        {% set proposals = dateAndProposals[1] %}
-
-        <fieldset class="panel panel--primary panel--rounded flow">
-            <div>
-                <legend>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</legend>
-            </div>
-
-            {% for proposal in proposals %}
+<div class="flow flow--large">
+    {% if displayMode == 'classic' %}
+        {% for proposal in proposals %}
+            <div class="panel panel--primary panel--rounded">
                 {{ include('proposals/_proposal.html.twig', {
                     proposal: proposal,
                     isPreferred: preferredChoices and proposal in preferredChoices,
                     maxCount: maxCount,
                     voteForm: voteForm,
                 }) }}
-            {% endfor %}
-        </fieldset>
-    {% endfor %}
-{% endif %}
+            </div>
+        {% endfor %}
+    {% elseif displayMode == 'date' %}
+        {% for dateAndProposals in proposals|groupDateProposals %}
+            {% set date = dateAndProposals[0] %}
+            {% set proposals = dateAndProposals[1] %}
+
+            <fieldset class="panel panel--primary panel--rounded flow">
+                <div>
+                    <legend>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</legend>
+                </div>
+
+                {% for proposal in proposals %}
+                    {{ include('proposals/_proposal.html.twig', {
+                        proposal: proposal,
+                        isPreferred: preferredChoices and proposal in preferredChoices,
+                        maxCount: maxCount,
+                        voteForm: voteForm,
+                    }) }}
+                {% endfor %}
+            </fieldset>
+        {% endfor %}
+    {% endif %}
+</div>
