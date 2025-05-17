@@ -1,0 +1,45 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'polls.find.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <h1>
+            {{ 'polls.find.title' | trans }}
+        </h1>
+
+        <p>
+            {{ 'polls.find.explain' | trans }}
+        </p>
+
+        {% if success %}
+            <div class="panel panel--success panel--rounded cols cols--gap-small">
+                <div class="text--bigger text--success">
+                    {{ icon('circle-check') }}
+                </div>
+
+                <p class="text--success" role="alert">
+                    {{ 'polls.find.success' | trans }}
+                </p>
+            </div>
+        {% else %}
+            <div class="panel panel--primary panel--rounded">
+                {{ form_start(form) }}
+                    {{ form_errors(form) }}
+
+                    {{ form_row(form.email) }}
+
+                    <div class="text--right">
+                        {{ form_row(form.submit) }}
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

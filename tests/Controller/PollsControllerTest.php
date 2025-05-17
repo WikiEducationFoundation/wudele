@@ -32,6 +32,89 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Choose the type of poll');
     }
 
+    public function testGetFindRendersCorrectly(): void
+    {
+        $client = static::createClient();
+
+        $client->request(Request::METHOD_GET, '/polls/find');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Find my polls');
+    }
+
+    public function testGetFindRendersCorrectlyASuccessfulMessage(): void
+    {
+        $client = static::createClient();
+
+        $client->request(Request::METHOD_GET, '/polls/find', [
+            'success' => true,
+        ]);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains(
+            'p[role="alert"]',
+            'We have sent you an email containing links to your polls.'
+        );
+    }
+
+    public function testPostFindSendsAnEmail(): void
+    {
+        $client = static::createClient();
+        $authorEmail = 'alix@example.org';
+        $poll = Factory\PollFactory::new([
+            'authorEmail' => $authorEmail,
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_POST, '/polls/find', [
+            'find_polls' => [
+                '_token' => $this->getCsrf($client, 'find_polls'),
+                'email' => $authorEmail,
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/polls/find?success=1', 302);
+        $this->assertEmailCount(1);
+        $email = $this->getMailerMessage();
+        $this->assertNotNull($email);
+        $this->assertEmailTextBodyContains($email, $poll->getTitle() ?? '');
+        $this->assertEmailAddressContains($email, 'To', $authorEmail);
+    }
+
+    public function testPostFindDoesNotSendEmailIfNoPolls(): void
+    {
+        $client = static::createClient();
+        $authorEmail = 'alix@example.org';
+
+        $client->request(Request::METHOD_POST, '/polls/find', [
+            'find_polls' => [
+                '_token' => $this->getCsrf($client, 'find_polls'),
+                'email' => $authorEmail,
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/polls/find?success=1', 302);
+        $this->assertEmailCount(0);
+    }
+
+    public function testPostFindFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $authorEmail = 'alix@example.org';
+        $poll = Factory\PollFactory::new([
+            'authorEmail' => $authorEmail,
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_POST, '/polls/find', [
+            'find_polls' => [
+                '_token' => 'not the token',
+                'email' => $authorEmail,
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#find_polls_error', 'The CSRF token is invalid');
+        $this->assertEmailCount(0);
+    }
+
     public function testGetNewRendersCorrectly(): void
     {
         $client = static::createClient();

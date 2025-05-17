@@ -4,6 +4,8 @@ answers.value.yes: 'Yes'
 base.default_title: 'Welcome to Pollaris!'
 calendar.patterns.next_month: 'Next month (__date__)'
 calendar.patterns.previous_month: 'Previous month (__date__)'
+emails.polls_list.here_is_the_list: 'Here is the list of the polls you administrate on Pollaris:'
+emails.polls_list.subject: 'List of your polls'
 emails.new_vote.hello: 'Hello {admin_name},'
 emails.new_vote.link: 'You can find your poll at the link: {url}'
 emails.new_vote.subject: 'New vote on a poll'
@@ -12,6 +14,8 @@ forms.apply: Apply
 forms.cancel: Cancel
 forms.complete: Complete
 forms.date_type.label.label_pattern: 'Date __number__'
+forms.find_polls_form.email.label: 'Your email address'
+forms.find_polls_form.submit: 'Send'
 forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
@@ -50,6 +54,7 @@ forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
+home.find_polls: 'Find my polls'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.modal.close: Close
@@ -67,6 +72,9 @@ polls.complete.public_link: 'Public sharing link'
 polls.complete.see: 'See my poll'
 polls.complete.title: 'Your poll is ready!'
 polls.dates.title: 'Choose the dates'
+polls.find.explain: 'Enter your email address and we will send you the links to the polls that you have created.'
+polls.find.success: 'We have sent you an email containing links to your polls. Please check your spam folder if you cannot see it.'
+polls.find.title: 'Find my polls'
 polls.new.title: 'Poll creation'
 polls.new.who_you_are: 'Who you are'
 polls.proposals.best: 'Preferred choice'

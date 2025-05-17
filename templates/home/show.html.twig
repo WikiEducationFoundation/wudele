@@ -24,9 +24,13 @@
             </div>
         </div>
 
-        <p>
+        <p class="cols cols--center cols--gap">
             <a class="button button--primary" href="{{ path('choose poll type') }}">
                 {{ 'home.create_poll' | trans }}
+            </a>
+
+            <a class="button" href="{{ path('find polls') }}">
+                {{ 'home.find_polls' | trans }}
             </a>
         </p>
     </div>

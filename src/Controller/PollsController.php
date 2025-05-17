@@ -12,6 +12,7 @@ use App\PollActivity;
 use App\Process;
 use App\Repository;
 use App\Security;
+use App\Service;
 use App\Utils;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,28 @@ class PollsController extends BaseController
     public function choose(): Response
     {
         return $this->render('polls/choose.html.twig');
+    }
+
+    #[Route('/polls/find', name: 'find polls')]
+    public function find(Request $request, Service\PollsFinder $pollsFinder): Response
+    {
+        $form = $this->createNamedForm('find_polls', Form\FindPollsForm::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $email = $form->get('email')->getData();
+
+            $pollsFinder->sendEmailLinks($email);
+
+            return $this->redirectToRoute('find polls', [
+                'success' => true,
+            ]);
+        }
+
+        return $this->render('polls/find.html.twig', [
+            'form' => $form,
+            'success' => $request->query->getBoolean('success'),
+        ]);
     }
 
     #[Route('/polls/new', name: 'new poll')]
