@@ -5,15 +5,19 @@
 .header {
     padding: var(--space-small) var(--space-medium);
 
-    color: var(--color-primary11);
+    color: var(--color-primary1);
 
-    box-shadow: 0 0 8px 0 rgba(0 0 0 / 10%);
+    background-color: var(--color-primary9);
+    box-shadow: 0 0 8px 0 rgba(0 0 0 / 15%);
 }
 
 .header__title {
+    --outline-color: currentcolor;
+
     display: inline-block;
     padding: var(--space-small);
 
+    color: currentcolor;
     font-size: var(--font-size-big);
     font-weight: bold;
     text-decoration: none;
