@@ -44,7 +44,9 @@
                     </div>
                 </th>
 
-                {% for answer in vote.answers %}
+                {% for proposal in proposals %}
+                    {% set answer = vote.answerForProposal(proposal) %}
+
                     <td class="text--center">
                         {% if answer.value == 'yes' %}
                             <span class="vote vote--yes">
