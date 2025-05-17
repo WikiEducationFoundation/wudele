@@ -5,3 +5,11 @@
 a {
     color: var(--color-primary11);
 }
+
+.anchor--currentcolor {
+    color: currentcolor;
+}
+
+.anchor--dotted {
+    text-decoration: underline dotted;
+}

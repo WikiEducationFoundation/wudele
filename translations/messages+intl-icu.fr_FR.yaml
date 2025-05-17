@@ -12,6 +12,9 @@ emails.polls_list.here_is_the_list: "Voici la liste des sondages que vous admini
 emails.polls_list.subject: 'Liste de vos sondages'
 forms.apply: Appliquer
 forms.cancel: Annuler
+forms.comment_form.author_name.label: 'Votre pseudonyme'
+forms.comment_form.content.label: 'Votre message'
+forms.comment_form.submit: Poster
 forms.complete: Finaliser
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Erreur
@@ -87,6 +90,10 @@ polls.settings.title: 'Paramétrez le sondage'
 polls.show.authenticated: 'Vous vous êtes authentifié·e avec succès.'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'
+polls.show.comment.created: 'Votre commentaire a été publié.'
+polls.show.comments.explain: 'Votre commentaire sera directement visible sur la page du sondage.'
+polls.show.comments.new: 'Nouveau commentaire'
+polls.show.comments.title: Commentaires
 polls.show.created_by: 'Sondage créé par {by}'
 polls.show.display_list: 'Affichage liste'
 polls.show.display_table: 'Affichage tableau'

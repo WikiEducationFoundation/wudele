@@ -63,3 +63,8 @@ body {
 
     background-color: var(--color-grey1);
 }
+
+hr {
+    border: 2px solid var(--color-grey6);
+    border-radius: 5px;
+}

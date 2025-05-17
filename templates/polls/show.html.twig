@@ -16,175 +16,221 @@
 {% endblock %}
 
 {% block body %}
-    <div class="flow">
-        <div class="wrapper wrapper--small wrapper--center flow flow--larger">
-            {% for message in app.flashes('success') %}
-                {% if message == 'vote.created' %}
-                    {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.created' | trans }) }}
-                {% elseif message == 'vote.updated' %}
-                    {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.updated' | trans }) }}
-                {% elseif message == 'poll.authenticated' %}
-                    {{ include('notifications/_success.html.twig', { message: 'polls.show.authenticated' | trans }) }}
-                {% endif %}
-            {% endfor %}
-
-            <div class="panel panel--primary panel--rounded flow flow--large">
-                <div class="flow flow--small">
-                    <h1>
-                        {{ poll.title }}
-                    </h1>
-
-                    {% if poll.description %}
-                        <p>
-                            {{ poll.description }}
-                        </p>
+    <div class="flow flow--larger">
+        <div class="flow">
+            <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+                {% for message in app.flashes('success') %}
+                    {% if message == 'vote.created' %}
+                        {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.created' | trans }) }}
+                    {% elseif message == 'vote.updated' %}
+                        {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.updated' | trans }) }}
+                    {% elseif message == 'comment.created' %}
+                        {{ include('notifications/_success.html.twig', { message: 'polls.show.comment.created' | trans }) }}
+                    {% elseif message == 'poll.authenticated' %}
+                        {{ include('notifications/_success.html.twig', { message: 'polls.show.authenticated' | trans }) }}
                     {% endif %}
+                {% endfor %}
 
-                    <p class="text--secondary">
-                        {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
-                    </p>
+                <div class="panel panel--primary panel--rounded flow flow--large">
+                    <div class="flow flow--small">
+                        <h1>
+                            {{ poll.title }}
+                        </h1>
+
+                        {% if poll.description %}
+                            <p>
+                                {{ poll.description }}
+                            </p>
+                        {% endif %}
+
+                        <p class="text--secondary">
+                            {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            {% set preferredChoices = poll.preferredChoices %}
-            {% if preferredChoices %}
-                {% set firstChoice = preferredChoices|first %}
+                {% set preferredChoices = poll.preferredChoices %}
+                {% if preferredChoices %}
+                    {% set firstChoice = preferredChoices|first %}
+
+                    <div class="flow">
+                        <h2 class="text--primary">
+                            {{ 'polls.show.best_proposals.title' | trans(count: preferredChoices|length) }}
+                        </h2>
+
+                        <div class="panel panel--primary panel--rounded flow">
+                            <p>
+                                {{ 'polls.show.best_proposals.info' | trans({
+                                    countChoices: preferredChoices|length,
+                                    countYes: firstChoice.countAnswers('yes'),
+                                }) | raw }}
+                            </p>
+
+                            <div class="panel panel--success panel--rounded panel--border">
+                                {% if preferredChoices|length == 1 %}
+                                    <p class="flow flow--small">
+                                        {% set date = firstChoice.date %}
+                                        {% if date %}
+                                            <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
+                                            <span class="text--block">{{ firstChoice.label }}</span>
+                                        {% else %}
+                                            <span class="text--bold">{{ firstChoice.label }}</span>
+                                        {% endif %}
+                                    </p>
+                                {% elseif poll.isClassicPoll %}
+                                    <ul class="list--nostyle flow flow--small">
+                                        {% for choice in preferredChoices %}
+                                            <li class="text--bold">
+                                                {{ choice.label }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% elseif poll.isDatePoll %}
+                                    <ul class="list--nostyle flow flow--small">
+                                        {% for dateAndChoices in preferredChoices|groupDateProposals %}
+                                            {% set date = dateAndChoices[0] %}
+                                            {% set choices = dateAndChoices[1] %}
+
+                                            <li class="flow flow--small">
+                                                <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
+
+                                                {% if choices|length == 1 %}
+                                                    <span class="text--block">{{ choices[0].label }}</span>
+                                                {% else %}
+                                                    <ul class="list--nostyle flow flow--small">
+                                                        {% for choice in choices %}
+                                                            <li>{{ choice.label }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
 
                 <div class="flow">
-                    <h2 class="text--primary">
-                        {{ 'polls.show.best_proposals.title' | trans(count: preferredChoices|length) }}
-                    </h2>
+                    {% set maxCount = poll.maxCount %}
 
-                    <div class="panel panel--primary panel--rounded flow">
-                        <p>
-                            {{ 'polls.show.best_proposals.info' | trans({
-                                countChoices: preferredChoices|length,
-                                countYes: firstChoice.countAnswers('yes'),
-                            }) | raw }}
-                        </p>
+                    <div class="cols cols--always cols--center cols--gap-small">
+                        <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
 
-                        <div class="panel panel--success panel--rounded panel--border">
-                            {% if preferredChoices|length == 1 %}
-                                <p class="flow flow--small">
-                                    {% set date = firstChoice.date %}
-                                    {% if date %}
-                                        <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
-                                        <span class="text--block">{{ firstChoice.label }}</span>
-                                    {% else %}
-                                        <span class="text--bold">{{ firstChoice.label }}</span>
-                                    {% endif %}
-                                </p>
-                            {% elseif poll.isClassicPoll %}
-                                <ul class="list--nostyle flow flow--small">
-                                    {% for choice in preferredChoices %}
-                                        <li class="text--bold">
-                                            {{ choice.label }}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% elseif poll.isDatePoll %}
-                                <ul class="list--nostyle flow flow--small">
-                                    {% for dateAndChoices in preferredChoices|groupDateProposals %}
-                                        {% set date = dateAndChoices[0] %}
-                                        {% set choices = dateAndChoices[1] %}
-
-                                        <li class="flow flow--small">
-                                            <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
-
-                                            {% if choices|length == 1 %}
-                                                <span class="text--block">{{ choices[0].label }}</span>
-                                            {% else %}
-                                                <ul class="list--nostyle flow flow--small">
-                                                    {% for choice in choices %}
-                                                        <li>{{ choice.label }}</li>
-                                                    {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                        <div class="no-mobile">
+                            {% if displayMode == 'list' %}
+                                <a
+                                    class="button button--small"
+                                    href="{{ path('poll', { slug: poll.slug, display: 'table' }) }}"
+                                >
+                                    {{ icon('table') }}
+                                    {{ 'polls.show.display_table' | trans }}
+                                </a>
+                            {% else %}
+                                <a
+                                    class="button button--small"
+                                    href="{{ path('poll', { slug: poll.slug, display: 'list' }) }}"
+                                >
+                                    {{ icon('bars') }}
+                                    {{ 'polls.show.display_list' | trans }}
+                                </a>
                             {% endif %}
                         </div>
                     </div>
+
+                    {% if maxCount == 0 %}
+                        <p class="panel panel--primary panel--rounded panel--border text--primary">
+                            {{ 'polls.show.no_vote' | trans }}
+                        </p>
+                    {% endif %}
                 </div>
-            {% endif %}
-
-            <div class="flow">
-                {% set maxCount = poll.maxCount %}
-
-                <div class="cols cols--always cols--center cols--gap-small">
-                    <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
-
-                    <div class="no-mobile">
-                        {% if displayMode == 'list' %}
-                            <a
-                                class="button button--small"
-                                href="{{ path('poll', { slug: poll.slug, display: 'table' }) }}"
-                            >
-                                {{ icon('table') }}
-                                {{ 'polls.show.display_table' | trans }}
-                            </a>
-                        {% else %}
-                            <a
-                                class="button button--small"
-                                href="{{ path('poll', { slug: poll.slug, display: 'list' }) }}"
-                            >
-                                {{ icon('bars') }}
-                                {{ 'polls.show.display_list' | trans }}
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
-
-                {% if maxCount == 0 %}
-                    <p class="panel panel--primary panel--rounded panel--border text--primary">
-                        {{ 'polls.show.no_vote' | trans }}
-                    </p>
-                {% endif %}
             </div>
-        </div>
 
-        {% if voteForm and displayMode == 'list' %}
-            <div class="wrapper wrapper--small wrapper--center">
-                {{ form_start(voteForm, { attr: { class: 'form--standard' } }) }}
+            {% if voteForm and displayMode == 'list' %}
+                <div class="wrapper wrapper--small wrapper--center">
+                    {{ form_start(voteForm, { attr: { class: 'form--standard' } }) }}
+                        {{ form_errors(voteForm) }}
+
+                        {{ include('proposals/_list.html.twig', {
+                            proposals: poll.proposals,
+                            displayMode: poll.type,
+                            preferredChoices: preferredChoices,
+                            maxCount: maxCount,
+                            voteForm: voteForm,
+                        }) }}
+
+                        <div class="panel panel--primary panel--rounded flow">
+                            {{ form_row(voteForm.authorName) }}
+
+                            {% if voteForm.password is defined %}
+                                {{ form_row(voteForm.password) }}
+                            {% endif %}
+                        </div>
+
+                        <div class="cols cols--always cols--gap cols--center">
+                            {% if voteId %}
+                                <a
+                                    class="button"
+                                    href="{{ path('poll', { slug: poll.slug, display: displayMode }) }}"
+                                >
+                                    {{ 'forms.cancel' | trans }}
+                                </a>
+                            {% endif %}
+
+                            <div class="col--extend"></div>
+
+                            {{ form_row(voteForm.submit) }}
+                        </div>
+                    {{ form_end(voteForm) }}
+                </div>
+            {% elseif voteForm and displayMode == 'table' %}
+                {{ form_start(voteForm, { attr: { class: 'flow flow--large' } }) }}
                     {{ form_errors(voteForm) }}
 
+                    {{ include('proposals/_table.html.twig', {
+                        proposals: poll.proposals,
+                        votes: poll.votes,
+                        displayMode: poll.type,
+                        preferredChoices: preferredChoices,
+                        maxCount: maxCount,
+                    }) }}
+
+                    <div class="wrapper wrapper--small wrapper--center flow flow--large">
+                        <div class="panel panel--primary panel--rounded flow">
+                            {{ form_row(voteForm.authorName) }}
+
+                            {% if voteForm.password is defined %}
+                                {{ form_row(voteForm.password) }}
+                            {% endif %}
+                        </div>
+
+                        <div class="cols cols--always cols--gap cols--center">
+                            {% if voteId %}
+                                <a
+                                    class="button"
+                                    href="{{ path('poll', { slug: poll.slug, display: displayMode }) }}"
+                                >
+                                    {{ 'forms.cancel' | trans }}
+                                </a>
+                            {% endif %}
+
+                            <div class="col--extend"></div>
+
+                            {{ form_row(voteForm.submit) }}
+                        </div>
+                    </div>
+                {{ form_end(voteForm) }}
+            {% elseif displayMode == 'list' %}
+                <div class="wrapper wrapper--small wrapper--center">
                     {{ include('proposals/_list.html.twig', {
                         proposals: poll.proposals,
                         displayMode: poll.type,
                         preferredChoices: preferredChoices,
                         maxCount: maxCount,
-                        voteForm: voteForm,
                     }) }}
-
-                    <div class="panel panel--primary panel--rounded flow">
-                        {{ form_row(voteForm.authorName) }}
-
-                        {% if voteForm.password is defined %}
-                            {{ form_row(voteForm.password) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="cols cols--always cols--gap cols--center">
-                        {% if voteId %}
-                            <a
-                                class="button"
-                                href="{{ path('poll', { slug: poll.slug, display: displayMode }) }}"
-                            >
-                                {{ 'forms.cancel' | trans }}
-                            </a>
-                        {% endif %}
-
-                        <div class="col--extend"></div>
-
-                        {{ form_row(voteForm.submit) }}
-                    </div>
-                {{ form_end(voteForm) }}
-            </div>
-        {% elseif voteForm and displayMode == 'table' %}
-            {{ form_start(voteForm, { attr: { class: 'flow flow--large' } }) }}
-                {{ form_errors(voteForm) }}
-
+                </div>
+            {% else %}
                 {{ include('proposals/_table.html.twig', {
                     proposals: poll.proposals,
                     votes: poll.votes,
@@ -192,60 +238,64 @@
                     preferredChoices: preferredChoices,
                     maxCount: maxCount,
                 }) }}
+            {% endif %}
 
-                <div class="wrapper wrapper--small wrapper--center flow flow--large">
-                    <div class="panel panel--primary panel--rounded flow">
-                        {{ form_row(voteForm.authorName) }}
-
-                        {% if voteForm.password is defined %}
-                            {{ form_row(voteForm.password) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="cols cols--always cols--gap cols--center">
-                        {% if voteId %}
-                            <a
-                                class="button"
-                                href="{{ path('poll', { slug: poll.slug, display: displayMode }) }}"
-                            >
-                                {{ 'forms.cancel' | trans }}
-                            </a>
-                        {% endif %}
-
-                        <div class="col--extend"></div>
-
-                        {{ form_row(voteForm.submit) }}
-                    </div>
+            {% if voteId and not voteForm %}
+                <div class="text--center">
+                    <a
+                        class="button button--small"
+                        href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}"
+                    >
+                        {{ 'polls.show.vote_edit' | trans }}
+                    </a>
                 </div>
-            {{ form_end(voteForm) }}
-        {% elseif displayMode == 'list' %}
-            <div class="wrapper wrapper--small wrapper--center">
-                {{ include('proposals/_list.html.twig', {
-                    proposals: poll.proposals,
-                    displayMode: poll.type,
-                    preferredChoices: preferredChoices,
-                    maxCount: maxCount,
-                }) }}
-            </div>
-        {% else %}
-            {{ include('proposals/_table.html.twig', {
-                proposals: poll.proposals,
-                votes: poll.votes,
-                displayMode: poll.type,
-                preferredChoices: preferredChoices,
-                maxCount: maxCount,
-            }) }}
-        {% endif %}
+            {% endif %}
+        </div>
 
-        {% if voteId and not voteForm %}
-            <div class="text--center">
-                <a
-                    class="button button--small"
-                    href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}"
-                >
-                    {{ 'polls.show.vote_edit' | trans }}
-                </a>
+        <hr class="wrapper wrapper--center">
+
+        <div class="wrapper wrapper--small wrapper--center flow flow--large">
+            <h2 class="text--primary">{{ 'polls.show.comments.title' | trans }}</h2>
+
+            {% for comment in poll.comments %}
+                <article id="comment-{{ comment.id }}" class="panel panel--rounded flow flow--small">
+                    <header class="cols cols--always cols--gap-small text--secondary">
+                        <span class="col--extend">
+                            {{ comment.authorName }}
+                        </span>
+
+                        <a class="anchor--dotted anchor--currentcolor text--small" href="#comment-{{ comment.id }}">
+                            <time datetime="{{ comment.createdAt | dateIso }}">
+                                {{ comment.createdAt | dateTrans('d MMMM yyyy, HH:mm') }}
+                            </time>
+                        </a>
+                    </header>
+
+                    <p>
+                        {{ comment.content | nl2br }}
+                    </p>
+                </article>
+            {% endfor %}
+
+            <div class="panel panel--primary panel--rounded flow">
+                <h3 class="text--primary">{{ 'polls.show.comments.new' | trans }}</h3>
+
+                <p>
+                    {{ 'polls.show.comments.explain' | trans }}
+                </p>
+
+                {{ form_start(commentForm) }}
+                    {{ form_errors(commentForm) }}
+
+                    {{ form_row(commentForm.authorName) }}
+
+                    {{ form_row(commentForm.content) }}
+
+                    <div class="text--right">
+                        {{ form_row(commentForm.submit) }}
+                    </div>
+                {{ form_end(commentForm) }}
             </div>
-        {% endif %}
+        </div>
     </div>
 {% endblock %}

@@ -12,6 +12,9 @@ emails.polls_list.here_is_the_list: 'Here is the list of the polls you administr
 emails.polls_list.subject: 'List of your polls'
 forms.apply: Apply
 forms.cancel: Cancel
+forms.comment_form.author_name.label: 'Your nickname'
+forms.comment_form.content.label: 'Your message'
+forms.comment_form.submit: Post
 forms.complete: Complete
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Error
@@ -87,6 +90,10 @@ polls.settings.title: 'Configure the poll'
 polls.show.authenticated: 'You have successfully authenticated.'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
+polls.show.comment.created: 'Your comment has been published.'
+polls.show.comments.explain: 'Your comment will be directly visible on the poll’s page.'
+polls.show.comments.new: 'New comment'
+polls.show.comments.title: Comments
 polls.show.created_by: 'Poll created by {by}'
 polls.show.display_list: 'List view'
 polls.show.display_table: 'Table view'

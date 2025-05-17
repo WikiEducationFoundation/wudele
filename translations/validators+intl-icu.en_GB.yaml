@@ -1,6 +1,9 @@
 Error: Error
 answer.value.invalid: 'Select a choice from the list.'
 answer.value.required: 'Select a choice.'
+comment.author_name.max_length: 'Enter a nickname of less than {limit} characters.'
+comment.author_name.required: 'Enter a nickname.'
+comment.content.required: 'Enter a message.'
 date.value.required: 'Enter a date.'
 poll.author_email.invalid: 'Enter a valid email address.'
 poll.author_name.max_length: 'Enter a nickname of less than {limit} characters.'

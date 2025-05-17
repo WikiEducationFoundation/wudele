@@ -139,6 +139,17 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(options: ['default' => false])]
     private bool $notifyOnVotes = false;
 
+    /**
+     * @var Collections\Collection<int, Comment>
+     */
+    #[ORM\OneToMany(
+        targetEntity: Comment::class,
+        mappedBy: 'poll',
+        orphanRemoval: true,
+    )]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
+    private Collections\Collection $comments;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -152,6 +163,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
         $this->dates = new Collections\ArrayCollection();
+        $this->comments = new Collections\ArrayCollection();
     }
 
     public function getId(): ?string
@@ -502,6 +514,35 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setNotifyOnVotes(bool $notifyOnVotes): static
     {
         $this->notifyOnVotes = $notifyOnVotes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collections\Collection<int, Comment>
+     */
+    public function getComments(): Collections\Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPoll($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            if ($comment->getPoll() === $this) {
+                $comment->setPoll(null);
+            }
+        }
 
         return $this;
     }

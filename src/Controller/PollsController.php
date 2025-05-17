@@ -89,6 +89,7 @@ class PollsController extends BaseController
         Entity\Poll $poll,
         Request $request,
         Repository\VoteRepository $voteRepository,
+        Repository\CommentRepository $commentRepository,
         Security\PollSecurity $pollSecurity,
         EventDispatcherInterface $eventDispatcher,
     ): Response {
@@ -135,10 +136,29 @@ class PollsController extends BaseController
             }
         }
 
+        $comment = new Entity\Comment();
+        $comment->setPoll($poll);
+        $commentForm = $this->createNamedForm('comment', Form\CommentForm::class, $comment);
+
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment = $commentForm->getData();
+
+            $commentRepository->save($comment);
+
+            $this->addFlash('success', 'comment.created');
+
+            return $this->redirectToRoute('poll', [
+                'slug' => $poll->getSlug(),
+                'display' => $displayMode,
+            ]);
+        }
+
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
             'voteId' => $voteId,
             'voteForm' => $voteForm,
+            'commentForm' => $commentForm,
             'displayMode' => $displayMode,
         ]);
     }

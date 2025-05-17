@@ -57,11 +57,16 @@ class VotesController extends BaseController
             ]);
         }
 
+        $comment = new Entity\Comment();
+        $comment->setPoll($poll);
+        $commentForm = $this->createNamedForm('comment', Form\CommentForm::class, $comment);
+
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
             'voteId' => $vote->getId(),
             'voteForm' => $form,
             'preserveScroll' => true,
+            'commentForm' => $commentForm,
             'displayMode' => $displayMode,
         ]);
     }

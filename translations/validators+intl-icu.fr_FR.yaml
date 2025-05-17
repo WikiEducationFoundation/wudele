@@ -1,6 +1,9 @@
 Error: Erreur
 answer.value.invalid: 'Sélectionnez un choix depuis la liste.'
 answer.value.required: 'Sélectionnez un choix.'
+comment.author_name.max_length: 'Saisissez un pseudo de moins de {limit} caractères.'
+comment.author_name.required: 'Saisissez un pseudo.'
+comment.content.required: 'Saisissez un message.'
 date.value.required: 'Saisissez une date.'
 poll.author_email.invalid: 'Saisissez une adresse email valide.'
 poll.author_name.max_length: 'Saisissez un pseudo de moins de {limit} caractères.'

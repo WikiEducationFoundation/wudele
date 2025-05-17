@@ -287,7 +287,7 @@ class PollsControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
     }
 
-    public function testPostShowCreatesAVote(): void
+    public function testPostShowWithVoteCreatesAVote(): void
     {
         $client = static::createClient();
         $authorEmail = 'charlie@example.com';
@@ -325,7 +325,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertEmailAddressContains($email, 'To', $authorEmail);
     }
 
-    public function testPostShowFailsIfMaxVoteIsReached(): void
+    public function testPostShowWithVoteFailsIfMaxVoteIsReached(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
@@ -360,7 +360,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($votes));
     }
 
-    public function testPostShowFailsIfRequiredPasswordIsIncorrect(): void
+    public function testPostShowWithVoteFailsIfRequiredPasswordIsIncorrect(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new([
@@ -387,7 +387,7 @@ class PollsControllerTest extends WebTestCase
         Factory\VoteFactory::assert()->count(0);
     }
 
-    public function testPostShowFailsIfCsrfIsInvalid(): void
+    public function testPostShowWithVoteFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
         $poll = Factory\PollFactory::new()->completed()->create();
@@ -406,6 +406,69 @@ class PollsControllerTest extends WebTestCase
 
         $this->assertSelectorTextContains('#vote_error', 'The CSRF token is invalid');
         Factory\VoteFactory::assert()->count(0);
+    }
+
+    public function testPostShowWithCommentCreatesAComment(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $name = 'Alix';
+        $content = 'Lorem ipsum';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'comment' => [
+                '_token' => $this->getCsrf($client, 'comment'),
+                'authorName' => $name,
+                'content' => $content,
+            ],
+        ]);
+
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}?display=list", 302);
+        $comments = Factory\CommentFactory::all();
+        $this->assertSame(1, count($comments));
+        $this->assertSame($name, $comments[0]->getAuthorName());
+        $this->assertSame($content, $comments[0]->getContent());
+        $this->assertSame($poll->getId(), $comments[0]->getPoll()->getId());
+    }
+
+    public function testPostShowWithCommentFailsIfContentIsEmpty(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $name = 'Alix';
+        $content = '';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'comment' => [
+                '_token' => $this->getCsrf($client, 'comment'),
+                'authorName' => $name,
+                'content' => $content,
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#comment_content_error', 'Enter a message.');
+        $comments = Factory\CommentFactory::all();
+        $this->assertSame(0, count($comments));
+    }
+
+    public function testPostShowWithCommentFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $name = 'Alix';
+        $content = 'Lorem ipsum';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'comment' => [
+                '_token' => 'not the token',
+                'authorName' => $name,
+                'content' => $content,
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#comment_error', 'The CSRF token is invalid');
+        $comments = Factory\CommentFactory::all();
+        $this->assertSame(0, count($comments));
     }
 
     public function testGetAuthenticateRendersCorrectly(): void
