@@ -411,7 +411,11 @@ class PollsControllerTest extends WebTestCase
     public function testPostShowWithCommentCreatesAComment(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->completed()->create();
+        $authorEmail = 'charlie@example.com';
+        $poll = Factory\PollFactory::new([
+            'authorEmail' => $authorEmail,
+            'notifyOnComments' => true,
+        ])->completed()->create();
         $name = 'Alix';
         $content = 'Lorem ipsum';
 
@@ -429,6 +433,11 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($name, $comments[0]->getAuthorName());
         $this->assertSame($content, $comments[0]->getContent());
         $this->assertSame($poll->getId(), $comments[0]->getPoll()->getId());
+        $this->assertEmailCount(1);
+        $email = $this->getMailerMessage();
+        $this->assertNotNull($email);
+        $this->assertEmailTextBodyContains($email, $name);
+        $this->assertEmailAddressContains($email, 'To', $authorEmail);
     }
 
     public function testPostShowWithCommentFailsIfContentIsEmpty(): void
@@ -1086,6 +1095,7 @@ class PollsControllerTest extends WebTestCase
         $slug = 'my-slug';
         $password = 'secret';
         $notifyOnVotes = true;
+        $notifyOnComments = true;
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings", [
             'poll_settings' => [
@@ -1098,6 +1108,7 @@ class PollsControllerTest extends WebTestCase
                     'second' => $password,
                 ],
                 'notifyOnVotes' => $notifyOnVotes,
+                'notifyOnComments' => $notifyOnComments,
             ]
         ]);
 
@@ -1105,6 +1116,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($maxVotes, $poll->getMaxVotes());
         $this->assertSame($slug, $poll->getSlug());
         $this->assertTrue($poll->isNotifyOnVotes());
+        $this->assertTrue($poll->isNotifyOnComments());
         /** @var Service\PollPassword */
         $pollPassword = static::getContainer()->get(Service\PollPassword::class);
         $this->assertTrue($pollPassword->verify($poll->getPassword() ?? '', $password));

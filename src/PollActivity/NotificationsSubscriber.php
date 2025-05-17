@@ -18,6 +18,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
     {
         return [
             VoteEvent::NEW => 'notifyNewVote',
+            CommentEvent::NEW => 'notifyNewComment',
         ];
     }
 
@@ -50,6 +51,36 @@ class NotificationsSubscriber implements EventSubscriberInterface
             ->context([
                 'admin_name' => $poll->getAuthorName(),
                 'voter_name' => $vote->getAuthorName(),
+                'poll_name' => $poll->getTitle(),
+                'poll_slug' => $poll->getSlug(),
+            ]);
+
+        $this->mailer->send($email);
+    }
+
+    public function notifyNewComment(CommentEvent $event): void
+    {
+        $comment = $event->getComment();
+        $poll = $comment->getPoll();
+
+        if (!$poll->getAuthorEmail() || !$poll->isNotifyOnComments()) {
+            return;
+        }
+
+        $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
+        $locale = 'fr_FR';
+
+        $subject = '[Pollaris] ';
+        $subject .= $this->translator->trans('emails.new_comment.subject', locale: $locale);
+
+        $email = (new TemplatedEmail())
+            ->to($to)
+            ->subject($subject)
+            ->textTemplate('emails/new_comment.txt.twig')
+            ->locale($locale)
+            ->context([
+                'admin_name' => $poll->getAuthorName(),
+                'commenter_name' => $comment->getAuthorName(),
                 'poll_name' => $poll->getTitle(),
                 'poll_slug' => $poll->getSlug(),
             ]);

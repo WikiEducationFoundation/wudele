@@ -4,8 +4,10 @@ answers.value.yes: Oui
 base.default_title: "Bienvenue sur Pollaris\_!"
 calendar.patterns.next_month: 'Mois suivant (__date__)'
 calendar.patterns.previous_month: 'Mois précédent (__date__)'
-emails.new_vote.hello: 'Bonjour {admin_name},'
-emails.new_vote.link: "Vous pouvez retrouver votre sondage à l’adresse\_: {url}"
+emails.hello: 'Bonjour {name},'
+emails.link_to_poll: "Vous pouvez retrouver votre sondage à l’adresse\_: {url}"
+emails.new_comment.posted: "{commenter_name} vient de commenter sur le sondage «\_{poll_name}\_»."
+emails.new_comment.subject: 'Nouveau commentaire sur un sondage'
 emails.new_vote.subject: 'Nouveau vote sur un sondage'
 emails.new_vote.voted: "{voter_name} vient de voter au sondage «\_{poll_name}\_»."
 emails.polls_list.here_is_the_list: "Voici la liste des sondages que vous administrez sur Pollaris\_:"
@@ -38,7 +40,8 @@ forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
 forms.poll_settings_form.max_votes.label: 'Nombre maximum de participant·es'
-forms.poll_settings_form.notify_on_votes.label: 'Recevoir un email à chaque participation'
+forms.poll_settings_form.notify_on_comments.label: 'Recevoir un email à chaque commentaire'
+forms.poll_settings_form.notify_on_votes.label: 'Recevoir un email à chaque vote'
 forms.poll_settings_form.password.label: 'Mot de passe'
 forms.poll_settings_form.password.leave_empty_to_keep: 'Laissez ces champs vides pour conserver le mot de passe actuel.'
 forms.poll_settings_form.password.protect: 'Protéger le sondage par mot de passe'
@@ -113,8 +116,10 @@ polls.summary.edit: Modifier
 polls.summary.information.title: 'Informations générales'
 polls.summary.proposals.title: 'Mes propositions'
 polls.summary.settings.max_votes: '{ number, plural, one {1 participant·e maximum peut} other {# participant·es maximum peuvent} } voter par proposition.'
-polls.summary.settings.notify_on_votes.do: 'Je recevrai un email à chaque participation au sondage.'
-polls.summary.settings.notify_on_votes.dont: 'Je ne recevrai pas d’email lors des participations au sondage.'
+polls.summary.settings.notify_on_comments.do: 'Je recevrai un email à chaque commentaire sur le sondage.'
+polls.summary.settings.notify_on_comments.dont: 'Je ne recevrai pas d’email lors des commentaires sur le sondage.'
+polls.summary.settings.notify_on_votes.do: 'Je recevrai un email à chaque vote sur le sondage.'
+polls.summary.settings.notify_on_votes.dont: 'Je ne recevrai pas d’email lors des votes sur le sondage.'
 polls.summary.settings.password_protected.full: 'Le sondage est protégé par un mot de passe.'
 polls.summary.settings.password_protected.not: 'Le sondage n’est pas protégé par un mot de passe.'
 polls.summary.settings.password_protected.vote: 'Le sondage est protégé par un mot de passe (les résultats sont visibles sans mot de passe).'

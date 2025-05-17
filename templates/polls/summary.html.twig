@@ -144,6 +144,14 @@
                         {% endif %}
                     </p>
 
+                    <p class="text--bold">
+                        {% if poll.notifyOnComments %}
+                            {{ 'polls.summary.settings.notify_on_comments.do' | trans }}
+                        {% else %}
+                            {{ 'polls.summary.settings.notify_on_comments.dont' | trans }}
+                        {% endif %}
+                    </p>
+
                     <div class="panel__separator"></div>
 
                     <a class="button button--menuitem" href="{{ path('edit poll settings', { id: poll.id, token: poll.adminToken }) }}">

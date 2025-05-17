@@ -146,6 +146,9 @@ class PollsController extends BaseController
 
             $commentRepository->save($comment);
 
+            $commentEvent = new PollActivity\CommentEvent($comment);
+            $eventDispatcher->dispatch($commentEvent, PollActivity\CommentEvent::NEW);
+
             $this->addFlash('success', 'comment.created');
 
             return $this->redirectToRoute('poll', [

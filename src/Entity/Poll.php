@@ -150,6 +150,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collections\Collection $comments;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $notifyOnComments = false;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -160,6 +163,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->authorName = '';
         $this->authorEmail = '';
         $this->notifyOnVotes = false;
+        $this->notifyOnComments = false;
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
         $this->dates = new Collections\ArrayCollection();
@@ -543,6 +547,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
                 $comment->setPoll(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isNotifyOnComments(): ?bool
+    {
+        return $this->notifyOnComments;
+    }
+
+    public function setNotifyOnComments(bool $notifyOnComments): static
+    {
+        $this->notifyOnComments = $notifyOnComments;
 
         return $this;
     }
