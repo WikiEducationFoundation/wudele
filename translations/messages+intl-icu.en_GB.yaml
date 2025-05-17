@@ -1,6 +1,8 @@
 answers.value.maybe: Maybe
 answers.value.no: 'No'
 answers.value.yes: 'Yes'
+base.copied: Copied!
+base.copy: Copy
 base.default_title: 'Welcome to Pollaris!'
 calendar.patterns.next_month: 'Next month (__date__)'
 calendar.patterns.previous_month: 'Previous month (__date__)'
@@ -71,8 +73,6 @@ polls.choose.date: 'Poll date'
 polls.choose.next: Next
 polls.choose.title: 'Choose the type of poll'
 polls.complete.consult: 'Consult your poll now'
-polls.complete.copied: Copied!
-polls.complete.copy: Copy
 polls.complete.created: 'The poll “{poll}” is created. You can invite your contacts to take part by sharing the link below.'
 polls.complete.public_link: 'Public sharing link'
 polls.complete.see: 'See my poll'
@@ -90,6 +90,7 @@ polls.settings.notifications.title: Notifications
 polls.settings.password.title: 'Protect by password'
 polls.settings.slug.title: 'Customise the poll link'
 polls.settings.title: 'Configure the poll'
+polls.show.already_voted: 'You have already voted in this poll, but you can still change your vote. You can copy the edit link to save it, or edit your vote directly.'
 polls.show.authenticated: 'You have successfully authenticated.'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
@@ -100,6 +101,7 @@ polls.show.comments.title: Comments
 polls.show.created_by: 'Poll created by {by}'
 polls.show.display_list: 'List view'
 polls.show.display_table: 'Table view'
+polls.show.link_edit_vote: 'Link to edit your vote'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
 polls.show.vote.created: 'Your vote is confirmed. You can still change it if you wish.'

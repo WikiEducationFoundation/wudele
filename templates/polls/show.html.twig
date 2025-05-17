@@ -49,6 +49,53 @@
                     </div>
                 </div>
 
+                {% if voteId and not voteForm %}
+                    <div class="panel panel--primary panel--rounded flow flow--large">
+                        <div class="cols cols--gap-small">
+                            <div class="text--bigger">
+                                {{ icon('lightbulb') }}
+                            </div>
+
+                            <p>
+                                {{ 'polls.show.already_voted' | trans }}
+                            </p>
+                        </div>
+
+                        <div class="flow flow--small">
+                            <label for="edit-link">
+                                {{ 'polls.show.link_edit_vote' | trans }}
+                            </label>
+
+                            <div
+                                class="cols cols--always cols--gap-small"
+                                data-controller="copy-to-clipboard"
+                                data-label-copied="{{ 'base.copied' | trans }}"
+                            >
+                                <input
+                                    id="edit-link"
+                                    type="url"
+                                    value="{{ url('edit vote', { slug: poll.slug, id: voteId }) }}"
+                                    readonly
+                                    data-copy-to-clipboard-target="copyable"
+                                />
+
+                                <button
+                                    type="button"
+                                    class="button--primary"
+                                    data-copy-to-clipboard-target="button"
+                                    data-action="copy-to-clipboard#copy"
+                                >
+                                    {{ 'base.copy' | trans }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <a class="button" href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}">
+                            {{ 'polls.show.vote_edit' | trans }}
+                        </a>
+                    </div>
+                {% endif %}
+
                 {% set preferredChoices = poll.preferredChoices %}
                 {% if preferredChoices %}
                     {% set firstChoice = preferredChoices|first %}
@@ -238,17 +285,6 @@
                     preferredChoices: preferredChoices,
                     maxCount: maxCount,
                 }) }}
-            {% endif %}
-
-            {% if voteId and not voteForm %}
-                <div class="text--center">
-                    <a
-                        class="button button--small"
-                        href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}"
-                    >
-                        {{ 'polls.show.vote_edit' | trans }}
-                    </a>
-                </div>
             {% endif %}
         </div>
 
