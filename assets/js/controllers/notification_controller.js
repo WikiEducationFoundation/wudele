@@ -1,5 +1,5 @@
-// This file is part of Bileto.
-// Copyright 2022-2025 Probesys
+// This file is part of Pollaris.
+// Copyright 2024-2025 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { Controller } from '@hotwired/stimulus';
