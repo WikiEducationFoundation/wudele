@@ -27,10 +27,10 @@ class PollsController extends BaseController
         return $this->render('polls/choose.html.twig');
     }
 
-    #[Route('/polls/find', name: 'find polls')]
-    public function find(Request $request, Service\PollsFinder $pollsFinder): Response
+    #[Route('/polls/search', name: 'search polls')]
+    public function search(Request $request, Service\PollsFinder $pollsFinder): Response
     {
-        $form = $this->createNamedForm('find_polls', Form\FindPollsForm::class);
+        $form = $this->createNamedForm('search_polls', Form\SearchPollsForm::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -38,12 +38,12 @@ class PollsController extends BaseController
 
             $pollsFinder->sendEmailLinks($email);
 
-            return $this->redirectToRoute('find polls', [
+            return $this->redirectToRoute('search polls', [
                 'success' => true,
             ]);
         }
 
-        return $this->render('polls/find.html.twig', [
+        return $this->render('polls/search.html.twig', [
             'form' => $form,
             'success' => $request->query->getBoolean('success'),
         ]);

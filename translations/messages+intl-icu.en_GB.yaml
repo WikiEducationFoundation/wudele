@@ -22,8 +22,8 @@ forms.comment_form.submit: Post
 forms.complete: Complete
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Error
-forms.find_polls_form.email.label: 'Your email address'
-forms.find_polls_form.submit: Send
+forms.search_polls_form.email.label: 'Your email address'
+forms.search_polls_form.submit: Send
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
@@ -62,7 +62,7 @@ forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
-home.find_polls: 'Find my polls'
+home.search_polls: 'Find my polls'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
@@ -93,9 +93,9 @@ polls.complete.public_link: 'Public sharing link'
 polls.complete.see: 'See my poll'
 polls.complete.title: 'Your poll is ready!'
 polls.dates.title: 'Choose the dates'
-polls.find.explain: 'Enter your email address and we will send you the links to the polls that you have created.'
-polls.find.success: 'We have sent you an email containing links to your polls. Please check your spam folder if you cannot see it.'
-polls.find.title: 'Find my polls'
+polls.search.explain: 'Enter your email address and we will send you the links to the polls that you have created.'
+polls.search.success: 'We have sent you an email containing links to your polls. Please check your spam folder if you cannot see it.'
+polls.search.title: 'Find my polls'
 polls.new.title: 'Poll creation'
 polls.new.who_you_are: 'Who you are'
 polls.proposals.best: 'Preferred choice'

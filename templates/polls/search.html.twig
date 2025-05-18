@@ -6,16 +6,16 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'polls.find.title' | trans }}{% endblock %}
+{% block title %}{{ 'polls.search.title' | trans }}{% endblock %}
 
 {% block body %}
     <div class="wrapper wrapper--small wrapper--center flow flow--larger">
         <h1>
-            {{ 'polls.find.title' | trans }}
+            {{ 'polls.search.title' | trans }}
         </h1>
 
         <p>
-            {{ 'polls.find.explain' | trans }}
+            {{ 'polls.search.explain' | trans }}
         </p>
 
         {% if success %}
@@ -25,7 +25,7 @@
                 </div>
 
                 <p class="text--success" role="alert">
-                    {{ 'polls.find.success' | trans }}
+                    {{ 'polls.search.success' | trans }}
                 </p>
             </div>
         {% else %}

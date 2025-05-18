@@ -32,21 +32,21 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Choose the type of poll');
     }
 
-    public function testGetFindRendersCorrectly(): void
+    public function testGetSearchRendersCorrectly(): void
     {
         $client = static::createClient();
 
-        $client->request(Request::METHOD_GET, '/polls/find');
+        $client->request(Request::METHOD_GET, '/polls/search');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Find my polls');
     }
 
-    public function testGetFindRendersCorrectlyASuccessfulMessage(): void
+    public function testGetSearchRendersCorrectlyASuccessfulMessage(): void
     {
         $client = static::createClient();
 
-        $client->request(Request::METHOD_GET, '/polls/find', [
+        $client->request(Request::METHOD_GET, '/polls/search', [
             'success' => true,
         ]);
 
@@ -57,7 +57,7 @@ class PollsControllerTest extends WebTestCase
         );
     }
 
-    public function testPostFindSendsAnEmail(): void
+    public function testPostSearchSendsAnEmail(): void
     {
         $client = static::createClient();
         $authorEmail = 'alix@example.org';
@@ -65,14 +65,14 @@ class PollsControllerTest extends WebTestCase
             'authorEmail' => $authorEmail,
         ])->completed()->create();
 
-        $client->request(Request::METHOD_POST, '/polls/find', [
-            'find_polls' => [
-                '_token' => $this->getCsrf($client, 'find_polls'),
+        $client->request(Request::METHOD_POST, '/polls/search', [
+            'search_polls' => [
+                '_token' => $this->getCsrf($client, 'search_polls'),
                 'email' => $authorEmail,
             ],
         ]);
 
-        $this->assertResponseRedirects('/polls/find?success=1', 302);
+        $this->assertResponseRedirects('/polls/search?success=1', 302);
         $this->assertEmailCount(1);
         $email = $this->getMailerMessage();
         $this->assertNotNull($email);
@@ -80,23 +80,23 @@ class PollsControllerTest extends WebTestCase
         $this->assertEmailAddressContains($email, 'To', $authorEmail);
     }
 
-    public function testPostFindDoesNotSendEmailIfNoPolls(): void
+    public function testPostSearchDoesNotSendEmailIfNoPolls(): void
     {
         $client = static::createClient();
         $authorEmail = 'alix@example.org';
 
-        $client->request(Request::METHOD_POST, '/polls/find', [
-            'find_polls' => [
-                '_token' => $this->getCsrf($client, 'find_polls'),
+        $client->request(Request::METHOD_POST, '/polls/search', [
+            'search_polls' => [
+                '_token' => $this->getCsrf($client, 'search_polls'),
                 'email' => $authorEmail,
             ],
         ]);
 
-        $this->assertResponseRedirects('/polls/find?success=1', 302);
+        $this->assertResponseRedirects('/polls/search?success=1', 302);
         $this->assertEmailCount(0);
     }
 
-    public function testPostFindFailsIfCsrfIsInvalid(): void
+    public function testPostSearchFailsIfCsrfIsInvalid(): void
     {
         $client = static::createClient();
         $authorEmail = 'alix@example.org';
@@ -104,14 +104,14 @@ class PollsControllerTest extends WebTestCase
             'authorEmail' => $authorEmail,
         ])->completed()->create();
 
-        $client->request(Request::METHOD_POST, '/polls/find', [
-            'find_polls' => [
+        $client->request(Request::METHOD_POST, '/polls/search', [
+            'search_polls' => [
                 '_token' => 'not the token',
                 'email' => $authorEmail,
             ],
         ]);
 
-        $this->assertSelectorTextContains('#find_polls_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#search_polls_error', 'The CSRF token is invalid');
         $this->assertEmailCount(0);
     }
 

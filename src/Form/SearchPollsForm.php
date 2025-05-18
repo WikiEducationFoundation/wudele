@@ -12,17 +12,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatableMessage;
 
-class FindPollsForm extends AbstractType
+class SearchPollsForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('email', Type\EmailType::class, [
             'trim' => true,
-            'label' => new TranslatableMessage('forms.find_polls_form.email.label'),
+            'label' => new TranslatableMessage('forms.search_polls_form.email.label'),
         ]);
 
         $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.find_polls_form.submit'),
+            'label' => new TranslatableMessage('forms.search_polls_form.submit'),
         ]);
     }
 
