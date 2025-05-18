@@ -4,7 +4,7 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
-{{ 'emails.polls_list.here_is_the_list' | trans }}
+{{ 'emails.polls_list.here_is_the_list' | trans({ appName: appName }) }}
 
 {% for poll in polls %}
 - {{ poll.title }} : {{ url('poll admin', { id: poll.id, token: poll.adminToken }) }}

@@ -11,9 +11,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {% set block_title = block('title') %}
         {% if block_title is not empty %}
-            <title>{% block title %}{% endblock %} – Pollaris</title>
+            <title>{% block title %}{% endblock %} – {{ appName }}</title>
         {% else %}
-            <title>{{ 'base.default_title' | trans }}</title>
+            <title>{{ 'base.default_title' | trans({ appName: appName}) }}</title>
         {% endif %}
 
         {% block stylesheets %}
@@ -34,7 +34,7 @@
                 <header class="layout__header header cols cols--always cols--center cols--gap-small" role="banner">
                     <div class="col--extend">
                         <a class="header__title" href="{{ path('home') }}">
-                            Pollaris
+                            {{ appName }}
                         </a>
                     </div>
 

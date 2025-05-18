@@ -8,6 +8,7 @@ namespace App\Service;
 
 use App\Repository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -18,6 +19,8 @@ class PollsFinder
         private Repository\PollRepository $pollRepository,
         private MailerInterface $mailer,
         private TranslatorInterface $translator,
+        #[Autowire('%app.name%')]
+        private string $appName,
     ) {
     }
 
@@ -32,7 +35,7 @@ class PollsFinder
         $to = new Address($email);
         $locale = 'fr_FR';
 
-        $subject = '[Pollaris] ';
+        $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.polls_list.subject', locale: $locale);
 
         $email = (new TemplatedEmail())

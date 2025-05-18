@@ -7,6 +7,7 @@
 namespace App\PollActivity;
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -25,6 +26,8 @@ class NotificationsSubscriber implements EventSubscriberInterface
     public function __construct(
         private MailerInterface $mailer,
         private TranslatorInterface $translator,
+        #[Autowire('%app.name%')]
+        private string $appName,
     ) {
     }
 
@@ -40,7 +43,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
         $locale = 'fr_FR';
 
-        $subject = '[Pollaris] ';
+        $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.new_vote.subject', locale: $locale);
 
         $email = (new TemplatedEmail())
@@ -70,7 +73,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
         $locale = 'fr_FR';
 
-        $subject = '[Pollaris] ';
+        $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.new_comment.subject', locale: $locale);
 
         $email = (new TemplatedEmail())
