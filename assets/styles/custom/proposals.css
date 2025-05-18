@@ -35,6 +35,8 @@
     width: 150px;
 
     font-size: var(--font-size-small);
+
+    overflow-wrap: break-word;
 }
 
 .proposals-table .proposal__day-week,
