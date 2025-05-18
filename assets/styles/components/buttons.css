@@ -49,19 +49,6 @@ button:hover,
     --button-color: var(--color-primary1);
 }
 
-.button--success {
-    --button-background-color: var(--color-success11);
-    --button-border-color: var(--color-success11);
-    --button-color: var(--color-success1);
-    --outline-color: var(--color-success11);
-}
-
-.button--success:hover {
-    --button-background-color: var(--color-success12);
-    --button-border-color: var(--color-success12);
-    --button-color: var(--color-success1);
-}
-
 .button--small {
     --button-padding: var(--space-smaller) var(--space-large);
 }
