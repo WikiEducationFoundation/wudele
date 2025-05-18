@@ -119,6 +119,7 @@ polls.summary.author.no_email: 'No address given'
 polls.summary.edit: Edit
 polls.summary.information.title: 'General information'
 polls.summary.proposals.title: 'My proposals'
+polls.summary.settings.customised_slug: 'The link of the poll is customised.'
 polls.summary.settings.max_votes: 'A maximum of { number, plural, one {1 participant} other {# participants} } can vote per proposal.'
 polls.summary.settings.notify_on_comments.do: 'I will receive an email each time someone comments on the poll.'
 polls.summary.settings.notify_on_comments.dont: 'I will not receive an email when someone comments on the poll.'

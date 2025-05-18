@@ -126,6 +126,12 @@
                         </p>
                     {% endif %}
 
+                    {% if poll.isSlugCustomized %}
+                        <p class="text--bold">
+                            {{ 'polls.summary.settings.customised_slug' | trans }}
+                        </p>
+                    {% endif %}
+
                     <p class="text--bold">
                         {% if poll.isFullPasswordProtected %}
                             {{ 'polls.summary.settings.password_protected.full' | trans }}

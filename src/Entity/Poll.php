@@ -458,6 +458,11 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         }
     }
 
+    public function isSlugCustomized(): bool
+    {
+        return $this->slug !== $this->id;
+    }
+
     public function getAdminToken(): ?string
     {
         return $this->adminToken;
