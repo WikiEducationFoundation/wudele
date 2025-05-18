@@ -33,6 +33,7 @@
 @import "./custom/votes.css";
 @import "./layout/body.css";
 @import "./layout/header.css";
+@import "./layout/locales.css";
 
 *,
 *::before,

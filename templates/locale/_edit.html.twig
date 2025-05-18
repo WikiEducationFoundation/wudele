@@ -1,0 +1,45 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+<div
+    class="layout__locales"
+    data-controller="locales"
+    data-action="keydown.esc->locales#closeMenu keydown.up->locales#navigateUp:prevent keydown.down->locales#navigateDown:prevent"
+>
+    <button
+        class="layout__locales-button"
+        data-locales-target="button"
+        data-action="locales#switchMenu"
+        aria-label="{{ ('layout.locales.change.' ~ locale) | trans }}"
+    >
+        {{ icon('language') }}
+        {{ localeLabel }}
+    </button>
+
+    <form method="post" action="{{ path('edit locale') }}">
+        <ul
+            class="layout__locales-menu list--nostyle flow flow--smaller"
+            data-locales-target="menu"
+            hidden
+        >
+            {% for code, label in locales %}
+                <li>
+                    <button
+                        class="button--menuitem"
+                        name="locale"
+                        value="{{ code }}"
+                        data-locales-target="menuitem"
+                        {% if locale == code %}
+                            aria-current="true"
+                        {% endif %}
+                    >
+                        {{ label }}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+</div>

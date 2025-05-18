@@ -31,10 +31,16 @@
     <body>
         <div class="layout" id="layout">
             {% block header %}
-                <header class="layout__header header" role="banner">
-                    <a class="header__title" href="{{ path('home') }}">
-                        Pollaris
-                    </a>
+                <header class="layout__header header cols cols--always cols--center cols--gap-small" role="banner">
+                    <div class="col--extend">
+                        <a class="header__title" href="{{ path('home') }}">
+                            Pollaris
+                        </a>
+                    </div>
+
+                    <div>
+                        {{ render(path('edit locale')) }}
+                    </div>
                 </header>
             {% endblock %}
 

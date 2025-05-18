@@ -17,8 +17,13 @@ class LocaleSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        $preferredLocale = Utils\Locales::getBest($request->getLanguages());
-        $request->setLocale($preferredLocale);
+        $locale = Utils\Locales::getBest($request->getLanguages());
+
+        if ($request->hasPreviousSession()) {
+            $locale = $request->getSession()->get('_locale', $locale);
+        }
+
+        $request->setLocale($locale);
     }
 
     public static function getSubscribedEvents(): array
