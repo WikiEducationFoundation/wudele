@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## 2025-05-18 - 0.5.0
 
 ### Migration notes
 
@@ -8,6 +8,49 @@ You must configure a mail server to send notifications.
 See the `MAILER_` environment variables in the `.env.sample` file and update your `.env.local` file.
 You also need to configure a Messenger worker to send the emails asynchronously.
 Read [the installation documentation](/docs/administrators/install.md).
+
+You can also change the default name of the application from Pollaris to anything else by changing the `APP_NAME` environment variable.
+
+### New
+
+- Allow to change the language ([3e659ba](https://framagit.org/pollaris/pollaris/-/commit/3e659ba))
+- Allow to protect polls with a password ([72cc4ce](https://framagit.org/pollaris/pollaris/-/commit/72cc4ce), [58a3bce](https://framagit.org/pollaris/pollaris/-/commit/58a3bce), [37b4611](https://framagit.org/pollaris/pollaris/-/commit/37b4611))
+- Allow to comment on the polls ([978d20b](https://framagit.org/pollaris/pollaris/-/commit/978d20b))
+- Allow to receive notifications on new votes ([5ae38dd](https://framagit.org/pollaris/pollaris/-/commit/5ae38dd))
+- Allow to receive emails on new comments ([54ef73c](https://framagit.org/pollaris/pollaris/-/commit/54ef73c))
+- Provide an admin page to delete votes and comments ([8dcff9f](https://framagit.org/pollaris/pollaris/-/commit/8dcff9f))
+- Allow to find polls associated to an email ([bd5e80c](https://framagit.org/pollaris/pollaris/-/commit/bd5e80c), [94c510e](https://framagit.org/pollaris/pollaris/-/commit/94c510e))
+
+### Improvements
+
+- Rework and simplify the poll creation process ([bcfb276](https://framagit.org/pollaris/pollaris/-/commit/bcfb276), [02efb58](https://framagit.org/pollaris/pollaris/-/commit/02efb58))
+- Provide a button to copy the vote edition link ([3f1bad9](https://framagit.org/pollaris/pollaris/-/commit/3f1bad9))
+- Maintain display mode after voting ([81662da](https://framagit.org/pollaris/pollaris/-/commit/81662da))
+- Change header background color to primary ([4f3d996](https://framagit.org/pollaris/pollaris/-/commit/4f3d996))
+- Change button--success by button--primary ([ecfeb03](https://framagit.org/pollaris/pollaris/-/commit/ecfeb03))
+- Add an illustration on the home page ([444e460](https://framagit.org/pollaris/pollaris/-/commit/444e460))
+- Improve the look of the Turbo progress bar ([fc8be15](https://framagit.org/pollaris/pollaris/-/commit/fc8be15), [664de12](https://framagit.org/pollaris/pollaris/-/commit/664de12))
+- Decrease panel padding on mobile ([e57bbb3](https://framagit.org/pollaris/pollaris/-/commit/e57bbb3))
+
+### Bug fixes
+
+- Fix editing votes failing after adding a proposal ([33acb8d](https://framagit.org/pollaris/pollaris/-/commit/33acb8d))
+- Fix display of wrong answers in table view ([c5db468](https://framagit.org/pollaris/pollaris/-/commit/c5db468))
+- Fix spacing between proposals in list mode ([4c56a1f](https://framagit.org/pollaris/pollaris/-/commit/4c56a1f))
+- Fix the text overflow in tables ([4bf6efd](https://framagit.org/pollaris/pollaris/-/commit/4bf6efd))
+
+### Technical
+
+- Allow to customise the application name ([fe75b19](https://framagit.org/pollaris/pollaris/-/commit/fe75b19))
+- Add support for PHP 8.4 ([7f93108](https://framagit.org/pollaris/pollaris/-/commit/7f93108))
+- Update the dependencies ([5e4d275](https://framagit.org/pollaris/pollaris/-/commit/5e4d275))
+- Setup the mailer component ([839e670](https://framagit.org/pollaris/pollaris/-/commit/839e670), [c647f6b](https://framagit.org/pollaris/pollaris/-/commit/c647f6b))
+
+### Developers
+
+- Add style to disabled inputs ([c8867cd](https://framagit.org/pollaris/pollaris/-/commit/c8867cd))
+- Add style for checkboxes ([832c7a0](https://framagit.org/pollaris/pollaris/-/commit/832c7a0))
+- Remove unused CSS for disabled radios ([c00194b](https://framagit.org/pollaris/pollaris/-/commit/c00194b))
 
 ## 2025-04-16 - 0.4.0
 
