@@ -69,3 +69,13 @@ hr {
     border: 2px solid var(--color-grey6);
     border-radius: 5px;
 }
+
+.turbo-progress-bar {
+    position: fixed;
+    top: 0;
+
+    height: 0.3rem;
+
+    background: var(--color-primary3);
+    border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
+}
