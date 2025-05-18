@@ -1287,4 +1287,36 @@ class PollsControllerTest extends WebTestCase
         $client->catchExceptions(false);
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/complete");
     }
+
+    public function testGetAdminRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Administration of the poll');
+    }
+
+    public function testGetAdminRedirectsIfNotCompleted(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+    }
+
+    public function testGetAdminFailsIfAdminTokenDoesNotMatch(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/admin");
+    }
 }

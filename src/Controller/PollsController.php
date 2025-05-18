@@ -266,10 +266,7 @@ class PollsController extends BaseController
                 $pollSecurity->authenticate($request->getSession(), $poll);
             }
 
-            return $this->redirectToRoute('poll summary', [
-                'id' => $poll->getId(),
-                'token' => $poll->getAdminToken(),
-            ]);
+            return $this->redirect($process->getStepUrl('summary'));
         }
 
         return $this->render('polls/settings.html.twig', [
@@ -451,6 +448,30 @@ class PollsController extends BaseController
         }
 
         return $this->render('polls/complete.html.twig', [
+            'poll' => $poll,
+            'process' => $process,
+        ]);
+    }
+
+    #[Route('/polls/{id:poll}/{token}/admin', name: 'poll admin')]
+    public function admin(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+        Process\PollProcessBuilder $pollProcessBuilder,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        $process = $pollProcessBuilder->build($poll);
+
+        if (!$process->isAccessible('end')) {
+            return $this->redirect($process->getPreviousStepUrl('end'));
+        }
+
+        return $this->render('polls/admin.html.twig', [
             'poll' => $poll,
             'process' => $process,
         ]);

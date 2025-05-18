@@ -69,11 +69,24 @@ layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
 layout.modal.close: Close
 notifications.close: Close
+polls.admin.comments: Comments
+polls.admin.confirm_delete_comment: 'Are you sure to delete this comment?'
+polls.admin.confirm_delete_vote: 'Are you sure to delete this vote?'
+polls.admin.delete: Delete
+polls.admin.edit: Edit
+polls.admin.go_to_poll: 'Go to the poll'
+polls.admin.have_voted: '{voter} has voted on {date}.'
+polls.admin.no_comments: 'No comments have been published on the poll.'
+polls.admin.no_votes: 'No votes have been made on the poll.'
+polls.admin.title: 'Administration of the poll'
+polls.admin.votes: Votes
 polls.authenticate.title: 'Authentication to a protected poll'
 polls.choose.classic: 'Poll classic'
 polls.choose.date: 'Poll date'
 polls.choose.next: Next
 polls.choose.title: 'Choose the type of poll'
+polls.complete.admin_access: 'Please keep the following link to administrate your poll at any time. <strong>Keep this link to yourself!</strong>'
+polls.complete.admin_link: 'Private administration link'
 polls.complete.consult: 'Consult your poll now'
 polls.complete.created: 'The poll “{poll}” is created. You can invite your contacts to take part by sharing the link below.'
 polls.complete.public_link: 'Public sharing link'

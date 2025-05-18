@@ -482,6 +482,11 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         return $this->votes;
     }
 
+    public function countVotes(): int
+    {
+        return $this->votes->count();
+    }
+
     public function addVote(Vote $vote): static
     {
         if (!$this->votes->contains($vote)) {
@@ -533,6 +538,11 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function getComments(): Collections\Collection
     {
         return $this->comments;
+    }
+
+    public function countComments(): int
+    {
+        return $this->comments->count();
     }
 
     public function addComment(Comment $comment): static

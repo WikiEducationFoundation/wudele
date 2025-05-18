@@ -1,0 +1,116 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'polls.admin.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <h1>
+            {{ 'polls.admin.title' | trans }}
+        </h1>
+
+        <div class="flow flow--large">
+            {{ include('polls/_summary.html.twig') }}
+        </div>
+
+        <hr>
+
+        <div class="flow flow--large">
+            <div class="flow">
+                <h2 class="text--primary">{{ 'polls.admin.votes' | trans }}</h2>
+
+                {% if poll.votes is empty %}
+                    <p class="panel panel--rounded">
+                        {{ 'polls.admin.no_votes' | trans }}
+                    </p>
+                {% else %}
+                    {% for vote in poll.votes %}
+                        <div class="panel panel--primary panel--rounded flow">
+                            <p>
+                                {{ 'polls.admin.have_voted' | trans({ voter: vote.authorName, date: vote.createdAt | dateTrans }) }}
+                            </p>
+
+                            <div class="panel__separator"></div>
+
+                            <div class="flow flow--smaller">
+                                <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: vote.id }) }}">
+                                    {{ icon('pen-to-square') }}
+                                    {{ 'polls.admin.edit' | trans }}
+                                </a>
+
+                                <form
+                                    method="post"
+                                    action="{{ path('delete vote', { pollId: poll.id, token: poll.adminToken, voteId: vote.id }) }}"
+                                    data-turbo-confirm="{{ 'polls.admin.confirm_delete_vote' | trans }}"
+                                >
+                                    <button class="button button--menuitem">
+                                        {{ icon('trash') }}
+                                        {{ 'polls.admin.delete' | trans }}
+                                    </a>
+
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete vote') }}">
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="flow">
+                <h2 class="text--primary">{{ 'polls.admin.comments' | trans }}</h2>
+
+                {% if poll.comments is empty %}
+                    <p class="panel panel--rounded">
+                        {{ 'polls.admin.no_comments' | trans }}
+                    </p>
+                {% else %}
+                    {% for comment in poll.comments %}
+                        <div class="panel panel--primary panel--rounded flow">
+                            <article class="panel panel--white panel--rounded flow flow--small">
+                                <header class="cols cols--always cols--gap-small text--secondary">
+                                    <span class="col--extend">
+                                        {{ comment.authorName }}
+                                    </span>
+
+                                    <time class="text--small" datetime="{{ comment.createdAt | dateIso }}">
+                                        {{ comment.createdAt | dateTrans }}
+                                    </time>
+                                </header>
+
+                                <p>
+                                    {{ comment.content | nl2br }}
+                                </p>
+                            </article>
+
+                            <div class="panel__separator"></div>
+
+                            <form
+                                method="post"
+                                action="{{ path('delete comment', { pollId: poll.id, token: poll.adminToken, commentId: comment.id }) }}"
+                                data-turbo-confirm="{{ 'polls.admin.confirm_delete_comment' | trans }}"
+                            >
+                                <button class="button button--menuitem">
+                                    {{ icon('trash') }}
+                                    {{ 'polls.admin.delete' | trans }}
+                                </a>
+
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete comment') }}">
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text--center">
+            <a class="button button--block button--primary" href="{{ path('poll', { slug: poll.slug }) }}">
+                {{ 'polls.admin.go_to_poll' | trans }}
+            </a>
+        </div>
+    </div>
+{% endblock %}

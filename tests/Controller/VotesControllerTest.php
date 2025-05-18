@@ -161,4 +161,85 @@ class VotesControllerTest extends WebTestCase
         $this->refresh($answer);
         $this->assertSame($oldValue, $answer->getValue());
     }
+
+    public function testPostDeletionDeletesTheVote(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $client->request(
+            Request::METHOD_POST,
+            "/polls/{$poll->getId()}/{$poll->getAdminToken()}/votes/{$vote->getId()}/deletion",
+            [
+                '_csrf_token' => $this->getCsrf($client, 'delete vote'),
+            ]
+        );
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
+        Factory\VoteFactory::assert()->notExists(['id' => $vote->getId()]);
+    }
+
+    public function testPostDeletionFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $client->request(
+            Request::METHOD_POST,
+            "/polls/{$poll->getId()}/{$poll->getAdminToken()}/votes/{$vote->getId()}/deletion",
+            [
+                '_csrf_token' => 'not the token',
+            ]
+        );
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
+        Factory\VoteFactory::assert()->exists(['id' => $vote->getId()]);
+    }
+
+    public function testPostDeletionFailsIfAdminTokenIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(
+            Request::METHOD_POST,
+            "/polls/{$poll->getId()}/not-the-token/votes/{$vote->getId()}/deletion",
+            [
+                '_csrf_token' => $this->getCsrf($client, 'delete vote'),
+            ]
+        );
+    }
+
+    public function testPostDeletionFailsIfVoteIsNotPartOfPoll(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $otherPoll = Factory\PollFactory::new()->completed()->create();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $otherPoll,
+        ]);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(
+            Request::METHOD_POST,
+            "/polls/{$poll->getId()}/{$poll->getAdminToken()}/votes/{$vote->getId()}/deletion",
+            [
+                '_csrf_token' => $this->getCsrf($client, 'delete vote'),
+            ]
+        );
+    }
 }

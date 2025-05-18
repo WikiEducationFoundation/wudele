@@ -70,4 +70,34 @@ class VotesController extends BaseController
             'displayMode' => $displayMode,
         ]);
     }
+
+    #[Route('/polls/{pollId:poll}/{token}/votes/{voteId:vote}/deletion', name: 'delete vote', methods: ['POST'])]
+    public function deletion(
+        #[MapEntity(mapping: ['poll' => 'id'])]
+        Entity\Poll $poll,
+        #[MapEntity(mapping: ['vote' => 'id'])]
+        Entity\Vote $vote,
+        string $token,
+        Request $request,
+        Repository\VoteRepository $voteRepository,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        if ($poll->getId() !== $vote->getPoll()->getId()) {
+            throw $this->createNotFoundException('Vote is not part of the poll');
+        }
+
+        $csrfToken = $request->request->getString('_csrf_token', '');
+
+        if ($this->isCsrfTokenValid('delete vote', $csrfToken)) {
+            $voteRepository->remove($vote, true);
+        }
+
+        return $this->redirectToRoute('poll admin', [
+            'id' => $poll->getId(),
+            'token' => $poll->getAdminToken(),
+        ]);
+    }
 }

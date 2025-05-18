@@ -69,11 +69,24 @@ layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
 layout.modal.close: Fermer
 notifications.close: Fermer
+polls.admin.comments: Commentaires
+polls.admin.confirm_delete_comment: "Êtes-vous sur·e de vouloir supprimer ce commentaire\_?"
+polls.admin.confirm_delete_vote: "Êtes-vous sur·e de vouloir supprimer ce vote\_?"
+polls.admin.delete: Supprimer
+polls.admin.edit: Modifier
+polls.admin.go_to_poll: 'Aller au sondage'
+polls.admin.have_voted: '{voter} a voté le {date}.'
+polls.admin.no_comments: 'Aucun commentaire n’a été posté sur ce sondage.'
+polls.admin.no_votes: 'Aucun vote n’a été fait sur ce sondage.'
+polls.admin.title: 'Administration du sondage'
+polls.admin.votes: Votes
 polls.authenticate.title: 'Authentification à un sondage protégé'
 polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
 polls.choose.next: Suivant
 polls.choose.title: 'Choisissez le type de sondage'
+polls.complete.admin_access: "Veuillez conserver le lien suivant pour pouvoir administrer votre sondage à tout moment. <strong>Gardez ce lien pour vous\_!</strong>"
+polls.complete.admin_link: 'Lien d’administration privé'
 polls.complete.consult: 'Consultez votre sondage dès maintenant'
 polls.complete.created: "Le sondage «\_{poll}\_» est créé. Vous pouvez inviter vos contacts à y participer en partageant le lien ci-dessous."
 polls.complete.public_link: 'Lien de partage public'

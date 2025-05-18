@@ -7,5 +7,5 @@
 {{ 'emails.polls_list.here_is_the_list' | trans }}
 
 {% for poll in polls %}
-- {{ poll.title }} : {{ url('poll summary', { id: poll.id, token: poll.adminToken }) }}
+- {{ poll.title }} : {{ url('poll admin', { id: poll.id, token: poll.adminToken }) }}
 {% endfor %}
