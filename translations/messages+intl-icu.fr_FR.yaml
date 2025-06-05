@@ -92,6 +92,7 @@ polls.complete.created: "Le sondage «\_{poll}\_» est créé. Vous pouvez invit
 polls.complete.public_link: 'Lien de partage public'
 polls.complete.see: 'Voir mon sondage'
 polls.complete.title: "Votre sondage est prêt\_!"
+polls.dates.slots_at_next_step: 'Sélectionnez une ou plusieurs dates. Vous pourrez choisir les horaires à l’écran suivant.'
 polls.dates.title: 'Choisissez les dates'
 polls.search.explain: 'Saisissez votre adresse email et nous vous enverrons les liens vers les sondages que vous avez créés.'
 polls.search.success: 'Nous vous avons envoyé un email contenant les liens vers vos sondages. Veuillez vérifier vos spams si vous ne le voyez pas arriver.'

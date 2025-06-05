@@ -18,6 +18,10 @@
             <p class="text--secondary">
                 {{ 'polls.steps' | trans({ step: process.stepNumber('dates'), total: process.totalSteps }) }}
             </p>
+
+            <p class="text--secondary">
+                {{ 'polls.dates.slots_at_next_step' | trans }}
+            </p>
         </div>
 
         {{ form_start(form) }}

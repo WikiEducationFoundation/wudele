@@ -92,6 +92,7 @@ polls.complete.created: 'The poll “{poll}” is created. You can invite your c
 polls.complete.public_link: 'Public sharing link'
 polls.complete.see: 'See my poll'
 polls.complete.title: 'Your poll is ready!'
+polls.dates.slots_at_next_step: 'Select one or more dates. You’ll be able to select time slots at the next step.'
 polls.dates.title: 'Choose the dates'
 polls.search.explain: 'Enter your email address and we will send you the links to the polls that you have created.'
 polls.search.success: 'We have sent you an email containing links to your polls. Please check your spam folder if you cannot see it.'
