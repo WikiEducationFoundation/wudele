@@ -1228,7 +1228,12 @@ class PollsControllerTest extends WebTestCase
     public function testPostSummaryCompletesThePoll(): void
     {
         $client = static::createClient();
-        $poll = Factory\PollFactory::new()->withProposal()->withAuthor()->create();
+        $title = 'My poll';
+        $authorEmail = 'alix@example.org';
+        $poll = Factory\PollFactory::new([
+            'title' => $title,
+            'authorEmail' => $authorEmail,
+        ])->withProposal()->withAuthor()->create();
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", [
             'poll_summary' => [
@@ -1238,6 +1243,11 @@ class PollsControllerTest extends WebTestCase
 
         $this->refresh($poll);
         $this->assertTrue($poll->isCompleted());
+        $this->assertEmailCount(1);
+        $email = $this->getMailerMessage();
+        $this->assertNotNull($email);
+        $this->assertEmailTextBodyContains($email, $title);
+        $this->assertEmailAddressContains($email, 'To', $authorEmail);
     }
 
     public function testPostSummaryFailsIfCsrfIsInvalid(): void

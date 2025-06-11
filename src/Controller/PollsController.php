@@ -402,6 +402,7 @@ class PollsController extends BaseController
         Request $request,
         Repository\PollRepository $pollRepository,
         Process\PollProcessBuilder $pollProcessBuilder,
+        EventDispatcherInterface $eventDispatcher,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -420,6 +421,9 @@ class PollsController extends BaseController
             $poll->setCompletedAt(Utils\Time::now());
 
             $pollRepository->save($poll);
+
+            $pollEvent = new PollActivity\PollEvent($poll);
+            $eventDispatcher->dispatch($pollEvent, PollActivity\PollEvent::COMPLETED);
 
             return $this->redirect($process->getNextStepUrl('summary'));
         }

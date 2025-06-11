@@ -18,6 +18,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            PollEvent::COMPLETED => 'sendAdminEmail',
             VoteEvent::NEW => 'notifyNewVote',
             CommentEvent::NEW => 'notifyNewComment',
         ];
@@ -29,6 +30,32 @@ class NotificationsSubscriber implements EventSubscriberInterface
         #[Autowire('%app.name%')]
         private string $appName,
     ) {
+    }
+
+    public function sendAdminEmail(PollEvent $event): void
+    {
+        $poll = $event->getPoll();
+
+        if (!$poll->getAuthorEmail() || !$poll->isCompleted()) {
+            return;
+        }
+
+        $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
+        $locale = 'fr_FR';
+
+        $subject = "[{$this->appName}] ";
+        $subject .= $this->translator->trans('emails.new_poll_admin.subject', locale: $locale);
+
+        $email = (new TemplatedEmail())
+            ->to($to)
+            ->subject($subject)
+            ->textTemplate('emails/new_poll_admin.txt.twig')
+            ->locale($locale)
+            ->context([
+                'poll' => $poll,
+            ]);
+
+        $this->mailer->send($email);
     }
 
     public function notifyNewVote(VoteEvent $event): void

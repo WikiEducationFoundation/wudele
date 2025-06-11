@@ -10,6 +10,9 @@ emails.hello: 'Bonjour {name},'
 emails.link_to_poll: "Vous pouvez retrouver votre sondage à l’adresse\_: {url}"
 emails.new_comment.posted: "{commenter_name} vient de commenter sur le sondage «\_{poll_name}\_»."
 emails.new_comment.subject: 'Nouveau commentaire sur un sondage'
+emails.new_poll_admin.created: "Vous venez de créer le sondage «\_{poll_name}\_». Vous pouvez modifier votre sondage à tout moment en vous rendant à l’adresse suivante\_:"
+emails.new_poll_admin.keep_it_secret: "Veillez à garder ce lien pour vous\_!"
+emails.new_poll_admin.subject: 'Nouveau sondage'
 emails.new_vote.subject: 'Nouveau vote sur un sondage'
 emails.new_vote.voted: "{voter_name} vient de voter au sondage «\_{poll_name}\_»."
 emails.polls_list.here_is_the_list: "Voici la liste des sondages que vous administrez sur {appName}\_:"
