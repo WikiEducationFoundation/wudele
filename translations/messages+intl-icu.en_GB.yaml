@@ -65,8 +65,10 @@ forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
+home.free_software: '{appName} is a free software licensed under AGPL 3.'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.search_polls: 'Find my polls'
+home.source_code: 'Access the source code.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'

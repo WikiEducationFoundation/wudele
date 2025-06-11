@@ -65,8 +65,10 @@ forms.vote_form.password.help: 'Un mot de passe est nécessaire pour voter sur c
 forms.vote_form.password.label: 'Mot de passe'
 forms.vote_form.submit.label: Voter
 home.create_poll: 'Créer un nouveau sondage'
+home.free_software: '{appName} est un logiciel libre sous licence AGPL 3.'
 home.intro: 'Grâce à notre outil de sondage, planifiez, organisez et prenez des décisions rapidement, simplement et sans inscription.'
 home.search_polls: 'Retrouver mes sondages'
+home.source_code: 'Accéder au code source.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
