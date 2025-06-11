@@ -111,7 +111,7 @@ polls.settings.notifications.title: Notifications
 polls.settings.password.title: 'Protect by password'
 polls.settings.slug.title: 'Customise the poll link'
 polls.settings.title: 'Configure the poll'
-polls.show.already_voted: 'You have already voted in this poll, but you can still change your vote. You can copy the edit link to save it, or edit your vote directly.'
+polls.show.already_voted: 'You have already voted in this poll, but you can still change your vote.'
 polls.show.authenticated: 'You have successfully authenticated.'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
@@ -122,6 +122,7 @@ polls.show.comments.title: Comments
 polls.show.created_by: 'Poll created by {by}'
 polls.show.display_list: 'List view'
 polls.show.display_table: 'Table view'
+polls.show.explain_link_edit_vote: 'You can copy the edit link to save it and edit your vote later.'
 polls.show.link_edit_vote: 'Link to edit your vote'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll

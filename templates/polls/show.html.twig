@@ -61,6 +61,19 @@
                             </p>
                         </div>
 
+                        <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}">
+                            {{ icon('pen-to-square') }}
+                            {{ 'polls.show.vote_edit' | trans }}
+                        </a>
+                    </div>
+                {% elseif voteId and voteForm %}
+                    <div class="panel panel--primary panel--rounded flow flow--large">
+                        <div class="cols cols--gap-small">
+                            <p>
+                                {{ 'polls.show.explain_link_edit_vote' | trans }}
+                            </p>
+                        </div>
+
                         <div class="flow flow--small">
                             <label for="edit-link">
                                 {{ 'polls.show.link_edit_vote' | trans }}
@@ -89,13 +102,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <div class="panel__separator"></div>
-
-                        <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}">
-                            {{ icon('pen-to-square') }}
-                            {{ 'polls.show.vote_edit' | trans }}
-                        </a>
                     </div>
                 {% endif %}
 
