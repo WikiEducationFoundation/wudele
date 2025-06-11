@@ -78,8 +78,8 @@ migration: ## Generate a database migration from entities changes
 
 .PHONY: translations
 translations: ## Update the translations from the code
-	$(CONSOLE) translation:extract --format=yaml --force --clean --no-fill --sort=asc en_GB
-	$(CONSOLE) translation:extract --format=yaml --force --clean --no-fill --sort=asc fr_FR
+	$(CONSOLE) translation:extract --format=yaml --force --clean --sort=asc en_GB
+	$(CONSOLE) translation:extract --format=yaml --force --clean --sort=asc fr_FR
 
 .PHONY: icons
 icons: ## Build the icons asset
