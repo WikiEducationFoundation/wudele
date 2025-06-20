@@ -248,7 +248,8 @@ First of all, you can change the name of the platform by setting the `APP_NAME` 
 You also can create the following files:
 
 - `public/custom.css`: custom CSS rules;
-- `public/custom.js`: a custom JS script.
+- `public/custom.js`: a custom JS script;
+- `templates/home/custom.html.twig`: allows to customise the home page (you can copy the [`templates/home/show.html.twig`](/templates/home/show.html.twig) template to get started).
 
 ## Updating the production environment
 
