@@ -161,12 +161,14 @@ class PollsControllerTest extends WebTestCase
         $client = static::createClient();
         $title = 'My poll';
         $name = 'Alix';
+        $email = 'alix@example.org';
 
         $client->request(Request::METHOD_POST, '/polls/new?type=date', [
             'poll' => [
                 '_token' => $this->getCsrf($client, 'poll'),
                 'title' => $title,
                 'authorName' => $name,
+                'authorEmail' => $email,
             ],
         ]);
 
@@ -176,6 +178,30 @@ class PollsControllerTest extends WebTestCase
         $id = $poll->getId();
         $adminToken = $poll->getAdminToken();
         $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/dates", 302);
+    }
+
+    public function testPostNewFailsIfEmailIsEmptyButRequired(): void
+    {
+        // Emails are not required by default, but there are during tests (see
+        // the .env.test file).
+        $client = static::createClient();
+        $title = 'My poll';
+        $description = 'Description of my poll';
+        $name = 'Alix';
+        $email = '';
+
+        $result = $client->request(Request::METHOD_POST, '/polls/new', [
+            'poll' => [
+                '_token' => $this->getCsrf($client, 'poll'),
+                'title' => $title,
+                'description' => $description,
+                'authorName' => $name,
+                'authorEmail' => $email,
+            ],
+        ]);
+
+        Factory\PollFactory::assert()->count(0);
+        $this->assertSelectorTextContains('#poll_authorEmail_error', 'Enter an email address.');
     }
 
     public function testPostNewFailsIfCsrfIsInvalid(): void

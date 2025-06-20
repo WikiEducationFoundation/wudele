@@ -1,5 +1,12 @@
 # Changelog
 
+## unreleased
+
+### Migration notes
+
+A new `APP_REQUIRE_EMAILS` is available to force the polls' authors to enter an email.
+See the [`env.sample`](/env.sample) file.
+
 ## 2025-05-18 - 0.5.0
 
 ### Migration notes

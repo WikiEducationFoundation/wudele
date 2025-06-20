@@ -6,6 +6,7 @@
 parameters:
     app.public_directory: "%kernel.project_dir%/public"
     app.name: "%env(APP_NAME)%"
+    app.require_emails: "%env(bool:APP_REQUIRE_EMAILS)%"
 
 services:
     # default configuration for services in *this* file

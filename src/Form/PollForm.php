@@ -7,14 +7,22 @@
 namespace App\Form;
 
 use App\Entity;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PollForm extends AbstractType
 {
+    public function __construct(
+        #[Autowire('%app.require_emails%')]
+        private bool $requireEmails,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', Type\TextType::class, [
@@ -45,13 +53,24 @@ class PollForm extends AbstractType
             ],
         ]);
 
-        $builder->add('authorEmail', Type\EmailType::class, [
+        $authorEmailOptions = [
             'required' => false,
             'trim' => true,
             'empty_data' => '',
             'label' => new TranslatableMessage('forms.poll_form.author_email.label'),
             'help' => new TranslatableMessage('forms.poll_form.author_email.help'),
-        ]);
+        ];
+
+        if ($this->requireEmails) {
+            $authorEmailOptions['required'] = true;
+            $authorEmailOptions['constraints'] = [
+                new Assert\NotBlank(
+                    message: new TranslatableMessage('poll.author_email.required', domain: 'validators'),
+                ),
+            ];
+        }
+
+        $builder->add('authorEmail', Type\EmailType::class, $authorEmailOptions);
 
         $builder->add('submit', Type\SubmitType::class, [
             'label' => new TranslatableMessage('forms.next'),
