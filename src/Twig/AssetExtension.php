@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class EsbuildAssetExtension extends AbstractExtension
+class AssetExtension extends AbstractExtension
 {
     public function __construct(
         private string $pathToAssets,
