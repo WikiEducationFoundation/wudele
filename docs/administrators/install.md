@@ -239,6 +239,17 @@ You can read the logs with:
 # journalctl -f -u pollaris-worker@service
 ```
 
+### Optional: Customise your platform
+
+There are several ways in which you can customise Pollaris to suit your visitors' needs.
+
+First of all, you can change the name of the platform by setting the `APP_NAME` variable in the `.env.local` file.
+
+You also can create the following files:
+
+- `public/custom.css`: custom CSS rules;
+- `public/custom.js`: a custom JS script.
+
 ## Updating the production environment
 
 **Please always start by checking the migration notes in [the changelog](/CHANGELOG.md) before updating the application.**

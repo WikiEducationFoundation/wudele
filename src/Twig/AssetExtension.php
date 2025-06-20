@@ -25,6 +25,7 @@ class AssetExtension extends AbstractExtension
     {
         return [
             new TwigFunction('esbuild_asset', [$this, 'esbuildAsset']),
+            new TwigFunction('asset_exists', [$this, 'assetExists']),
         ];
     }
 
@@ -36,5 +37,11 @@ class AssetExtension extends AbstractExtension
         $assetPathname = "/{$this->pathToAssets}/{$assetPath}";
 
         return $assetPackage->getUrl($assetPathname);
+    }
+
+    public function assetExists(string $assetPath): bool
+    {
+        $assetPathname = "{$this->pathToPublic}/{$assetPath}";
+        return file_exists($assetPathname);
     }
 }

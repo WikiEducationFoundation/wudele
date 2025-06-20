@@ -11,3 +11,5 @@
 /coverage
 
 /public/dev_assets
+/public/custom.css
+/public/custom.js

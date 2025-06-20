@@ -20,9 +20,17 @@
             <link rel="stylesheet" href="{{ esbuild_asset('styles/application.css') }}" data-turbo-track="reload">
         {% endblock %}
 
+        {% if asset_exists('custom.css') %}
+            <link rel="stylesheet" href="{{ asset('custom.css') }}">
+        {% endif %}
+
         {% block javascripts %}
             <script src="{{ esbuild_asset('js/application.js') }}" defer data-turbo-track="reload"></script>
         {% endblock %}
+
+        {% if asset_exists('custom.js') %}
+            <script src="{{ asset('custom.js') }}" defer data-turbo-track="reload"></script>
+        {% endif %}
 
         {% block additional_head_tags %}
         {% endblock %}
