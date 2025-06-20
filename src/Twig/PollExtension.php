@@ -9,23 +9,14 @@ namespace App\Twig;
 use App\Entity;
 use Doctrine\Common\Collections;
 use Symfony\Component\Form\FormView;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\Attribute\AsTwigFilter;
 
-class PollExtension extends AbstractExtension
+class PollExtension
 {
-    public function getFilters(): array
-    {
-        return [
-            new TwigFilter('getAnswerFormForProposal', [$this, 'getAnswerFormForProposal']),
-            new TwigFilter('groupDateProposals', [$this, 'groupDateProposals']),
-            new TwigFilter('groupAnswersByValues', [$this, 'groupAnswersByValues']),
-        ];
-    }
-
     /**
      * Return an AnswerForm corresponding to a proposal in the given VoteForm.
      */
+    #[AsTwigFilter('getAnswerFormForProposal')]
     public function getAnswerFormForProposal(FormView $voteForm, Entity\Proposal $proposal): FormView
     {
         if (!isset($voteForm->children['answers'])) {
@@ -59,6 +50,7 @@ class PollExtension extends AbstractExtension
      *
      * @return array<array{Entity\Date, Entity\Proposal[]}>
      */
+    #[AsTwigFilter('groupDateProposals')]
     public function groupDateProposals(mixed $proposals): array
     {
         $datesAndChoices = [];
@@ -87,6 +79,7 @@ class PollExtension extends AbstractExtension
      *
      * @return array<string, Entity\Answer[]>
      */
+    #[AsTwigFilter('groupAnswersByValues')]
     public function groupAnswersByValues(Collections\Collection $answers): array
     {
         $answersByValues = [

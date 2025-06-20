@@ -8,21 +8,14 @@
 namespace App\Twig;
 
 use Symfony\Component\Form\FormView;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\Attribute\AsTwigFunction;
 
-class FormExtension extends AbstractExtension
+class FormExtension
 {
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('field_id', [$this, 'fieldId']),
-        ];
-    }
-
     /**
      * @param FormView|string $field
      */
+    #[AsTwigFunction('field_id')]
     public function fieldId(mixed $field, string $suffix = ''): string
     {
         if ($field instanceof FormView) {

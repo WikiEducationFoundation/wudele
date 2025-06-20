@@ -10,10 +10,9 @@ namespace App\Twig;
 use App\Utils;
 use Symfony\Component\Asset;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\Attribute\AsTwigFunction;
 
-class IconExtension extends AbstractExtension
+class IconExtension
 {
     public function __construct(
         #[Autowire('%app.public_directory%')]
@@ -21,17 +20,7 @@ class IconExtension extends AbstractExtension
     ) {
     }
 
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction(
-                'icon',
-                [$this, 'icon'],
-                ['is_safe' => ['html']]
-            ),
-        ];
-    }
-
+    #[AsTwigFunction('icon', isSafe: ['html'])]
     public function icon(string $iconName, string $additionalClassNames = ''): string
     {
         $iconName = htmlspecialchars($iconName);

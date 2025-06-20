@@ -9,36 +9,28 @@ namespace App\Twig;
 
 use App\Service;
 use App\Utils;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\Attribute\AsTwigFilter;
 
-class DateFormatterExtension extends AbstractExtension
+class DateFormatterExtension
 {
     public function __construct(
         private Service\DateTranslator $dateTranslator,
     ) {
     }
 
-    public function getFilters(): array
-    {
-        return [
-            new TwigFilter('dateTrans', [$this, 'dateTrans']),
-            new TwigFilter('dateIso', [$this, 'dateIso']),
-            new TwigFilter('dateFull', [$this, 'dateFull']),
-            new TwigFilter('dateShort', [$this, 'dateShort']),
-        ];
-    }
-
+    #[AsTwigFilter('dateTrans')]
     public function dateTrans(\DateTimeInterface $date, string $format = 'dd MMM yyyy, HH:mm'): string
     {
         return $this->dateTranslator->format($date, $format);
     }
 
+    #[AsTwigFilter('dateIso')]
     public function dateIso(\DateTimeInterface $date): string
     {
         return $date->format(\DateTimeInterface::ATOM);
     }
 
+    #[AsTwigFilter('dateFull')]
     public function dateFull(\DateTimeInterface $date, bool $fullMonth = false, bool $cleverYear = false): string
     {
         $today = Utils\Time::relative('today');
@@ -62,6 +54,7 @@ class DateFormatterExtension extends AbstractExtension
         return $this->dateTrans($date, $format);
     }
 
+    #[AsTwigFilter('dateShort')]
     public function dateShort(\DateTimeInterface $date, bool $fullMonth = false, bool $cleverYear = false): string
     {
         $today = Utils\Time::relative('today');
