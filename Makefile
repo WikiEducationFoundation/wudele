@@ -80,7 +80,7 @@ endif
 
 .PHONY: migration
 migration: ## Generate a database migration from entities changes
-	$(CONSOLE) make:migration
+	$(CONSOLE) make:migration --formatted
 
 .PHONY: translations
 translations: ## Update the translations from the code
