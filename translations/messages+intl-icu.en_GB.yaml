@@ -1,3 +1,12 @@
+admin.polls.admin_link: 'Admin link'
+admin.polls.author: Author
+admin.polls.created_at: 'Created at'
+admin.polls.none: 'The search didn’t return any matching polls.'
+admin.polls.not_completed: 'Poll not completed'
+admin.polls.public_link: 'Public link'
+admin.polls.search: Search
+admin.polls.title: 'List of polls'
+admin.title: Administration
 answers.value.maybe: Maybe
 answers.value.no: 'No'
 answers.value.yes: 'Yes'
@@ -28,6 +37,8 @@ forms.error: Error
 forms.labels.max_length: '(max. {length} characters)'
 forms.labels.optional: (optional)
 forms.labels.optional_and_max_length: '(optional, max. {length} characters)'
+forms.login.password: Password
+forms.login.username: Username
 forms.next: Next
 forms.poll_authentication_form.password.label: Password
 forms.poll_authentication_form.submit: Authenticate
@@ -72,7 +83,10 @@ home.source_code: 'Access the source code.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
+layout.logout: Logout
 layout.modal.close: Close
+login.log_in: 'Log in'
+login.title: 'Login to administration'
 notifications.close: Close
 pagination.next: 'Next page'
 pagination.previous: 'Previous page'

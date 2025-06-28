@@ -239,6 +239,18 @@ You can read the logs with:
 # journalctl -f -u pollaris-worker@service
 ```
 
+### Optional: Create an admin
+
+You can create an admin by running the following command:
+
+```console
+www-data$ php bin/console app:user:create
+```
+
+Open the login page at `https://pollaris.example.org/login`.
+
+The administration allows you to search polls by <abbr>URL</abbr>, title, author name, or email.
+
 ### Optional: Customise your platform
 
 There are several ways in which you can customise Pollaris to suit your visitors' needs.

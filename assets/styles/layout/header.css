@@ -24,3 +24,10 @@
 
     border-radius: var(--border-radius);
 }
+
+.header__button {
+    --outline-color: var(--color-primary1);
+    --button-color: currentcolor;
+    --button-background-color: transparent;
+    --button-border-color: currentcolor;
+}

@@ -7,6 +7,8 @@
 namespace App\Repository;
 
 use App\Entity;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Doctrine\ORM;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,8 +16,47 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PollRepository extends BaseRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        ManagerRegistry $registry,
+    ) {
         parent::__construct($registry, Entity\Poll::class);
+    }
+
+    /**
+     * @return ORM\Query<null, Entity\Poll>
+     */
+    public function getSearchQuery(string $search): ORM\Query
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $search = trim($search);
+
+        $pollBaseUrl = $this->urlGenerator->generate('home', referenceType: UrlGeneratorInterface::ABSOLUTE_URL);
+        $pollBaseUrl = "{$pollBaseUrl}polls/";
+
+        if (str_starts_with($search, $pollBaseUrl)) {
+            $pollSlug = substr($search, strlen($pollBaseUrl));
+
+            $remainingSlashPosition = strpos($pollSlug, '/');
+            if ($remainingSlashPosition !== false) {
+                $pollSlug = substr($pollSlug, 0, $remainingSlashPosition);
+            }
+
+            $queryBuilder->where('p.slug = :slug');
+            $queryBuilder->orWhere('p.id = :slug');
+            $queryBuilder->setParameter('slug', $pollSlug);
+        } elseif ($search !== '') {
+            $queryBuilder->where('ILIKE(p.authorEmail, :query) = TRUE');
+            $queryBuilder->orWhere('ILIKE(p.authorName, :query) = TRUE');
+            $queryBuilder->orWhere('ILIKE(p.title, :query) = TRUE');
+            $queryBuilder->orWhere('p.slug = :slug');
+            $queryBuilder->setParameter('query', "%{$search}%");
+            $queryBuilder->setParameter('slug', $search);
+        }
+
+        $queryBuilder->orderBy('p.createdAt', 'DESC');
+
+        return $queryBuilder->getQuery();
     }
 }

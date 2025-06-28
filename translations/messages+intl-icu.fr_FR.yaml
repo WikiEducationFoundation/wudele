@@ -1,3 +1,12 @@
+admin.polls.admin_link: 'Lien admin'
+admin.polls.author: Auteur·ice
+admin.polls.created_at: 'Créé le'
+admin.polls.none: 'La recherche n’a retourné aucun sondage.'
+admin.polls.not_completed: 'Sondage non finalisé'
+admin.polls.public_link: 'Lien public'
+admin.polls.search: Rechercher
+admin.polls.title: 'Liste des sondages'
+admin.title: Administration
 answers.value.maybe: Peut-être
 answers.value.no: Non
 answers.value.yes: Oui
@@ -28,6 +37,8 @@ forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
 forms.labels.optional: (facultatif)
 forms.labels.optional_and_max_length: '(facultatif, max. {length} caractères)'
+forms.login.password: 'Mot de passe'
+forms.login.username: 'Nom d’utilisateurice'
 forms.next: Suivant
 forms.poll_authentication_form.password.label: 'Mot de passe'
 forms.poll_authentication_form.submit: S’authentifier
@@ -72,7 +83,10 @@ home.source_code: 'Accéder au code source.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
+layout.logout: 'Se déconnecter'
 layout.modal.close: Fermer
+login.log_in: 'Se connecter'
+login.title: 'Connexion à l’administration'
 notifications.close: Fermer
 pagination.next: 'Page suivante'
 pagination.previous: 'Page précédente'

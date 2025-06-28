@@ -1,0 +1,63 @@
+{#
+ # This file is part of Pollaris.
+ # Copyright 2024-2025 Marien Fressinaud
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'login.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+        <h1>
+            {{ 'login.title' | trans }}
+        </h1>
+
+        <form method="post" class="panel panel--primary panel--rounded form--standard">
+            {% if error %}
+                <p role="alert" class="form__error" id="login-error">
+                    <span class="sr-only">{{ 'forms.error' | trans }}</span>
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </p>
+            {% endif %}
+
+            <div class="flow flow--small">
+                <label for="username">
+                    {{ 'forms.login.username' | trans }}
+                </label>
+
+                <input
+                    type="text"
+                    value="{{ last_username }}"
+                    name="_username"
+                    id="username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="flow flow--small">
+                <label for="password">
+                    {{ 'forms.login.password' | trans }}
+                </label>
+
+                <input
+                    type="password"
+                    name="_password"
+                    id="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <div class="text--right">
+                <button class="button--primary" type="submit">
+                    {{ 'login.log_in' | trans }}
+                </button>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </form>
+    </div>
+{% endblock %}

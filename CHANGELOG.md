@@ -7,6 +7,15 @@
 A new `APP_REQUIRE_EMAILS` is available to force the polls' authors to enter an email.
 See the [`env.sample`](/env.sample) file.
 
+You can now create an admin to search for polls.
+Create an admin with:
+
+```console
+www-data$ php bin/console app:user:create
+```
+
+Then, open the login page at `https://pollaris.example.org/login`.
+
 ## 2025-05-18 - 0.5.0
 
 ### Migration notes

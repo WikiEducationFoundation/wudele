@@ -6,13 +6,6 @@
     position: relative;
 }
 
-.layout__locales-button {
-    --outline-color: var(--color-primary1);
-    --button-color: currentcolor;
-    --button-background-color: transparent;
-    --button-border-color: currentcolor;
-}
-
 .layout__locales-menu {
     position: absolute;
     z-index: 100;
