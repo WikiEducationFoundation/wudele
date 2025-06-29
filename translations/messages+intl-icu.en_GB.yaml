@@ -127,6 +127,8 @@ polls.settings.notifications.title: Notifications
 polls.settings.password.title: 'Protect by password'
 polls.settings.slug.title: 'Customise the poll link'
 polls.settings.title: 'Configure the poll'
+polls.sharing.public_link: 'Public sharing link'
+polls.sharing.title: 'Share the poll'
 polls.show.already_voted: 'You have already voted in this poll, but you can still change your vote.'
 polls.show.authenticated: 'You have successfully authenticated.'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
@@ -142,6 +144,7 @@ polls.show.explain_link_edit_vote: 'You can copy the edit link to save it and ed
 polls.show.link_edit_vote: 'Link to edit your vote'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
+polls.show.share: Share
 polls.show.vote.created: 'Your vote is confirmed. You can still change it if you wish.'
 polls.show.vote.updated: 'Your vote has been changed.'
 polls.show.vote_edit: 'Edit my vote'
