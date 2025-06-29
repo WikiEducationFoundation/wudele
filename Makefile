@@ -67,10 +67,16 @@ db-reset: ## Reset the database (take a FORCE argument)
 ifndef FORCE
 	$(error Please run the operation with FORCE=true)
 endif
+ifndef NODOCKER
+	$(DOCKER_COMPOSE) stop worker
+endif
 	$(CONSOLE) doctrine:database:drop --force --if-exists
 	$(CONSOLE) doctrine:database:create
 	$(CONSOLE) doctrine:migrations:migrate --no-interaction
 	$(CONSOLE) cache:clear
+ifndef NODOCKER
+	$(DOCKER_COMPOSE) start worker
+endif
 
 .PHONY: migration
 migration: ## Generate a database migration from entities changes
