@@ -162,8 +162,8 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->isPasswordForVotesOnly = false;
         $this->authorName = '';
         $this->authorEmail = '';
-        $this->notifyOnVotes = false;
-        $this->notifyOnComments = false;
+        $this->notifyOnVotes = true;
+        $this->notifyOnComments = true;
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
         $this->dates = new Collections\ArrayCollection();
