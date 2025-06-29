@@ -84,16 +84,19 @@ class PollsController extends BaseController
         ]);
     }
 
-    #[Route('/polls/{slug:poll}', name: 'poll')]
+    #[Route('/polls/{slug}', name: 'poll')]
     public function show(
-        Entity\Poll $poll,
+        string $slug,
         Request $request,
+        Repository\PollRepository $pollRepository,
         Repository\VoteRepository $voteRepository,
         Repository\CommentRepository $commentRepository,
         Security\PollSecurity $pollSecurity,
         EventDispatcherInterface $eventDispatcher,
     ): Response {
-        if (!$poll->isCompleted()) {
+        $poll = $pollRepository->loadBySlug($slug);
+
+        if (!$poll || !$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 

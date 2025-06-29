@@ -17,15 +17,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VotesController extends BaseController
 {
-    #[Route('/polls/{slug:poll}/votes/{id:vote}/edit', name: 'edit vote')]
+    #[Route('/polls/{slug}/votes/{id:vote}/edit', name: 'edit vote')]
     public function edit(
-        #[MapEntity(mapping: ['poll' => 'slug'])]
-        Entity\Poll $poll,
+        string $slug,
         Entity\Vote $vote,
         Request $request,
+        Repository\PollRepository $pollRepository,
         Repository\VoteRepository $voteRepository,
         Security\PollSecurity $pollSecurity,
     ): Response {
+        $poll = $pollRepository->loadBySlug($slug);
+
+        if (!$poll) {
+            throw $this->createNotFoundException('The poll doesn’t exist.');
+        }
+
         if ($poll->getId() !== $vote->getPoll()->getId()) {
             throw $this->createNotFoundException('Vote is not part of the poll');
         }

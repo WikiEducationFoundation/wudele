@@ -23,6 +23,26 @@ class PollRepository extends BaseRepository
         parent::__construct($registry, Entity\Poll::class);
     }
 
+    public function loadBySlug(string $slug): ?Entity\Poll
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(<<<SQL
+            SELECT p, pr, d, v, c, a
+            FROM App\Entity\Poll p
+            LEFT JOIN p.proposals pr
+            LEFT JOIN p.dates d
+            LEFT JOIN p.votes v
+            LEFT JOIN p.comments c
+            LEFT JOIN pr.answers a
+            WHERE p.slug = :slug
+        SQL);
+
+        $query->setParameter('slug', $slug);
+
+        return $query->getOneOrNullResult();
+    }
+
     /**
      * @return ORM\Query<null, Entity\Poll>
      */
