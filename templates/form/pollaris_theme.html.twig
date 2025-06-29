@@ -141,9 +141,12 @@
 
 {%- block urlprefix_widget -%}
     <div class="cols cols--center input input--urlprefix">
-        <p class="col--noshrink input__prefix">
-            {{ url('home') }}polls/
-        </p>
+        {% set prefix = attr['data-prefix'] | default('') %}
+        {% if prefix %}
+            <p class="col--noshrink input__prefix">
+                {{ prefix }}
+            </p>
+        {% endif %}
 
         {{- form_widget(form, { 'attr': { 'class': 'input__url' } }) -}}
     </div>

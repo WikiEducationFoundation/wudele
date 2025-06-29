@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,6 +22,7 @@ class PollSettingsForm extends AbstractType
 {
     public function __construct(
         private Service\PollPassword $pollPassword,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -31,6 +33,9 @@ class PollSettingsForm extends AbstractType
             'required' => false,
         ]);
 
+        $pollBaseUrl = $this->urlGenerator->generate('home', referenceType: UrlGeneratorInterface::ABSOLUTE_URL);
+        $pollBaseUrl = "{$pollBaseUrl}polls/";
+
         $builder->add('slug', Type\TextType::class, [
             'trim' => true,
             'empty_data' => '',
@@ -38,6 +43,7 @@ class PollSettingsForm extends AbstractType
             'help' => new TranslatableMessage('forms.poll_settings_form.slug.help'),
             'attr' => [
                 'maxlength' => Entity\Poll::MAX_SLUG_LENGTH,
+                'data-prefix' => $pollBaseUrl,
             ],
             'constraints' => [
                 new Assert\NotBlank(
