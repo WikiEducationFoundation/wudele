@@ -107,6 +107,7 @@ class PollsController extends BaseController
 
         $session = $request->getSession();
         $voteId = $session->get("vote-{$poll->getId()}");
+        $hasAccessToAdmin = $session->get("admin-{$poll->getId()}");
 
         $voteForm = null;
 
@@ -163,6 +164,7 @@ class PollsController extends BaseController
             'voteForm' => $voteForm,
             'commentForm' => $commentForm,
             'displayMode' => $displayMode,
+            'hasAccessToAdmin' => $hasAccessToAdmin,
         ]);
     }
 
@@ -425,6 +427,9 @@ class PollsController extends BaseController
             $pollEvent = new PollActivity\PollEvent($poll);
             $eventDispatcher->dispatch($pollEvent, PollActivity\PollEvent::COMPLETED);
 
+            $session = $request->getSession();
+            $session->set("admin-{$poll->getId()}", true);
+
             return $this->redirect($process->getNextStepUrl('summary'));
         }
 
@@ -474,6 +479,9 @@ class PollsController extends BaseController
         if (!$process->isAccessible('end')) {
             return $this->redirect($process->getPreviousStepUrl('end'));
         }
+
+        $session = $request->getSession();
+        $session->set("admin-{$poll->getId()}", true);
 
         return $this->render('polls/admin.html.twig', [
             'poll' => $poll,

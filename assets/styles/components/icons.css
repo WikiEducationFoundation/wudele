@@ -25,3 +25,7 @@
 .icon--rotate270 {
     transform: rotate(270deg);
 }
+
+.icon--lock {
+    vertical-align: text-top;
+}

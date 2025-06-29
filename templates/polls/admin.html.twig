@@ -14,6 +14,35 @@
             {{ 'polls.admin.title' | trans }}
         </h1>
 
+        <div class="panel panel--primary panel--rounded flow flow--small">
+            <label for="poll-admin-link">
+                {{ 'polls.admin.admin_link' | trans }}
+            </label>
+
+            <div
+                class="cols cols--always cols--gap-small"
+                data-controller="copy-to-clipboard"
+                data-label-copied="{{ 'base.copied' | trans }}"
+            >
+                <input
+                    id="poll-admin-link"
+                    type="url"
+                    value="{{ url('poll admin', { id: poll.id, token: poll.adminToken }) }}"
+                    readonly
+                    data-copy-to-clipboard-target="copyable"
+                />
+
+                <button
+                    type="button"
+                    class="button--primary"
+                    data-copy-to-clipboard-target="button"
+                    data-action="copy-to-clipboard#copy"
+                >
+                    {{ 'base.copy' | trans }}
+                </button>
+            </div>
+        </div>
+
         <div class="flow flow--large">
             {{ include('polls/_summary.html.twig') }}
         </div>

@@ -58,6 +58,16 @@
                                 {{ icon('share') }}
                                 {{ 'polls.show.share' | trans }}
                             </button>
+
+                            {% if hasAccessToAdmin %}
+                                <a
+                                    href="{{ path('poll admin', { id: poll.id, token: poll.adminToken }) }}"
+                                    class="button button--ghost"
+                                >
+                                    {{ icon('lock') }}
+                                    {{ 'polls.show.administration' | trans }}
+                                </a>
+                            {% endif %}
                         </div>
 
                         <template id="modal-sharing">

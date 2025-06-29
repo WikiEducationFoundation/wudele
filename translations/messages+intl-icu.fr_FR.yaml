@@ -90,6 +90,7 @@ login.title: 'Connexion à l’administration'
 notifications.close: Fermer
 pagination.next: 'Page suivante'
 pagination.previous: 'Page précédente'
+polls.admin.admin_link: 'Lien d’administration privé'
 polls.admin.comments: Commentaires
 polls.admin.confirm_delete_comment: "Êtes-vous sur·e de vouloir supprimer ce commentaire\_?"
 polls.admin.confirm_delete_vote: "Êtes-vous sur·e de vouloir supprimer ce vote\_?"
@@ -129,6 +130,7 @@ polls.settings.slug.title: 'Personnaliser le lien du sondage'
 polls.settings.title: 'Paramétrez le sondage'
 polls.sharing.public_link: 'Lien de partage public'
 polls.sharing.title: 'Partager le sondage'
+polls.show.administration: Administration
 polls.show.already_voted: 'Vous avez déjà voté à ce sondage, mais vous pouvez encore modifier votre vote.'
 polls.show.authenticated: 'Vous vous êtes authentifié·e avec succès.'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
