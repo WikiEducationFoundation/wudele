@@ -164,7 +164,7 @@ polls.summary.settings.notify_on_votes.dont: 'Je ne recevrai pas d’email lors 
 polls.summary.settings.password_protected.full: 'Le sondage est protégé par un mot de passe.'
 polls.summary.settings.password_protected.not: 'Le sondage n’est pas protégé par un mot de passe.'
 polls.summary.settings.password_protected.vote: 'Le sondage est protégé par un mot de passe (les résultats sont visibles sans mot de passe).'
-polls.summary.settings.title: 'Paramètres avancés'
+polls.summary.settings.title: 'Options du sondage'
 polls.summary.title: 'Résumé de votre sondage'
 polls.votes.maybe: Peut-être
 polls.votes.no: Non

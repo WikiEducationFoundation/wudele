@@ -164,7 +164,7 @@ polls.summary.settings.notify_on_votes.dont: 'I will not receive an email when s
 polls.summary.settings.password_protected.full: 'The poll is protected by a password.'
 polls.summary.settings.password_protected.not: 'The poll is not protected by a password.'
 polls.summary.settings.password_protected.vote: 'The poll is protected by a password (the results are visible without password).'
-polls.summary.settings.title: 'Advanced settings'
+polls.summary.settings.title: 'Poll options'
 polls.summary.title: 'Summary of your poll'
 polls.votes.maybe: Maybe
 polls.votes.no: 'No'
