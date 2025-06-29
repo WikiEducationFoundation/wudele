@@ -131,7 +131,6 @@ polls.settings.title: 'Configure the poll'
 polls.sharing.public_link: 'Public sharing link'
 polls.sharing.title: 'Share the poll'
 polls.show.administration: Administration
-polls.show.already_voted: 'You have already voted in this poll, but you can still change your vote.'
 polls.show.authenticated: 'You have successfully authenticated.'
 polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
 polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'

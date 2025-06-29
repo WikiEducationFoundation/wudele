@@ -131,7 +131,6 @@ polls.settings.title: 'Paramétrez le sondage'
 polls.sharing.public_link: 'Lien de partage public'
 polls.sharing.title: 'Partager le sondage'
 polls.show.administration: Administration
-polls.show.already_voted: 'Vous avez déjà voté à ce sondage, mais vous pouvez encore modifier votre vote.'
 polls.show.authenticated: 'Vous vous êtes authentifié·e avec succès.'
 polls.show.best_proposals.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
 polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other {Choix préférés} }'

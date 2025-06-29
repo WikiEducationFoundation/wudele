@@ -59,6 +59,13 @@
                                 {{ 'polls.show.share' | trans }}
                             </button>
 
+                            {% if voteId and not voteForm %}
+                                <a class="button button--ghost" href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}">
+                                    {{ icon('pen-to-square') }}
+                                    {{ 'polls.show.vote_edit' | trans }}
+                                </a>
+                            {% endif %}
+
                             {% if hasAccessToAdmin %}
                                 <a
                                     href="{{ path('poll admin', { id: poll.id, token: poll.adminToken }) }}"
@@ -107,24 +114,7 @@
                     </div>
                 </div>
 
-                {% if voteId and not voteForm %}
-                    <div class="panel panel--primary panel--rounded flow flow--large">
-                        <div class="cols cols--gap-small">
-                            <div class="text--bigger">
-                                {{ icon('lightbulb') }}
-                            </div>
-
-                            <p>
-                                {{ 'polls.show.already_voted' | trans }}
-                            </p>
-                        </div>
-
-                        <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: voteId, display: displayMode }) }}">
-                            {{ icon('pen-to-square') }}
-                            {{ 'polls.show.vote_edit' | trans }}
-                        </a>
-                    </div>
-                {% elseif voteId and voteForm %}
+                {% if voteId and voteForm %}
                     <div class="panel panel--primary panel--rounded flow flow--large">
                         <div class="cols cols--gap-small">
                             <p>
