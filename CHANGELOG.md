@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## 2025-06-29 - 0.6.0
 
 ### Migration notes
 
@@ -15,6 +15,45 @@ www-data$ php bin/console app:user:create
 ```
 
 Then, open the login page at `https://pollaris.example.org/login`.
+
+### New
+
+- Provide an admin to search polls ([4fd28ba](https://framagit.org/pollaris/pollaris/-/commit/4fd28ba))
+- Allow to force polls' authors to enter an email ([df01b70](https://framagit.org/pollaris/pollaris/-/commit/df01b70))
+- Send the admin link to author email ([076be01](https://framagit.org/pollaris/pollaris/-/commit/076be01))
+
+### Improvements
+
+- Allow polls' authors to find link to admin more easily ([ddde37d](https://framagit.org/pollaris/pollaris/-/commit/ddde37d))
+- Add a modal to share the poll ([6134d88](https://framagit.org/pollaris/pollaris/-/commit/6134d88))
+- Rename "advanced settings" in "poll options" ([cbe2134](https://framagit.org/pollaris/pollaris/-/commit/cbe2134))
+- Enable notifications by default ([4ea5ddc](https://framagit.org/pollaris/pollaris/-/commit/4ea5ddc))
+- Explain time slots can be selected at step 3 ([b136a7d](https://framagit.org/pollaris/pollaris/-/commit/b136a7d))
+- Move the button to edit the vote ([486fbd8](https://framagit.org/pollaris/pollaris/-/commit/486fbd8))
+- Move the "copy edit vote link" on the edit page ([c03bbac](https://framagit.org/pollaris/pollaris/-/commit/c03bbac))
+- Add a link to the source code ([24a31a4](https://framagit.org/pollaris/pollaris/-/commit/24a31a4))
+
+### Bug fixes
+
+- Make sure the poll table has a white background ([cf8b9fa](https://framagit.org/pollaris/pollaris/-/commit/cf8b9fa))
+
+### Technical
+
+- Improve the performance of the poll page ([73adc5c](https://framagit.org/pollaris/pollaris/-/commit/73adc5c))
+- Allow to create administrators ([a4a9d7d](https://framagit.org/pollaris/pollaris/-/commit/a4a9d7d))
+- Allow to customise the home page ([8d53971](https://framagit.org/pollaris/pollaris/-/commit/8d53971))
+- Allow to provide custom CSS and JS ([ff99fa8](https://framagit.org/pollaris/pollaris/-/commit/ff99fa8))
+- Update the dependencies ([5c8bd80](https://framagit.org/pollaris/pollaris/-/commit/5c8bd80), [69b3878](https://framagit.org/pollaris/pollaris/-/commit/69b3878), [651890a](https://framagit.org/pollaris/pollaris/-/commit/651890a), [21f8ad0](https://framagit.org/pollaris/pollaris/-/commit/21f8ad0))
+
+### Developers
+
+- Provide a `ILIKE` DQL function ([7a8df8a](https://framagit.org/pollaris/pollaris/-/commit/7a8df8a))
+- Provide a Pagination component ([2774a5e](https://framagit.org/pollaris/pollaris/-/commit/2774a5e))
+- Fix the `make db-reset` command ([40b36be](https://framagit.org/pollaris/pollaris/-/commit/40b36be))
+- Update the Twig extensions ([0db834e](https://framagit.org/pollaris/pollaris/-/commit/0db834e))
+- Rename EsbuildAssetExtension into AssetExtension ([6175dc7](https://framagit.org/pollaris/pollaris/-/commit/6175dc7))
+- Sort the translation files ([786af10](https://framagit.org/pollaris/pollaris/-/commit/786af10))
+- Remove `--no-fill` from make translations command ([86772c9](https://framagit.org/pollaris/pollaris/-/commit/86772c9))
 
 ## 2025-05-18 - 0.5.0
 
