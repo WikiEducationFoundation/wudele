@@ -28,6 +28,7 @@
 @import "./components/lists.css";
 @import "./components/loaders.css";
 @import "./components/modal.css";
+@import "./components/pagination.css";
 @import "./components/panels.css";
 @import "./custom/proposals.css";
 @import "./custom/votes.css";

@@ -74,6 +74,8 @@ layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
 layout.modal.close: Close
 notifications.close: Close
+pagination.next: 'Next page'
+pagination.previous: 'Previous page'
 polls.admin.comments: Comments
 polls.admin.confirm_delete_comment: 'Are you sure to delete this comment?'
 polls.admin.confirm_delete_vote: 'Are you sure to delete this vote?'
