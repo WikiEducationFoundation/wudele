@@ -131,6 +131,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         mappedBy: 'poll',
         orphanRemoval: true,
     )]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collections\Collection $votes;
 
     #[ORM\Column(nullable: true)]

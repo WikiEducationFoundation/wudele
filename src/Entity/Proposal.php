@@ -50,6 +50,7 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
         mappedBy: 'proposal',
         orphanRemoval: true,
     )]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collections\Collection $answers;
 
     #[ORM\ManyToOne(inversedBy: 'proposals')]
