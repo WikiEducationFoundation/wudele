@@ -1,5 +1,16 @@
 # Changelog
 
+## 2025-07-16 - 0.6.1
+
+### Bug fixes
+
+- Fix the order of the date proposals ([294746e](https://framagit.org/pollaris/pollaris/-/commit/294746e))
+- Order polls' votes by their creation dates ([89d4625](https://framagit.org/pollaris/pollaris/-/commit/89d4625))
+
+### Developers
+
+- Update the dependencies ([29df41e](https://framagit.org/pollaris/pollaris/-/commit/29df41e))
+
 ## 2025-06-29 - 0.6.0
 
 ### Migration notes
