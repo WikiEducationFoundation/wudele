@@ -71,6 +71,17 @@ class PollExtension
             $datesAndChoices[$dateKey][1][] = $proposal;
         }
 
+        foreach ($datesAndChoices as $key => $dateAndProposals) {
+            $proposals = $dateAndProposals[1];
+            usort($proposals, function (Entity\Proposal $proposal1, Entity\Proposal $proposal2): int {
+                return $proposal1->getLabel() <=> $proposal2->getLabel();
+            });
+
+            $datesAndChoices[$key][1] = $proposals;
+        }
+
+        ksort($datesAndChoices);
+
         return $datesAndChoices;
     }
 
@@ -93,5 +104,23 @@ class PollExtension
         }
 
         return $answersByValues;
+    }
+
+    /**
+     * @template T of mixed
+     *
+     * @param array<T[]> $arrays
+     * @return T[]
+     */
+    #[AsTwigFilter('flatten')]
+    public function flatten(array $arrays): array
+    {
+        $result = [];
+
+        foreach ($arrays as $array) {
+            $result = array_merge($result, $array);
+        }
+
+        return $result;
     }
 }

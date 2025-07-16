@@ -4,6 +4,11 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
+{% if displayMode == 'date' %}
+    {% set datesAndProposals = proposals|groupDateProposals %}
+    {% set proposals = datesAndProposals|column(1)|flatten %}
+{% endif %}
+
 <div class="proposals-table-container" data-controller="proposals-table">
     <table class="proposals-table panel panel--white panel--rounded">
         {% if displayMode == 'classic' %}
@@ -20,7 +25,7 @@
             <tr>
                 <td class="proposals-table__sticky-cell"></td>
 
-                {% for dateAndProposals in proposals|groupDateProposals %}
+                {% for dateAndProposals in datesAndProposals %}
                     {% set date = dateAndProposals[0] %}
                     {% set dateProposals = dateAndProposals[1] %}
 
