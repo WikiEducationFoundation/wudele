@@ -28,13 +28,10 @@ class PollRepository extends BaseRepository
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(<<<SQL
-            SELECT p, pr, d, v, c, a
+            SELECT p, pr, d
             FROM App\Entity\Poll p
             LEFT JOIN p.proposals pr
             LEFT JOIN p.dates d
-            LEFT JOIN p.votes v
-            LEFT JOIN p.comments c
-            LEFT JOIN pr.answers a
             WHERE p.slug = :slug
         SQL);
 
