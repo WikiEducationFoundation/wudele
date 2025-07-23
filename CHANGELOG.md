@@ -1,5 +1,19 @@
 # Changelog
 
+## 2025-07-23 - 0.6.2
+
+### Bug fixes
+
+- Fix loading timeouts ([8d342e9](https://framagit.org/pollaris/pollaris/-/commit/8d342e9))
+
+### Technical
+
+- Update the dependencies ([c9e17b1](https://framagit.org/pollaris/pollaris/-/commit/c9e17b1))
+
+### Developers
+
+- Remove useless image name in docker-compose.yml ([35a1f67](https://framagit.org/pollaris/pollaris/-/commit/35a1f67))
+
 ## 2025-07-16 - 0.6.1
 
 ### Bug fixes
