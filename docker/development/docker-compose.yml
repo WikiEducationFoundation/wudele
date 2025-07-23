@@ -6,7 +6,6 @@ name: pollaris
 
 services:
     php:
-        image: pollaris:php-dev
         build: .
         restart: unless-stopped
         volumes:
@@ -17,7 +16,6 @@ services:
             - database
 
     worker:
-        image: pollaris:php-dev
         build: .
         restart: unless-stopped
         command: php bin/console messenger:consume async -vv
