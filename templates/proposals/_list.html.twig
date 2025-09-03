@@ -21,8 +21,8 @@
             {% set date = dateAndProposals[0] %}
             {% set proposals = dateAndProposals[1] %}
 
-            <fieldset class="panel panel--primary panel--rounded flow">
-                <div>
+            <fieldset class="panel panel--primary panel--rounded panel--date flow">
+                <div class="panel--date__legend">
                     <legend>{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</legend>
                 </div>
 
