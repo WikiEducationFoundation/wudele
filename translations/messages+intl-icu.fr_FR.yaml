@@ -171,8 +171,9 @@ polls.summary.settings.password_protected.vote: 'Le sondage est protégé par un
 polls.summary.settings.title: 'Options du sondage'
 polls.summary.title: 'Résumé de votre sondage'
 polls.votes.maybe: Peut-être
+polls.votes.maybe.count: "{count}\_Peut-être"
 polls.votes.no: Non
-polls.votes.none: Aucun
+polls.votes.no.count: "{count}\_Non"
 polls.votes.yes: Oui
 polls.votes.yes.count: "{count}\_Oui"
 polls.votes.yours: 'Votre vote'

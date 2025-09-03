@@ -2,6 +2,11 @@
 /* Copyright 2024-2025 Marien Fressinaud */
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
+.votes__label {
+    padding-top: var(--space-smaller);
+    padding-bottom: var(--space-smaller);
+}
+
 .vote {
     --vote-color: inherit;
     --vote-border-color: currentcolor;
@@ -44,48 +49,17 @@
     color: var(--vote-border-color);
 }
 
-@media (min-width: 800px) {
-    .votebar__label {
-        text-align: right;
-    }
-}
-
-.votebar__bar {
-    display: inline-block;
-    width: var(--votebar-width, 0);
-    min-width: 2ch;
-
-    color: var(--votebar-color);
-    text-align: center;
-
-    background-color: var(--votebar-background-color);
-    border: 1px solid var(--votebar-border-color);
-    border-radius: var(--border-radius);
-}
-
-.votebar--yes .votebar__bar {
-    --votebar-color: var(--color-success12);
-    --votebar-border-color: var(--color-success11);
-    --votebar-background-color: var(--color-success3);
-}
-
-.votebar--maybe .votebar__bar {
-    --votebar-color: var(--color-warning12);
-    --votebar-border-color: var(--color-warning11);
-    --votebar-background-color: var(--color-warning3);
-}
-
-.votebar--no .votebar__bar {
-    --votebar-color: var(--color-error12);
-    --votebar-border-color: var(--color-error11);
-    --votebar-background-color: var(--color-error3);
-}
-
 .vote__choices {
     display: flex;
 
     align-items: stretch;
-    gap: var(--space-medium);
+    gap: var(--space-smaller);
+}
+
+@media (max-width: 500px) {
+    .vote__choices {
+        flex-direction: column;
+    }
 }
 
 input.radio--vote + label {
@@ -93,11 +67,10 @@ input.radio--vote + label {
     --radio-vote-border-color: transparent;
     --radio-vote-background-color: var(--color-primary3);
 
-    padding: var(--space-medium) var(--space-smaller);
+    padding: var(--space-smaller);
 
     flex: 1;
-    flex-direction: column;
-    gap: var(--space-medium);
+    gap: var(--space-small);
 
     color: var(--radio-vote-color);
     font-size: var(--font-size-small);
@@ -160,7 +133,7 @@ input.radio--vote + label::before {
     mask-position: center;
     mask-size: cover;
 
-    opacity: 0.4;
+    opacity: 0.7;
 }
 
 input.radio--vote:checked + label::before {

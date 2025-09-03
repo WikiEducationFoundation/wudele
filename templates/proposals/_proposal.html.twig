@@ -9,24 +9,8 @@
 {% set countNo = proposal.countAnswers('no') %}
 
 <fieldset class="panel panel--white panel--rounded panel--proposal flow">
-    <div class="cols cols--always">
-        <legend class="col--extend text--nobold">{{ proposal.label }}</legend>
-
-        {% if isPreferred %}
-            <p class="text--success">
-                {{ icon('star') }}
-
-                {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
-
-                <span class="sr-only">
-                    {{ 'polls.proposals.best' | trans }}
-                </span>
-            </p>
-        {% elseif countYes > 0 %}
-            <p>
-                {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
-            </p>
-        {% endif %}
+    <div>
+        <legend class="text--nobold">{{ proposal.label }}</legend>
     </div>
 
     {% if voteForm %}
@@ -35,107 +19,85 @@
     {% endif %}
 
     {% if maxCount > 0 %}
+        {% set answersByValues = proposal.answers | groupAnswersByValues %}
+
         <div class="panel__separator"></div>
 
         <ul class="list--nostyle flow flow--smaller">
-            <li class="votebar votebar--yes cols cols--gap-small">
-                <span class="col--size2 col--noshrink votebar__label">
-                    {{ 'polls.votes.yes' | trans }}
-                </span>
+            <li class="cols cols--gap-small votes">
+                {% if isPreferred %}
+                    <span class="col--size3 col--noshrink votes__label text--success">
+                        {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
 
-                <span class="col--extend">
-                    {% if countYes > 0 %}
-                        <span class="votebar__bar" style="--votebar-width: {{ countYes * 100 / maxCount }}%">
-                            {{ countYes }}
-                        </span>
-                    {% else %}
-                        –
+                        {{ icon('star') }}
+
                         <span class="sr-only">
-                            {{ 'polls.votes.none' | trans }}
+                            {{ 'polls.proposals.best' | trans }}
                         </span>
-                    {% endif %}
-                </span>
-            </li>
+                    </span>
+                {% else %}
+                    <span class="col--size3 col--noshrink votes__label">
+                        {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
+                    </span>
+                {% endif %}
 
-            <li class="votebar votebar--maybe cols cols--gap-small">
-                <span class="col--size2 col--noshrink votebar__label">
-                    {{ 'polls.votes.maybe' | trans }}
-                </span>
-
-                <span class="col--extend">
-                    {% if countMaybe > 0 %}
-                        <span class="votebar__bar" style="--votebar-width: {{ countMaybe * 100 / maxCount }}%">
-                            {{ countMaybe }}
-                        </span>
-                    {% else %}
-                        –
-                        <span class="sr-only">
-                            {{ 'polls.votes.none' | trans }}
-                        </span>
-                    {% endif %}
-                </span>
-            </li>
-
-            <li class="votebar votebar--no cols cols--gap-small">
-                <span class="col--size2 col--noshrink votebar__label">
-                    {{ 'polls.votes.no' | trans }}
-                </span>
-
-                <span class="col--extend">
-                    {% if countNo > 0 %}
-                        <span class="votebar__bar" style="--votebar-width: {{ countNo * 100 / maxCount }}%">
-                            {{ countNo }}
-                        </span>
-                    {% else %}
-                        –
-                        <span class="sr-only">
-                            {{ 'polls.votes.none' | trans }}
-                        </span>
-                    {% endif %}
-                </span>
-            </li>
-        </ul>
-
-        <div class="flow flow--smaller">
-            {% for answers in proposal.answers | groupAnswersByValues %}
-                {% if answers | length > 0 %}
-                    <ul class="list--nostyle">
-                        {% for answer in answers %}
-                            {% if answer.value == 'yes' %}
-                                <li class="vote vote--yes">
-                                    {{ icon('square-check') }}
-
-                                    {{ answer.vote.authorName }}
-
-                                    <span class="sr-only">
-                                        {{ 'polls.votes.yes' | trans }}
-                                    </span>
-                                </li>
-                            {% elseif answer.value == 'no' %}
-                                <li class="vote vote--no">
-                                    {{ icon('square-xmark') }}
-
-                                    {{ answer.vote.authorName }}
-
-                                    <span class="sr-only">
-                                        {{ 'polls.votes.no' | trans }}
-                                    </span>
-                                </li>
-                            {% elseif answer.value == 'maybe' %}
-                                <li class="vote vote--maybe">
-                                    {{ icon('square-minus') }}
-
-                                    {{ answer.vote.authorName }}
-
-                                    <span class="sr-only">
-                                        {{ 'polls.votes.maybe' | trans }}
-                                    </span>
-                                </li>
-                            {% endif %}
+                {% if answersByValues['yes'] | length > 0 %}
+                    <ul class="col--extended list--nostyle">
+                        {% for answer in answersByValues['yes'] %}
+                            <li class="vote vote--yes">
+                                {{ icon('square-check') }}
+                                {{ answer.vote.authorName }}
+                            </li>
                         {% endfor %}
                     </ul>
+                {% else %}
+                    <span class="col--extend">
+                        –
+                    </span>
                 {% endif %}
-            {% endfor %}
-        </div>
+            </li>
+
+            <li class="cols cols--gap-small votes">
+                <span class="col--size3 col--noshrink votes__label">
+                    {{ 'polls.votes.maybe.count' | trans({ count: countMaybe }) }}
+                </span>
+
+                {% if answersByValues['maybe'] | length > 0 %}
+                    <ul class="col--extended list--nostyle">
+                        {% for answer in answersByValues['maybe'] %}
+                            <li class="vote vote--maybe">
+                                {{ icon('square-xmark') }}
+                                {{ answer.vote.authorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <span class="col--extend">
+                        –
+                    </span>
+                {% endif %}
+            </li>
+
+            <li class="cols cols--gap-small votes">
+                <span class="col--size3 col--noshrink votes__label">
+                    {{ 'polls.votes.no.count' | trans({ count: countNo }) }}
+                </span>
+
+                {% if answersByValues['no'] | length > 0 %}
+                    <ul class="col--extended list--nostyle">
+                        {% for answer in answersByValues['no'] %}
+                            <li class="vote vote--no">
+                                {{ icon('square-minus') }}
+                                {{ answer.vote.authorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <span class="col--extend">
+                        –
+                    </span>
+                {% endif %}
+            </li>
+        </ul>
     {% endif %}
 </fieldset>

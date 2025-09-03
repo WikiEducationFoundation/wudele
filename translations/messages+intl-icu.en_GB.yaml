@@ -171,8 +171,9 @@ polls.summary.settings.password_protected.vote: 'The poll is protected by a pass
 polls.summary.settings.title: 'Poll options'
 polls.summary.title: 'Summary of your poll'
 polls.votes.maybe: Maybe
+polls.votes.maybe.count: "{count}\_Maybe"
 polls.votes.no: 'No'
-polls.votes.none: None
+polls.votes.no.count: "{count}\_No"
 polls.votes.yes: 'Yes'
 polls.votes.yes.count: "{count}\_Yes"
 polls.votes.yours: 'Your vote'

@@ -80,15 +80,10 @@
 
 .proposals-table .vote__choices {
     flex-direction: column;
-    gap: var(--space-smaller);
 }
 
 .proposals-table input.radio--vote + label {
     width: 150px;
-    padding: var(--space-smaller);
-
-    flex-direction: row;
-    gap: var(--space-small);
 }
 
 .proposals-table__sticky-cell {
