@@ -114,6 +114,12 @@
                     </div>
                 </div>
 
+                {% if poll.isClosed %}
+                    <p class="text--bolder text--center text--error">
+                        {{ 'polls.show.is_closed' | trans }}
+                    </p>
+                {% endif %}
+
                 {% if voteId and voteForm %}
                     <div class="panel panel--primary panel--rounded flow flow--large">
                         <div class="cols cols--gap-small">
@@ -368,27 +374,33 @@
                         {{ comment.content | nl2br }}
                     </p>
                 </article>
+            {% else %}
+                <p class="panel panel--rounded">
+                    {{ 'polls.show.comments.none' | trans }}
+                </p>
             {% endfor %}
 
-            <div class="panel panel--primary panel--rounded flow">
-                <h3 class="text--primary">{{ 'polls.show.comments.new' | trans }}</h3>
+            {% if commentForm %}
+                <div class="panel panel--primary panel--rounded flow">
+                    <h3 class="text--primary">{{ 'polls.show.comments.new' | trans }}</h3>
 
-                <p>
-                    {{ 'polls.show.comments.explain' | trans }}
-                </p>
+                    <p>
+                        {{ 'polls.show.comments.explain' | trans }}
+                    </p>
 
-                {{ form_start(commentForm) }}
-                    {{ form_errors(commentForm) }}
+                    {{ form_start(commentForm) }}
+                        {{ form_errors(commentForm) }}
 
-                    {{ form_row(commentForm.authorName) }}
+                        {{ form_row(commentForm.authorName) }}
 
-                    {{ form_row(commentForm.content) }}
+                        {{ form_row(commentForm.content) }}
 
-                    <div class="text--right">
-                        {{ form_row(commentForm.submit) }}
-                    </div>
-                {{ form_end(commentForm) }}
-            </div>
+                        <div class="text--right">
+                            {{ form_row(commentForm.submit) }}
+                        </div>
+                    {{ form_end(commentForm) }}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

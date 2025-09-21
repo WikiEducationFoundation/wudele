@@ -49,6 +49,8 @@ forms.poll_dates_form.use_calendar: 'Select the dates from a calendar'
 forms.poll_form.author_email.help: 'Your address will not be shared with other poll participants. It will only be used to enable you to find your poll if you lose its address and to notify you when new votes are made.'
 forms.poll_form.author_email.label: 'Your email address'
 forms.poll_form.author_name.label: 'Your nickname'
+forms.poll_form.closed_at.help: 'Participants will be able to vote until this date.'
+forms.poll_form.closed_at.label: 'Poll closing date'
 forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Name of your poll'
 forms.poll_proposals_form.add_proposal: 'Add a proposal'
@@ -137,11 +139,13 @@ polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other 
 polls.show.comment.created: 'Your comment has been published.'
 polls.show.comments.explain: 'Your comment will be directly visible on the poll’s page.'
 polls.show.comments.new: 'New comment'
+polls.show.comments.none: 'No comments have been published.'
 polls.show.comments.title: Comments
 polls.show.created_by: 'Poll created by {by}'
 polls.show.display_list: 'List view'
 polls.show.display_table: 'Table view'
 polls.show.explain_link_edit_vote: 'You can copy the edit link to save it and edit your vote later.'
+polls.show.is_closed: 'This poll is closed.'
 polls.show.link_edit_vote: 'Link to edit your vote'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
@@ -156,8 +160,11 @@ polls.steps: 'Step {step} on {total}'
 polls.summary.author.email: 'Email address'
 polls.summary.author.name: Nickname
 polls.summary.author.no_email: 'No address given'
+polls.summary.closed_at: 'Closing date'
+polls.summary.closed_at.none: None
 polls.summary.edit: Edit
 polls.summary.information.title: 'General information'
+polls.summary.is_closed: '(poll closed)'
 polls.summary.proposals.title: 'My proposals'
 polls.summary.settings.customised_slug: 'The link of the poll is customised.'
 polls.summary.settings.max_votes: 'A maximum of { number, plural, one {1 participant} other {# participants} } can vote per proposal.'

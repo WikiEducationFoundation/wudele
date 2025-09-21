@@ -10,6 +10,7 @@ use App\Security;
 use App\Service;
 use App\Tests\Helper;
 use App\Tests\Factory;
+use App\Utils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -336,6 +337,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}?display=list", 302);
         $votes = Factory\VoteFactory::all();
         $this->assertSame(1, count($votes));
         $this->assertSame($name, $votes[0]->getAuthorName());
@@ -349,6 +351,35 @@ class PollsControllerTest extends WebTestCase
         $this->assertNotNull($email);
         $this->assertEmailTextBodyContains($email, $name);
         $this->assertEmailAddressContains($email, 'To', $authorEmail);
+    }
+
+    public function testPostShowWithVoteDoesNothingIfPollIsClosed(): void
+    {
+        $client = static::createClient();
+        $authorEmail = 'charlie@example.com';
+        $poll = Factory\PollFactory::new([
+            'authorEmail' => $authorEmail,
+            'notifyOnVotes' => true,
+            'closedAt' => Utils\Time::ago(1, 'day'),
+        ])->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $name = 'Alix';
+
+        $this->assertNotFalse($proposal);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => $name,
+                'answers' => [
+                    ['value' => 'yes'],
+                ],
+            ],
+        ]);
+
+        $votes = Factory\VoteFactory::all();
+        $this->assertSame(0, count($votes));
+        $this->assertEmailCount(0);
     }
 
     public function testPostShowWithVoteFailsIfMaxVoteIsReached(): void
@@ -464,6 +495,31 @@ class PollsControllerTest extends WebTestCase
         $this->assertNotNull($email);
         $this->assertEmailTextBodyContains($email, $name);
         $this->assertEmailAddressContains($email, 'To', $authorEmail);
+    }
+
+    public function testPostShowWithCommentDoesNothingIfPollIsClosed(): void
+    {
+        $client = static::createClient();
+        $authorEmail = 'charlie@example.com';
+        $poll = Factory\PollFactory::new([
+            'authorEmail' => $authorEmail,
+            'notifyOnComments' => true,
+            'closedAt' => Utils\Time::ago(1, 'day'),
+        ])->completed()->create();
+        $name = 'Alix';
+        $content = 'Lorem ipsum';
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'comment' => [
+                '_token' => $this->getCsrf($client, 'comment'),
+                'authorName' => $name,
+                'content' => $content,
+            ],
+        ]);
+
+        $comments = Factory\CommentFactory::all();
+        $this->assertSame(0, count($comments));
+        $this->assertEmailCount(0);
     }
 
     public function testPostShowWithCommentFailsIfContentIsEmpty(): void

@@ -49,6 +49,8 @@ forms.poll_dates_form.use_calendar: 'Sélectionner les dates depuis un calendrie
 forms.poll_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
 forms.poll_form.author_email.label: 'Votre adresse email'
 forms.poll_form.author_name.label: 'Votre pseudonyme'
+forms.poll_form.closed_at.help: 'Les participant·es pourront voter jusqu’à cette date.'
+forms.poll_form.closed_at.label: 'Date de fin du sondage'
 forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
@@ -137,11 +139,13 @@ polls.show.best_proposals.title: '{ count, plural, one {Choix préféré} other 
 polls.show.comment.created: 'Votre commentaire a été publié.'
 polls.show.comments.explain: 'Votre commentaire sera directement visible sur la page du sondage.'
 polls.show.comments.new: 'Nouveau commentaire'
+polls.show.comments.none: 'Aucun commentaire n’a été posté.'
 polls.show.comments.title: Commentaires
 polls.show.created_by: 'Sondage créé par {by}'
 polls.show.display_list: 'Affichage liste'
 polls.show.display_table: 'Affichage tableau'
 polls.show.explain_link_edit_vote: 'Vous pouvez copier le lien de modification pour le sauvegarder et modifier votre vote plus tard.'
+polls.show.is_closed: 'Ce sondage est terminé.'
 polls.show.link_edit_vote: 'Lien de modification de votre vote'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"
 polls.show.poll: Sondage
@@ -156,8 +160,11 @@ polls.steps: 'Étape {step} sur {total}'
 polls.summary.author.email: 'Adresse email'
 polls.summary.author.name: Pseudonyme
 polls.summary.author.no_email: 'Aucune adresse renseignée'
+polls.summary.closed_at: 'Date de fin'
+polls.summary.closed_at.none: Aucune
 polls.summary.edit: Modifier
 polls.summary.information.title: 'Informations générales'
+polls.summary.is_closed: '(sondage terminé)'
 polls.summary.proposals.title: 'Mes propositions'
 polls.summary.settings.customised_slug: 'Le lien du sondage est personnalisé.'
 polls.summary.settings.max_votes: '{ number, plural, one {1 participant·e maximum peut} other {# participant·es maximum peuvent} } voter par proposition.'

@@ -54,6 +54,10 @@
     color: var(--color-success11);
 }
 
+.text--error {
+    color: var(--color-error11);
+}
+
 .text--block {
     display: block;
 }

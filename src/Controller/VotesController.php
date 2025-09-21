@@ -42,6 +42,12 @@ class VotesController extends BaseController
             ]);
         }
 
+        if ($poll->isClosed()) {
+            return $this->redirectToRoute('poll', [
+                'slug' => $poll->getSlug(),
+            ]);
+        }
+
         $displayMode = $request->query->get('display', 'list');
 
         $session = $request->getSession();

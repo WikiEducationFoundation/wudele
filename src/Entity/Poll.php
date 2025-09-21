@@ -154,11 +154,15 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(options: ['default' => false])]
     private bool $notifyOnComments = false;
 
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $closedAt = null;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
         $this->title = '';
         $this->description = '';
+        $this->closedAt = Utils\Time::fromNow(1, 'month');
         $this->password = '';
         $this->isPasswordForVotesOnly = false;
         $this->authorName = '';
@@ -575,6 +579,27 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setNotifyOnComments(bool $notifyOnComments): static
     {
         $this->notifyOnComments = $notifyOnComments;
+
+        return $this;
+    }
+
+    public function isClosed(): bool
+    {
+        if (!$this->closedAt) {
+            return false;
+        }
+
+        return Utils\Time::relative('today') > $this->closedAt->modify('today');
+    }
+
+    public function getClosedAt(): ?\DateTimeImmutable
+    {
+        return $this->closedAt;
+    }
+
+    public function setClosedAt(?\DateTimeImmutable $closedAt): static
+    {
+        $this->closedAt = $closedAt;
 
         return $this;
     }

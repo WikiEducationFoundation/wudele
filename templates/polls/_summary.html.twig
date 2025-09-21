@@ -39,6 +39,26 @@
                         {{ 'polls.summary.author.no_email' | trans }}
                     {% endif %}
                 </dd>
+
+                <dt class="flow flow--small text--bold">
+                    {{ 'polls.summary.closed_at' | trans }}
+                </dt>
+
+                <dd>
+                    {% if poll.closedAt %}
+                        <time datetime="{{ poll.closedAt | dateIso }}">
+                            {{ poll.closedAt | dateShort(fullMonth: true) }}
+                        </time>
+                    {% else %}
+                        {{ 'polls.summary.closed_at.none' | trans }}
+                    {% endif %}
+
+                    {% if poll.isClosed %}
+                        <span class="text--bold text--error">
+                            {{ 'polls.summary.is_closed' | trans }}
+                        </span>
+                    {% endif %}
+                </dd>
             </dl>
         </div>
 

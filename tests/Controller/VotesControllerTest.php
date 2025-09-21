@@ -8,6 +8,7 @@ namespace App\Tests\Controller;
 
 use App\Tests\Helper;
 use App\Tests\Factory;
+use App\Utils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -34,6 +35,22 @@ class VotesControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'My poll');
+    }
+
+    public function testGetEditRedirectsToPollIfPollIsClosed(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'closedAt' => Utils\Time::ago(1, 'day'),
+        ])->completed()->create();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/votes/{$vote->getId()}/edit");
+
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}", 302);
     }
 
     public function testGetEditFailsIfPollIdDoesNotMatch(): void

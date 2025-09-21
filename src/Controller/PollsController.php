@@ -109,56 +109,61 @@ class PollsController extends BaseController
         $displayMode = $request->query->get('display', 'list');
 
         $session = $request->getSession();
-        $voteId = $session->get("vote-{$poll->getId()}");
         $hasAccessToAdmin = $session->get("admin-{$poll->getId()}");
 
+        $voteId = null;
         $voteForm = null;
+        $commentForm = null;
 
-        if (!$voteId) {
-            $vote = new Entity\Vote();
-            $vote->setPoll($poll);
-            $voteForm = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
+        if (!$poll->isClosed()) {
+            $voteId = $session->get("vote-{$poll->getId()}");
 
-            $voteForm->handleRequest($request);
-            if ($voteForm->isSubmitted() && $voteForm->isValid()) {
-                $vote = $voteForm->getData();
+            if (!$voteId) {
+                $vote = new Entity\Vote();
+                $vote->setPoll($poll);
+                $voteForm = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
 
-                $voteRepository->save($vote);
+                $voteForm->handleRequest($request);
+                if ($voteForm->isSubmitted() && $voteForm->isValid()) {
+                    $vote = $voteForm->getData();
 
-                $voteEvent = new PollActivity\VoteEvent($vote);
-                $eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
+                    $voteRepository->save($vote);
 
-                $session = $request->getSession();
-                $session->set("vote-{$poll->getId()}", $vote->getId());
+                    $voteEvent = new PollActivity\VoteEvent($vote);
+                    $eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
 
-                $this->addFlash('success', 'vote.created');
+                    $session = $request->getSession();
+                    $session->set("vote-{$poll->getId()}", $vote->getId());
+
+                    $this->addFlash('success', 'vote.created');
+
+                    return $this->redirectToRoute('poll', [
+                        'slug' => $poll->getSlug(),
+                        'display' => $displayMode,
+                    ]);
+                }
+            }
+
+            $comment = new Entity\Comment();
+            $comment->setPoll($poll);
+            $commentForm = $this->createNamedForm('comment', Form\CommentForm::class, $comment);
+
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $comment = $commentForm->getData();
+
+                $commentRepository->save($comment);
+
+                $commentEvent = new PollActivity\CommentEvent($comment);
+                $eventDispatcher->dispatch($commentEvent, PollActivity\CommentEvent::NEW);
+
+                $this->addFlash('success', 'comment.created');
 
                 return $this->redirectToRoute('poll', [
                     'slug' => $poll->getSlug(),
                     'display' => $displayMode,
                 ]);
             }
-        }
-
-        $comment = new Entity\Comment();
-        $comment->setPoll($poll);
-        $commentForm = $this->createNamedForm('comment', Form\CommentForm::class, $comment);
-
-        $commentForm->handleRequest($request);
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $comment = $commentForm->getData();
-
-            $commentRepository->save($comment);
-
-            $commentEvent = new PollActivity\CommentEvent($comment);
-            $eventDispatcher->dispatch($commentEvent, PollActivity\CommentEvent::NEW);
-
-            $this->addFlash('success', 'comment.created');
-
-            return $this->redirectToRoute('poll', [
-                'slug' => $poll->getSlug(),
-                'display' => $displayMode,
-            ]);
         }
 
         return $this->render('polls/show.html.twig', [
