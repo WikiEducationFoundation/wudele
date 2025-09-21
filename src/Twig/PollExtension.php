@@ -74,7 +74,7 @@ class PollExtension
         foreach ($datesAndChoices as $key => $dateAndProposals) {
             $proposals = $dateAndProposals[1];
             usort($proposals, function (Entity\Proposal $proposal1, Entity\Proposal $proposal2): int {
-                return $proposal1->getLabel() <=> $proposal2->getLabel();
+                return $proposal1->getId() <=> $proposal2->getId();
             });
 
             $datesAndChoices[$key][1] = $proposals;
