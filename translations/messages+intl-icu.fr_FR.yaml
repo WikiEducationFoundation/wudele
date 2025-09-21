@@ -56,6 +56,7 @@ forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
+forms.poll_settings_form.are_results_public.label: 'Les résultats sont visibles par tout·es les participant·es'
 forms.poll_settings_form.max_votes.label: 'Nombre maximum de participant·es'
 forms.poll_settings_form.notify_on_comments.label: 'Recevoir un email à chaque commentaire'
 forms.poll_settings_form.notify_on_votes.label: 'Recevoir un email à chaque vote'
@@ -133,6 +134,7 @@ polls.search.title: 'Retrouver mes sondages'
 polls.settings.max_votes.title: 'Limiter le nombre de participant·es par proposition'
 polls.settings.notifications.title: Notifications
 polls.settings.password.title: 'Protéger par mot de passe'
+polls.settings.permissions.title: Permissions
 polls.settings.slug.title: 'Personnaliser le lien du sondage'
 polls.settings.title: 'Paramétrez le sondage'
 polls.sharing.public_link: 'Lien de partage public'
@@ -181,6 +183,8 @@ polls.summary.settings.notify_on_votes.dont: 'Je ne recevrai pas d’email lors 
 polls.summary.settings.password_protected.full: 'Le sondage est protégé par un mot de passe.'
 polls.summary.settings.password_protected.not: 'Le sondage n’est pas protégé par un mot de passe.'
 polls.summary.settings.password_protected.vote: 'Le sondage est protégé par un mot de passe (les résultats sont visibles sans mot de passe).'
+polls.summary.settings.results.private: 'Je suis le ou la seule à pouvoir voir les résultats du sondage.'
+polls.summary.settings.results.public: 'Tout le monde peut voir les résultats du sondage.'
 polls.summary.settings.title: 'Options du sondage'
 polls.summary.title: 'Résumé de votre sondage'
 polls.votes.maybe: Peut-être

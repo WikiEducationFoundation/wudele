@@ -108,14 +108,12 @@ class PollsController extends BaseController
 
         $displayMode = $request->query->get('display', 'list');
 
-        $session = $request->getSession();
-        $hasAccessToAdmin = $session->get("admin-{$poll->getId()}");
-
         $myVote = null;
         $voteForm = null;
         $commentForm = null;
 
         if (!$poll->isClosed()) {
+            $session = $request->getSession();
             $voteId = $session->get("vote-{$poll->getId()}");
 
             if ($voteId) {
@@ -174,7 +172,6 @@ class PollsController extends BaseController
             'voteForm' => $voteForm,
             'commentForm' => $commentForm,
             'displayMode' => $displayMode,
-            'hasAccessToAdmin' => $hasAccessToAdmin,
         ]);
     }
 

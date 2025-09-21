@@ -51,6 +51,14 @@
 
             <div class="panel panel--rounded panel--primary flow">
                 <h2 class="text--primary">
+                    {{ 'polls.settings.permissions.title' | trans }}
+                </h2>
+
+                {{ form_row(form.areResultsPublic) }}
+            </div>
+
+            <div class="panel panel--rounded panel--primary flow">
+                <h2 class="text--primary">
                     {{ 'polls.settings.notifications.title' | trans }}
                 </h2>
 

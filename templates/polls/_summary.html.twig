@@ -155,6 +155,14 @@
         </p>
 
         <p class="text--bold">
+            {% if poll.areResultsPublic %}
+                {{ 'polls.summary.settings.results.public' | trans }}
+            {% else %}
+                {{ 'polls.summary.settings.results.private' | trans }}
+            {% endif %}
+        </p>
+
+        <p class="text--bold">
             {% if poll.notifyOnVotes %}
                 {{ 'polls.summary.settings.notify_on_votes.do' | trans }}
             {% else %}

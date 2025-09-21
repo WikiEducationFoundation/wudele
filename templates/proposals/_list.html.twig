@@ -4,6 +4,11 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
+{% set preferredChoices = poll.preferredChoices %}
+{% set displayMode = poll.type %}
+{% set proposals = poll.proposals %}
+{% set maxCount = poll.maxCount %}
+
 <div class="flow flow--large">
     {% if displayMode == 'classic' %}
         {% for proposal in proposals %}
@@ -13,6 +18,7 @@
                     isPreferred: preferredChoices and proposal in preferredChoices,
                     maxCount: maxCount,
                     voteForm: voteForm,
+                    myVote: myVote,
                 }) }}
             </div>
         {% endfor %}
@@ -32,6 +38,7 @@
                         isPreferred: preferredChoices and proposal in preferredChoices,
                         maxCount: maxCount,
                         voteForm: voteForm,
+                        myVote: myVote,
                     }) }}
                 {% endfor %}
             </fieldset>

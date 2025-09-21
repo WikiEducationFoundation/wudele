@@ -9,10 +9,30 @@ namespace App\Twig;
 use App\Entity;
 use Doctrine\Common\Collections;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Attribute\AsTwigFilter;
+use Twig\Attribute\AsTwigFunction;
 
 class PollExtension
 {
+    public function __construct(
+        private RequestStack $requestStack,
+    ) {
+    }
+
+    #[AsTwigFunction('hasAccessToAdmin')]
+    public function hasAccessToAdmin(Entity\Poll $poll): bool
+    {
+        $session = $this->requestStack->getSession();
+        return $session->get("admin-{$poll->getId()}") === true;
+    }
+
+    #[AsTwigFunction('canViewResults')]
+    public function canViewResults(Entity\Poll $poll): bool
+    {
+        return $poll->areResultsPublic() || $this->hasAccessToAdmin($poll);
+    }
+
     /**
      * Return an AnswerForm corresponding to a proposal in the given VoteForm.
      */
@@ -86,13 +106,17 @@ class PollExtension
     }
 
     /**
-     * @param Collections\Collection<int, Entity\Answer> $answers
+     * @param Entity\Answer[]|Collections\Collection<int, Entity\Answer> $answers
      *
      * @return array<string, Entity\Answer[]>
      */
     #[AsTwigFilter('groupAnswersByValues')]
-    public function groupAnswersByValues(Collections\Collection $answers): array
+    public function groupAnswersByValues(mixed $answers): array
     {
+        if ($answers instanceof Collections\Collection) {
+            $answers = $answers->toArray();
+        }
+
         $answersByValues = [
             'yes' => [],
             'maybe' => [],

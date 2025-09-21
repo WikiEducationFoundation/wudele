@@ -13,7 +13,9 @@ class PollExtensionTest extends WebTestCase
 {
     public function testFlatten(): void
     {
-        $pollExtension = new PollExtension();
+        $container = static::getContainer();
+        /** @var PollExtension */
+        $pollExtension = $container->get(PollExtension::class);
         $arrays = [
             ['foo', 'bar', 'baz'],
             ['spam', 'ham', 'eggs'],

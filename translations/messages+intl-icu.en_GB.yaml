@@ -56,6 +56,7 @@ forms.poll_form.description.label: Description
 forms.poll_form.title.label: 'Name of your poll'
 forms.poll_proposals_form.add_proposal: 'Add a proposal'
 forms.poll_proposals_form.remove_proposal: 'Remove the proposal'
+forms.poll_settings_form.are_results_public.label: 'The results are visible to all the participants'
 forms.poll_settings_form.max_votes.label: 'Maximum number of participants'
 forms.poll_settings_form.notify_on_comments.label: 'Receive an email for each comment'
 forms.poll_settings_form.notify_on_votes.label: 'Receive an email for each vote'
@@ -133,6 +134,7 @@ polls.search.title: 'Find my polls'
 polls.settings.max_votes.title: 'Limit the number of participants per proposal'
 polls.settings.notifications.title: Notifications
 polls.settings.password.title: 'Protect by password'
+polls.settings.permissions.title: Permissions
 polls.settings.slug.title: 'Customise the poll link'
 polls.settings.title: 'Configure the poll'
 polls.sharing.public_link: 'Public sharing link'
@@ -181,6 +183,8 @@ polls.summary.settings.notify_on_votes.dont: 'I will not receive an email when s
 polls.summary.settings.password_protected.full: 'The poll is protected by a password.'
 polls.summary.settings.password_protected.not: 'The poll is not protected by a password.'
 polls.summary.settings.password_protected.vote: 'The poll is protected by a password (the results are visible without password).'
+polls.summary.settings.results.private: 'I’m the only who can see the poll results.'
+polls.summary.settings.results.public: 'Everyone can see the poll results.'
 polls.summary.settings.title: 'Poll options'
 polls.summary.title: 'Summary of your poll'
 polls.votes.maybe: Maybe

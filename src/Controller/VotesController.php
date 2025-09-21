@@ -50,9 +50,6 @@ class VotesController extends BaseController
 
         $displayMode = $request->query->get('display', 'list');
 
-        $session = $request->getSession();
-        $hasAccessToAdmin = $session->get("admin-{$poll->getId()}");
-
         $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
 
         $form->handleRequest($request);
@@ -79,7 +76,6 @@ class VotesController extends BaseController
             'preserveScroll' => true,
             'commentForm' => null,
             'displayMode' => $displayMode,
-            'hasAccessToAdmin' => $hasAccessToAdmin,
         ]);
     }
 

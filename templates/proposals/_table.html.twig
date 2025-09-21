@@ -4,6 +4,17 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
+{% set preferredChoices = poll.preferredChoices %}
+{% set displayMode = poll.type %}
+
+{% set votes = [] %}
+{% if canViewResults(poll) %}
+    {% set votes = poll.votes %}
+{% elseif myVote %}
+    {% set votes = [myVote] %}
+{% endif %}
+
+{% set proposals = poll.proposals %}
 {% if displayMode == 'date' %}
     {% set datesAndProposals = proposals|groupDateProposals %}
     {% set proposals = datesAndProposals|column(1)|flatten %}
@@ -100,7 +111,7 @@
             </tr>
         {% endfor %}
 
-        {% if votes is not empty %}
+        {% if canViewResults(poll) and votes is not empty %}
             <tr>
                 <th class="proposals-table__sticky-cell">
                     <div class="proposals-table__sum">

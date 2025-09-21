@@ -157,6 +157,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $closedAt = null;
 
+    #[ORM\Column(options: ['default' => true])]
+    private ?bool $areResultsPublic = null;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -169,6 +172,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->authorEmail = '';
         $this->notifyOnVotes = true;
         $this->notifyOnComments = true;
+        $this->areResultsPublic = true;
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
         $this->dates = new Collections\ArrayCollection();
@@ -600,6 +604,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setClosedAt(?\DateTimeImmutable $closedAt): static
     {
         $this->closedAt = $closedAt;
+
+        return $this;
+    }
+
+    public function areResultsPublic(): ?bool
+    {
+        return $this->areResultsPublic;
+    }
+
+    public function setAreResultsPublic(bool $areResultsPublic): static
+    {
+        $this->areResultsPublic = $areResultsPublic;
 
         return $this;
     }

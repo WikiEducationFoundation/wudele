@@ -63,13 +63,17 @@ class PollSettingsForm extends AbstractType
             ],
         ]);
 
-
         $builder->add('isPasswordForVotesOnly', Type\CheckboxType::class, [
             'label' => new TranslatableMessage('forms.poll_settings_form.password_for_votes_only.label'),
             'required' => false,
             'attr' => [
                 'data-poll-password-target' => 'isPasswordForVotesOnly',
             ],
+        ]);
+
+        $builder->add('areResultsPublic', Type\CheckboxType::class, [
+            'label' => new TranslatableMessage('forms.poll_settings_form.are_results_public.label'),
+            'required' => false,
         ]);
 
         $builder->add('notifyOnVotes', Type\CheckboxType::class, [

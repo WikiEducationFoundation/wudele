@@ -4,10 +4,6 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
-{% set countYes = proposal.countAnswers('yes') %}
-{% set countMaybe = proposal.countAnswers('maybe') %}
-{% set countNo = proposal.countAnswers('no') %}
-
 <fieldset class="panel panel--white panel--rounded panel--proposal flow">
     <div>
         <legend class="text--nobold">{{ proposal.label }}</legend>
@@ -19,7 +15,18 @@
     {% endif %}
 
     {% if maxCount > 0 %}
-        {% set answersByValues = proposal.answers | groupAnswersByValues %}
+        {% set answers = [] %}
+        {% if canViewResults(poll) %}
+            {% set answers = proposal.answers %}
+        {% elseif myVote %}
+            {% set answers = [myVote.answerForProposal(proposal)] %}
+        {% endif %}
+
+        {% set answersByValues = answers | groupAnswersByValues %}
+
+        {% set countYes = answersByValues['yes'] | length %}
+        {% set countMaybe = answersByValues['maybe'] | length %}
+        {% set countNo = answersByValues['no'] | length %}
 
         <div class="panel__separator"></div>
 
@@ -41,7 +48,7 @@
                     </span>
                 {% endif %}
 
-                {% if answersByValues['yes'] | length > 0 %}
+                {% if countYes > 0 %}
                     <ul class="col--extended list--nostyle">
                         {% for answer in answersByValues['yes'] %}
                             <li class="vote vote--yes">
@@ -61,7 +68,7 @@
                     {{ 'polls.votes.maybe.count' | trans({ count: countMaybe }) }}
                 </span>
 
-                {% if answersByValues['maybe'] | length > 0 %}
+                {% if countMaybe > 0 %}
                     <ul class="col--extended list--nostyle">
                         {% for answer in answersByValues['maybe'] %}
                             <li class="vote vote--maybe">
@@ -81,7 +88,7 @@
                     {{ 'polls.votes.no.count' | trans({ count: countNo }) }}
                 </span>
 
-                {% if answersByValues['no'] | length > 0 %}
+                {% if countNo > 0 %}
                     <ul class="col--extended list--nostyle">
                         {% for answer in answersByValues['no'] %}
                             <li class="vote vote--no">
