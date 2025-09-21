@@ -64,6 +64,7 @@ class AnswerForm extends AbstractType
                 'choice_attr' => function (string $choice) use ($yesDisabled): array {
                     $attrs = [
                         'class' => "radio--vote radio--vote-{$choice}",
+                        'data-form-leave-confirmation-target' => 'input',
                     ];
 
                     if ($choice === 'yes' && $yesDisabled) {

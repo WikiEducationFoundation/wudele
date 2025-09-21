@@ -16,9 +16,15 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VoteForm extends AbstractType
 {
+    public function __construct(
+        private TranslatorInterface $translator,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('authorName', Type\TextType::class, [
@@ -27,6 +33,7 @@ class VoteForm extends AbstractType
             'label' => new TranslatableMessage('forms.vote_form.author_name.label'),
             'attr' => [
                 'maxlength' => Entity\Vote::MAX_AUTHOR_NAME_LENGTH,
+                'data-form-leave-confirmation-target' => 'input',
             ],
         ]);
 
@@ -83,8 +90,19 @@ class VoteForm extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $leaveConfirmation = $this->translator->trans('forms.vote_form.leave_confirmation');
+
         $resolver->setDefaults([
             'data_class' => Entity\Vote::class,
+            'attr' => [
+                'data-controller' => 'form-leave-confirmation',
+                'data-action' => (
+                    'form-leave-confirmation#disableCheck'
+                    . ' beforeunload@window->form-leave-confirmation#check'
+                    . ' turbo:before-visit@window->form-leave-confirmation#check'
+                ),
+                'data-form-leave-confirmation-confirmation-value' => $leaveConfirmation,
+            ],
         ]);
     }
 }

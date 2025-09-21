@@ -75,6 +75,7 @@ forms.search_polls_form.submit: Send
 forms.slot_type.label.label_pattern: 'Time slot __number__'
 forms.slots_form.day: Day
 forms.vote_form.author_name.label: 'Your nickname'
+forms.vote_form.leave_confirmation: 'You have not yet confirmed your vote. By continuing, you will lose your entry. Are you sure you want to continue?'
 forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
 forms.vote_form.submit.label: Vote
