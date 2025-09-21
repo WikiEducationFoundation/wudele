@@ -25,3 +25,11 @@ application.register('notification', NotificationController);
 application.register('poll-password', PollPasswordController);
 application.register('protected-button', ProtectedButtonController);
 application.register('slots-applier', SlotsApplierController);
+
+// Make sure to visit the response when receiving the `turbo:frame-missing` event.
+// This happens most of the time on redirection after submitting a form in a modal.
+// Otherwise, "Content missing" would be displayed within the modal.
+document.addEventListener('turbo:frame-missing', (event) => {
+    event.preventDefault();
+    event.detail.visit(event.detail.response);
+});
