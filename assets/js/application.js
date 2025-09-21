@@ -10,6 +10,7 @@ import ModalController from './controllers/modal_controller.js';
 import ModalOpenerController from './controllers/modal_opener_controller.js';
 import NotificationController from './controllers/notification_controller.js';
 import PollPasswordController from './controllers/poll_password_controller.js';
+import ProtectedButtonController from './controllers/protected_button_controller.js';
 import SlotsApplierController from './controllers/slots_applier_controller.js';
 
 const application = Application.start();
@@ -22,4 +23,5 @@ application.register('modal', ModalController);
 application.register('modal-opener', ModalOpenerController);
 application.register('notification', NotificationController);
 application.register('poll-password', PollPasswordController);
+application.register('protected-button', ProtectedButtonController);
 application.register('slots-applier', SlotsApplierController);
