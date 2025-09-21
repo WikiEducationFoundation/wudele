@@ -82,7 +82,7 @@
                                     <button class="button button--menuitem">
                                         {{ icon('trash') }}
                                         {{ 'polls.admin.delete' | trans }}
-                                    </a>
+                                    </button>
 
                                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete vote') }}">
                                 </form>
@@ -128,7 +128,7 @@
                                 <button class="button button--menuitem">
                                     {{ icon('trash') }}
                                     {{ 'polls.admin.delete' | trans }}
-                                </a>
+                                </button>
 
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete comment') }}">
                             </form>
