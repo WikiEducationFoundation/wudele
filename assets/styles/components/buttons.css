@@ -25,13 +25,20 @@ button,
     transition:
         color 0.2s ease-in-out,
         background-color 0.2s ease-in-out,
-        border-color 0.2s ease-in-out;
+        border-color 0.2s ease-in-out,
+        filter 0.2s ease-in-out;
 
     cursor: pointer;
 }
 
-button:hover,
-.button:hover {
+button:disabled,
+.button:disabled {
+    cursor: not-allowed;
+    filter: grayscale(0.6) opacity(0.7);
+}
+
+button:hover:not(:disabled),
+.button:hover:not(:disabled) {
     --button-background-color: var(--color-primary3);
     --button-border-color: var(--color-primary12);
     --button-color: var(--color-primary12);
@@ -43,9 +50,21 @@ button:hover,
     --button-color: var(--color-primary1);
 }
 
-.button--primary:hover {
+.button--primary:hover:not(:disabled) {
     --button-background-color: var(--color-primary12);
     --button-border-color: var(--color-primary12);
+    --button-color: var(--color-primary1);
+}
+
+.button--danger {
+    --button-background-color: var(--color-error11);
+    --button-border-color: var(--color-error11);
+    --button-color: var(--color-error1);
+}
+
+.button--danger:hover:not(:disabled) {
+    --button-background-color: var(--color-error12);
+    --button-border-color: var(--color-error12);
     --button-color: var(--color-primary1);
 }
 

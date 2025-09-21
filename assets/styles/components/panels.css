@@ -30,6 +30,12 @@
     background-color: var(--color-success3);
 }
 
+.panel--danger {
+    color: var(--color-error12);
+
+    background-color: var(--color-error3);
+}
+
 .panel--white {
     background-color: var(--color-grey1);
 }
