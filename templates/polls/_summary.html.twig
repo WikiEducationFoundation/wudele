@@ -68,6 +68,17 @@
             {{ icon('pen-to-square') }}
             {{ 'polls.summary.edit' | trans }}
         </a>
+
+        <button
+            type="button"
+            class="button button--menuitem"
+            data-controller="modal-opener"
+            data-action="modal-opener#fetch"
+            data-modal-opener-selector-value="{{ path('delete poll', { id: poll.id, token: poll.adminToken }) }}"
+        >
+            {{ icon('trash') }}
+            {{ 'polls.summary.delete_poll' | trans }}
+        </button>
     </div>
 </div>
 

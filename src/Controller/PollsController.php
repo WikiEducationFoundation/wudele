@@ -496,4 +496,32 @@ class PollsController extends BaseController
             'process' => $process,
         ]);
     }
+
+    #[Route('/polls/{id:poll}/{token}/deletion', name: 'delete poll')]
+    public function deletion(
+        Entity\Poll $poll,
+        string $token,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+    ): Response {
+        if ($poll->getAdminToken() !== $token) {
+            throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        $form = $this->createNamedForm('poll_deletion', Form\PollDeletionForm::class, $poll);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pollRepository->remove($poll, true);
+
+            $this->addFlash('success', 'poll.deleted');
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('polls/deletion.html.twig', [
+            'poll' => $poll,
+            'form' => $form,
+        ]);
+    }
 }

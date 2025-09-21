@@ -1411,4 +1411,69 @@ class PollsControllerTest extends WebTestCase
         $client->catchExceptions(false);
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/not-the-token/admin");
     }
+
+    public function testGetDeletionRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $client->request(
+            Request::METHOD_GET,
+            "/polls/{$poll->getId()}/{$poll->getAdminToken()}/deletion",
+        );
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Deletion of a poll');
+    }
+
+    public function testGetDeletionFailsIfAdminTokenIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(
+            Request::METHOD_GET,
+            "/polls/{$poll->getId()}/not-the-token/deletion",
+        );
+    }
+
+    public function testPostDeletionDeletesThePoll(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $client->request(
+            Request::METHOD_POST,
+            "/polls/{$poll->getId()}/{$poll->getAdminToken()}/deletion",
+            [
+                'poll_deletion' => [
+                    '_token' => $this->getCsrf($client, 'poll_deletion'),
+                ],
+            ]
+        );
+
+        $this->assertResponseRedirects('/', 302);
+        Factory\PollFactory::assert()->notExists(['id' => $poll->getId()]);
+    }
+
+    public function testPostDeletionFailsIfCsrfIsInvalid(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+
+        $client->request(
+            Request::METHOD_POST,
+            "/polls/{$poll->getId()}/{$poll->getAdminToken()}/deletion",
+            [
+                'poll_deletion' => [
+                    '_token' => 'not the token',
+                ],
+            ]
+        );
+
+        Factory\PollFactory::assert()->exists(['id' => $poll->getId()]);
+    }
 }
