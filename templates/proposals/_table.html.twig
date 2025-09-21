@@ -41,6 +41,23 @@
             </tr>
         {% endif %}
 
+        {% if voteForm %}
+            <tr>
+                <th class="proposals-table__sticky-cell">
+                    <div class="proposals-table__author proposals-table__author--new">
+                        {{ 'polls.votes.yours' | trans }}
+                    </div>
+                </th>
+
+                {% for proposal in proposals %}
+                    <td>
+                        {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
+                        {{ form_row(answerForm) }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endif %}
+
         {% for vote in votes %}
             <tr>
                 <th class="proposals-table__sticky-cell">
@@ -82,22 +99,5 @@
                 {% endfor %}
             </tr>
         {% endfor %}
-
-        {% if voteForm %}
-            <tr>
-                <th class="proposals-table__sticky-cell">
-                    <div class="proposals-table__author proposals-table__author--new">
-                        {{ 'polls.votes.yours' | trans }}
-                    </div>
-                </th>
-
-                {% for proposal in proposals %}
-                    <td>
-                        {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
-                        {{ form_row(answerForm) }}
-                    </td>
-                {% endfor %}
-            </tr>
-        {% endif %}
     </table>
 </div>

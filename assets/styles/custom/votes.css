@@ -9,7 +9,7 @@
 
 .vote {
     --vote-color: inherit;
-    --vote-border-color: currentcolor;
+    --vote-icon-color: currentcolor;
     --vote-background-color: transparent;
 
     display: inline-block;
@@ -19,26 +19,25 @@
     color: var(--vote-color);
     font-size: var(--font-size-smaller);
 
-    border: 1px solid var(--vote-border-color);
     border-radius: var(--border-radius);
     background-color: var(--vote-background-color);
 }
 
 .vote--yes {
     --vote-color: var(--color-success12);
-    --vote-border-color: var(--color-success11);
+    --vote-icon-color: var(--color-success11);
     --vote-background-color: var(--color-success3);
 }
 
 .vote--no {
     --vote-color: var(--color-error12);
-    --vote-border-color: var(--color-error11);
+    --vote-icon-color: var(--color-error11);
     --vote-background-color: var(--color-error3);
 }
 
 .vote--maybe {
     --vote-color: var(--color-warning12);
-    --vote-border-color: var(--color-warning11);
+    --vote-icon-color: var(--color-warning11);
     --vote-background-color: var(--color-warning3);
 }
 
@@ -46,7 +45,7 @@
     margin-right: 0;
     margin-left: 0;
 
-    color: var(--vote-border-color);
+    color: var(--vote-icon-color);
 }
 
 .vote__choices {
@@ -63,17 +62,19 @@
 }
 
 input.radio--vote + label {
-    --radio-vote-color: var(--color-primary11);
+    --radio-vote-color: var(--color-primary12);
     --radio-vote-border-color: transparent;
+    --radio-vote-icon-color: var(--color-primary9);
     --radio-vote-background-color: var(--color-primary3);
 
-    padding: var(--space-smaller);
+    padding: var(--space-medium) var(--space-small);
 
     flex: 1;
     gap: var(--space-small);
 
     color: var(--radio-vote-color);
     font-size: var(--font-size-small);
+    font-weight: bold;
     text-align: center;
 
     background-color: var(--radio-vote-background-color);
@@ -92,6 +93,8 @@ input.radio--vote[disabled]:not(:checked) + label {
 
 @media (max-width: 500px) {
     input.radio--vote + label {
+        padding: var(--space-small);
+
         font-size: var(--font-size-small);
     }
 }
@@ -103,43 +106,38 @@ input.radio--vote:checked + label {
 input.radio--vote-yes:checked + label {
     --radio-vote-color: var(--color-success12);
     --radio-vote-border-color: var(--color-success11);
+    --radio-vote-icon-color: var(--color-success11);
     --radio-vote-background-color: var(--color-success3);
 }
 
 input.radio--vote-maybe:checked + label {
     --radio-vote-color: var(--color-warning12);
     --radio-vote-border-color: var(--color-warning11);
+    --radio-vote-icon-color: var(--color-warning11);
     --radio-vote-background-color: var(--color-warning3);
 }
 
 input.radio--vote-no:checked + label {
     --radio-vote-color: var(--color-error12);
     --radio-vote-border-color: var(--color-error11);
+    --radio-vote-icon-color: var(--color-error11);
     --radio-vote-background-color: var(--color-error3);
 }
 
 input.radio--vote + label::before {
-    width: 1.5rem;
+    width: 1.3rem;
     height: auto;
     margin-right: 0;
 
     aspect-ratio: 1;
 
-    background-color: var(--radio-vote-color);
+    background-color: var(--radio-vote-icon-color);
     border: none;
     border-radius: 0;
     mask-image: var(--radio-vote-icon);
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: cover;
-
-    opacity: 0.7;
-}
-
-input.radio--vote:checked + label::before {
-    background-color: var(--radio-vote-border-color);
-
-    opacity: 1;
 }
 
 input.radio--vote-yes + label::before {

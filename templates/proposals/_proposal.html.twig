@@ -26,7 +26,7 @@
         <ul class="list--nostyle flow flow--smaller">
             <li class="cols cols--gap-small votes">
                 {% if isPreferred %}
-                    <span class="col--size3 col--noshrink votes__label text--success">
+                    <span class="col--size3 col--noshrink votes__label text--success text--bold">
                         {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
 
                         {{ icon('star') }}
@@ -45,14 +45,13 @@
                     <ul class="col--extended list--nostyle">
                         {% for answer in answersByValues['yes'] %}
                             <li class="vote vote--yes">
-                                {{ icon('square-check') }}
                                 {{ answer.vote.authorName }}
                             </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <span class="col--extend">
-                        –
+                    <span class="col--extend" aria-hidden="true">
+                        —
                     </span>
                 {% endif %}
             </li>
@@ -66,14 +65,13 @@
                     <ul class="col--extended list--nostyle">
                         {% for answer in answersByValues['maybe'] %}
                             <li class="vote vote--maybe">
-                                {{ icon('square-xmark') }}
                                 {{ answer.vote.authorName }}
                             </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <span class="col--extend">
-                        –
+                    <span class="col--extend" aria-hidden="true">
+                        —
                     </span>
                 {% endif %}
             </li>
@@ -87,14 +85,13 @@
                     <ul class="col--extended list--nostyle">
                         {% for answer in answersByValues['no'] %}
                             <li class="vote vote--no">
-                                {{ icon('square-minus') }}
                                 {{ answer.vote.authorName }}
                             </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <span class="col--extend">
-                        –
+                    <span class="col--extend" aria-hidden="true">
+                        —
                     </span>
                 {% endif %}
             </li>

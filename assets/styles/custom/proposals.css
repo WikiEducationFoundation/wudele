@@ -36,11 +36,7 @@
     margin-left: auto;
 
     border-collapse: separate;
-    border-spacing: var(--space-medium) var(--space-smaller);
-}
-
-.proposals-table td {
-    padding: var(--space-smaller);
+    border-spacing: var(--space-small) var(--space-smaller);
 }
 
 .proposals-table .proposal__day-week,
@@ -79,11 +75,14 @@
 }
 
 .proposals-table .vote__choices {
+    margin-bottom: var(--space-medium);
+
     flex-direction: column;
 }
 
 .proposals-table input.radio--vote + label {
     width: 150px;
+    padding: var(--space-small);
 }
 
 .proposals-table__sticky-cell {
@@ -99,7 +98,7 @@
 }
 
 .proposals-table__author {
-    width: 150px;
+    width: 200px;
     padding: var(--space-small);
 
     font-weight: normal;
