@@ -99,5 +99,47 @@
                 {% endfor %}
             </tr>
         {% endfor %}
+
+        {% if votes is not empty %}
+            <tr>
+                <th class="proposals-table__sticky-cell">
+                    <div class="proposals-table__sum">
+                        {{ 'polls.votes.sum' | trans }}
+                    </div>
+                </th>
+
+                {% for proposal in proposals %}
+                    {% set countYes = proposal.countAnswers('yes') %}
+                    {% set countMaybe = proposal.countAnswers('maybe') %}
+                    {% set isPreferred = preferredChoices and proposal in preferredChoices %}
+
+                    <td class="text--center{% if isPreferred %} text--success text--bold{% endif %}">
+                        {% if isPreferred %}
+                            {{ icon('star') }}
+                        {% endif %}
+
+                        {% if countYes > 0 %}
+                            {{ countYes }}
+
+                            <span class="sr-only">
+                                {{ 'polls.votes.yes' | trans }}
+                            </span>
+                        {% endif %}
+
+                        {% if countMaybe > 0 %}
+                            <span class="text--secondary text--small">
+                                {{ 'polls.votes.maybe.count_alt' | trans({ count: countMaybe }) }}
+                            </span>
+                        {% endif %}
+
+                        {% if isPreferred %}
+                            <span class="sr-only">
+                                {{ 'polls.proposals.best' | trans }}
+                            </span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endif %}
     </table>
 </div>

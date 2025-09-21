@@ -98,13 +98,30 @@
 }
 
 .proposals-table__author {
+    overflow: hidden;
+
     width: 200px;
     padding: var(--space-small);
 
     font-weight: normal;
     text-align: right;
+    text-overflow: ellipsis;
+}
+
+@media(max-width: 500px) {
+    .proposals-table__author {
+        width: 125px;
+    }
 }
 
 .proposals-table__author--new {
     font-weight: bold;
+}
+
+.proposals-table__sum {
+    padding: var(--space-small);
+
+    font-weight: normal;
+    font-style: italic;
+    text-align: right;
 }
