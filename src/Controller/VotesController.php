@@ -48,8 +48,6 @@ class VotesController extends BaseController
             ]);
         }
 
-        $displayMode = $request->query->get('display', 'list');
-
         $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
 
         $form->handleRequest($request);
@@ -65,7 +63,6 @@ class VotesController extends BaseController
 
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
-                'display' => $displayMode,
             ]);
         }
 
@@ -75,7 +72,6 @@ class VotesController extends BaseController
             'voteForm' => $form,
             'preserveScroll' => true,
             'commentForm' => null,
-            'displayMode' => $displayMode,
         ]);
     }
 

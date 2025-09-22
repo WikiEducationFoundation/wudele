@@ -106,8 +106,6 @@ class PollsController extends BaseController
             ]);
         }
 
-        $displayMode = $request->query->get('display', 'list');
-
         $myVote = null;
         $voteForm = null;
         $commentForm = null;
@@ -139,7 +137,6 @@ class PollsController extends BaseController
 
                     return $this->redirectToRoute('poll', [
                         'slug' => $poll->getSlug(),
-                        'display' => $displayMode,
                     ]);
                 }
             }
@@ -161,7 +158,6 @@ class PollsController extends BaseController
 
                 return $this->redirectToRoute('poll', [
                     'slug' => $poll->getSlug(),
-                    'display' => $displayMode,
                 ]);
             }
         }
@@ -171,7 +167,6 @@ class PollsController extends BaseController
             'myVote' => $myVote,
             'voteForm' => $voteForm,
             'commentForm' => $commentForm,
-            'displayMode' => $displayMode,
         ]);
     }
 

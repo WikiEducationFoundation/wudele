@@ -17,120 +17,71 @@
 
 {% block body %}
     <div class="flow flow--larger">
-        <div class="flow">
-            <div class="wrapper wrapper--small wrapper--center flow flow--larger">
-                {% for message in app.flashes('success') %}
-                    {% if message == 'vote.created' %}
-                        {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.created' | trans }) }}
-                    {% elseif message == 'vote.updated' %}
-                        {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.updated' | trans }) }}
-                    {% elseif message == 'comment.created' %}
-                        {{ include('notifications/_success.html.twig', { message: 'polls.show.comment.created' | trans }) }}
-                    {% elseif message == 'poll.authenticated' %}
-                        {{ include('notifications/_success.html.twig', { message: 'polls.show.authenticated' | trans }) }}
-                    {% endif %}
-                {% endfor %}
+        <div class="wrapper wrapper--small wrapper--center flow flow--larger">
+            {% for message in app.flashes('success') %}
+                {% if message == 'vote.created' %}
+                    {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.created' | trans }) }}
+                {% elseif message == 'vote.updated' %}
+                    {{ include('notifications/_success.html.twig', { message: 'polls.show.vote.updated' | trans }) }}
+                {% elseif message == 'comment.created' %}
+                    {{ include('notifications/_success.html.twig', { message: 'polls.show.comment.created' | trans }) }}
+                {% elseif message == 'poll.authenticated' %}
+                    {{ include('notifications/_success.html.twig', { message: 'polls.show.authenticated' | trans }) }}
+                {% endif %}
+            {% endfor %}
 
-                <div class="panel panel--primary panel--rounded flow flow--large">
-                    <div class="flow flow--small">
-                        <h1>
-                            {{ poll.title }}
-                        </h1>
+            <div class="panel panel--primary panel--rounded flow flow--small">
+                <h1>
+                    {{ poll.title }}
+                </h1>
 
-                        {% if poll.description %}
-                            <p>
-                                {{ poll.description | nl2br }}
-                            </p>
-                        {% endif %}
-
-                        <p class="text--secondary">
-                            {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
-                        </p>
-
-                        <div>
-                            <button
-                                type="button"
-                                class="button--ghost"
-                                data-controller="modal-opener"
-                                data-action="modal-opener#copy"
-                                data-modal-opener-selector-value="#modal-sharing"
-                            >
-                                {{ icon('share') }}
-                                {{ 'polls.show.share' | trans }}
-                            </button>
-
-                            {% if myVote and not voteForm %}
-                                <a class="button button--ghost" href="{{ path('edit vote', { slug: poll.slug, id: myVote.id, display: displayMode }) }}">
-                                    {{ icon('pen-to-square') }}
-                                    {{ 'polls.show.vote_edit' | trans }}
-                                </a>
-                            {% endif %}
-
-                            {% if hasAccessToAdmin(poll) %}
-                                <a
-                                    href="{{ path('poll admin', { id: poll.id, token: poll.adminToken }) }}"
-                                    class="button button--ghost"
-                                >
-                                    {{ icon('lock') }}
-                                    {{ 'polls.show.administration' | trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-
-                        <template id="modal-sharing">
-                            <div class="flow flow--large">
-                                <h1 id="modal-title">{{ 'polls.sharing.title' | trans }}</h1>
-
-                                <div class="panel panel--primary panel--rounded flow flow--small">
-                                    <label for="poll-public-link">
-                                        {{ 'polls.sharing.public_link' | trans }}
-                                    </label>
-
-                                    <div
-                                        class="cols cols--always cols--gap-small"
-                                        data-controller="copy-to-clipboard"
-                                        data-label-copied="{{ 'base.copied' | trans }}"
-                                    >
-                                        <input
-                                            id="poll-public-link"
-                                            type="url"
-                                            value="{{ url('poll', { slug: poll.slug }) }}"
-                                            readonly
-                                            data-copy-to-clipboard-target="copyable"
-                                        />
-
-                                        <button
-                                            type="button"
-                                            class="button--primary"
-                                            data-copy-to-clipboard-target="button"
-                                            data-action="copy-to-clipboard#copy"
-                                        >
-                                            {{ 'base.copy' | trans }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                {% if poll.isClosed %}
-                    <p class="text--bolder text--center text--danger">
-                        {{ 'polls.show.is_closed' | trans }}
+                {% if poll.description %}
+                    <p>
+                        {{ poll.description | nl2br }}
                     </p>
                 {% endif %}
 
-                {% if myVote and voteForm %}
-                    <div class="panel panel--primary panel--rounded flow flow--large">
-                        <div class="cols cols--gap-small">
-                            <p>
-                                {{ 'polls.show.explain_link_edit_vote' | trans }}
-                            </p>
-                        </div>
+                <p class="text--secondary">
+                    {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
+                </p>
 
-                        <div class="flow flow--small">
-                            <label for="edit-link">
-                                {{ 'polls.show.link_edit_vote' | trans }}
+                <div>
+                    <button
+                        type="button"
+                        class="button--ghost"
+                        data-controller="modal-opener"
+                        data-action="modal-opener#copy"
+                        data-modal-opener-selector-value="#modal-sharing"
+                    >
+                        {{ icon('share') }}
+                        {{ 'polls.show.share' | trans }}
+                    </button>
+
+                    {% if myVote and not voteForm %}
+                        <a class="button button--ghost" href="{{ path('edit vote', { slug: poll.slug, id: myVote.id }) }}">
+                            {{ icon('pen-to-square') }}
+                            {{ 'polls.show.vote_edit' | trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if hasAccessToAdmin(poll) %}
+                        <a
+                            href="{{ path('poll admin', { id: poll.id, token: poll.adminToken }) }}"
+                            class="button button--ghost"
+                        >
+                            {{ icon('lock') }}
+                            {{ 'polls.show.administration' | trans }}
+                        </a>
+                    {% endif %}
+                </div>
+
+                <template id="modal-sharing">
+                    <div class="flow flow--large">
+                        <h1 id="modal-title">{{ 'polls.sharing.title' | trans }}</h1>
+
+                        <div class="panel panel--primary panel--rounded flow flow--small">
+                            <label for="poll-public-link">
+                                {{ 'polls.sharing.public_link' | trans }}
                             </label>
 
                             <div
@@ -139,9 +90,9 @@
                                 data-label-copied="{{ 'base.copied' | trans }}"
                             >
                                 <input
-                                    id="edit-link"
+                                    id="poll-public-link"
                                     type="url"
-                                    value="{{ url('edit vote', { slug: poll.slug, id: myVote.id }) }}"
+                                    value="{{ url('poll', { slug: poll.slug }) }}"
                                     readonly
                                     data-copy-to-clipboard-target="copyable"
                                 />
@@ -157,84 +108,118 @@
                             </div>
                         </div>
                     </div>
-                {% endif %}
-
-                <div class="flow">
-                    <div class="cols cols--always cols--center cols--gap-small">
-                        <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
-
-                        <div class="no-mobile">
-                            {% if displayMode == 'list' %}
-                                <a
-                                    class="button button--small"
-                                    href="{{ path('poll', { slug: poll.slug, display: 'table' }) }}"
-                                >
-                                    {{ icon('table') }}
-                                    {{ 'polls.show.display_table' | trans }}
-                                </a>
-                            {% else %}
-                                <a
-                                    class="button button--small"
-                                    href="{{ path('poll', { slug: poll.slug, display: 'list' }) }}"
-                                >
-                                    {{ icon('bars') }}
-                                    {{ 'polls.show.display_list' | trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    {% if poll.maxCount == 0 %}
-                        <p class="panel panel--primary panel--rounded panel--border text--primary">
-                            {{ 'polls.show.no_vote' | trans }}
-                        </p>
-                    {% endif %}
-                </div>
+                </template>
             </div>
 
-            {% if voteForm and displayMode == 'list' %}
-                <div class="wrapper wrapper--small wrapper--center">
-                    {{ form_start(voteForm, { attr: { class: 'form--standard' } }) }}
-                        {{ form_errors(voteForm) }}
+            {% if poll.isClosed %}
+                <p class="text--bolder text--center text--danger">
+                    {{ 'polls.show.is_closed' | trans }}
+                </p>
+            {% endif %}
 
-                        {{ include('proposals/_list.html.twig', {
-                            poll: poll,
-                            voteForm: voteForm,
-                            myVote: myVote,
-                        }) }}
+            {% if myVote and voteForm %}
+                <div class="panel panel--primary panel--rounded flow flow--large">
+                    <div class="cols cols--gap-small">
+                        <p>
+                            {{ 'polls.show.explain_link_edit_vote' | trans }}
+                        </p>
+                    </div>
 
-                        <div class="panel panel--primary panel--rounded flow">
-                            {{ form_row(voteForm.authorName) }}
+                    <div class="flow flow--small">
+                        <label for="edit-link">
+                            {{ 'polls.show.link_edit_vote' | trans }}
+                        </label>
 
-                            {% if voteForm.password is defined %}
-                                {{ form_row(voteForm.password) }}
-                            {% endif %}
+                        <div
+                            class="cols cols--always cols--gap-small"
+                            data-controller="copy-to-clipboard"
+                            data-label-copied="{{ 'base.copied' | trans }}"
+                        >
+                            <input
+                                id="edit-link"
+                                type="url"
+                                value="{{ url('edit vote', { slug: poll.slug, id: myVote.id }) }}"
+                                readonly
+                                data-copy-to-clipboard-target="copyable"
+                            />
+
+                            <button
+                                type="button"
+                                class="button--primary"
+                                data-copy-to-clipboard-target="button"
+                                data-action="copy-to-clipboard#copy"
+                            >
+                                {{ 'base.copy' | trans }}
+                            </button>
                         </div>
-
-                        <div class="cols cols--always cols--gap cols--center">
-                            {% if myVote %}
-                                <a
-                                    class="button"
-                                    href="{{ path('poll', { slug: poll.slug, display: displayMode }) }}"
-                                >
-                                    {{ 'forms.cancel' | trans }}
-                                </a>
-                            {% endif %}
-
-                            <div class="col--extend"></div>
-
-                            {{ form_row(voteForm.submit) }}
-                        </div>
-                    {{ form_end(voteForm) }}
+                    </div>
                 </div>
-            {% elseif voteForm and displayMode == 'table' %}
+            {% endif %}
+        </div>
+
+        <div
+            class="flow"
+            data-controller="poll-view"
+            aria-live="polite"
+        >
+            <div class="wrapper wrapper--small wrapper--center flow">
+                <div class="cols cols--always cols--center cols--gap-small">
+                    <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
+
+                    <div>
+                        <button
+                            class="button button--small"
+                            data-poll-view-target="listButton"
+                            data-action="poll-view#displayList"
+                        >
+                            {{ icon('bars') }}
+                            {{ 'polls.show.display_list' | trans }}
+                        </button>
+
+                        <button
+                            class="button button--small"
+                            data-poll-view-target="tableButton"
+                            data-action="poll-view#displayTable"
+                        >
+                            {{ icon('table') }}
+                            {{ 'polls.show.display_table' | trans }}
+                        </button>
+                    </div>
+                </div>
+
+                {% if poll.maxCount == 0 %}
+                    <p class="panel panel--primary panel--rounded panel--border text--primary">
+                        {{ 'polls.show.no_vote' | trans }}
+                    </p>
+                {% endif %}
+            </div>
+
+            {% set proposals = poll.proposals %}
+            {% if poll.type == 'date' %}
+                {% set datesAndProposals = proposals|groupDateProposals %}
+                {% set proposals = datesAndProposals|column(1)|flatten %}
+            {% endif %}
+
+            {% if voteForm %}
                 {{ form_start(voteForm, { attr: { class: 'flow flow--large' } }) }}
                     {{ form_errors(voteForm) }}
 
-                    {{ include('proposals/_table.html.twig', {
-                        poll: poll,
-                        myVote: myVote,
-                    }) }}
+                    <div hidden>
+                        {% for proposal in proposals %}
+                            <div data-poll-view-target="voteForm" data-proposal="{{ proposal.id }}">
+                                {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
+                                {{ form_row(answerForm) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="wrapper wrapper--small wrapper--center" data-poll-view-target="listView">
+                        {{ include('proposals/_list.html.twig') }}
+                    </div>
+
+                    <div data-poll-view-target="tableView">
+                        {{ include('proposals/_table.html.twig') }}
+                    </div>
 
                     <div class="wrapper wrapper--small wrapper--center flow flow--large">
                         <div class="panel panel--primary panel--rounded flow">
@@ -249,7 +234,7 @@
                             {% if myVote %}
                                 <a
                                     class="button"
-                                    href="{{ path('poll', { slug: poll.slug, display: displayMode }) }}"
+                                    href="{{ path('poll', { slug: poll.slug }) }}"
                                 >
                                     {{ 'forms.cancel' | trans }}
                                 </a>
@@ -261,18 +246,14 @@
                         </div>
                     </div>
                 {{ form_end(voteForm) }}
-            {% elseif displayMode == 'list' %}
-                <div class="wrapper wrapper--small wrapper--center">
-                    {{ include('proposals/_list.html.twig', {
-                        poll: poll,
-                        myVote: myVote,
-                    }) }}
-                </div>
             {% else %}
-                {{ include('proposals/_table.html.twig', {
-                    poll: poll,
-                    myVote: myVote,
-                }) }}
+                <div class="wrapper wrapper--small wrapper--center" data-poll-view-target="listView">
+                    {{ include('proposals/_list.html.twig') }}
+                </div>
+
+                <div data-poll-view-target="tableView">
+                    {{ include('proposals/_table.html.twig') }}
+                </div>
             {% endif %}
         </div>
 

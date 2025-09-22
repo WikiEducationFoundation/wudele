@@ -10,8 +10,8 @@
     </div>
 
     {% if voteForm %}
-        {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
-        {{ form_row(answerForm) }}
+        <div data-poll-view-target="listVoteSlot" data-proposal="{{ proposal.id }}">
+        </div>
     {% endif %}
 
     {% if maxCount > 0 %}

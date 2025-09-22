@@ -6,7 +6,6 @@
 
 {% set preferredChoices = poll.preferredChoices %}
 {% set displayMode = poll.type %}
-{% set proposals = poll.proposals %}
 {% set maxCount = poll.maxCount %}
 
 <div class="flow flow--large">
@@ -23,7 +22,7 @@
             </div>
         {% endfor %}
     {% elseif displayMode == 'date' %}
-        {% for dateAndProposals in proposals|groupDateProposals %}
+        {% for dateAndProposals in datesAndProposals %}
             {% set date = dateAndProposals[0] %}
             {% set proposals = dateAndProposals[1] %}
 

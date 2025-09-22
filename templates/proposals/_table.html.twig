@@ -14,12 +14,6 @@
     {% set votes = [myVote] %}
 {% endif %}
 
-{% set proposals = poll.proposals %}
-{% if displayMode == 'date' %}
-    {% set datesAndProposals = proposals|groupDateProposals %}
-    {% set proposals = datesAndProposals|column(1)|flatten %}
-{% endif %}
-
 <div class="proposals-table-container" data-controller="proposals-table">
     <table class="proposals-table panel panel--white panel--rounded">
         {% if displayMode == 'classic' %}
@@ -61,9 +55,7 @@
                 </th>
 
                 {% for proposal in proposals %}
-                    <td>
-                        {% set answerForm = voteForm | getAnswerFormForProposal(proposal) %}
-                        {{ form_row(answerForm) }}
+                    <td data-poll-view-target="tableVoteSlot" data-proposal="{{ proposal.id }}">
                     </td>
                 {% endfor %}
             </tr>

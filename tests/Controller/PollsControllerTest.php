@@ -337,7 +337,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertResponseRedirects("/polls/{$poll->getSlug()}?display=list", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}", 302);
         $votes = Factory\VoteFactory::all();
         $this->assertSame(1, count($votes));
         $this->assertSame($name, $votes[0]->getAuthorName());
@@ -484,7 +484,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertResponseRedirects("/polls/{$poll->getSlug()}?display=list", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}", 302);
         $comments = Factory\CommentFactory::all();
         $this->assertSame(1, count($comments));
         $this->assertSame($name, $comments[0]->getAuthorName());
