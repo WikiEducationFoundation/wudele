@@ -74,7 +74,7 @@ class VotesController extends BaseController
 
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
-            'voteId' => $vote->getId(),
+            'myVote' => $vote,
             'voteForm' => $form,
             'preserveScroll' => true,
             'commentForm' => null,

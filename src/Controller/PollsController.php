@@ -111,14 +111,16 @@ class PollsController extends BaseController
         $session = $request->getSession();
         $hasAccessToAdmin = $session->get("admin-{$poll->getId()}");
 
-        $voteId = null;
+        $myVote = null;
         $voteForm = null;
         $commentForm = null;
 
         if (!$poll->isClosed()) {
             $voteId = $session->get("vote-{$poll->getId()}");
 
-            if (!$voteId) {
+            if ($voteId) {
+                $myVote = $voteRepository->find($voteId);
+            } else {
                 $vote = new Entity\Vote();
                 $vote->setPoll($poll);
                 $voteForm = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
@@ -168,7 +170,7 @@ class PollsController extends BaseController
 
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
-            'voteId' => $voteId,
+            'myVote' => $myVote,
             'voteForm' => $voteForm,
             'commentForm' => $commentForm,
             'displayMode' => $displayMode,
