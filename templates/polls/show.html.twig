@@ -264,12 +264,12 @@
 
             <div class="wrapper wrapper--small wrapper--center flow">
                 <h2 class="text--primary">
-                    {{ 'polls.show.best_proposals.title' | trans(count: preferredChoices|length) }}
+                    {{ 'polls.show.results.title' | trans(count: preferredChoices|length) }}
                 </h2>
 
                 <div class="panel panel--primary panel--rounded flow">
                     <p>
-                        {{ 'polls.show.best_proposals.info' | trans({
+                        {{ 'polls.show.results.info' | trans({
                             countChoices: preferredChoices|length,
                             countYes: firstChoice.countAnswers('yes'),
                         }) | raw }}

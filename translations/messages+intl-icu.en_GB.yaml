@@ -141,8 +141,6 @@ polls.sharing.public_link: 'Public sharing link'
 polls.sharing.title: 'Share the poll'
 polls.show.administration: Administration
 polls.show.authenticated: 'You have successfully authenticated.'
-polls.show.best_proposals.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
-polls.show.best_proposals.title: '{ count, plural, one {Preferred choice} other {Preferred choices} }'
 polls.show.comment.created: 'Your comment has been published.'
 polls.show.comments.explain: 'Your comment will be directly visible on the poll’s page.'
 polls.show.comments.new: 'New comment'
@@ -156,6 +154,8 @@ polls.show.is_closed: 'This poll is closed.'
 polls.show.link_edit_vote: 'Link to edit your vote'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
+polls.show.results.info: '{ countChoices, plural, one {The preferred choice with <strong>{countYes} yes</strong> is:} other {The preferred choices with <strong>{countYes} yes</strong> are:} }'
+polls.show.results.title: Results
 polls.show.share: Share
 polls.show.vote.created: 'Your vote is confirmed. You can still change it if you wish.'
 polls.show.vote.updated: 'Your vote has been changed.'
