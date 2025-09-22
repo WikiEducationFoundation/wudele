@@ -32,7 +32,7 @@
 
         <ul class="list--nostyle flow flow--smaller">
             <li class="cols cols--gap-small votes">
-                {% if isPreferred %}
+                {% if canViewResults(poll) and isPreferred %}
                     <span class="col--size3 col--noshrink votes__label text--success text--bold">
                         {{ 'polls.votes.yes.count' | trans({ count: countYes }) }}
 
