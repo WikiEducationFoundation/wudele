@@ -6,7 +6,6 @@
 
 {% set preferredChoices = poll.preferredChoices %}
 {% set displayMode = poll.type %}
-{% set maxCount = poll.maxCount %}
 
 <div class="flow flow--large">
     {% if displayMode == 'classic' %}
@@ -15,7 +14,6 @@
                 {{ include('proposals/_proposal.html.twig', {
                     proposal: proposal,
                     isPreferred: preferredChoices and proposal in preferredChoices,
-                    maxCount: maxCount,
                     voteForm: voteForm,
                     myVote: myVote,
                 }) }}
@@ -35,7 +33,6 @@
                     {{ include('proposals/_proposal.html.twig', {
                         proposal: proposal,
                         isPreferred: preferredChoices and proposal in preferredChoices,
-                        maxCount: maxCount,
                         voteForm: voteForm,
                         myVote: myVote,
                     }) }}

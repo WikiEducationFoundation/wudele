@@ -1,0 +1,73 @@
+/* This file is part of Pollaris. */
+/* Copyright 2024-2025 Marien Fressinaud */
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+@media(max-width: 800px) {
+    .result {
+        margin-bottom: var(--space-small);
+    }
+}
+
+.result__label {
+    padding: var(--space-smaller);
+
+    font-size: var(--font-size-small);
+}
+
+@media(max-width: 800px) {
+    .result__label-date {
+        padding-right: var(--space-small);
+    }
+}
+
+@media(min-width: 800px) {
+    .result__label-date {
+        display: block;
+    }
+
+    .result__label {
+        padding: var(--space-small);
+
+        text-align: right;
+
+        border-right: 1px solid var(--color-grey3);
+    }
+}
+
+.resultbar {
+    overflow: hidden;
+
+    display: flex;
+    width: var(--resultbar-width, 0);
+
+    color: var(--color-primary12);
+    font-size: var(--font-size-small);
+    text-align: center;
+
+    border-radius: var(--border-radius);
+}
+
+@media(min-width: 800px) {
+    .resultbar {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+}
+
+.resultbar__part {
+    width: var(--resultbar-part-width, 0);
+    min-width: 2ch;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.resultbar__part--yes {
+    background-color: var(--color-primary7);
+}
+
+.resultbar__part--maybe {
+    background-color: var(--color-primary4);
+}
+
+.resultbar__placeholder {
+    padding: var(--space-smaller);
+}

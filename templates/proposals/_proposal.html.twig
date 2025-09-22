@@ -14,14 +14,14 @@
         </div>
     {% endif %}
 
-    {% if maxCount > 0 %}
-        {% set answers = [] %}
-        {% if canViewResults(poll) %}
-            {% set answers = proposal.answers %}
-        {% elseif myVote %}
-            {% set answers = [myVote.answerForProposal(proposal)] %}
-        {% endif %}
+    {% set answers = [] %}
+    {% if canViewResults(poll) %}
+        {% set answers = proposal.answers %}
+    {% elseif myVote %}
+        {% set answers = [myVote.answerForProposal(proposal)] %}
+    {% endif %}
 
+    {% if answers is not empty %}
         {% set answersByValues = answers | groupAnswersByValues %}
 
         {% set countYes = answersByValues['yes'] | length %}

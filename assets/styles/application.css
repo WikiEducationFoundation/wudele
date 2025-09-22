@@ -16,6 +16,7 @@
 @import "./components/anchors.css";
 @import "./components/buttons.css";
 @import "./components/calendar.css";
+@import "./components/details.css";
 @import "./components/forms/checkboxes.css";
 @import "./components/forms/errors.css";
 @import "./components/forms/fieldsets.css";
@@ -31,6 +32,7 @@
 @import "./components/pagination.css";
 @import "./components/panels.css";
 @import "./custom/proposals.css";
+@import "./custom/results.css";
 @import "./custom/votes.css";
 @import "./layout/body.css";
 @import "./layout/header.css";

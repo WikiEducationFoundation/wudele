@@ -155,6 +155,7 @@ polls.show.link_edit_vote: 'Lien de modification de votre vote'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"
 polls.show.poll: Sondage
 polls.show.results.info: "{ countChoices, plural, one {Le choix préféré avec <strong>{countYes} oui</strong> est\_:} other {Les choix préférés avec <strong>{countYes} oui</strong> sont\_:} }"
+polls.show.results.results_graph: 'Graphique des résultats'
 polls.show.results.title: Résultats
 polls.show.share: Partager
 polls.show.vote.created: 'Votre vote est confirmé. Vous pouvez encore le modifier si vous le souhaitez.'
