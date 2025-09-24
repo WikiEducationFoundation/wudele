@@ -45,6 +45,8 @@
                     {{ 'polls.show.created_by' | trans({ by: poll.authorName }) }}
                 </p>
 
+                <div class="panel__separator"></div>
+
                 <div>
                     <button
                         type="button"
@@ -57,10 +59,13 @@
                         {{ 'polls.show.share' | trans }}
                     </button>
 
-                    {% if myVote and not voteForm %}
-                        <a class="button button--ghost" href="{{ path('edit vote', { slug: poll.slug, id: myVote.id }) }}">
-                            {{ icon('pen-to-square') }}
-                            {{ 'polls.show.vote_edit' | trans }}
+                    {% if canViewResults(poll) %}
+                        <a
+                            href="{{ path('poll csv', { slug: poll.slug }) }}"
+                            class="button button--ghost"
+                        >
+                            {{ icon('file-csv') }}
+                            {{ 'polls.show.export_csv' | trans | raw }}
                         </a>
                     {% endif %}
 
@@ -71,6 +76,16 @@
                         >
                             {{ icon('lock') }}
                             {{ 'polls.show.administration' | trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if myVote and not voteForm %}
+                        <a
+                            class="button button--ghost"
+                            href="{{ path('edit vote', { slug: poll.slug, id: myVote.id }) }}"
+                        >
+                            {{ icon('pen-to-square') }}
+                            {{ 'polls.show.vote_edit' | trans }}
                         </a>
                     {% endif %}
                 </div>

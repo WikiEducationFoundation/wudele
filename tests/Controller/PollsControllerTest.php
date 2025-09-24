@@ -565,6 +565,61 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(0, count($comments));
     }
 
+    public function testGetShowCsvRendersCorrectly(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+        ])->completed()->create();
+
+        $response = $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}.csv");
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseHeaderSame('Content-Type', 'text/csv; charset=UTF-8');
+        $this->assertResponseHeaderSame('Content-Disposition', 'attachment; filename="My_poll.csv"');
+    }
+
+    public function testGetShowCsvRedirectsIfNotAuthenticatedToPasswordProtectedPoll(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'password' => 'secret',
+            'isPasswordForVotesOnly' => false,
+        ])->completed()->create();
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}.csv");
+
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/authenticate", 302);
+    }
+
+    public function testGetShowCsvFailsIfPollIsNotComplete(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::createOne([
+            'completedAt' => null,
+        ]);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}.csv");
+    }
+
+    public function testGetShowCsvFailsIfCannotSeeResults(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'areResultsPublic' => false,
+        ])->completed()->create();
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $client->catchExceptions(false);
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}.csv");
+    }
+
     public function testGetAuthenticateRendersCorrectly(): void
     {
         $client = static::createClient();

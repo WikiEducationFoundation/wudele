@@ -18,6 +18,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PollsController extends BaseController
 {
@@ -82,6 +84,98 @@ class PollsController extends BaseController
             'form' => $form,
             'process' => $process,
         ]);
+    }
+
+    #[Route('/polls/{slug}.csv', name: 'poll csv')]
+    public function showCsv(
+        string $slug,
+        Request $request,
+        Repository\PollRepository $pollRepository,
+        Security\PollSecurity $pollSecurity,
+        TranslatorInterface $translator,
+    ): Response {
+        $poll = $pollRepository->loadBySlug($slug);
+
+        if (!$poll || !$poll->isCompleted()) {
+            throw $this->createNotFoundException('The poll doesn’t exist (yet).');
+        }
+
+        if (!$pollSecurity->isAuthenticated($poll)) {
+            return $this->redirectToRoute('authenticate poll', [
+                'slug' => $poll->getSlug(),
+            ]);
+        }
+
+        if (!$pollSecurity->canViewResults($poll)) {
+            throw $this->createNotFoundException('You cannot see the results of this poll.');
+        }
+
+        $data = [];
+
+        if ($poll->isDatePoll()) {
+            $proposalsByDates = $poll->getProposalsByDates();
+            $allProposals = [];
+
+            $rowDate = [''];
+
+            foreach ($proposalsByDates as $dateIso => $dateAndProposals) {
+                foreach ($dateAndProposals[1] as $proposal) {
+                    $rowDate[] = $dateIso;
+                    $allProposals[] = $proposal;
+                }
+            }
+
+            $data[] = $rowDate;
+        } else {
+            $allProposals = $poll->getProposals();
+        }
+
+        $rowProposals = [''];
+
+        foreach ($allProposals as $proposal) {
+            $rowProposals[] = $proposal->getLabel();
+        }
+
+        $data[] = $rowProposals;
+
+        foreach ($poll->getVotes() as $vote) {
+            $voteRow = [$vote->getAuthorName()];
+
+            foreach ($allProposals as $proposal) {
+                $answer = $vote->getAnswerForProposal($proposal);
+                if ($answer) {
+                    $voteRow[] = $translator->trans($answer->getHumanValue());
+                } else {
+                    $voteRow[] = '';
+                }
+            }
+
+            $data[] = $voteRow;
+        }
+
+        $csvEncoder = new CsvEncoder();
+
+        $csv = $csvEncoder->encode($data, 'csv', [
+            'csv_escape_formulas' => true,
+            'no_headers' => true,
+        ]);
+
+        $filename = $poll->getTitle() . '.csv';
+        $filename = str_replace(' ', '_', $filename);
+        $filename = preg_replace('[^a-zA-Z0-9._-]', '_', $filename);
+        if ($filename === null) {
+            $filename = $poll->getSlug() . '.csv';
+        }
+        $filename = preg_replace('/__+/', '_', $filename);
+        if ($filename === null) {
+            $filename = $poll->getSlug() . '.csv';
+        }
+
+        $response = new Response($csv);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
+
+        return $response;
     }
 
     #[Route('/polls/{slug}', name: 'poll')]
