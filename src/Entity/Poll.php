@@ -348,6 +348,14 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     }
 
     /**
+     * @return array<array{Date, Proposal[]}>
+     */
+    public function getProposalsByDates(): array
+    {
+        return self::groupDateProposals($this->proposals);
+    }
+
+    /**
      * @return Proposal[]
      */
     public function getPreferredChoices(): array
@@ -608,5 +616,44 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->areResultsPublic = $areResultsPublic;
 
         return $this;
+    }
+
+    /**
+     * @param Proposal[]|Collections\Collection<int, Proposal> $proposals
+     *
+     * @return array<array{Date, Proposal[]}>
+     */
+    public static function groupDateProposals(mixed $proposals): array
+    {
+        $datesAndChoices = [];
+
+        foreach ($proposals as $proposal) {
+            $date = $proposal->getDate();
+
+            if (!$date || !$date->getValue()) {
+                throw new \LogicException('Expecting a "date" proposal, but date is not set');
+            }
+
+            $dateKey = $date->getValue()->format('Y-m-d');
+
+            if (!isset($datesAndChoices[$dateKey])) {
+                $datesAndChoices[$dateKey] = [$date, []];
+            }
+
+            $datesAndChoices[$dateKey][1][] = $proposal;
+        }
+
+        foreach ($datesAndChoices as $key => $dateAndProposals) {
+            $proposals = $dateAndProposals[1];
+            usort($proposals, function (Proposal $proposal1, Proposal $proposal2): int {
+                return $proposal1->getId() <=> $proposal2->getId();
+            });
+
+            $datesAndChoices[$key][1] = $proposals;
+        }
+
+        ksort($datesAndChoices);
+
+        return $datesAndChoices;
     }
 }

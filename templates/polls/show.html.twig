@@ -157,10 +157,11 @@
             {% endif %}
         </div>
 
-        {% set proposals = poll.proposals %}
         {% if poll.isDatePoll %}
-            {% set datesAndProposals = proposals|groupDateProposals %}
+            {% set datesAndProposals = poll.proposalsByDates %}
             {% set proposals = datesAndProposals|column(1)|flatten %}
+        {% else %}
+            {% set proposals = poll.proposals %}
         {% endif %}
 
         <div

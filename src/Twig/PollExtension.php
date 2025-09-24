@@ -72,36 +72,7 @@ class PollExtension
     #[AsTwigFilter('groupDateProposals')]
     public function groupDateProposals(mixed $proposals): array
     {
-        $datesAndChoices = [];
-
-        foreach ($proposals as $proposal) {
-            $date = $proposal->getDate();
-
-            if (!$date || !$date->getValue()) {
-                throw new \LogicException('Expecting a "date" proposal, but date is not set');
-            }
-
-            $dateKey = $date->getValue()->format('Y-m-d');
-
-            if (!isset($datesAndChoices[$dateKey])) {
-                $datesAndChoices[$dateKey] = [$date, []];
-            }
-
-            $datesAndChoices[$dateKey][1][] = $proposal;
-        }
-
-        foreach ($datesAndChoices as $key => $dateAndProposals) {
-            $proposals = $dateAndProposals[1];
-            usort($proposals, function (Entity\Proposal $proposal1, Entity\Proposal $proposal2): int {
-                return $proposal1->getId() <=> $proposal2->getId();
-            });
-
-            $datesAndChoices[$key][1] = $proposals;
-        }
-
-        ksort($datesAndChoices);
-
-        return $datesAndChoices;
+        return Entity\Poll::groupDateProposals($proposals);
     }
 
     /**
