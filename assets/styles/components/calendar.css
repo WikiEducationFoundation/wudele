@@ -70,7 +70,7 @@
     z-index: 1;
 }
 
-.calendar__day[aria-selected="true"] {
+.calendar__day[aria-selected="true"]:not(:disabled) {
     --button-background-color: var(--color-primary11);
     --button-border-color: var(--color-primary11);
     --button-color: var(--color-primary1);
