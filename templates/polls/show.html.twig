@@ -158,7 +158,7 @@
         </div>
 
         {% set proposals = poll.proposals %}
-        {% if poll.type == 'date' %}
+        {% if poll.isDatePoll %}
             {% set datesAndProposals = proposals|groupDateProposals %}
             {% set proposals = datesAndProposals|column(1)|flatten %}
         {% endif %}
@@ -330,11 +330,11 @@
                     <ul class="wrapper wrapper--center panel panel--white panel--border panel--rounded">
                         {% set maxCount = poll.positiveAnswersMaxCount %}
 
-                        {% if poll.type == 'classic' %}
+                        {% if poll.isClassicPoll %}
                             {% for proposal in proposals %}
                                 {{ include('proposals/_result.html.twig') }}
                             {% endfor %}
-                        {% elseif poll.type == 'date' %}
+                        {% elseif poll.isDatePoll %}
                             {% for dateAndProposals in datesAndProposals %}
                                 {% set date = dateAndProposals[0] %}
                                 {% set dateProposals = dateAndProposals[1] %}
