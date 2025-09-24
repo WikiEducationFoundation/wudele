@@ -71,6 +71,16 @@ class PollSettingsForm extends AbstractType
             ],
         ]);
 
+        $builder->add('editVoteMode', Type\ChoiceType::class, [
+            'choices' => Entity\Poll::EDIT_VOTE_MODES,
+            'label' => false,
+            'empty_data' => 'no',
+            'expanded' => true,
+            'choice_label' => function (string $choice): TranslatableMessage {
+                return Entity\Poll::translateEditVoteMode($choice);
+            },
+        ]);
+
         $builder->add('areResultsPublic', Type\CheckboxType::class, [
             'label' => new TranslatableMessage('forms.poll_settings_form.are_results_public.label'),
             'required' => false,

@@ -32,6 +32,12 @@ class PollExtension
         return $this->pollSecurity->canViewResults($poll);
     }
 
+    #[AsTwigFunction('canEditVote')]
+    public function canEditVote(Entity\Poll $poll): bool
+    {
+        return $this->pollSecurity->canEditVote($poll);
+    }
+
     /**
      * Return an AnswerForm corresponding to a proposal in the given VoteForm.
      */

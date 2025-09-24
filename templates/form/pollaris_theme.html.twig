@@ -134,6 +134,18 @@
     {%- endif %}
 {%- endblock -%}
 
+{%- block choice_widget_expanded -%}
+    {%- set attr = attr|merge({class: (attr.class|default('flow flow--small'))|trim}) -%}
+    <div {{ block('widget_container_attributes') }}>
+    {%- for child in form %}
+        <div>
+            {{- form_widget(child) -}}
+            {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+        </div>
+    {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
 {%- block radio_label -%}
     {%- set no_optional = true -%}
     {{- block('form_label') -}}

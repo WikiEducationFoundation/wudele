@@ -32,6 +32,17 @@ class PollSecurity
         return $poll->areResultsPublic() || $this->hasAccessToAdmin($poll);
     }
 
+    public function canEditVote(Entity\Poll $poll): bool
+    {
+        return (
+            !$poll->isClosed() &&
+            (
+                $poll->getEditVoteMode() !== 'no' ||
+                $this->hasAccessToAdmin($poll)
+            )
+        );
+    }
+
     public function isAuthenticated(Entity\Poll $poll): bool
     {
         if (!$poll->isFullPasswordProtected()) {

@@ -61,15 +61,19 @@
     }
 }
 
+.vote__choices > * {
+    flex: 1;
+}
+
 input.radio--vote + label {
     --radio-vote-color: var(--color-primary12);
     --radio-vote-border-color: transparent;
     --radio-vote-icon-color: var(--color-primary9);
     --radio-vote-background-color: var(--color-primary3);
 
+    width: 100%;
     padding: var(--space-medium) var(--space-small);
 
-    flex: 1;
     gap: var(--space-small);
 
     color: var(--radio-vote-color);

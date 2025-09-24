@@ -34,6 +34,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public const TYPES = ['date', 'classic'];
     public const DEFAULT_TYPE = 'classic';
 
+    public const EDIT_VOTE_MODES = ['own', 'no'];
+    public const DEFAULT_EDIT_VOTE_MODE = 'own';
+
     #[ORM\Id]
     #[ORM\Column(length: 20)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -160,6 +163,13 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(options: ['default' => true])]
     private ?bool $areResultsPublic = null;
 
+    #[ORM\Column(length: 20, options: ['default' => self::DEFAULT_EDIT_VOTE_MODE])]
+    #[Assert\Choice(
+        choices: self::EDIT_VOTE_MODES,
+        message: new TranslatableMessage('poll.edit_vote_mode.invalid', domain: 'validators'),
+    )]
+    private ?string $editVoteMode = null;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -173,6 +183,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->notifyOnVotes = true;
         $this->notifyOnComments = true;
         $this->areResultsPublic = true;
+        $this->editVoteMode = self::DEFAULT_EDIT_VOTE_MODE;
         $this->proposals = new Collections\ArrayCollection();
         $this->votes = new Collections\ArrayCollection();
         $this->dates = new Collections\ArrayCollection();
@@ -655,5 +666,28 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         ksort($datesAndChoices);
 
         return $datesAndChoices;
+    }
+
+    public function getEditVoteMode(): ?string
+    {
+        return $this->editVoteMode;
+    }
+
+    public function setEditVoteMode(string $editVoteMode): static
+    {
+        $this->editVoteMode = $editVoteMode;
+
+        return $this;
+    }
+
+    public static function translateEditVoteMode(string $value): TranslatableMessage
+    {
+        if ($value === 'own') {
+            return new TranslatableMessage('polls.edit_vote_mode.own');
+        } elseif ($value === 'no') {
+            return new TranslatableMessage('polls.edit_vote_mode.no');
+        } else {
+            throw new \LogicException("Cannot translate edit vote mode {$value}");
+        }
     }
 }

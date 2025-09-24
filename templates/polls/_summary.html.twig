@@ -132,51 +132,61 @@
     <h2 class="text--primary">{{ 'polls.summary.settings.title' | trans }}</h2>
 
     <div class="panel panel--rounded panel--primary flow">
-        {% if poll.maxVotes > 0 %}
-            <p class="text--bold">
-                {{ 'polls.summary.settings.max_votes' | trans({ number: poll.maxVotes }) }}
-            </p>
-        {% endif %}
-
-        {% if poll.isSlugCustomized %}
-            <p class="text--bold">
-                {{ 'polls.summary.settings.customised_slug' | trans }}
-            </p>
-        {% endif %}
-
-        <p class="text--bold">
-            {% if poll.isFullPasswordProtected %}
-                {{ 'polls.summary.settings.password_protected.full' | trans }}
-            {% elseif poll.isVotePasswordProtected %}
-                {{ 'polls.summary.settings.password_protected.vote' | trans }}
-            {% else %}
-                {{ 'polls.summary.settings.password_protected.not' | trans }}
+        <ul class="list--nostyle flow text--bold">
+            {% if poll.maxVotes > 0 %}
+                <li>
+                    {{ 'polls.summary.settings.max_votes' | trans({ number: poll.maxVotes }) }}
+                </li>
             {% endif %}
-        </p>
 
-        <p class="text--bold">
-            {% if poll.areResultsPublic %}
-                {{ 'polls.summary.settings.results.public' | trans }}
-            {% else %}
-                {{ 'polls.summary.settings.results.private' | trans }}
+            {% if poll.isSlugCustomized %}
+                <li>
+                    {{ 'polls.summary.settings.customised_slug' | trans }}
+                </li>
             {% endif %}
-        </p>
 
-        <p class="text--bold">
-            {% if poll.notifyOnVotes %}
-                {{ 'polls.summary.settings.notify_on_votes.do' | trans }}
-            {% else %}
-                {{ 'polls.summary.settings.notify_on_votes.dont' | trans }}
-            {% endif %}
-        </p>
+            <li>
+                {% if poll.isFullPasswordProtected %}
+                    {{ 'polls.summary.settings.password_protected.full' | trans }}
+                {% elseif poll.isVotePasswordProtected %}
+                    {{ 'polls.summary.settings.password_protected.vote' | trans }}
+                {% else %}
+                    {{ 'polls.summary.settings.password_protected.not' | trans }}
+                {% endif %}
+            </li>
 
-        <p class="text--bold">
-            {% if poll.notifyOnComments %}
-                {{ 'polls.summary.settings.notify_on_comments.do' | trans }}
-            {% else %}
-                {{ 'polls.summary.settings.notify_on_comments.dont' | trans }}
-            {% endif %}
-        </p>
+            <li>
+                {% if poll.editVoteMode == 'own' %}
+                    {{ 'polls.summary.settings.edit_vote_mode.own' | trans }}
+                {% else %}
+                    {{ 'polls.summary.settings.edit_vote_mode.no' | trans }}
+                {% endif %}
+            </li>
+
+            <li>
+                {% if poll.areResultsPublic %}
+                    {{ 'polls.summary.settings.results.public' | trans }}
+                {% else %}
+                    {{ 'polls.summary.settings.results.private' | trans }}
+                {% endif %}
+            </li>
+
+            <li>
+                {% if poll.notifyOnVotes %}
+                    {{ 'polls.summary.settings.notify_on_votes.do' | trans }}
+                {% else %}
+                    {{ 'polls.summary.settings.notify_on_votes.dont' | trans }}
+                {% endif %}
+            </li>
+
+            <li>
+                {% if poll.notifyOnComments %}
+                    {{ 'polls.summary.settings.notify_on_comments.do' | trans }}
+                {% else %}
+                    {{ 'polls.summary.settings.notify_on_comments.dont' | trans }}
+                {% endif %}
+            </li>
+        </ul>
 
         <div class="panel__separator"></div>
 

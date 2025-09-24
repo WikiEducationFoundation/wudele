@@ -124,6 +124,8 @@ polls.dates.slots_at_next_step: 'Sélectionnez une ou plusieurs dates. Vous pour
 polls.dates.title: 'Choisissez les dates'
 polls.deletion.information: "Attention, vous êtes sur le point de supprimer le sondage «\_<strong>{title}</strong>\_» ainsi que les votes et commentaires associés."
 polls.deletion.title: 'Suppression d’un sondage'
+polls.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote'
+polls.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote'
 polls.new.title: 'Création de sondage'
 polls.new.who_you_are: 'Votre identité'
 polls.proposals.best: 'Choix préféré'
@@ -160,7 +162,7 @@ polls.show.results.info: "{ countChoices, plural, one {Le choix préféré avec 
 polls.show.results.results_graph: 'Graphique des résultats'
 polls.show.results.title: Résultats
 polls.show.share: Partager
-polls.show.vote.created: 'Votre vote est confirmé. Vous pouvez encore le modifier si vous le souhaitez.'
+polls.show.vote.created: 'Votre vote est confirmé.'
 polls.show.vote.updated: 'Votre vote a bien été modifié.'
 polls.show.vote_edit: 'Modifier mon vote'
 polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
@@ -178,6 +180,8 @@ polls.summary.information.title: 'Informations générales'
 polls.summary.is_closed: '(sondage terminé)'
 polls.summary.proposals.title: 'Mes propositions'
 polls.summary.settings.customised_slug: 'Le lien du sondage est personnalisé.'
+polls.summary.settings.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote.'
+polls.summary.settings.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote.'
 polls.summary.settings.max_votes: '{ number, plural, one {1 participant·e maximum peut} other {# participant·es maximum peuvent} } voter par proposition.'
 polls.summary.settings.notify_on_comments.do: 'Je recevrai un email à chaque commentaire sur le sondage.'
 polls.summary.settings.notify_on_comments.dont: 'Je ne recevrai pas d’email lors des commentaires sur le sondage.'

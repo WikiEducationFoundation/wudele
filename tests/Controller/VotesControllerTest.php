@@ -53,6 +53,22 @@ class VotesControllerTest extends WebTestCase
         $this->assertResponseRedirects("/polls/{$poll->getSlug()}", 302);
     }
 
+    public function testGetEditRedirectsIfEditionIsDisabled(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'title' => 'My poll',
+            'editVoteMode' => 'no',
+        ])->completed()->create();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/votes/{$vote->getId()}/edit");
+
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}", 302);
+    }
+
     public function testGetEditFailsIfPollIdDoesNotMatch(): void
     {
         $client = static::createClient();
