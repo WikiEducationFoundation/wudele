@@ -143,7 +143,7 @@ class PollsController extends BaseController
 
             foreach ($allProposals as $proposal) {
                 $answer = $vote->getAnswerForProposal($proposal);
-                if ($answer) {
+                if ($answer && $answer->getValue()) {
                     $voteRow[] = $translator->trans($answer->getHumanValue());
                 } else {
                     $voteRow[] = '';
@@ -160,16 +160,17 @@ class PollsController extends BaseController
             'no_headers' => true,
         ]);
 
-        $filename = $poll->getTitle() . '.csv';
+        $filename = $poll->getTitle() ?? '';
         $filename = str_replace(' ', '_', $filename);
-        $filename = preg_replace('[^a-zA-Z0-9._-]', '_', $filename);
+        $filename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename);
         if ($filename === null) {
-            $filename = $poll->getSlug() . '.csv';
+            $filename = $poll->getSlug() ?? '';
         }
         $filename = preg_replace('/__+/', '_', $filename);
         if ($filename === null) {
-            $filename = $poll->getSlug() . '.csv';
+            $filename = $poll->getSlug() ?? '';
         }
+        $filename = trim($filename, '_') . '.csv';
 
         $response = new Response($csv);
         $response->headers->set('Content-Type', 'text/csv');
