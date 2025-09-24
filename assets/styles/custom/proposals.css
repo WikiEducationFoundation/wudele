@@ -32,6 +32,8 @@
 }
 
 .proposals-table {
+    --cell-width: 115px;
+
     margin-right: auto;
     margin-left: auto;
 
@@ -39,12 +41,22 @@
     border-spacing: var(--space-small) var(--space-smaller);
 }
 
+@media print {
+    .proposals-table {
+        --cell-width: 75px;
+
+        border-collapse: collapse;
+
+        break-after: always;
+    }
+}
+
 .proposals-table .proposal__day-week,
 .proposals-table .proposal__day-month,
 .proposals-table .proposal__month,
 .proposals-table .proposal__label {
     display: block;
-    width: 150px;
+    width: var(--cell-width);
 
     font-size: var(--font-size-small);
 
@@ -65,7 +77,7 @@
 
 .proposals-table .vote {
     display: block;
-    width: 150px;
+    width: var(--cell-width);
     margin-bottom: 0;
     padding: var(--space-small) var(--space-smaller);
 
@@ -81,8 +93,10 @@
 }
 
 .proposals-table input.radio--vote + label {
-    width: 150px;
-    padding: var(--space-small);
+    width: var(--cell-width);
+    padding: var(--space-smaller);
+
+    font-size: var(--font-size-smaller);
 }
 
 .proposals-table__sticky-cell {
@@ -97,12 +111,19 @@
     border-right: 2px solid var(--color-grey6);
 }
 
+@media print {
+    .proposals-table__sticky-cell:not(:empty) {
+        border-right: none;
+    }
+}
+
 .proposals-table__author {
     overflow: hidden;
 
-    width: 200px;
+    width: 150px;
     padding: var(--space-small);
 
+    font-size: var(--font-size-small);
     font-weight: normal;
     text-align: right;
     text-overflow: ellipsis;
@@ -111,6 +132,12 @@
 @media(max-width: 500px) {
     .proposals-table__author {
         width: 125px;
+    }
+}
+
+@media print {
+    .proposals-table__author {
+        width: 100px;
     }
 }
 

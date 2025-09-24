@@ -3,7 +3,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 .layout__body {
-    max-width: 1400px;
+    max-width: 1600px;
     margin-right: auto;
     margin-left: auto;
     padding: var(--space-larger) var(--space-small);

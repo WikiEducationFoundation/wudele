@@ -10,6 +10,7 @@
 @import "./utils/flow.css";
 @import "./utils/fonts.css";
 @import "./utils/mobile.css";
+@import "./utils/print.css";
 @import "./utils/text.css";
 @import "./utils/wrapper.css";
 @import "./components/accordions.css";
