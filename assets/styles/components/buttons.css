@@ -38,7 +38,9 @@ button:disabled,
 }
 
 button:hover:not(:disabled),
-.button:hover:not(:disabled) {
+.button:hover:not(:disabled),
+button[aria-expanded="true"],
+.button[aria-expanded="true"] {
     --button-background-color: var(--color-primary3);
     --button-border-color: var(--color-primary12);
     --button-color: var(--color-primary12);
@@ -50,7 +52,8 @@ button:hover:not(:disabled),
     --button-color: var(--color-primary1);
 }
 
-.button--primary:hover:not(:disabled) {
+.button--primary:hover:not(:disabled),
+.button--primary[aria-expanded="true"] {
     --button-background-color: var(--color-primary12);
     --button-border-color: var(--color-primary12);
     --button-color: var(--color-primary1);
@@ -62,7 +65,8 @@ button:hover:not(:disabled),
     --button-color: var(--color-error1);
 }
 
-.button--danger:hover:not(:disabled) {
+.button--danger:hover:not(:disabled),
+.button--danger[aria-expanded="true"] {
     --button-background-color: var(--color-error12);
     --button-border-color: var(--color-error12);
     --button-color: var(--color-primary1);
@@ -83,7 +87,8 @@ button:hover:not(:disabled),
     --button-border-color: transparent;
 }
 
-.button--ghost:hover {
+.button--ghost:hover,
+.button--ghost[aria-expanded="true"] {
     --button-background-color: transparent;
     --button-border-color: var(--color-primary6);
 }
