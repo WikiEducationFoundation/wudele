@@ -100,7 +100,7 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
-        if (!$pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+        if (!$pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('authenticate poll', [
                 'slug' => $poll->getSlug(),
             ]);
@@ -180,7 +180,7 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
-        if (!$poll->isFullPasswordProtected() || $pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+        if (!$poll->isFullPasswordProtected() || $pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
             ]);
@@ -192,7 +192,7 @@ class PollsController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $pollSecurity->authenticate($request->getSession(), $poll);
+            $pollSecurity->authenticate($poll);
 
             $this->addFlash('success', 'poll.authenticated');
 
@@ -267,7 +267,7 @@ class PollsController extends BaseController
             $pollRepository->save($poll);
 
             if ($poll->isFullPasswordProtected()) {
-                $pollSecurity->authenticate($request->getSession(), $poll);
+                $pollSecurity->authenticate($poll);
             }
 
             return $this->redirect($process->getStepUrl('summary'));

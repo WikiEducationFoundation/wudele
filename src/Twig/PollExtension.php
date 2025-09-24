@@ -7,30 +7,29 @@
 namespace App\Twig;
 
 use App\Entity;
+use App\Security;
 use Doctrine\Common\Collections;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Attribute\AsTwigFilter;
 use Twig\Attribute\AsTwigFunction;
 
 class PollExtension
 {
     public function __construct(
-        private RequestStack $requestStack,
+        private Security\PollSecurity $pollSecurity,
     ) {
     }
 
     #[AsTwigFunction('hasAccessToAdmin')]
     public function hasAccessToAdmin(Entity\Poll $poll): bool
     {
-        $session = $this->requestStack->getSession();
-        return $session->get("admin-{$poll->getId()}") === true;
+        return $this->pollSecurity->hasAccessToAdmin($poll);
     }
 
     #[AsTwigFunction('canViewResults')]
     public function canViewResults(Entity\Poll $poll): bool
     {
-        return $poll->areResultsPublic() || $this->hasAccessToAdmin($poll);
+        return $this->pollSecurity->canViewResults($poll);
     }
 
     /**

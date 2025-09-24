@@ -36,7 +36,7 @@ class VotesController extends BaseController
             throw $this->createNotFoundException('Vote is not part of the poll');
         }
 
-        if (!$pollSecurity->isAuthenticated($request->getSession(), $poll)) {
+        if (!$pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('authenticate poll', [
                 'slug' => $poll->getSlug(),
             ]);

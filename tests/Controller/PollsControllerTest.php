@@ -263,7 +263,10 @@ class PollsControllerTest extends WebTestCase
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
         $pollSecurity = $client->getContainer()->get(Security\PollSecurity::class);
-        $pollSecurity->authenticate($session, $poll);
+        $session->set(
+            $pollSecurity->generateKey($poll),
+            $pollSecurity->generateHash($poll)
+        );
         $session->save();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}");
@@ -602,7 +605,10 @@ class PollsControllerTest extends WebTestCase
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
         $pollSecurity = $client->getContainer()->get(Security\PollSecurity::class);
-        $pollSecurity->authenticate($session, $poll);
+        $session->set(
+            $pollSecurity->generateKey($poll),
+            $pollSecurity->generateHash($poll)
+        );
         $session->save();
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getSlug()}/authenticate");
@@ -630,7 +636,9 @@ class PollsControllerTest extends WebTestCase
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
         $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
-        $this->assertTrue($pollSecurity->isAuthenticated($session, $poll));
+        $hash = $session->get($pollSecurity->generateKey($poll));
+        $this->assertNotNull($hash);
+        $this->assertTrue($pollSecurity->compareHash($poll, $hash));
     }
 
     public function testPostAuthenticateFailsIfPasswordIsInvalid(): void
@@ -653,7 +661,8 @@ class PollsControllerTest extends WebTestCase
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
         $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
-        $this->assertFalse($pollSecurity->isAuthenticated($session, $poll));
+        $hash = $session->get($pollSecurity->generateKey($poll));
+        $this->assertNull($hash);
     }
 
     public function testPostAuthenticateFailsIfCsrfIsInvalid(): void
@@ -676,7 +685,8 @@ class PollsControllerTest extends WebTestCase
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
         $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
-        $this->assertFalse($pollSecurity->isAuthenticated($session, $poll));
+        $hash = $session->get($pollSecurity->generateKey($poll));
+        $this->assertNull($hash);
     }
 
     public function testGetEditRendersCorrectly(): void
