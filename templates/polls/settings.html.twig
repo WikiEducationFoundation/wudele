@@ -68,7 +68,13 @@
             </div>
 
             <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ path('poll summary', { id: poll.id, token: poll.adminToken }) }}">
+                {% if poll.isCompleted %}
+                    {% set urlCancel = path('poll admin', { id: poll.id, token: poll.adminToken }) %}
+                {% else %}
+                    {% set urlCancel = path('poll summary', { id: poll.id, token: poll.adminToken }) %}
+                {% endif %}
+
+                <a class="button" href="{{ urlCancel }}">
                     {{ 'forms.cancel' | trans }}
                 </a>
 
