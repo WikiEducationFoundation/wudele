@@ -50,7 +50,7 @@
                 <div class="no-print">
                     <button
                         type="button"
-                        class="button--ghost"
+                        class="button--ghost button--small"
                         data-controller="modal-opener"
                         data-action="modal-opener#copy"
                         data-modal-opener-selector-value="#modal-sharing"
@@ -63,7 +63,7 @@
                         type="button"
                         data-controller="printer"
                         data-action="printer#print"
-                        class="button button--ghost"
+                        class="button button--ghost button--small"
                     >
                         {{ icon('print') }}
                         {{ 'polls.show.print' | trans }}
@@ -72,7 +72,7 @@
                     {% if canViewResults(poll) %}
                         <a
                             href="{{ path('poll csv', { slug: poll.slug }) }}"
-                            class="button button--ghost"
+                            class="button button--ghost button--small"
                         >
                             {{ icon('file-csv') }}
                             {{ 'polls.show.export_csv' | trans | raw }}
@@ -82,7 +82,7 @@
                     {% if hasAccessToAdmin(poll) %}
                         <a
                             href="{{ path('poll admin', { id: poll.id, token: poll.adminToken }) }}"
-                            class="button button--ghost"
+                            class="button button--ghost button--small"
                         >
                             {{ icon('lock') }}
                             {{ 'polls.show.administration' | trans }}
@@ -184,14 +184,14 @@
                              # value from the localStorage is only used on the
                              # /my page #}
                             {% if canEditVote(poll, ignoreAdminAccess: true) %}
-                                <a href="__vote_url__" class="button button--small">
+                                <a href="__vote_url__" class="button button--smaller">
                                     {{ 'polls.show.my_votes.edit' | trans }}
                                 </a>
                             {% endif %}
 
                             <button
                                 type="button"
-                                class="button--ghost"
+                                class="button--smaller"
                                 data-action="my-votes#removeVote"
                                 data-storage-key="__key__"
                                 title="{{ 'polls.show.my_votes.remove' | trans }}"

@@ -23,15 +23,16 @@
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
-            <button
-                type="button"
-                class="button--small button--block"
-                data-controller="modal-opener"
-                data-action="modal-opener#copy"
-                data-modal-opener-selector-value="#modal-slots-applier"
-            >
-                {{ 'polls.slots.same_slots.apply' | trans }}
-            </button>
+            <div class="text--center">
+                <button
+                    type="button"
+                    data-controller="modal-opener"
+                    data-action="modal-opener#copy"
+                    data-modal-opener-selector-value="#modal-slots-applier"
+                >
+                    {{ 'polls.slots.same_slots.apply' | trans }}
+                </button>
+            </div>
 
             {% for date in form.dates %}
                 <fieldset class="panel panel--primary panel--rounded">
@@ -55,7 +56,7 @@
 
                                         <button
                                             type="button"
-                                            class="button--ghost"
+                                            class="button--ghost button--small"
                                             data-action="collection#removeElement"
                                         >
                                             {{ icon('trash') }}
@@ -90,7 +91,7 @@
 
                                     <button
                                         type="button"
-                                        class="button--ghost"
+                                        class="button--ghost button--small"
                                         data-action="collection#removeElement"
                                     >
                                         {{ icon('trash') }}

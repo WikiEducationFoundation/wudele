@@ -33,16 +33,17 @@
                 data-collection-index-value="{{ form.dates|length > 0 ? form.dates|last.vars.name + 1 : 0 }}"
                 data-action="date-clicked->dates-form#switchDateSelection"
             >
-                <button
-                    type="button"
-                    class="button--small button--block"
-                    data-action="dates-form#switch"
-                    data-dates-form-target="switch"
-                    data-label-calendar="{{ 'forms.poll_dates_form.use_calendar' | trans }}"
-                    data-label-manually="{{ 'forms.poll_dates_form.enter_manually' | trans }}"
-                >
-                    {{ 'forms.poll_dates_form.enter_manually' | trans }}
-                </button>
+                <div class="text--center">
+                    <button
+                        type="button"
+                        data-action="dates-form#switch"
+                        data-dates-form-target="switch"
+                        data-label-calendar="{{ 'forms.poll_dates_form.use_calendar' | trans }}"
+                        data-label-manually="{{ 'forms.poll_dates_form.enter_manually' | trans }}"
+                    >
+                        {{ 'forms.poll_dates_form.enter_manually' | trans }}
+                    </button>
+                </div>
 
                 <div class="flow flow--smaller" data-dates-form-target="calendar">
                     <div class="calendar__header cols cols--always cols--center">
@@ -119,7 +120,7 @@
 
                     <button
                         type="button"
-                        class="button--small button--block"
+                        class="button--block"
                         data-action="collection#addElement"
                     >
                         {{ 'forms.poll_dates_form.add_date' | trans }}
