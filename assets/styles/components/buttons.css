@@ -60,6 +60,7 @@ button[aria-expanded="true"],
 }
 
 .button--danger {
+    --outline-color: var(--color-error11);
     --button-background-color: var(--color-error11);
     --button-border-color: var(--color-error11);
     --button-color: var(--color-error1);
