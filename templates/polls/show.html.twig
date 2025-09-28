@@ -373,13 +373,13 @@
                     </div>
                 </div>
 
-                <details>
+                <details class="flow flow--smaller">
                     <summary class="wrapper wrapper--small wrapper--center">
                         {{ icon('chart-simple') }}
                         {{ 'polls.show.results.results_graph' | trans }}
                     </summary>
 
-                    <ul class="wrapper wrapper--center panel panel--white panel--border panel--rounded">
+                    <ul class="wrapper wrapper--small wrapper--center panel panel--white panel--border panel--rounded panel--nopadding">
                         {% set maxCount = poll.positiveAnswersMaxCount %}
 
                         {% if poll.isClassicPoll %}

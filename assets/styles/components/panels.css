@@ -16,6 +16,10 @@
     }
 }
 
+.panel--nopadding {
+    --panel-padding: 0;
+}
+
 .panel--rounded {
     border-radius: var(--border-radius);
 }
