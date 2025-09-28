@@ -87,16 +87,33 @@ home.search_polls: 'Find my polls'
 home.show.poll.deleted: 'Your poll has been successfully deleted.'
 home.source_code: 'Access the source code.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
+layout.header.my: 'My polls and votes'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
 layout.logout: Logout
 layout.modal.close: Close
 login.log_in: 'Log in'
 login.title: 'Login to administration'
+my.index.admin_link: 'Administration link'
+my.index.description: 'Find all your polls and votes stored in your browser here. For greater privacy, remove them if you share your browser with other people.'
+my.index.poll_link: 'Poll link'
+my.index.polls.confirm_removal: 'You are about to remove all polls from this browser (the polls will continue to exist). Are you sure you want to continue?'
+my.index.polls.empty_placeholder: 'No polls'
+my.index.polls.of_by: 'Poll of __date__ by __author__'
+my.index.polls.remove: 'Remove the poll'
+my.index.polls.title: Polls
+my.index.remove_all: 'Remove all'
+my.index.title: 'My polls and votes'
+my.index.vote_link: 'Vote link'
+my.index.votes.confirm_removal: 'You are about to remove all votes from this browser (the votes will continue to exist). Are you sure you want to continue?'
+my.index.votes.date: '(vote of __vote_date__)'
+my.index.votes.empty_placeholder: 'No votes'
+my.index.votes.poll: 'On the “<strong>__poll_title__</strong>” poll by __poll_author__'
+my.index.votes.remove: 'Remove the vote'
+my.index.votes.title: Votes
 notifications.close: Close
 pagination.next: 'Next page'
 pagination.previous: 'Previous page'
-polls.admin.admin_link: 'Private administration link'
 polls.admin.comments: Comments
 polls.admin.confirm_delete_comment: 'Are you sure to delete this comment?'
 polls.admin.confirm_delete_vote: 'Are you sure to delete this vote?'
@@ -113,8 +130,6 @@ polls.choose.classic: 'Poll classic'
 polls.choose.date: 'Poll date'
 polls.choose.next: Next
 polls.choose.title: 'Choose the type of poll'
-polls.complete.admin_access: 'Please keep the following link to administrate your poll at any time. <strong>Keep this link to yourself!</strong>'
-polls.complete.admin_link: 'Private administration link'
 polls.complete.consult: 'Consult your poll now'
 polls.complete.created: 'The poll “{poll}” is created. You can invite your contacts to take part by sharing the link below.'
 polls.complete.public_link: 'Public sharing link'
@@ -151,10 +166,13 @@ polls.show.comments.title: Comments
 polls.show.created_by: 'Poll created by {by}'
 polls.show.display_list: 'List view'
 polls.show.display_table: 'Table view'
-polls.show.explain_link_edit_vote: 'You can copy the edit link to save it and edit your vote later.'
 polls.show.export_csv: 'Export (<abbr>CSV</abbr>)'
 polls.show.is_closed: 'This poll is closed.'
-polls.show.link_edit_vote: 'Link to edit your vote'
+polls.show.my_votes.date: '(vote of __date__)'
+polls.show.my_votes.description: 'Your votes are stored in your browser. For greater privacy, delete them if you share your browser with other people.'
+polls.show.my_votes.edit: Edit
+polls.show.my_votes.remove: Remove
+polls.show.my_votes.title: 'My votes'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'
 polls.show.poll: Poll
 polls.show.print: Print
@@ -164,11 +182,13 @@ polls.show.results.title: Results
 polls.show.share: Share
 polls.show.vote.created: 'Your vote is confirmed.'
 polls.show.vote.updated: 'Your vote has been changed.'
-polls.show.vote_edit: 'Edit my vote'
 polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'
 polls.steps: 'Step {step} on {total}'
+polls.summary.admin_access: 'Please keep the following link to administrate your poll at any time. <strong>Keep this link to yourself!</strong>'
+polls.summary.admin_link: 'Private administration link'
+polls.summary.admin_link.remember: 'Remember the link in this browser'
 polls.summary.author.email: 'Email address'
 polls.summary.author.name: Nickname
 polls.summary.author.no_email: 'No address given'

@@ -88,16 +88,6 @@
                             {{ 'polls.show.administration' | trans }}
                         </a>
                     {% endif %}
-
-                    {% if myVote and not voteForm and canEditVote(poll) %}
-                        <a
-                            class="button button--ghost"
-                            href="{{ path('edit vote', { slug: poll.slug, id: myVote.id }) }}"
-                        >
-                            {{ icon('pen-to-square') }}
-                            {{ 'polls.show.vote_edit' | trans }}
-                        </a>
-                    {% endif %}
                 </div>
 
                 <template id="modal-sharing">
@@ -142,42 +132,77 @@
                 </p>
             {% endif %}
 
-            {% if myVote and voteForm %}
-                <div class="panel panel--primary panel--rounded flow flow--large no-print">
-                    <div class="cols cols--gap-small">
-                        <p>
-                            {{ 'polls.show.explain_link_edit_vote' | trans }}
-                        </p>
-                    </div>
+            {% if myVote and app.flashes('storeMyVote') %}
+                <div
+                    data-controller="storage"
+                    data-storage-namespace-value="votes"
+                    data-storage-key-value="{{ myVote.id }}"
+                    data-storage-entry-value="{{ {
+                        pollId: poll.id,
+                        pollTitle: poll.title,
+                        pollType: poll.type,
+                        pollDate: poll.createdAt | dateIso,
+                        pollAuthor: poll.authorName,
+                        pollUrl: url('poll', { slug: poll.slug }),
+                        voteAuthor: myVote.authorName,
+                        voteDate: myVote.createdAt | dateIso,
+                        voteUrl: url('edit vote', { slug: poll.slug, id: myVote.id }),
+                        canEditVote: canEditVote(poll, ignoreAdminAccess: true),
+                    } | json_encode }}"
+                ></div>
+            {% endif %}
 
-                    <div class="flow flow--small">
-                        <label for="edit-link">
-                            {{ 'polls.show.link_edit_vote' | trans }}
-                        </label>
+            {% if displayMyVotes %}
+                <div
+                    class="flow no-print"
+                    data-controller="my-votes"
+                    data-my-votes-poll-id-value="{{ poll.id }}"
+                >
+                    <h2 class="text--primary">
+                        {{ 'polls.show.my_votes.title' | trans }}
+                        {{ icon('thumbtack') }}
+                    </h2>
 
-                        <div
-                            class="cols cols--always cols--gap-small"
-                            data-controller="copy-to-clipboard"
-                            data-label-copied="{{ 'base.copied' | trans }}"
-                        >
-                            <input
-                                id="edit-link"
-                                type="url"
-                                value="{{ url('edit vote', { slug: poll.slug, id: myVote.id }) }}"
-                                readonly
-                                data-copy-to-clipboard-target="copyable"
-                            />
+                    <p>
+                        {{ 'polls.show.my_votes.description' | trans }}
+                    </p>
+
+                    <ul class="panel panel--primary panel--rounded list--nostyle flow" data-my-votes-target="list">
+                    </ul>
+
+                    <template data-my-votes-target="template">
+                        <li class="panel panel--white panel--rounded cols cols--center cols--always cols--gap-small">
+                            <span class="col--extend">
+                                __author__
+                                <span class="text--small text--secondary">
+                                    {{ 'polls.show.my_votes.date' | trans }}
+                                </span>
+                            </span>
+
+                            {# Don't rely on the value stored in the localStorage
+                             # as the admin can change the edit vote mode. The
+                             # value from the localStorage is only used on the
+                             # /my page #}
+                            {% if canEditVote(poll, ignoreAdminAccess: true) %}
+                                <a href="__vote_url__" class="button button--small">
+                                    {{ 'polls.show.my_votes.edit' | trans }}
+                                </a>
+                            {% endif %}
 
                             <button
                                 type="button"
-                                class="button--primary"
-                                data-copy-to-clipboard-target="button"
-                                data-action="copy-to-clipboard#copy"
+                                class="button--ghost"
+                                data-action="my-votes#removeVote"
+                                data-storage-key="__key__"
+                                title="{{ 'polls.show.my_votes.remove' | trans }}"
                             >
-                                {{ 'base.copy' | trans }}
+                                {{ icon('thumbtack-slash') }}
+                                <span class="sr-only">
+                                    {{ 'polls.show.my_votes.remove' | trans }}
+                                </span>
                             </button>
-                        </div>
-                    </div>
+                        </li>
+                    </template>
                 </div>
             {% endif %}
         </div>

@@ -60,6 +60,7 @@ class VotesController extends BaseController
             $session->set("vote-{$poll->getId()}", $vote->getId());
 
             $this->addFlash('success', 'vote.updated');
+            $this->addFlash('storeMyVote', true);
 
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
@@ -68,6 +69,7 @@ class VotesController extends BaseController
 
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
+            'displayMyVotes' => false,
             'myVote' => $vote,
             'voteForm' => $form,
             'preserveScroll' => true,

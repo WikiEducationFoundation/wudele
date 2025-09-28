@@ -87,16 +87,33 @@ home.search_polls: 'Retrouver mes sondages'
 home.show.poll.deleted: 'Votre sondage a bien été supprimé.'
 home.source_code: 'Accéder au code source.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
+layout.header.my: 'Mes sondages et votes'
 layout.locales.change.en_GB: 'Change the language (currently in English)'
 layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
 layout.logout: 'Se déconnecter'
 layout.modal.close: Fermer
 login.log_in: 'Se connecter'
 login.title: 'Connexion à l’administration'
+my.index.admin_link: 'Lien administration'
+my.index.description: 'Retrouvez ici tous vos sondages et votes mémorisés dans votre navigateur. Pour plus de confidentialité, retirez-les si vous partagez ce dernier avec d’autres personnes.'
+my.index.poll_link: 'Lien sondage'
+my.index.polls.confirm_removal: "Vous êtes sur le point de retirer tous les sondages de ce navigateur (les sondages continueront d’exister). Êtes-vous sur·e de vouloir continuer\_?"
+my.index.polls.empty_placeholder: 'Aucun sondage'
+my.index.polls.of_by: 'Sondage du __date__ par __author__'
+my.index.polls.remove: 'Retirer le sondage'
+my.index.polls.title: Sondages
+my.index.remove_all: 'Tout retirer'
+my.index.title: 'Mes sondages et votes'
+my.index.vote_link: 'Lien du vote'
+my.index.votes.confirm_removal: "Vous êtes sur le point de retirer tous les votes de ce navigateur (les votes continueront d’exister). Êtes-vous sur·e de vouloir continuer\_?"
+my.index.votes.date: '(vote du __vote_date__)'
+my.index.votes.empty_placeholder: 'Aucun vote'
+my.index.votes.poll: "Sur le sondage «\_<strong>__poll_title__</strong>\_» de __poll_author__"
+my.index.votes.remove: 'Retirer le vote'
+my.index.votes.title: Votes
 notifications.close: Fermer
 pagination.next: 'Page suivante'
 pagination.previous: 'Page précédente'
-polls.admin.admin_link: 'Lien d’administration privé'
 polls.admin.comments: Commentaires
 polls.admin.confirm_delete_comment: "Êtes-vous sur·e de vouloir supprimer ce commentaire\_?"
 polls.admin.confirm_delete_vote: "Êtes-vous sur·e de vouloir supprimer ce vote\_?"
@@ -113,8 +130,6 @@ polls.choose.classic: 'Sondage classique'
 polls.choose.date: 'Sondage date'
 polls.choose.next: Suivant
 polls.choose.title: 'Choisissez le type de sondage'
-polls.complete.admin_access: "Veuillez conserver le lien suivant pour pouvoir administrer votre sondage à tout moment. <strong>Gardez ce lien pour vous\_!</strong>"
-polls.complete.admin_link: 'Lien d’administration privé'
 polls.complete.consult: 'Consultez votre sondage dès maintenant'
 polls.complete.created: "Le sondage «\_{poll}\_» est créé. Vous pouvez inviter vos contacts à y participer en partageant le lien ci-dessous."
 polls.complete.public_link: 'Lien de partage public'
@@ -151,10 +166,13 @@ polls.show.comments.title: Commentaires
 polls.show.created_by: 'Sondage créé par {by}'
 polls.show.display_list: 'Affichage liste'
 polls.show.display_table: 'Affichage tableau'
-polls.show.explain_link_edit_vote: 'Vous pouvez copier le lien de modification pour le sauvegarder et modifier votre vote plus tard.'
 polls.show.export_csv: 'Exporter (<abbr>CSV</abbr>)'
 polls.show.is_closed: 'Ce sondage est terminé.'
-polls.show.link_edit_vote: 'Lien de modification de votre vote'
+polls.show.my_votes.date: '(vote du __date__)'
+polls.show.my_votes.description: 'Vos votes sont mémorisés dans votre navigateur. Pour plus de confidentialité, retirez-les si vous partagez ce dernier avec d’autres personnes.'
+polls.show.my_votes.edit: Modifier
+polls.show.my_votes.remove: Retirer
+polls.show.my_votes.title: 'Mes votes'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"
 polls.show.poll: Sondage
 polls.show.print: Imprimer
@@ -164,11 +182,13 @@ polls.show.results.title: Résultats
 polls.show.share: Partager
 polls.show.vote.created: 'Votre vote est confirmé.'
 polls.show.vote.updated: 'Votre vote a bien été modifié.'
-polls.show.vote_edit: 'Modifier mon vote'
 polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
+polls.summary.admin_access: "Veuillez conserver le lien suivant pour pouvoir administrer votre sondage à tout moment. <strong>Gardez ce lien pour vous\_!</strong>"
+polls.summary.admin_link: 'Lien d’administration privé'
+polls.summary.admin_link.remember: 'Mémoriser le sondage dans ce navigateur'
 polls.summary.author.email: 'Adresse email'
 polls.summary.author.name: Pseudonyme
 polls.summary.author.no_email: 'Aucune adresse renseignée'

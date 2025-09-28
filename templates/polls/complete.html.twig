@@ -50,41 +50,6 @@
             </div>
         </div>
 
-        <div class="flow">
-            <p>
-                {{ 'polls.complete.admin_access' | trans | raw }}
-            </p>
-
-            <div class="flow flow--small">
-                <label for="poll-admin-link">
-                    {{ 'polls.complete.admin_link' | trans }}
-                </label>
-
-                <div
-                    class="cols cols--always cols--gap-small"
-                    data-controller="copy-to-clipboard"
-                    data-label-copied="{{ 'base.copied' | trans }}"
-                >
-                    <input
-                        id="poll-admin-link"
-                        type="url"
-                        value="{{ url('poll admin', { id: poll.id, token: poll.adminToken }) }}"
-                        readonly
-                        data-copy-to-clipboard-target="copyable"
-                    />
-
-                    <button
-                        type="button"
-                        class="button--primary"
-                        data-copy-to-clipboard-target="button"
-                        data-action="copy-to-clipboard#copy"
-                    >
-                        {{ 'base.copy' | trans }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div class="panel panel--primary panel--rounded flow">
             <p class="text--big text--primary text--bold">
                 {{ 'polls.complete.consult' | trans }}

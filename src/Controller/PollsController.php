@@ -229,6 +229,7 @@ class PollsController extends BaseController
                     $session->set("vote-{$poll->getId()}", $vote->getId());
 
                     $this->addFlash('success', 'vote.created');
+                    $this->addFlash('storeMyVote', true);
 
                     return $this->redirectToRoute('poll', [
                         'slug' => $poll->getSlug(),
@@ -259,6 +260,7 @@ class PollsController extends BaseController
 
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
+            'displayMyVotes' => true,
             'myVote' => $myVote,
             'voteForm' => $voteForm,
             'commentForm' => $commentForm,

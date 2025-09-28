@@ -25,6 +25,17 @@
     border-radius: var(--border-radius);
 }
 
+.header__link {
+    --outline-color: currentcolor;
+
+    display: inline-block;
+    padding: var(--space-small);
+
+    color: currentcolor;
+
+    border-radius: var(--border-radius);
+}
+
 .header__button {
     --outline-color: var(--color-primary1);
     --button-color: currentcolor;

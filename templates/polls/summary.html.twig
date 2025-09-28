@@ -20,7 +20,7 @@
             </p>
         </div>
 
-        {{ form_start(form) }}
+        {{ form_start(form, { attr: { class: 'flow flow--larger' } }) }}
             {{ form_errors(form) }}
 
             {{ include('polls/_summary.html.twig') }}
