@@ -1,5 +1,64 @@
 # Changelog
 
+## 2025-09-28 - 0.7.0
+
+### Features
+
+- Remember created polls and votes in the browser ([e85d7a1](https://framagit.org/pollaris/pollaris/-/commit/e85d7a1))
+- Allow to vote even if the user has already voted ([cf7e38d](https://framagit.org/pollaris/pollaris/-/commit/cf7e38d))
+- Add a closing date to the polls ([bd8f094](https://framagit.org/pollaris/pollaris/-/commit/bd8f094))
+- Provide a results chart ([f34c4c4](https://framagit.org/pollaris/pollaris/-/commit/f34c4c4))
+- Allow to disable the vote edition ([fa8f590](https://framagit.org/pollaris/pollaris/-/commit/fa8f590))
+- Allow to print the polls ([d1a1bb1](https://framagit.org/pollaris/pollaris/-/commit/d1a1bb1))
+- Allow to export polls as CSV ([4b0b3d6](https://framagit.org/pollaris/pollaris/-/commit/4b0b3d6))
+- Allow to make poll results private ([3bea392](https://framagit.org/pollaris/pollaris/-/commit/3bea392))
+- Allow to delete a poll ([3a6dc7f](https://framagit.org/pollaris/pollaris/-/commit/3a6dc7f))
+- Display sum of "yes" in the table view ([782232e](https://framagit.org/pollaris/pollaris/-/commit/782232e))
+- Ask to confirm page closing while vote is not submitted ([a9c214b](https://framagit.org/pollaris/pollaris/-/commit/a9c214b))
+
+### Improvements
+
+- Increase the density of polls' list view ([3f2b0da](https://framagit.org/pollaris/pollaris/-/commit/3f2b0da))
+- Target form when accessing the vote edition ([6aed527](https://framagit.org/pollaris/pollaris/-/commit/6aed527))
+- Move the polls search form to the "my" page ([48e59fb](https://framagit.org/pollaris/pollaris/-/commit/48e59fb))
+- Keep the dates visible when voting ([1dac379](https://framagit.org/pollaris/pollaris/-/commit/1dac379))
+- Improve the readibility of poll votes ([dd11698](https://framagit.org/pollaris/pollaris/-/commit/dd11698))
+- Move the results below the poll proposals ([756d11d](https://framagit.org/pollaris/pollaris/-/commit/756d11d))
+- Rename the "preferred choices" section into "results" ([9b18d6b](https://framagit.org/pollaris/pollaris/-/commit/9b18d6b))
+- Increase slightly the width of small wrapper ([4717fce](https://framagit.org/pollaris/pollaris/-/commit/4717fce))
+- Improve the look of the poll actions buttons ([03302aa](https://framagit.org/pollaris/pollaris/-/commit/03302aa))
+- Remove the comment form when editing a vote ([67b8758](https://framagit.org/pollaris/pollaris/-/commit/67b8758))
+- Add a "clone" icon on the "apply same slot" button ([77317d4](https://framagit.org/pollaris/pollaris/-/commit/77317d4))
+- Move the "go to poll" link to the top of the admin page ([6c15640](https://framagit.org/pollaris/pollaris/-/commit/6c15640))
+- Keep hover style when locale menu is opened ([366a517](https://framagit.org/pollaris/pollaris/-/commit/366a517))
+- Decrease margin between vote author and submit ([d820943](https://framagit.org/pollaris/pollaris/-/commit/d820943))
+
+### Bug fixes
+
+- Consider newlines in polls descriptions ([182afdc](https://framagit.org/pollaris/pollaris/-/commit/182afdc))
+- Allow to switch between table and list views without losing answers ([2cac5eb](https://framagit.org/pollaris/pollaris/-/commit/2cac5eb))
+- Display slots in their initial order ([b7d5c34](https://framagit.org/pollaris/pollaris/-/commit/b7d5c34))
+- Fix clicking on buttons containing a SVG icon ([61434c9](https://framagit.org/pollaris/pollaris/-/commit/61434c9))
+- Fix the "cancel link" URL in poll settings ([908b982](https://framagit.org/pollaris/pollaris/-/commit/908b982))
+- Fix the outline color of danger buttons ([62c96de](https://framagit.org/pollaris/pollaris/-/commit/62c96de))
+
+### Technical
+
+- Add a robots.txt ([3ce8fed](https://framagit.org/pollaris/pollaris/-/commit/3ce8fed))
+- Add logs above the warning level under var/log in production ([a6e1c7f](https://framagit.org/pollaris/pollaris/-/commit/a6e1c7f))
+- Update the dependencies ([7c51898](https://framagit.org/pollaris/pollaris/-/commit/7c51898), [59d0b02](https://framagit.org/pollaris/pollaris/-/commit/59d0b02))
+
+### Developers
+
+- Add utility function to escape HTML ([7c1f3e4](https://framagit.org/pollaris/pollaris/-/commit/7c1f3e4))
+- Add methods to store info in localStorage ([c6e773e](https://framagit.org/pollaris/pollaris/-/commit/c6e773e))
+- Add a protected button Stimulus controller ([c5bcb8a](https://framagit.org/pollaris/pollaris/-/commit/c5bcb8a))
+- Add style for disabled buttons and danger elements ([eb58716](https://framagit.org/pollaris/pollaris/-/commit/eb58716))
+- Handle fetched modal content ([af60c91](https://framagit.org/pollaris/pollaris/-/commit/af60c91))
+- Refactor grouping proposals by dates ([12fa5aa](https://framagit.org/pollaris/pollaris/-/commit/12fa5aa))
+- Add thumbtack icons ([09e8a2f](https://framagit.org/pollaris/pollaris/-/commit/09e8a2f))
+- Fix closing button markup in admin ([36d9d0b](https://framagit.org/pollaris/pollaris/-/commit/36d9d0b))
+
 ## 2025-07-23 - 0.6.2
 
 ### Bug fixes
