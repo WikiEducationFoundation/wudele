@@ -32,13 +32,15 @@ class PollSecurity
         return $poll->areResultsPublic() || $this->hasAccessToAdmin($poll);
     }
 
-    public function canEditVote(Entity\Poll $poll): bool
+    public function canEditVote(Entity\Poll $poll, bool $ignoreAdminAccess = false): bool
     {
+        $hasAdminAccess = !$ignoreAdminAccess && $this->hasAccessToAdmin($poll);
+
         return (
             !$poll->isClosed() &&
             (
                 $poll->getEditVoteMode() !== 'no' ||
-                $this->hasAccessToAdmin($poll)
+                $hasAdminAccess
             )
         );
     }

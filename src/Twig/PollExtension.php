@@ -33,9 +33,9 @@ class PollExtension
     }
 
     #[AsTwigFunction('canEditVote')]
-    public function canEditVote(Entity\Poll $poll): bool
+    public function canEditVote(Entity\Poll $poll, bool $ignoreAdminAccess = false): bool
     {
-        return $this->pollSecurity->canEditVote($poll);
+        return $this->pollSecurity->canEditVote($poll, $ignoreAdminAccess);
     }
 
     /**
