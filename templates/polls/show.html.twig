@@ -146,7 +146,7 @@
                         pollUrl: url('poll', { slug: poll.slug }),
                         voteAuthor: myVote.authorName,
                         voteDate: myVote.createdAt | dateIso,
-                        voteUrl: url('edit vote', { slug: poll.slug, id: myVote.id }),
+                        voteUrl: url('edit vote', { slug: poll.slug, id: myVote.id, _fragment: 'poll' }),
                         canEditVote: canEditVote(poll, ignoreAdminAccess: true),
                     } | json_encode }}"
                 ></div>
@@ -215,6 +215,7 @@
         {% endif %}
 
         <div
+            id="poll"
             class="flow"
             data-controller="poll-view"
             aria-live="polite"

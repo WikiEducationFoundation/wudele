@@ -37,7 +37,7 @@
 
                             <div class="flow flow--smaller">
                                 {% if not poll.isClosed %}
-                                    <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: vote.id }) }}">
+                                    <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: vote.id, _fragment: 'poll' }) }}">
                                         {{ icon('pen-to-square') }}
                                         {{ 'polls.admin.edit' | trans }}
                                     </a>
