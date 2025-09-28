@@ -19,6 +19,7 @@ class SearchPollsForm extends AbstractType
         $builder->add('email', Type\EmailType::class, [
             'trim' => true,
             'label' => new TranslatableMessage('forms.search_polls_form.email.label'),
+            'help' => new TranslatableMessage('forms.search_polls_form.email.help'),
         ]);
 
         $builder->add('submit', Type\SubmitType::class, [
@@ -30,7 +31,7 @@ class SearchPollsForm extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => [
-                'class' => 'form--standard',
+                'class' => 'flow flow--small',
             ],
         ]);
     }

@@ -29,28 +29,6 @@ class PollsController extends BaseController
         return $this->render('polls/choose.html.twig');
     }
 
-    #[Route('/polls/search', name: 'search polls')]
-    public function search(Request $request, Service\PollsFinder $pollsFinder): Response
-    {
-        $form = $this->createNamedForm('search_polls', Form\SearchPollsForm::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $email = $form->get('email')->getData();
-
-            $pollsFinder->sendEmailLinks($email);
-
-            return $this->redirectToRoute('search polls', [
-                'success' => true,
-            ]);
-        }
-
-        return $this->render('polls/search.html.twig', [
-            'form' => $form,
-            'success' => $request->query->getBoolean('success'),
-        ]);
-    }
-
     #[Route('/polls/new', name: 'new poll')]
     public function new(
         Request $request,
@@ -89,7 +67,6 @@ class PollsController extends BaseController
     #[Route('/polls/{slug}.csv', name: 'poll csv')]
     public function showCsv(
         string $slug,
-        Request $request,
         Repository\PollRepository $pollRepository,
         Security\PollSecurity $pollSecurity,
         TranslatorInterface $translator,

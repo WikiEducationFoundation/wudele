@@ -20,6 +20,18 @@
             {{ icon('thumbtack') }}
         </h1>
 
+        {% if app.request.query.get('mailSent') %}
+            <div class="panel panel--success panel--rounded cols cols--gap-small">
+                <div class="text--bigger text--success">
+                    {{ icon('circle-check') }}
+                </div>
+
+                <p class="text--success" role="alert">
+                    {{ 'my.index.search.success' | trans }}
+                </p>
+            </div>
+        {% endif %}
+
         <p>
             {{ 'my.index.description' | trans }}
         </p>
@@ -149,6 +161,24 @@
                     </div>
                 </li>
             </template>
+        </div>
+
+        <div class="flow">
+            <h2 class="text--primary">
+                {{ 'my.index.search.title' | trans }}
+            </h2>
+
+            <div class="panel panel--primary panel--rounded">
+                {{ form_start(searchForm) }}
+                    {{ form_errors(searchForm) }}
+
+                    {{ form_row(searchForm.email) }}
+
+                    <div class="text--right">
+                        {{ form_row(searchForm.submit) }}
+                    </div>
+                {{ form_end(searchForm) }}
+            </div>
         </div>
     </div>
 {% endblock %}

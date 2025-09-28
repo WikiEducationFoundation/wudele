@@ -6,14 +6,32 @@
 
 namespace App\Controller;
 
+use App\Form;
+use App\Service;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MyController extends BaseController
 {
     #[Route('/my', name: 'my')]
-    public function index(): Response
+    public function index(Request $request, Service\PollsFinder $pollsFinder): Response
     {
-        return $this->render('my/index.html.twig');
+        $searchForm = $this->createNamedForm('search_polls', Form\SearchPollsForm::class);
+
+        $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $email = $searchForm->get('email')->getData();
+
+            $pollsFinder->sendEmailLinks($email);
+
+            return $this->redirectToRoute('my', [
+                'mailSent' => true,
+            ]);
+        }
+
+        return $this->render('my/index.html.twig', [
+            'searchForm' => $searchForm,
+        ]);
     }
 }
