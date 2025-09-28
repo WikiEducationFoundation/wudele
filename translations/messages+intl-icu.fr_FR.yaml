@@ -156,7 +156,7 @@ polls.settings.slug.title: 'Personnaliser le lien du sondage'
 polls.settings.title: 'Paramétrez le sondage'
 polls.sharing.public_link: 'Lien de partage public'
 polls.sharing.title: 'Partager le sondage'
-polls.show.administration: Administration
+polls.show.administer: Administrer
 polls.show.authenticated: 'Vous vous êtes authentifié·e avec succès.'
 polls.show.comment.created: 'Votre commentaire a été publié.'
 polls.show.comments.explain: 'Votre commentaire sera directement visible sur la page du sondage.'

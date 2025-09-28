@@ -156,7 +156,7 @@ polls.settings.slug.title: 'Customise the poll link'
 polls.settings.title: 'Configure the poll'
 polls.sharing.public_link: 'Public sharing link'
 polls.sharing.title: 'Share the poll'
-polls.show.administration: Administration
+polls.show.administer: Administer
 polls.show.authenticated: 'You have successfully authenticated.'
 polls.show.comment.created: 'Your comment has been published.'
 polls.show.comments.explain: 'Your comment will be directly visible on the poll’s page.'

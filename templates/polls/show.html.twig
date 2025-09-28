@@ -47,45 +47,47 @@
 
                 <div class="panel__separator no-print"></div>
 
-                <div class="no-print">
-                    <button
-                        type="button"
-                        class="button--ghost button--small"
-                        data-controller="modal-opener"
-                        data-action="modal-opener#copy"
-                        data-modal-opener-selector-value="#modal-sharing"
-                    >
-                        {{ icon('share') }}
-                        {{ 'polls.show.share' | trans }}
-                    </button>
+                <div class="flow flow--smaller no-print">
+                    <div>
+                        <button
+                            type="button"
+                            class="button--ghost button--small"
+                            data-controller="modal-opener"
+                            data-action="modal-opener#copy"
+                            data-modal-opener-selector-value="#modal-sharing"
+                        >
+                            {{ icon('share') }}
+                            {{ 'polls.show.share' | trans }}
+                        </button>
 
-                    <button
-                        type="button"
-                        data-controller="printer"
-                        data-action="printer#print"
-                        class="button button--ghost button--small"
-                    >
-                        {{ icon('print') }}
-                        {{ 'polls.show.print' | trans }}
-                    </button>
-
-                    {% if canViewResults(poll) %}
-                        <a
-                            href="{{ path('poll csv', { slug: poll.slug }) }}"
+                        <button
+                            type="button"
+                            data-controller="printer"
+                            data-action="printer#print"
                             class="button button--ghost button--small"
                         >
-                            {{ icon('file-csv') }}
-                            {{ 'polls.show.export_csv' | trans | raw }}
-                        </a>
-                    {% endif %}
+                            {{ icon('print') }}
+                            {{ 'polls.show.print' | trans }}
+                        </button>
+
+                        {% if canViewResults(poll) %}
+                            <a
+                                href="{{ path('poll csv', { slug: poll.slug }) }}"
+                                class="button button--ghost button--small"
+                            >
+                                {{ icon('file-csv') }}
+                                {{ 'polls.show.export_csv' | trans | raw }}
+                            </a>
+                        {% endif %}
+                    </div>
 
                     {% if hasAccessToAdmin(poll) %}
                         <a
                             href="{{ path('poll admin', { id: poll.id, token: poll.adminToken }) }}"
-                            class="button button--ghost button--small"
+                            class="button button--small button--block text--center"
                         >
                             {{ icon('lock') }}
-                            {{ 'polls.show.administration' | trans }}
+                            {{ 'polls.show.administer' | trans }}
                         </a>
                     {% endif %}
                 </div>
