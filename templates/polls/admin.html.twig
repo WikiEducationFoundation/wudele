@@ -14,6 +14,12 @@
             {{ 'polls.admin.title' | trans }}
         </h1>
 
+        <div class="text--center">
+            <a class="button button--block button--primary" href="{{ path('poll', { slug: poll.slug }) }}">
+                {{ 'polls.admin.go_to_poll' | trans }}
+            </a>
+        </div>
+
         {{ include('polls/_summary.html.twig') }}
 
         <hr>
@@ -105,12 +111,6 @@
                     {% endfor %}
                 {% endif %}
             </div>
-        </div>
-
-        <div class="text--center">
-            <a class="button button--block button--primary" href="{{ path('poll', { slug: poll.slug }) }}">
-                {{ 'polls.admin.go_to_poll' | trans }}
-            </a>
         </div>
     </div>
 {% endblock %}
