@@ -211,30 +211,30 @@ class PollsController extends BaseController
 
             if ($voteId) {
                 $myVote = $voteRepository->find($voteId);
-            } else {
-                $vote = new Entity\Vote();
-                $vote->setPoll($poll);
-                $voteForm = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
+            }
 
-                $voteForm->handleRequest($request);
-                if ($voteForm->isSubmitted() && $voteForm->isValid()) {
-                    $vote = $voteForm->getData();
+            $vote = new Entity\Vote();
+            $vote->setPoll($poll);
+            $voteForm = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
 
-                    $voteRepository->save($vote);
+            $voteForm->handleRequest($request);
+            if ($voteForm->isSubmitted() && $voteForm->isValid()) {
+                $vote = $voteForm->getData();
 
-                    $voteEvent = new PollActivity\VoteEvent($vote);
-                    $eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
+                $voteRepository->save($vote);
 
-                    $session = $request->getSession();
-                    $session->set("vote-{$poll->getId()}", $vote->getId());
+                $voteEvent = new PollActivity\VoteEvent($vote);
+                $eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
 
-                    $this->addFlash('success', 'vote.created');
-                    $this->addFlash('storeMyVote', true);
+                $session = $request->getSession();
+                $session->set("vote-{$poll->getId()}", $vote->getId());
 
-                    return $this->redirectToRoute('poll', [
-                        'slug' => $poll->getSlug(),
-                    ]);
-                }
+                $this->addFlash('success', 'vote.created');
+                $this->addFlash('storeMyVote', true);
+
+                return $this->redirectToRoute('poll', [
+                    'slug' => $poll->getSlug(),
+                ]);
             }
 
             $comment = new Entity\Comment();
@@ -260,10 +260,10 @@ class PollsController extends BaseController
 
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
-            'displayMyVotes' => true,
             'myVote' => $myVote,
             'voteForm' => $voteForm,
             'commentForm' => $commentForm,
+            'onEditPage' => false,
         ]);
     }
 

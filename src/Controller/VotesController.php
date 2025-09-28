@@ -69,11 +69,11 @@ class VotesController extends BaseController
 
         return $this->render('polls/show.html.twig', [
             'poll' => $poll,
-            'displayMyVotes' => false,
             'myVote' => $vote,
             'voteForm' => $form,
             'preserveScroll' => true,
             'commentForm' => null,
+            'onEditPage' => true,
         ]);
     }
 

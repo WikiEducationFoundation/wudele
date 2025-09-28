@@ -152,7 +152,7 @@
                 ></div>
             {% endif %}
 
-            {% if displayMyVotes %}
+            {% if not onEditPage %}
                 <div
                     class="flow no-print"
                     data-controller="my-votes"
@@ -282,7 +282,7 @@
                         </div>
 
                         <div class="cols cols--always cols--gap cols--center">
-                            {% if myVote %}
+                            {% if onEditPage %}
                                 <a
                                     class="button"
                                     href="{{ path('poll', { slug: poll.slug }) }}"
