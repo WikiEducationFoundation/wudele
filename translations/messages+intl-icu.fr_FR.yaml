@@ -28,7 +28,7 @@ emails.polls_list.here_is_the_list: "Voici la liste des sondages que vous admini
 emails.polls_list.subject: 'Liste de vos sondages'
 forms.apply: Appliquer
 forms.cancel: Annuler
-forms.comment_form.author_name.label: 'Votre pseudonyme'
+forms.comment_form.author_name.label: 'Votre nom'
 forms.comment_form.content.label: 'Votre message'
 forms.comment_form.submit: Poster
 forms.complete: Finaliser
@@ -49,7 +49,7 @@ forms.poll_dates_form.use_calendar: 'Sélectionner les dates depuis un calendrie
 forms.poll_deletion_form.submit: 'Je veux supprimer ce sondage'
 forms.poll_form.author_email.help: 'Votre adresse ne sera pas partagée avec les participant·es du sondage. Elle servira uniquement à vous permettre de retrouver votre sondage si vous perdez son adresse et à vous avertir lors de nouveaux votes.'
 forms.poll_form.author_email.label: 'Votre adresse email'
-forms.poll_form.author_name.label: 'Votre pseudonyme'
+forms.poll_form.author_name.label: 'Votre nom'
 forms.poll_form.closed_at.help: 'Les participant·es pourront voter jusqu’à cette date.'
 forms.poll_form.closed_at.label: 'Date de fin du sondage'
 forms.poll_form.description.label: Description
@@ -76,7 +76,7 @@ forms.search_polls_form.email.label: 'Votre adresse email'
 forms.search_polls_form.submit: Envoyer
 forms.slot_type.label.label_pattern: 'Horaire __number__'
 forms.slots_form.day: Journée
-forms.vote_form.author_name.label: 'Votre pseudonyme'
+forms.vote_form.author_name.label: 'Votre nom'
 forms.vote_form.leave_confirmation: "Vous n’avez pas encore confirmé votre vote. En continuant, vous allez perdre votre saisie. Êtes-vous sur·e de vouloir continuer\_?"
 forms.vote_form.password.help: 'Un mot de passe est nécessaire pour voter sur ce sondage.'
 forms.vote_form.password.label: 'Mot de passe'

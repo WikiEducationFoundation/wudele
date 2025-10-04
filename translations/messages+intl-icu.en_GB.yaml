@@ -28,7 +28,7 @@ emails.polls_list.here_is_the_list: 'Here is the list of the polls you administr
 emails.polls_list.subject: 'List of your polls'
 forms.apply: Apply
 forms.cancel: Cancel
-forms.comment_form.author_name.label: 'Your nickname'
+forms.comment_form.author_name.label: 'Your name'
 forms.comment_form.content.label: 'Your message'
 forms.comment_form.submit: Post
 forms.complete: Complete
@@ -49,7 +49,7 @@ forms.poll_dates_form.use_calendar: 'Select the dates from a calendar'
 forms.poll_deletion_form.submit: 'I want to delete this poll'
 forms.poll_form.author_email.help: 'Your address will not be shared with other poll participants. It will only be used to enable you to find your poll if you lose its address and to notify you when new votes are made.'
 forms.poll_form.author_email.label: 'Your email address'
-forms.poll_form.author_name.label: 'Your nickname'
+forms.poll_form.author_name.label: 'Your name'
 forms.poll_form.closed_at.help: 'Participants will be able to vote until this date.'
 forms.poll_form.closed_at.label: 'Poll closing date'
 forms.poll_form.description.label: Description
@@ -76,7 +76,7 @@ forms.search_polls_form.email.label: 'Your email address'
 forms.search_polls_form.submit: Send
 forms.slot_type.label.label_pattern: 'Time slot __number__'
 forms.slots_form.day: Day
-forms.vote_form.author_name.label: 'Your nickname'
+forms.vote_form.author_name.label: 'Your name'
 forms.vote_form.leave_confirmation: 'You have not yet confirmed your vote. By continuing, you will lose your entry. Are you sure you want to continue?'
 forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
