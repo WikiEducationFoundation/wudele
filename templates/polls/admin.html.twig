@@ -33,17 +33,16 @@
                         {{ 'polls.admin.no_votes' | trans }}
                     </p>
                 {% else %}
-                    {% for vote in poll.votes %}
-                        <div class="panel panel--primary panel--rounded flow">
-                            <p>
-                                {{ 'polls.admin.have_voted' | trans({ voter: vote.authorName, date: vote.createdAt | dateTrans }) }}
-                            </p>
+                    <ul class="panel panel--primary panel--rounded list--nostyle flow">
+                        {% for vote in poll.votes %}
+                            <li class="panel panel--white panel--rounded cols cols--center cols--always cols--gap-small">
+                                <span class="col--extend">
+                                    {{ 'polls.admin.have_voted' | trans({ voter: vote.authorName, date: vote.createdAt | dateTrans }) }}
+                                </span>
 
-                            <div class="panel__separator"></div>
 
-                            <div class="flow flow--smaller">
                                 {% if not poll.isClosed %}
-                                    <a class="button button--menuitem" href="{{ path('edit vote', { slug: poll.slug, id: vote.id, _fragment: 'poll' }) }}">
+                                    <a class="button button--smaller" href="{{ path('edit vote', { slug: poll.slug, id: vote.id, _fragment: 'poll' }) }}">
                                         {{ icon('pen-to-square') }}
                                         {{ 'polls.admin.edit' | trans }}
                                     </a>
@@ -54,16 +53,18 @@
                                     action="{{ path('delete vote', { pollId: poll.id, token: poll.adminToken, voteId: vote.id }) }}"
                                     data-turbo-confirm="{{ 'polls.admin.confirm_delete_vote' | trans }}"
                                 >
-                                    <button class="button button--menuitem">
+                                    <button class="button button--smaller">
                                         {{ icon('trash') }}
-                                        {{ 'polls.admin.delete' | trans }}
+                                        <span class="sr-only">
+                                            {{ 'polls.admin.delete' | trans }}
+                                        </span>
                                     </button>
 
                                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete vote') }}">
                                 </form>
-                            </div>
-                        </div>
-                    {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
                 {% endif %}
             </div>
 
@@ -75,8 +76,8 @@
                         {{ 'polls.admin.no_comments' | trans }}
                     </p>
                 {% else %}
-                    {% for comment in poll.comments %}
-                        <div class="panel panel--primary panel--rounded flow">
+                    <ul class="panel panel--primary panel--rounded list--nostyle flow">
+                        {% for comment in poll.comments %}
                             <article class="panel panel--white panel--rounded flow flow--small">
                                 <header class="cols cols--always cols--gap-small text--secondary">
                                     <span class="col--extend">
@@ -91,24 +92,28 @@
                                 <p>
                                     {{ comment.content | nl2br }}
                                 </p>
+
+                                <div class="cols cols--always cols--gap-small">
+                                    <div class="col--extend"></div>
+
+                                    <form
+                                        method="post"
+                                        action="{{ path('delete comment', { pollId: poll.id, token: poll.adminToken, commentId: comment.id }) }}"
+                                        data-turbo-confirm="{{ 'polls.admin.confirm_delete_comment' | trans }}"
+                                    >
+                                        <button class="button button--smaller">
+                                            {{ icon('trash') }}
+                                            <span class="sr-only">
+                                                {{ 'polls.admin.delete' | trans }}
+                                            </span>
+                                        </button>
+
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete comment') }}">
+                                    </form>
+                                </div>
                             </article>
-
-                            <div class="panel__separator"></div>
-
-                            <form
-                                method="post"
-                                action="{{ path('delete comment', { pollId: poll.id, token: poll.adminToken, commentId: comment.id }) }}"
-                                data-turbo-confirm="{{ 'polls.admin.confirm_delete_comment' | trans }}"
-                            >
-                                <button class="button button--menuitem">
-                                    {{ icon('trash') }}
-                                    {{ 'polls.admin.delete' | trans }}
-                                </button>
-
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete comment') }}">
-                            </form>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </ul>
                 {% endif %}
             </div>
         </div>
