@@ -9,7 +9,7 @@ namespace App\Flow;
 use App\Entity;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ClassicPollFlow extends Flow
+class ClassicPollFlow extends PollFlow
 {
     /** @var string[] */
     protected array $steps = [
@@ -18,15 +18,6 @@ class ClassicPollFlow extends Flow
         'summary',
         'end',
     ];
-
-    public function __construct(
-        private Entity\Poll $poll,
-        private UrlGeneratorInterface $urlGenerator,
-    ) {
-        if (!$poll->isClassicPoll()) {
-            throw new \LogicException('Poll must be of type "classic"');
-        }
-    }
 
     public function checkStep(string $stepName): bool
     {
@@ -43,28 +34,18 @@ class ClassicPollFlow extends Flow
 
     public function getStepUrl(string $stepName): string
     {
-        if ($stepName === 'init') {
-            return $this->urlGenerator->generate('edit poll', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'proposals') {
-            return $this->urlGenerator->generate('edit poll proposals', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'summary') {
-            return $this->urlGenerator->generate('poll summary', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'end') {
-            return $this->urlGenerator->generate('poll complete', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } else {
-            throw new \LogicException("{$stepName} is an invalid step name");
-        }
+        $routeName = match ($stepName) {
+            'init' => 'edit poll',
+            'proposals' => 'edit poll proposals',
+            'summary' => 'poll summary',
+            'end' => 'poll complete',
+            default => throw new \LogicException("{$stepName} is an invalid step name"),
+        };
+
+        return $this->urlGenerator->generate($routeName, [
+            'id' => $this->poll->getId(),
+            'token' => $this->poll->getAdminToken(),
+            'flow' => 'on',
+        ]);
     }
 }

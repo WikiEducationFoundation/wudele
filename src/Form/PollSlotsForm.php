@@ -25,10 +25,6 @@ class PollSlotsForm extends AbstractType
             'label' => false,
             'by_reference' => false,
         ]);
-
-        $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.next'),
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -350,6 +350,7 @@ class PollsController extends BaseController
         return $this->render('polls/settings.html.twig', [
             'poll' => $poll,
             'form' => $form,
+            'flow' => $flow,
         ]);
     }
 
@@ -550,8 +551,6 @@ class PollsController extends BaseController
         Entity\Poll $poll,
         string $token,
         Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -561,13 +560,8 @@ class PollsController extends BaseController
             return $this->redirectToRoute('poll summary', [
                 'id' => $poll->getId(),
                 'token' => $poll->getAdminToken(),
+                'flow' => 'on',
             ]);
-        }
-
-        $flow = $pollFlowBuilder->build($poll);
-
-        if (!$flow->isAccessible('end')) {
-            return $this->redirect($flow->getPreviousStepUrl('end'));
         }
 
         $session = $request->getSession();
@@ -575,7 +569,6 @@ class PollsController extends BaseController
 
         return $this->render('polls/admin.html.twig', [
             'poll' => $poll,
-            'flow' => $flow,
         ]);
     }
 

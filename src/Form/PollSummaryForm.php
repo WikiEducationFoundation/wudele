@@ -16,12 +16,6 @@ class PollSummaryForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.complete'),
-            'attr' => [
-                'class' => 'button--primary',
-            ],
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -32,6 +32,7 @@ forms.comment_form.author_name.label: 'Votre nom'
 forms.comment_form.content.label: 'Votre message'
 forms.comment_form.submit: Poster
 forms.complete: Finaliser
+forms.confirm: Confirmer
 forms.date_type.label.label_pattern: 'Date __number__'
 forms.error: Erreur
 forms.labels.max_length: '(max. {length} caractères)'
@@ -196,6 +197,8 @@ polls.summary.closed_at: 'Date de fin'
 polls.summary.closed_at.none: Aucune
 polls.summary.delete_poll: 'Supprimer le sondage'
 polls.summary.edit: Modifier
+polls.summary.edit_dates: 'Modifier les dates'
+polls.summary.edit_slots: 'Modifier les horaires'
 polls.summary.information.title: 'Informations générales'
 polls.summary.is_closed: '(sondage terminé)'
 polls.summary.proposals.title: 'Mes propositions'

@@ -77,10 +77,6 @@ class PollForm extends AbstractType
         }
 
         $builder->add('authorEmail', Type\EmailType::class, $authorEmailOptions);
-
-        $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.next'),
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

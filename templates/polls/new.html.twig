@@ -15,9 +15,7 @@
                 {{ 'polls.new.title' | trans }}
             </h1>
 
-            <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: flow.stepNumber('init'), total: flow.totalSteps }) }}
-            </p>
+            {{ include('polls/_flow_steps.html.twig', { step: 'init' }) }}
         </div>
 
         {{ form_start(form) }}
@@ -38,9 +36,7 @@
                 </div>
             </fieldset>
 
-            <div class="text--right">
-                {{ form_row(form.submit) }}
-            </div>
+            {{ include('polls/_flow_actions.html.twig', { step: 'init' }) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

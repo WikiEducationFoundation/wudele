@@ -71,7 +71,7 @@ class PollsControllerTest extends WebTestCase
         $adminToken = $poll->getAdminToken();
         $this->assertSame(20, strlen($id ?? ''));
         $this->assertSame(20, strlen($adminToken ?? ''));
-        $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/proposals", 302);
+        $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/proposals?flow=on", 302);
     }
 
     public function testPostNewDatePollRedirectsToPollDates(): void
@@ -95,7 +95,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame('date', $poll->getType());
         $id = $poll->getId();
         $adminToken = $poll->getAdminToken();
-        $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/dates", 302);
+        $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/dates?flow=on", 302);
     }
 
     public function testPostNewFailsIfEmailIsEmptyButRequired(): void
@@ -716,7 +716,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($newDescription, $poll->getDescription());
         $this->assertSame($newName, $poll->getAuthorName());
         $this->assertSame($newEmail, $poll->getAuthorEmail());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals?flow=on", 302);
     }
 
     public function testPostEditFailsIfCsrfIsInvalid(): void
@@ -809,7 +809,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($poll, $proposals[0]->getPoll());
         $this->assertSame('Bar', $proposals[1]->getLabel());
         $this->assertSame($poll, $proposals[1]->getPoll());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
     }
 
     public function testPostProposalsSynchronizesExistingVotesWithNewProposals(): void
@@ -957,7 +957,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($poll, $dates[0]->getPoll());
         $this->assertSame('2024-11-02', $dates[1]->getValue()?->format('Y-m-d'));
         $this->assertSame($poll, $dates[1]->getPoll());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots?flow=on", 302);
     }
 
     public function testPostDatesFailsIfCsrfIsInvalid(): void
@@ -1008,7 +1008,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates?flow=on", 302);
     }
 
     public function testGetSlotsFailsIfAdminTokenDoesNotMatch(): void
@@ -1053,7 +1053,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($date, $proposals[0]->getDate());
         $this->assertSame($slot2, $proposals[1]->getLabel());
         $this->assertSame($date, $proposals[1]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary?flow=on", 302);
     }
 
     public function testPostSlotsCreatesADefaultProposalIfNoneArePosted(): void
@@ -1080,7 +1080,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($proposals));
         $this->assertSame('Day', $proposals[0]->getLabel());
         $this->assertSame($date, $proposals[0]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary?flow=on", 302);
     }
 
     public function testPostSlotsFailsIfCsrfTokenIsInvalid(): void
@@ -1137,7 +1137,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/settings");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals?flow=on", 302);
     }
 
     public function testGetSettingsFailsIfAdminTokenDoesNotMatch(): void
@@ -1275,7 +1275,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/proposals?flow=on", 302);
     }
 
     public function testGetSummaryFailsIfAdminTokenDoesNotMatch(): void
@@ -1348,7 +1348,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/complete");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
     }
 
     public function testGetCompleteFailsIfAdminTokenDoesNotMatch(): void
@@ -1380,7 +1380,7 @@ class PollsControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin");
 
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary?flow=on", 302);
     }
 
     public function testGetAdminFailsIfAdminTokenDoesNotMatch(): void

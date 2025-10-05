@@ -46,6 +46,15 @@ abstract class Flow
     }
 
     /**
+     * Return whether the step has a previous step or not.
+     */
+    public function hasPreviousStep(string $stepName): bool
+    {
+        $stepNumber = $this->getStepNumber($stepName);
+        return $stepNumber > 1;
+    }
+
+    /**
      * Return the URL of the step before the given one.
      */
     public function getPreviousStepUrl(string $stepName): string
@@ -59,6 +68,15 @@ abstract class Flow
         $previousStepIndex = $stepIndex - 1;
         $previousStepName = $this->steps[$previousStepIndex];
         return $this->getStepUrl($previousStepName);
+    }
+
+    /**
+     * Return whether the step has a next step or not.
+     */
+    public function hasNextStep(string $stepName): bool
+    {
+        $stepNumber = $this->getStepNumber($stepName);
+        return $stepNumber < $this->getTotalSteps();
     }
 
     /**

@@ -15,9 +15,7 @@
                 {{ 'polls.slots.title' | trans }}
             </h1>
 
-            <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: flow.stepNumber('slots'), total: flow.totalSteps }) }}
-            </p>
+            {{ include('polls/_flow_steps.html.twig', { step: 'slots' }) }}
         </div>
 
         {{ form_start(form) }}
@@ -108,15 +106,7 @@
                 </fieldset>
             {% endfor %}
 
-            <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ flow.previousStepUrl('slots') }}">
-                    {{ 'forms.previous' | trans }}
-                </a>
-
-                <div class="col--extend"></div>
-
-                {{ form_row(form.submit) }}
-            </div>
+            {{ include('polls/_flow_actions.html.twig', { step: 'slots' }) }}
         {{ form_end(form) }}
 
         {{ include('polls/_slots_applier_modal.html.twig') }}

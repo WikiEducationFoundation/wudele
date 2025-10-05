@@ -34,10 +34,6 @@ class PollDatesForm extends AbstractType
                 ),
             ],
         ]);
-
-        $builder->add('submit', Type\SubmitType::class, [
-            'label' => new TranslatableMessage('forms.next'),
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -15,13 +15,13 @@
                 {{ 'polls.dates.title' | trans }}
             </h1>
 
-            <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: flow.stepNumber('dates'), total: flow.totalSteps }) }}
-            </p>
+            {{ include('polls/_flow_steps.html.twig', { step: 'dates' }) }}
 
-            <p class="text--secondary">
-                {{ 'polls.dates.slots_at_next_step' | trans }}
-            </p>
+            {% if not flow.isStepOutOfFlow %}
+                <p class="text--secondary">
+                    {{ 'polls.dates.slots_at_next_step' | trans }}
+                </p>
+            {% endif %}
         </div>
 
         {{ form_start(form) }}
@@ -128,15 +128,7 @@
                 </div>
             </div>
 
-            <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ flow.previousStepUrl('dates') }}">
-                    {{ 'forms.previous' | trans }}
-                </a>
-
-                <div class="col--extend"></div>
-
-                {{ form_row(form.submit) }}
-            </div>
+            {{ include('polls/_flow_actions.html.twig', { step: 'dates' }) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

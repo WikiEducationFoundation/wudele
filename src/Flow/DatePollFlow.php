@@ -9,7 +9,7 @@ namespace App\Flow;
 use App\Entity;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DatePollFlow extends Flow
+class DatePollFlow extends PollFlow
 {
     /** @var string[] */
     protected array $steps = [
@@ -19,15 +19,6 @@ class DatePollFlow extends Flow
         'summary',
         'end',
     ];
-
-    public function __construct(
-        private Entity\Poll $poll,
-        private UrlGeneratorInterface $urlGenerator,
-    ) {
-        if (!$poll->isDatePoll()) {
-            throw new \LogicException('Poll must be of type "date"');
-        }
-    }
 
     public function checkStep(string $stepName): bool
     {
@@ -46,33 +37,19 @@ class DatePollFlow extends Flow
 
     public function getStepUrl(string $stepName): string
     {
-        if ($stepName === 'init') {
-            return $this->urlGenerator->generate('edit poll', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'dates') {
-            return $this->urlGenerator->generate('edit poll dates', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'slots') {
-            return $this->urlGenerator->generate('edit poll slots', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'summary') {
-            return $this->urlGenerator->generate('poll summary', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } elseif ($stepName === 'end') {
-            return $this->urlGenerator->generate('poll complete', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
-        } else {
-            throw new \LogicException("{$stepName} is an invalid step name");
-        }
+        $routeName = match ($stepName) {
+            'init' => 'edit poll',
+            'dates' => 'edit poll dates',
+            'slots' => 'edit poll slots',
+            'summary' => 'poll summary',
+            'end' => 'poll complete',
+            default => throw new \LogicException("{$stepName} is an invalid step name"),
+        };
+
+        return $this->urlGenerator->generate($routeName, [
+            'id' => $this->poll->getId(),
+            'token' => $this->poll->getAdminToken(),
+            'flow' => 'on',
+        ]);
     }
 }

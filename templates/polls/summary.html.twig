@@ -15,9 +15,7 @@
                 {{ 'polls.summary.title' | trans }}
             </h1>
 
-            <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: flow.stepNumber('summary'), total: flow.totalSteps }) }}
-            </p>
+            {{ include('polls/_flow_steps.html.twig', { step: 'summary' }) }}
         </div>
 
         {{ form_start(form, { attr: { class: 'flow flow--larger' } }) }}
@@ -25,15 +23,7 @@
 
             {{ include('polls/_summary.html.twig') }}
 
-            <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ flow.previousStepUrl('summary') }}">
-                    {{ 'forms.previous' | trans }}
-                </a>
-
-                <div class="col--extend"></div>
-
-                {{ form_row(form.submit) }}
-            </div>
+            {{ include('polls/_flow_actions.html.twig', { step: 'summary', nextLabel: 'forms.complete' | trans }) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

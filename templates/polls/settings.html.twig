@@ -71,21 +71,7 @@
                 {{ form_row(form.notifyOnComments) }}
             </div>
 
-            <div class="cols cols--always cols--gap">
-                {% if poll.isCompleted %}
-                    {% set urlCancel = path('poll admin', { id: poll.id, token: poll.adminToken }) %}
-                {% else %}
-                    {% set urlCancel = path('poll summary', { id: poll.id, token: poll.adminToken }) %}
-                {% endif %}
-
-                <a class="button" href="{{ urlCancel }}">
-                    {{ 'forms.cancel' | trans }}
-                </a>
-
-                <div class="col--extend"></div>
-
-                {{ form_row(form.submit) }}
-            </div>
+            {{ include('polls/_flow_actions.html.twig', { step: 'summary' }) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}
