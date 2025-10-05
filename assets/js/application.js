@@ -16,6 +16,7 @@ import PollPasswordController from './controllers/poll_password_controller.js';
 import PollViewController from './controllers/poll_view_controller.js';
 import PrinterController from './controllers/printer_controller.js';
 import ProtectedButtonController from './controllers/protected_button_controller.js';
+import ScrollboxController from './controllers/scrollbox_controller.js';
 import SlotsApplierController from './controllers/slots_applier_controller.js';
 import StorageController from './controllers/storage_controller.js';
 
@@ -35,6 +36,7 @@ application.register('poll-password', PollPasswordController);
 application.register('poll-view', PollViewController);
 application.register('printer', PrinterController);
 application.register('protected-button', ProtectedButtonController);
+application.register('scrollbox', ScrollboxController);
 application.register('slots-applier', SlotsApplierController);
 application.register('storage', StorageController);
 

@@ -14,135 +14,147 @@
     {% set votes = [myVote] %}
 {% endif %}
 
-<div class="proposals-table-container" data-controller="proposals-table">
-    <table class="proposals-table panel panel--white panel--rounded">
-        {% if displayMode == 'classic' %}
-            <tr>
-                <td class="proposals-table__sticky-cell"></td>
+<div class="scrollbox" data-controller="scrollbox">
+    <div
+        class="proposals-table-container"
+        data-controller="proposals-table"
+        data-scrollbox-target="scroller"
+    >
+        <table class="proposals-table panel panel--white panel--rounded">
+            {% if displayMode == 'classic' %}
+                <tr>
+                    <td class="proposals-table__sticky-cell"></td>
 
-                {% for proposal in proposals %}
-                    <th>
-                        <span class="proposal__label">{{ proposal.label }}</span>
-                    </th>
-                {% endfor %}
-            </tr>
-        {% elseif displayMode == 'date' %}
-            <tr>
-                <td class="proposals-table__sticky-cell"></td>
-
-                {% for dateAndProposals in datesAndProposals %}
-                    {% set date = dateAndProposals[0] %}
-                    {% set dateProposals = dateAndProposals[1] %}
-
-                    {% for proposal in dateProposals %}
-                        <th>
-                            <span class="proposal__day-week">{{ date.value | dateTrans('EEE') }}</span>
-                            <span class="proposal__day-month">{{ date.value | dateTrans('d') }}</span>
-                            <span class="proposal__month">{{ date.value | dateTrans('MMM y') }}</span>
+                    {% for proposal in proposals %}
+                        <th
+                            {% if loop.first %}data-scrollbox-target="leftObserver"{% endif %}
+                            {% if loop.last %}data-scrollbox-target="rightObserver"{% endif %}
+                        >
                             <span class="proposal__label">{{ proposal.label }}</span>
                         </th>
                     {% endfor %}
-                {% endfor %}
-            </tr>
-        {% endif %}
+                </tr>
+            {% elseif displayMode == 'date' %}
+                <tr>
+                    <td class="proposals-table__sticky-cell"></td>
 
-        {% if voteForm %}
-            <tr class="no-print">
-                <th class="proposals-table__sticky-cell">
-                    <div class="proposals-table__author proposals-table__author--new">
-                        {{ 'polls.votes.yours' | trans }}
-                    </div>
-                </th>
+                    {% for dateAndProposals in datesAndProposals %}
+                        {% set date = dateAndProposals[0] %}
+                        {% set dateProposals = dateAndProposals[1] %}
 
-                {% for proposal in proposals %}
-                    <td data-poll-view-target="tableVoteSlot" data-proposal="{{ proposal.id }}">
-                    </td>
-                {% endfor %}
-            </tr>
-        {% endif %}
+                        {% for proposal in dateProposals %}
+                            <th
+                                {% if loop.parent.loop.first and loop.first %}data-scrollbox-target="leftObserver"{% endif %}
+                                {% if loop.parent.loop.last and loop.last %}data-scrollbox-target="rightObserver"{% endif %}
+                            >
+                                <span class="proposal__day-week">{{ date.value | dateTrans('EEE') }}</span>
+                                <span class="proposal__day-month">{{ date.value | dateTrans('d') }}</span>
+                                <span class="proposal__month">{{ date.value | dateTrans('MMM y') }}</span>
+                                <span class="proposal__label">{{ proposal.label }}</span>
+                            </th>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            {% endif %}
 
-        {% for vote in votes %}
-            <tr>
-                <th class="proposals-table__sticky-cell">
-                    <div class="proposals-table__author">
-                        {{ vote.authorName }}
-                    </div>
-                </th>
+            {% if voteForm %}
+                <tr class="no-print">
+                    <th class="proposals-table__sticky-cell">
+                        <div class="proposals-table__author proposals-table__author--new">
+                            {{ 'polls.votes.yours' | trans }}
+                        </div>
+                    </th>
 
-                {% for proposal in proposals %}
-                    {% set answer = vote.answerForProposal(proposal) %}
+                    {% for proposal in proposals %}
+                        <td data-poll-view-target="tableVoteSlot" data-proposal="{{ proposal.id }}">
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
 
-                    <td class="text--center">
-                        {% if answer.value == 'yes' %}
-                            <span class="vote vote--yes">
-                                {{ icon('square-check') }}
+            {% for vote in votes %}
+                <tr>
+                    <th class="proposals-table__sticky-cell">
+                        <div class="proposals-table__author">
+                            {{ vote.authorName }}
+                        </div>
+                    </th>
+
+                    {% for proposal in proposals %}
+                        {% set answer = vote.answerForProposal(proposal) %}
+
+                        <td class="text--center">
+                            {% if answer.value == 'yes' %}
+                                <span class="vote vote--yes">
+                                    {{ icon('square-check') }}
+
+                                    <span class="sr-only">
+                                        {{ 'polls.votes.yes' | trans }}
+                                    </span>
+                                </span>
+                            {% elseif answer.value == 'no' %}
+                                <span class="vote vote--no">
+                                    {{ icon('square-xmark') }}
+
+                                    <span class="sr-only">
+                                        {{ 'polls.votes.no' | trans }}
+                                    </span>
+                                </span>
+                            {% elseif answer.value == 'maybe' %}
+                                <span class="vote vote--maybe">
+                                    {{ icon('square-minus') }}
+
+                                    <span class="sr-only">
+                                        {{ 'polls.votes.maybe' | trans }}
+                                    </span>
+                                </span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+            {% if canViewResults(poll) and votes is not empty %}
+                <tr>
+                    <th class="proposals-table__sticky-cell">
+                        <div class="proposals-table__sum">
+                            {{ 'polls.votes.sum' | trans }}
+                        </div>
+                    </th>
+
+                    {% for proposal in proposals %}
+                        {% set countYes = proposal.countAnswers('yes') %}
+                        {% set countMaybe = proposal.countAnswers('maybe') %}
+                        {% set isPreferred = preferredChoices and proposal in preferredChoices %}
+
+                        <td class="text--center{% if isPreferred %} text--success text--bold{% endif %}">
+                            {% if isPreferred %}
+                                {{ icon('star') }}
+                            {% endif %}
+
+                            {% if countYes > 0 %}
+                                {{ countYes }}
 
                                 <span class="sr-only">
                                     {{ 'polls.votes.yes' | trans }}
                                 </span>
-                            </span>
-                        {% elseif answer.value == 'no' %}
-                            <span class="vote vote--no">
-                                {{ icon('square-xmark') }}
+                            {% endif %}
 
-                                <span class="sr-only">
-                                    {{ 'polls.votes.no' | trans }}
+                            {% if countMaybe > 0 %}
+                                <span class="text--secondary text--small">
+                                    {{ 'polls.votes.maybe.count_alt' | trans({ count: countMaybe }) }}
                                 </span>
-                            </span>
-                        {% elseif answer.value == 'maybe' %}
-                            <span class="vote vote--maybe">
-                                {{ icon('square-minus') }}
+                            {% endif %}
 
+                            {% if isPreferred %}
                                 <span class="sr-only">
-                                    {{ 'polls.votes.maybe' | trans }}
+                                    {{ 'polls.proposals.best' | trans }}
                                 </span>
-                            </span>
-                        {% endif %}
-                    </td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-
-        {% if canViewResults(poll) and votes is not empty %}
-            <tr>
-                <th class="proposals-table__sticky-cell">
-                    <div class="proposals-table__sum">
-                        {{ 'polls.votes.sum' | trans }}
-                    </div>
-                </th>
-
-                {% for proposal in proposals %}
-                    {% set countYes = proposal.countAnswers('yes') %}
-                    {% set countMaybe = proposal.countAnswers('maybe') %}
-                    {% set isPreferred = preferredChoices and proposal in preferredChoices %}
-
-                    <td class="text--center{% if isPreferred %} text--success text--bold{% endif %}">
-                        {% if isPreferred %}
-                            {{ icon('star') }}
-                        {% endif %}
-
-                        {% if countYes > 0 %}
-                            {{ countYes }}
-
-                            <span class="sr-only">
-                                {{ 'polls.votes.yes' | trans }}
-                            </span>
-                        {% endif %}
-
-                        {% if countMaybe > 0 %}
-                            <span class="text--secondary text--small">
-                                {{ 'polls.votes.maybe.count_alt' | trans({ count: countMaybe }) }}
-                            </span>
-                        {% endif %}
-
-                        {% if isPreferred %}
-                            <span class="sr-only">
-                                {{ 'polls.proposals.best' | trans }}
-                            </span>
-                        {% endif %}
-                    </td>
-                {% endfor %}
-            </tr>
-        {% endif %}
-    </table>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        </table>
+    </div>
 </div>

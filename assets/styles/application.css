@@ -32,6 +32,7 @@
 @import "./components/modal.css";
 @import "./components/pagination.css";
 @import "./components/panels.css";
+@import "./components/scrollboxes.css";
 @import "./custom/proposals.css";
 @import "./custom/results.css";
 @import "./custom/votes.css";

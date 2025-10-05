@@ -152,3 +152,14 @@
     font-style: italic;
     text-align: right;
 }
+
+/* Make sure that the scrollbox shadow doesn't pass over the authors column. */
+.scrollbox:has(> .proposals-table-container)::before {
+    left: 152px;
+}
+
+@media(max-width: 500px) {
+    .scrollbox:has(> .proposals-table-container)::before {
+        left: 127px;
+    }
+}
