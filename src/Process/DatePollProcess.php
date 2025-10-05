@@ -61,13 +61,8 @@ class DatePollProcess extends Process
                 'id' => $this->poll->getId(),
                 'token' => $this->poll->getAdminToken(),
             ]);
-        } elseif ($stepName === 'summary' && !$this->poll->isCompleted()) {
-            return $this->urlGenerator->generate('poll summary', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
         } elseif ($stepName === 'summary') {
-            return $this->urlGenerator->generate('poll admin', [
+            return $this->urlGenerator->generate('poll summary', [
                 'id' => $this->poll->getId(),
                 'token' => $this->poll->getAdminToken(),
             ]);

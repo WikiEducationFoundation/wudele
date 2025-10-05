@@ -486,6 +486,13 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
+        if ($poll->isCompleted()) {
+            return $this->redirectToRoute('poll admin', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
+        }
+
         $process = $pollProcessBuilder->build($poll);
 
         if (!$process->isAccessible('summary')) {
@@ -548,6 +555,13 @@ class PollsController extends BaseController
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
+        }
+
+        if (!$poll->isCompleted()) {
+            return $this->redirectToRoute('poll summary', [
+                'id' => $poll->getId(),
+                'token' => $poll->getAdminToken(),
+            ]);
         }
 
         $process = $pollProcessBuilder->build($poll);
