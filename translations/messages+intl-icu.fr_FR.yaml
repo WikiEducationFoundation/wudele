@@ -131,7 +131,9 @@ polls.admin.title: 'Administration du sondage'
 polls.admin.votes: Votes
 polls.authenticate.title: 'Authentification à un sondage protégé'
 polls.choose.classic: 'Sondage classique'
+polls.choose.classic_help: 'Un sondage pour choisir entre plusieurs options libres.'
 polls.choose.date: 'Sondage date'
+polls.choose.date_help: 'Un sondage pour choisir la meilleure date ou horaire possible.'
 polls.choose.next: Suivant
 polls.choose.title: 'Choisissez le type de sondage'
 polls.complete.consult: 'Consultez votre sondage dès maintenant'

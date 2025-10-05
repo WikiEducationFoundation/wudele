@@ -131,7 +131,9 @@ polls.admin.title: 'Administration of the poll'
 polls.admin.votes: Votes
 polls.authenticate.title: 'Authentication to a protected poll'
 polls.choose.classic: 'Poll classic'
+polls.choose.classic_help: 'A poll to choose between several free options.'
 polls.choose.date: 'Poll date'
+polls.choose.date_help: 'A poll to choose the best possible date or time slot.'
 polls.choose.next: Next
 polls.choose.title: 'Choose the type of poll'
 polls.complete.consult: 'Consult your poll now'
