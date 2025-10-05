@@ -4,12 +4,12 @@
 // Copyright 2024-2025 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace App\Process;
+namespace App\Flow;
 
 /**
- * Represent a multi-steps form process.
+ * A class helping representing multi-steps forms.
  */
-abstract class Process
+abstract class Flow
 {
     /** @var string[] */
     protected array $steps = [];

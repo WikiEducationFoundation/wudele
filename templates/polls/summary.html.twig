@@ -16,7 +16,7 @@
             </h1>
 
             <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: process.stepNumber('summary'), total: process.totalSteps }) }}
+                {{ 'polls.steps' | trans({ step: flow.stepNumber('summary'), total: flow.totalSteps }) }}
             </p>
         </div>
 
@@ -26,7 +26,7 @@
             {{ include('polls/_summary.html.twig') }}
 
             <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ process.previousStepUrl('summary') }}">
+                <a class="button" href="{{ flow.previousStepUrl('summary') }}">
                     {{ 'forms.previous' | trans }}
                 </a>
 

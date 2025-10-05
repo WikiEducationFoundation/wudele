@@ -16,7 +16,7 @@
             </h1>
 
             <p class="text--secondary">
-                {{ 'polls.steps' | trans({ step: process.stepNumber('dates'), total: process.totalSteps }) }}
+                {{ 'polls.steps' | trans({ step: flow.stepNumber('dates'), total: flow.totalSteps }) }}
             </p>
 
             <p class="text--secondary">
@@ -129,7 +129,7 @@
             </div>
 
             <div class="cols cols--always cols--gap">
-                <a class="button" href="{{ process.previousStepUrl('dates') }}">
+                <a class="button" href="{{ flow.previousStepUrl('dates') }}">
                     {{ 'forms.previous' | trans }}
                 </a>
 

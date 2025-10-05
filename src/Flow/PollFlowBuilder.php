@@ -4,24 +4,24 @@
 // Copyright 2024-2025 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace App\Process;
+namespace App\Flow;
 
 use App\Entity;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PollProcessBuilder
+class PollFlowBuilder
 {
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
-    public function build(Entity\Poll $poll): Process
+    public function build(Entity\Poll $poll): Flow
     {
         if ($poll->isClassicPoll()) {
-            return new ClassicPollProcess($poll, $this->urlGenerator);
+            return new ClassicPollFlow($poll, $this->urlGenerator);
         } else {
-            return new DatePollProcess($poll, $this->urlGenerator);
+            return new DatePollFlow($poll, $this->urlGenerator);
         }
     }
 }

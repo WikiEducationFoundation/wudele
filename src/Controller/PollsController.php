@@ -7,9 +7,9 @@
 namespace App\Controller;
 
 use App\Entity;
+use App\Flow;
 use App\Form;
 use App\PollActivity;
-use App\Process;
 use App\Repository;
 use App\Security;
 use App\Service;
@@ -33,7 +33,7 @@ class PollsController extends BaseController
     public function new(
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         $type = $request->query->getString('type');
 
@@ -44,7 +44,7 @@ class PollsController extends BaseController
         $poll = new Entity\Poll();
         $poll->setType($type);
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
         $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
 
@@ -54,13 +54,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirect($process->getNextStepUrl('init'));
+            return $this->redirect($flow->getNextStepUrl('init'));
         }
 
         return $this->render('polls/new.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -287,13 +287,13 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
         $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
 
@@ -303,13 +303,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirect($process->getNextStepUrl('init'));
+            return $this->redirect($flow->getNextStepUrl('init'));
         }
 
         return $this->render('polls/new.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -319,17 +319,17 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
         Security\PollSecurity $pollSecurity,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('summary')) {
-            return $this->redirect($process->getPreviousStepUrl('summary'));
+        if (!$flow->isAccessible('summary')) {
+            return $this->redirect($flow->getPreviousStepUrl('summary'));
         }
 
         $form = $this->createNamedForm('poll_settings', Form\PollSettingsForm::class, $poll);
@@ -344,7 +344,7 @@ class PollsController extends BaseController
                 $pollSecurity->authenticate($poll);
             }
 
-            return $this->redirect($process->getStepUrl('summary'));
+            return $this->redirect($flow->getStepUrl('summary'));
         }
 
         return $this->render('polls/settings.html.twig', [
@@ -359,7 +359,7 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -369,10 +369,10 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll must be of type classic');
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('proposals')) {
-            return $this->redirect($process->getPreviousStepUrl('proposals'));
+        if (!$flow->isAccessible('proposals')) {
+            return $this->redirect($flow->getPreviousStepUrl('proposals'));
         }
 
         $form = $this->createNamedForm('poll_proposals', Form\PollProposalsForm::class, $poll);
@@ -383,13 +383,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirect($process->getNextStepUrl('proposals'));
+            return $this->redirect($flow->getNextStepUrl('proposals'));
         }
 
         return $this->render('polls/proposals.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -399,7 +399,7 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -409,10 +409,10 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll must be of type date');
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('dates')) {
-            return $this->redirect($process->getPreviousStepUrl('dates'));
+        if (!$flow->isAccessible('dates')) {
+            return $this->redirect($flow->getPreviousStepUrl('dates'));
         }
 
         $form = $this->createNamedForm('poll_dates', Form\PollDatesForm::class, $poll);
@@ -423,13 +423,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirect($process->getNextStepUrl('dates'));
+            return $this->redirect($flow->getNextStepUrl('dates'));
         }
 
         return $this->render('polls/dates.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -439,7 +439,7 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -449,10 +449,10 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll must be of type date');
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('slots')) {
-            return $this->redirect($process->getPreviousStepUrl('slots'));
+        if (!$flow->isAccessible('slots')) {
+            return $this->redirect($flow->getPreviousStepUrl('slots'));
         }
 
         $form = $this->createNamedForm('poll_slots', Form\PollSlotsForm::class, $poll);
@@ -463,13 +463,13 @@ class PollsController extends BaseController
 
             $pollRepository->save($poll);
 
-            return $this->redirect($process->getNextStepUrl('slots'));
+            return $this->redirect($flow->getNextStepUrl('slots'));
         }
 
         return $this->render('polls/slots.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -479,7 +479,7 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
         EventDispatcherInterface $eventDispatcher,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
@@ -493,10 +493,10 @@ class PollsController extends BaseController
             ]);
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('summary')) {
-            return $this->redirect($process->getPreviousStepUrl('summary'));
+        if (!$flow->isAccessible('summary')) {
+            return $this->redirect($flow->getPreviousStepUrl('summary'));
         }
 
         $form = $this->createNamedForm('poll_summary', Form\PollSummaryForm::class);
@@ -513,13 +513,13 @@ class PollsController extends BaseController
             $session = $request->getSession();
             $session->set("admin-{$poll->getId()}", true);
 
-            return $this->redirect($process->getNextStepUrl('summary'));
+            return $this->redirect($flow->getNextStepUrl('summary'));
         }
 
         return $this->render('polls/summary.html.twig', [
             'poll' => $poll,
             'form' => $form,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -527,21 +527,21 @@ class PollsController extends BaseController
     public function complete(
         Entity\Poll $poll,
         string $token,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('end')) {
-            return $this->redirect($process->getPreviousStepUrl('end'));
+        if (!$flow->isAccessible('end')) {
+            return $this->redirect($flow->getPreviousStepUrl('end'));
         }
 
         return $this->render('polls/complete.html.twig', [
             'poll' => $poll,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 
@@ -551,7 +551,7 @@ class PollsController extends BaseController
         string $token,
         Request $request,
         Repository\PollRepository $pollRepository,
-        Process\PollProcessBuilder $pollProcessBuilder,
+        Flow\PollFlowBuilder $pollFlowBuilder,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -564,10 +564,10 @@ class PollsController extends BaseController
             ]);
         }
 
-        $process = $pollProcessBuilder->build($poll);
+        $flow = $pollFlowBuilder->build($poll);
 
-        if (!$process->isAccessible('end')) {
-            return $this->redirect($process->getPreviousStepUrl('end'));
+        if (!$flow->isAccessible('end')) {
+            return $this->redirect($flow->getPreviousStepUrl('end'));
         }
 
         $session = $request->getSession();
@@ -575,7 +575,7 @@ class PollsController extends BaseController
 
         return $this->render('polls/admin.html.twig', [
             'poll' => $poll,
-            'process' => $process,
+            'flow' => $flow,
         ]);
     }
 

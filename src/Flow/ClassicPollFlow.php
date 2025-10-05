@@ -4,12 +4,12 @@
 // Copyright 2024-2025 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace App\Process;
+namespace App\Flow;
 
 use App\Entity;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ClassicPollProcess extends Process
+class ClassicPollFlow extends Flow
 {
     /** @var string[] */
     protected array $steps = [
