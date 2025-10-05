@@ -30,7 +30,13 @@ export default class extends Controller {
             dayjs.locale('en');
         }
 
-        this.focusedDate = dayjs();
+        const firstSelectedDate = this.getFirstSelectedDate();
+        if (firstSelectedDate) {
+            this.focusedDate = firstSelectedDate;
+        } else {
+            this.focusedDate = dayjs();
+        }
+
         this.refresh();
     }
 
@@ -155,6 +161,20 @@ export default class extends Controller {
         return this.sourceTargets.some((input) => {
             return input.value === dateAsString;
         });
+    }
+
+    getFirstSelectedDate () {
+        const dates = this.sourceTargets.map((input) => {
+            return input.value;
+        });
+
+        dates.sort();
+
+        if (dates.length > 0) {
+            return dayjs(dates[0]);
+        } else {
+            return null;
+        }
     }
 
     focusDateButton () {
