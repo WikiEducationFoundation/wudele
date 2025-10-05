@@ -185,6 +185,7 @@ polls.show.results.title: Résultats
 polls.show.share: Partager
 polls.show.vote.created: 'Votre vote est confirmé.'
 polls.show.vote.updated: 'Votre vote a bien été modifié.'
+polls.slots.help: "Les horaires peuvent être saisis librement (par exemple\_: 8h ou matin). Si vous n’en indiquez pas, la journée entière sera prise en compte."
 polls.slots.same_slots.apply: 'Appliquer les mêmes horaires à toutes les dates'
 polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes les dates'
 polls.slots.title: 'Choisissez les horaires'

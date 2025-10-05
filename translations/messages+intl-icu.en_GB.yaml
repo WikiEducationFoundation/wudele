@@ -185,6 +185,7 @@ polls.show.results.title: Results
 polls.show.share: Share
 polls.show.vote.created: 'Your vote is confirmed.'
 polls.show.vote.updated: 'Your vote has been changed.'
+polls.slots.help: 'Time slots can be entered freely (for example: 8 a.m. or morning). If you do not specify a time slot, the entire day will be taken into account.'
 polls.slots.same_slots.apply: 'Apply the same time slots to all dates'
 polls.slots.same_slots.title: 'Choose the time slots to apply to all dates'
 polls.slots.title: 'Choose the time slots'

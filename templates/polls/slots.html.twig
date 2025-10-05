@@ -16,6 +16,10 @@
             </h1>
 
             {{ include('polls/_flow_steps.html.twig', { step: 'slots' }) }}
+
+            <p>
+                {{ 'polls.slots.help' | trans }}
+            </p>
         </div>
 
         {{ form_start(form) }}
