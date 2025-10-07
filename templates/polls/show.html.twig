@@ -36,9 +36,9 @@
                 </h1>
 
                 {% if poll.description %}
-                    <p>
-                        {{ poll.description | nl2br }}
-                    </p>
+                    <div class="flow flow--small">
+                        {{ poll.description | markdown }}
+                    </div>
                 {% endif %}
 
                 <p class="text--secondary">
@@ -420,9 +420,9 @@
                         </a>
                     </header>
 
-                    <p>
-                        {{ comment.content | nl2br }}
-                    </p>
+                    <div class="flow flow--small">
+                        {{ comment.content | markdown }}
+                    </div>
                 </article>
             {% else %}
                 <p class="panel panel--rounded">

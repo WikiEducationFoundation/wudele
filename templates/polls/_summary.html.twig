@@ -72,9 +72,9 @@
             </p>
 
             {% if poll.description %}
-                <p>
-                    {{ poll.description | nl2br }}
-                </p>
+                <div class="flow flow--small">
+                    {{ poll.description | markdown }}
+                </div>
             {% endif %}
 
             <dl class="list--nostyle flow">
