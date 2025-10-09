@@ -12,7 +12,8 @@ The `docker` command must be executable by your normal user.
 Clone the repository:
 
 ```console
-$ git clone https://framagit.org/pollaris/pollaris.git
+$ git clone git@framagit.org:pollaris/pollaris.git
+$ # or git clone https://framagit.org/pollaris/pollaris.git
 ```
 
 Install the dependencies:
