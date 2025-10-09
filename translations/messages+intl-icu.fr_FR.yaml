@@ -7,7 +7,7 @@ admin.polls.public_link: 'Lien public'
 admin.polls.search: Rechercher
 admin.polls.title: 'Liste des sondages'
 admin.title: Administration
-answers.value.maybe: Peut-être
+answers.value.maybe: 'Si besoin'
 answers.value.no: Non
 answers.value.yes: Oui
 base.copied: "Copié\_!"
@@ -58,7 +58,7 @@ forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
 forms.poll_settings_form.are_results_public.label: 'Les résultats sont visibles par tout·es les participant·es'
-forms.poll_settings_form.disable_maybe.label: "Désactiver les votes «\_peut-être\_»"
+forms.poll_settings_form.disable_maybe.label: "Désactiver les votes «\_si besoin\_»"
 forms.poll_settings_form.max_votes.label: "Nombre maximum de votes «\_oui\_» par proposition"
 forms.poll_settings_form.notify_on_comments.label: 'Recevoir un email à chaque commentaire'
 forms.poll_settings_form.notify_on_votes.label: 'Recevoir un email à chaque vote'
@@ -209,7 +209,7 @@ polls.summary.proposals.title: 'Mes propositions'
 polls.summary.settings.customised_slug: 'Le lien du sondage est personnalisé.'
 polls.summary.settings.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote.'
 polls.summary.settings.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote.'
-polls.summary.settings.is_disable_maybe: "Les participant·es ne pourront pas voter «\_peut-être\_»."
+polls.summary.settings.is_disable_maybe: "Les participant·es ne pourront pas voter «\_si besoin\_»."
 polls.summary.settings.max_votes: '{ number, plural, one {1 participant·e maximum peut} other {# participant·es maximum peuvent} } voter par proposition.'
 polls.summary.settings.notify_on_comments.do: 'Je recevrai un email à chaque commentaire sur le sondage.'
 polls.summary.settings.notify_on_comments.dont: 'Je ne recevrai pas d’email lors des commentaires sur le sondage.'
@@ -222,8 +222,8 @@ polls.summary.settings.results.private: 'Je suis le ou la seule à pouvoir voir 
 polls.summary.settings.results.public: 'Tout le monde peut voir les résultats du sondage.'
 polls.summary.settings.title: 'Options du sondage'
 polls.summary.title: 'Résumé de votre sondage'
-polls.votes.maybe: Peut-être
-polls.votes.maybe.count: "{count}\_Peut-être"
+polls.votes.maybe: 'Si besoin'
+polls.votes.maybe.count: "{count}\_Si besoin"
 polls.votes.maybe.count_alt: '(+{count})'
 polls.votes.no: Non
 polls.votes.no.count: "{count}\_Non"

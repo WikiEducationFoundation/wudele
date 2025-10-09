@@ -74,7 +74,7 @@ input.radio--vote + label {
     width: 100%;
     padding: var(--space-medium) var(--space-small);
 
-    gap: var(--space-small);
+    gap: var(--space-smaller);
 
     color: var(--radio-vote-color);
     font-size: var(--font-size-small);
