@@ -49,8 +49,14 @@ class AnswerForm extends AbstractType
                 $yesDisabled = $countYes >= $maxVotes;
             }
 
+            if ($poll->isDisableMaybe()) {
+                $choices = ['yes', 'no'];
+            } else {
+                $choices = ['yes', 'maybe', 'no'];
+            }
+
             $form->add('value', Type\ChoiceType::class, [
-                'choices' => Entity\Answer::VALID_VALUES,
+                'choices' => $choices,
                 'label' => false,
                 'empty_data' => 'no',
                 'expanded' => true,

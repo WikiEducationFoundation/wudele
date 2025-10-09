@@ -58,7 +58,8 @@ forms.poll_form.title.label: 'Nom de votre sondage'
 forms.poll_proposals_form.add_proposal: 'Ajouter une proposition'
 forms.poll_proposals_form.remove_proposal: 'Retirer la proposition'
 forms.poll_settings_form.are_results_public.label: 'Les résultats sont visibles par tout·es les participant·es'
-forms.poll_settings_form.max_votes.label: 'Nombre maximum de participant·es'
+forms.poll_settings_form.disable_maybe.label: "Désactiver les votes «\_peut-être\_»"
+forms.poll_settings_form.max_votes.label: "Nombre maximum de votes «\_oui\_» par proposition"
 forms.poll_settings_form.notify_on_comments.label: 'Recevoir un email à chaque commentaire'
 forms.poll_settings_form.notify_on_votes.label: 'Recevoir un email à chaque vote'
 forms.poll_settings_form.password.label: 'Mot de passe'
@@ -151,8 +152,8 @@ polls.new.title: 'Création de sondage'
 polls.new.who_you_are: 'Votre identité'
 polls.proposals.best: 'Choix préféré'
 polls.proposals.title: 'Choisissez les propositions'
-polls.settings.max_votes.title: 'Limiter le nombre de participant·es par proposition'
 polls.settings.notifications.title: Notifications
+polls.settings.options.title: 'Options des votes'
 polls.settings.password.title: 'Protéger par mot de passe'
 polls.settings.permissions.title: Permissions
 polls.settings.slug.title: 'Personnaliser le lien du sondage'
@@ -208,6 +209,7 @@ polls.summary.proposals.title: 'Mes propositions'
 polls.summary.settings.customised_slug: 'Le lien du sondage est personnalisé.'
 polls.summary.settings.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote.'
 polls.summary.settings.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote.'
+polls.summary.settings.is_disable_maybe: "Les participant·es ne pourront pas voter «\_peut-être\_»."
 polls.summary.settings.max_votes: '{ number, plural, one {1 participant·e maximum peut} other {# participant·es maximum peuvent} } voter par proposition.'
 polls.summary.settings.notify_on_comments.do: 'Je recevrai un email à chaque commentaire sur le sondage.'
 polls.summary.settings.notify_on_comments.dont: 'Je ne recevrai pas d’email lors des commentaires sur le sondage.'

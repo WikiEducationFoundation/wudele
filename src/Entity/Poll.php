@@ -170,6 +170,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     )]
     private ?string $editVoteMode = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $disableMaybe = false;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -689,5 +692,17 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         } else {
             throw new \LogicException("Cannot translate edit vote mode {$value}");
         }
+    }
+
+    public function isDisableMaybe(): bool
+    {
+        return $this->disableMaybe;
+    }
+
+    public function setDisableMaybe(bool $disableMaybe): static
+    {
+        $this->disableMaybe = $disableMaybe;
+
+        return $this;
     }
 }

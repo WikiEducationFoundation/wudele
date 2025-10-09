@@ -302,6 +302,35 @@ class PollsControllerTest extends WebTestCase
         $this->assertEmailCount(0);
     }
 
+    public function testPostShowWithMaybeVoteFailsIfMaybeDisabled(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'disableMaybe' => true,
+        ])->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $name = 'Alix';
+
+        $this->assertNotFalse($proposal);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => $name,
+                'answers' => [
+                    ['value' => 'maybe'],
+                ],
+            ],
+        ]);
+
+        $this->assertSelectorTextContains(
+            '#vote_answers_0_value_error',
+            'The selected choice is invalid.'
+        );
+        $votes = Factory\VoteFactory::all();
+        $this->assertSame(0, count($votes));
+    }
+
     public function testPostShowWithVoteFailsIfMaxVoteIsReached(): void
     {
         $client = static::createClient();

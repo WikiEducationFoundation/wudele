@@ -196,6 +196,12 @@
 
     <div class="panel panel--rounded panel--primary flow">
         <ul class="list--nostyle flow text--bold">
+            {% if poll.isDisableMaybe %}
+                <li>
+                    {{ 'polls.summary.settings.is_disable_maybe' | trans }}
+                </li>
+            {% endif %}
+
             {% if poll.maxVotes > 0 %}
                 <li>
                     {{ 'polls.summary.settings.max_votes' | trans({ number: poll.maxVotes }) }}
