@@ -47,6 +47,7 @@ Create a dedicated user and database for the application:
 postgres=# CREATE DATABASE pollaris_production;
 postgres=# CREATE USER pollaris_user WITH ENCRYPTED PASSWORD 'secret';
 postgres=# GRANT ALL PRIVILEGES ON DATABASE pollaris_production TO pollaris_user;
+postgres=# ALTER DATABASE pollaris_production OWNER TO pollaris_user;
 ```
 
 ### Download the code
@@ -100,7 +101,7 @@ The commands that need to be executed as `www-data` **will be prefixed by `www-d
 Checkout the code to the latest version of the application:
 
 ```
-www-data$ git switch $(git describe --tags $(git rev-list --tags --max-count=1))
+www-data$ git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 ```
 
 [The full list of releases.](https://framagit.org/pollaris/pollaris/-/releases)
@@ -279,7 +280,7 @@ www-data$ git fetch
 Switch to the latest version:
 
 ```console
-www-data$ git switch $(git describe --tags $(git rev-list --tags --max-count=1))
+www-data$ git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 ```
 
 Install the new/updated dependencies:
