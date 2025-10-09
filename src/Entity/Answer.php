@@ -37,10 +37,7 @@ class Answer implements ActivityMonitor\TrackableEntityInterface
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Proposal $proposal = null;
 
-    #[ORM\Column(length: 10)]
-    #[Assert\NotBlank(
-        message: new TranslatableMessage('answer.value.required', domain: 'validators'),
-    )]
+    #[ORM\Column(length: 10, nullable: true)]
     #[Assert\Choice(
         choices: self::VALID_VALUES,
         message: new TranslatableMessage('answer.value.invalid', domain: 'validators'),
@@ -110,7 +107,7 @@ class Answer implements ActivityMonitor\TrackableEntityInterface
         return self::translateValue($this->getValue());
     }
 
-    public function setValue(string $value): static
+    public function setValue(?string $value): static
     {
         $this->value = $value;
 

@@ -1,6 +1,5 @@
 Error: Error
 answer.value.invalid: 'Select a choice from the list.'
-answer.value.required: 'Select a choice.'
 comment.author_name.max_length: 'Enter a name of less than {limit} characters.'
 comment.author_name.required: 'Enter a name.'
 comment.content.required: 'Enter a message.'

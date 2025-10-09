@@ -173,6 +173,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(options: ['default' => false])]
     private bool $disableMaybe = false;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $voteNoByDefault = false;
+
     public function __construct()
     {
         $this->type = self::DEFAULT_TYPE;
@@ -702,6 +705,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setDisableMaybe(bool $disableMaybe): static
     {
         $this->disableMaybe = $disableMaybe;
+
+        return $this;
+    }
+
+    public function isVoteNoByDefault(): bool
+    {
+        return $this->voteNoByDefault;
+    }
+
+    public function setVoteNoByDefault(bool $voteNoByDefault): static
+    {
+        $this->voteNoByDefault = $voteNoByDefault;
 
         return $this;
     }

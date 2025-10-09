@@ -33,6 +33,11 @@ class PollSettingsForm extends AbstractType
             'required' => false,
         ]);
 
+        $builder->add('voteNoByDefault', Type\CheckboxType::class, [
+            'label' => new TranslatableMessage('forms.poll_settings_form.vote_no_by_default.label'),
+            'required' => false,
+        ]);
+
         $builder->add('maxVotes', Type\IntegerType::class, [
             'label' => new TranslatableMessage('forms.poll_settings_form.max_votes.label'),
             'required' => false,

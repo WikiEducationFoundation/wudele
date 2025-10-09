@@ -1,6 +1,5 @@
 Error: Erreur
 answer.value.invalid: 'Sélectionnez un choix depuis la liste.'
-answer.value.required: 'Sélectionnez un choix.'
 comment.author_name.max_length: 'Saisissez un nom de moins de {limit} caractères.'
 comment.author_name.required: 'Saisissez un nom.'
 comment.content.required: 'Saisissez un message.'

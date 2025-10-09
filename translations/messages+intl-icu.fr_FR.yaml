@@ -69,6 +69,7 @@ forms.poll_settings_form.password_for_votes_only.label: 'Les résultats sont vis
 forms.poll_settings_form.repeat_password.label: 'Confirmer le mot de passe'
 forms.poll_settings_form.slug.help: 'Attention, modifier le lien de votre sondage le rend plus facilement accessible à tout le monde. Il est recommandé de le protéger par un mot de passe.'
 forms.poll_settings_form.slug.label: 'Saisissez le lien de votre sondage'
+forms.poll_settings_form.vote_no_by_default.label: "Voter «\_non\_» par défaut en absence de réponse"
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
 forms.previous: Précédent
@@ -210,6 +211,7 @@ polls.summary.settings.customised_slug: 'Le lien du sondage est personnalisé.'
 polls.summary.settings.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote.'
 polls.summary.settings.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote.'
 polls.summary.settings.is_disable_maybe: "Les participant·es ne pourront pas voter «\_si besoin\_»."
+polls.summary.settings.is_vote_no_by_default: "L’absence de réponse équivaut à un vote «\_non\_»."
 polls.summary.settings.max_votes: '{ number, plural, one {1 participant·e maximum peut} other {# participant·es maximum peuvent} } voter par proposition.'
 polls.summary.settings.notify_on_comments.do: 'Je recevrai un email à chaque commentaire sur le sondage.'
 polls.summary.settings.notify_on_comments.dont: 'Je ne recevrai pas d’email lors des commentaires sur le sondage.'

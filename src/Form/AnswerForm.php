@@ -55,10 +55,16 @@ class AnswerForm extends AbstractType
                 $choices = ['yes', 'maybe', 'no'];
             }
 
+            if ($poll->isVoteNoByDefault()) {
+                $defaultValue = 'no';
+            } else {
+                $defaultValue = null;
+            }
+
             $form->add('value', Type\ChoiceType::class, [
                 'choices' => $choices,
                 'label' => false,
-                'empty_data' => 'no',
+                'empty_data' => $defaultValue,
                 'expanded' => true,
                 'required' => false,
                 'placeholder' => false,

@@ -273,6 +273,37 @@ class PollsControllerTest extends WebTestCase
         $this->assertEmailAddressContains($email, 'To', $authorEmail);
     }
 
+    public function testPostShowWithMissingVoteIsConsideredAsNoIfOptionIsTrue(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new([
+            'voteNoByDefault' => true,
+        ])->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $name = 'Alix';
+
+        $this->assertNotFalse($proposal);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => $name,
+                'answers' => [
+                ],
+            ],
+        ]);
+
+        $this->assertResponseRedirects("/polls/{$poll->getSlug()}", 302);
+        $votes = Factory\VoteFactory::all();
+        $this->assertSame(1, count($votes));
+        $this->assertSame($name, $votes[0]->getAuthorName());
+        $this->assertSame($poll->getId(), $votes[0]->getPoll()->getId());
+        $answers = $votes[0]->getAnswers()->toArray();
+        $this->assertSame(1, count($answers));
+        $this->assertSame('no', $answers[0]->getValue());
+        $this->assertSame($proposal->getId(), $answers[0]->getProposal()?->getId());
+    }
+
     public function testPostShowWithVoteDoesNothingIfPollIsClosed(): void
     {
         $client = static::createClient();
