@@ -36,7 +36,7 @@
                     <ul class="panel panel--primary panel--rounded list--nostyle flow">
                         {% for vote in poll.votes %}
                             <li class="panel panel--white panel--rounded cols cols--center cols--always cols--gap-small">
-                                <span class="col--extend">
+                                <span class="col--extend text--overflow">
                                     {{ 'polls.admin.have_voted' | trans({ voter: vote.authorName, date: vote.createdAt | dateTrans }) }}
                                 </span>
 
@@ -80,7 +80,7 @@
                         {% for comment in poll.comments %}
                             <article class="panel panel--white panel--rounded flow flow--small">
                                 <header class="cols cols--always cols--gap-small text--secondary">
-                                    <span class="col--extend">
+                                    <span class="col--extend text--overflow">
                                         {{ comment.authorName }}
                                     </span>
 
