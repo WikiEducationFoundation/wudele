@@ -10,7 +10,7 @@ use App\Tests\Helper;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class LocaleControllerTest extends WebTestCase
+class PreferencesControllerTest extends WebTestCase
 {
     use Helper\CsrfHelper;
 
@@ -19,8 +19,11 @@ class LocaleControllerTest extends WebTestCase
         $client = static::createClient();
         $session = $this->getSession($client);
 
-        $client->request(Request::METHOD_POST, '/locale', [
-            'locale' => 'fr_FR',
+        $client->request(Request::METHOD_POST, '/preferences', [
+            'preferences' => [
+                '_token' => $this->getCsrf($client, 'preferences'),
+                'locale' => 'fr_FR',
+            ],
         ]);
 
         $this->assertResponseRedirects('/', 302);
@@ -32,11 +35,14 @@ class LocaleControllerTest extends WebTestCase
         $client = static::createClient();
         $session = $this->getSession($client);
 
-        $client->request(Request::METHOD_POST, '/locale', [
-            'locale' => 'not a locale',
+        $client->request(Request::METHOD_POST, '/preferences', [
+            'preferences' => [
+                '_token' => $this->getCsrf($client, 'preferences'),
+                'locale' => 'not a locale',
+            ],
         ]);
 
-        $this->assertResponseRedirects('/', 302);
+        $this->assertSelectorTextContains('#preferences_locale_error', 'The selected choice is invalid');
         $this->assertNull($session->get('_locale'));
     }
 }

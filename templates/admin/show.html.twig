@@ -17,7 +17,15 @@
         </div>
 
         <div class="cols cols--gap-small">
-            {{ render(path('edit locale')) }}
+            <button
+                class="header__button button--small"
+                data-controller="modal-opener"
+                data-action="modal-opener#fetch"
+                data-modal-opener-selector-value="{{ path('edit preferences') }}"
+            >
+                {{ icon('gear') }}
+                {{ 'layout.header.preferences' | trans }}
+            </button>
 
             <form action="{{ path('logout') }}" method="post" data-turbo="false">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">

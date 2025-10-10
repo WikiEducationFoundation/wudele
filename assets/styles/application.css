@@ -24,6 +24,7 @@
 @import "./components/forms/forms.css";
 @import "./components/forms/labels.css";
 @import "./components/forms/radios.css";
+@import "./components/forms/selects.css";
 @import "./components/forms/texts.css";
 @import "./components/icons.css";
 @import "./components/images.css";
@@ -38,7 +39,6 @@
 @import "./custom/votes.css";
 @import "./layout/body.css";
 @import "./layout/header.css";
-@import "./layout/locales.css";
 
 *,
 *::before,

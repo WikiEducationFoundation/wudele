@@ -73,6 +73,7 @@ forms.poll_settings_form.slug.label: 'Enter the poll link'
 forms.poll_settings_form.vote_no_by_default.label: 'Vote “no” by default if no response is given'
 forms.poll_slots_form.add_slot: 'Add a time slot'
 forms.poll_slots_form.remove_slot: 'Remove the time slot'
+forms.preferences.locale.label: Language
 forms.previous: Previous
 forms.proposal_type.label.label_pattern: 'Proposal __number__'
 forms.search_polls_form.email.help: 'We will send you the links to the polls that you have created.'
@@ -93,8 +94,7 @@ home.show.poll.deleted: 'Your poll has been successfully deleted.'
 home.source_code: 'Access the source code.'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.header.my: 'My polls and votes'
-layout.locales.change.en_GB: 'Change the language (currently in English)'
-layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
+layout.header.preferences: Preferences
 layout.logout: Logout
 layout.modal.close: Close
 login.log_in: 'Log in'
@@ -232,3 +232,4 @@ polls.votes.sum: Sum
 polls.votes.yes: 'Yes'
 polls.votes.yes.count: "{count}\_Yes"
 polls.votes.yours: 'Your vote'
+preferences.edit.title: 'Your preferences'

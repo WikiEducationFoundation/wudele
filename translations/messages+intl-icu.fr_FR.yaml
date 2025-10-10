@@ -73,6 +73,7 @@ forms.poll_settings_form.slug.label: 'Saisissez le lien de votre sondage'
 forms.poll_settings_form.vote_no_by_default.label: "Voter «\_non\_» par défaut en absence de réponse"
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
+forms.preferences.locale.label: Langue
 forms.previous: Précédent
 forms.proposal_type.label.label_pattern: 'Proposition __number__'
 forms.search_polls_form.email.help: 'Nous vous enverrons les liens vers les sondages que vous avez créés.'
@@ -93,8 +94,7 @@ home.show.poll.deleted: 'Votre sondage a bien été supprimé.'
 home.source_code: 'Accéder au code source.'
 home.title: 'Organisez des évènements ou recueillez l’avis de vos proches, simplement, librement.'
 layout.header.my: 'Mes sondages et votes'
-layout.locales.change.en_GB: 'Change the language (currently in English)'
-layout.locales.change.fr_FR: 'Changer la langue (actuellement en français)'
+layout.header.preferences: Préférences
 layout.logout: 'Se déconnecter'
 layout.modal.close: Fermer
 login.log_in: 'Se connecter'
@@ -232,3 +232,4 @@ polls.votes.sum: Somme
 polls.votes.yes: Oui
 polls.votes.yes.count: "{count}\_Oui"
 polls.votes.yours: 'Votre vote'
+preferences.edit.title: 'Vos préférences'

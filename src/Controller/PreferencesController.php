@@ -6,27 +6,29 @@
 
 namespace App\Controller;
 
+use App\Form;
 use App\Utils;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class LocaleController extends BaseController
+class PreferencesController extends BaseController
 {
-    #[Route('/locale', name: 'edit locale')]
+    #[Route('/preferences', name: 'edit preferences')]
     public function edit(Request $request): Response
     {
-        $locale = $request->request->getString('locale', $request->getLocale());
-
         $referer = $request->headers->get('Referer');
         if ($referer === null) {
             $referer = '/';
         }
 
-        if ($request->isMethod('POST')) {
-            if (!Utils\Locales::isAvailable($locale)) {
-                return $this->redirect($referer);
-            }
+        $form = $this->createNamedForm('preferences', Form\PreferencesForm::class, [
+            'locale' => $request->getLocale(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $locale = $form->get('locale')->getData();
 
             $session = $request->getSession();
             $session->set('_locale', $locale);
@@ -34,12 +36,8 @@ class LocaleController extends BaseController
             return $this->redirect($referer);
         }
 
-        $locales = Utils\Locales::getSupportedLanguages();
-
-        return $this->render('locale/_edit.html.twig', [
-            'locales' => $locales,
-            'locale' => $locale,
-            'localeLabel' => $locales[$locale],
+        return $this->render('preferences/edit.html.twig', [
+            'form' => $form,
         ]);
     }
 }
