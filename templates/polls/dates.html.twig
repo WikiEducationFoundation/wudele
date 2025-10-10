@@ -45,44 +45,50 @@
                     </button>
                 </div>
 
-                <div class="flow flow--smaller" data-dates-form-target="calendar">
-                    <div class="calendar__header cols cols--always cols--center">
-                        <button
-                            type="button"
-                            class="calendar__header-button"
-                            data-calendar-target="previousMonth"
-                            data-action="calendar#goToPreviousMonth"
-                            data-label-pattern="{{ 'calendar.patterns.previous_month' | trans }}"
-                        >
-                            {{ icon('angle-down', 'icon--rotate90') }}
-                        </button>
+                <div class="flow" data-dates-form-target="calendar">
+                    <div class="flow flow--smaller" data-dates-form-target="calendar">
+                        <div class="calendar__header cols cols--always cols--center">
+                            <button
+                                type="button"
+                                class="calendar__header-button"
+                                data-calendar-target="previousMonth"
+                                data-action="calendar#goToPreviousMonth"
+                                data-label-pattern="{{ 'calendar.patterns.previous_month' | trans }}"
+                            >
+                                {{ icon('angle-down', 'icon--rotate90') }}
+                            </button>
 
-                        <h2
-                            id="calendar-title"
-                            class="text--primary col--extend text--center"
-                            data-calendar-target="currentMonth"
-                            aria-live="polite"
-                        >
-                        </h2>
+                            <h2
+                                id="calendar-title"
+                                class="text--primary col--extend text--center"
+                                data-calendar-target="currentMonth"
+                                aria-live="polite"
+                            >
+                            </h2>
 
-                        <button
-                            type="button"
-                            class="calendar__header-button"
-                            data-calendar-target="nextMonth"
-                            data-action="calendar#goToNextMonth"
-                            data-label-pattern="{{ 'calendar.patterns.next_month' | trans }}"
-                        >
-                            {{ icon('angle-down', 'icon--rotate270') }}
-                        </button>
+                            <button
+                                type="button"
+                                class="calendar__header-button"
+                                data-calendar-target="nextMonth"
+                                data-action="calendar#goToNextMonth"
+                                data-label-pattern="{{ 'calendar.patterns.next_month' | trans }}"
+                            >
+                                {{ icon('angle-down', 'icon--rotate270') }}
+                            </button>
+                        </div>
+
+                        <table class="calendar" data-action="keydown->calendar#handleKeydown" aria-labelledby="calendar-title">
+                            <thead data-calendar-target="daysLabels">
+                            </thead>
+
+                            <tbody data-calendar-target="days">
+                            </tbody>
+                        </table>
                     </div>
 
-                    <table class="calendar" data-action="keydown->calendar#handleKeydown" aria-labelledby="calendar-title">
-                        <thead data-calendar-target="daysLabels">
-                        </thead>
-
-                        <tbody data-calendar-target="days">
-                        </tbody>
-                    </table>
+                    <p class="wrapper wrapper--text wrapper--center text--secondary text--small text--center no-mobile">
+                        {{ 'calendar.hints.dates_period' | trans | raw }}
+                    </p>
                 </div>
 
                 <div class="flow" data-dates-form-target="inputs" hidden>

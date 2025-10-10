@@ -30,6 +30,7 @@ export default class extends Controller {
             dayjs.locale('en');
         }
 
+        this.periodSelectionStart = null;
         const firstSelectedDate = this.getFirstSelectedDate();
         if (firstSelectedDate) {
             this.focusedDate = firstSelectedDate;
@@ -141,18 +142,51 @@ export default class extends Controller {
 
     switchSelection (event) {
         const dateButton = event.target;
-        const value = dateButton.dataset.value;
-        const isSelected = dateButton.ariaSelected === 'true';
+        const date = dayjs(dateButton.dataset.value);
 
-        const dateClicked = new CustomEvent('date-clicked', { detail: {
-            value: value,
-            action: isSelected ? 'unselect' : 'select',
-        } });
-        this.element.dispatchEvent(dateClicked);
+        let dates = [date];
+        let action = dateButton.ariaSelected === 'true' ? 'unselect' : 'select';
+        if (event.shiftKey && this.periodSelectionStart) {
+            dates = this.getDateValuesRange(this.periodSelectionStart, date, 'day');
+            action = this.isDateSelected(this.periodSelectionStart) ? 'select' : 'unselect';
+        }
 
-        this.focusedDate = dayjs(value);
+        dates.forEach((date) => {
+            if (
+                (action === 'select' && this.isDateSelected(date)) ||
+                (action === 'unselect' && !this.isDateSelected(date))
+            ) {
+                return;
+            }
+
+            const dateClicked = new CustomEvent('date-clicked', { detail: {
+                value: date.format('YYYY-MM-DD'),
+                action: action,
+            } });
+            this.element.dispatchEvent(dateClicked);
+        });
+
+        this.focusedDate = date;
         this.refresh();
         this.focusDateButton();
+        this.periodSelectionStart = date;
+    }
+
+    getDateValuesRange (date1, date2, unit) {
+        let currentDate = date1;
+        let endDate = date2;
+        if (date1.isAfter(date2)) {
+            currentDate = date2;
+            endDate = date1;
+        }
+
+        const range = [];
+        while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
+            range.push(currentDate.clone());
+            currentDate = currentDate.add(1, unit);
+        }
+
+        return range;
     }
 
     isDateSelected (date) {

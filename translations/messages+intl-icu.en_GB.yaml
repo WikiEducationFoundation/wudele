@@ -13,6 +13,7 @@ answers.value.yes: 'Yes'
 base.copied: Copied!
 base.copy: Copy
 base.default_title: 'Welcome to {appName}!'
+calendar.hints.dates_period: 'Tip: you can select a range of dates by holding down the <kbd>Shift</kbd> key.'
 calendar.patterns.next_month: 'Next month (__date__)'
 calendar.patterns.previous_month: 'Previous month (__date__)'
 emails.hello: 'Hello {name},'

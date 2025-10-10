@@ -13,6 +13,7 @@ answers.value.yes: Oui
 base.copied: "Copié\_!"
 base.copy: Copier
 base.default_title: "Bienvenue sur {appName}\_!"
+calendar.hints.dates_period: "Astuce\_: vous pouvez sélectionner une plage de dates en maintenant la touche <kbd>Maj</kbd> enfoncée."
 calendar.patterns.next_month: 'Mois suivant (__date__)'
 calendar.patterns.previous_month: 'Mois précédent (__date__)'
 emails.hello: 'Bonjour {name},'
