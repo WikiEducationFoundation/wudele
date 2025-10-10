@@ -73,6 +73,10 @@ forms.poll_settings_form.slug.label: 'Saisissez le lien de votre sondage'
 forms.poll_settings_form.vote_no_by_default.label: "Voter «\_non\_» par défaut en absence de réponse"
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
+forms.preferences.color_scheme.auto: Auto
+forms.preferences.color_scheme.dark: Sombre
+forms.preferences.color_scheme.label: Thème
+forms.preferences.color_scheme.light: Clair
 forms.preferences.locale.label: Langue
 forms.previous: Précédent
 forms.proposal_type.label.label_pattern: 'Proposition __number__'

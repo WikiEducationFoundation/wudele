@@ -16,7 +16,7 @@
     overflow: hidden auto;
 
     opacity: 0;
-    background-color: rgba(0 0 0 / 50%);
+    background-color: rgba(0 0 0 / 75%);
 
     transform: scaleX(1.02) scaleY(1.02);
     transition: visibility 0s linear 0.2s, opacity 0.2s 0s, transform 0.2s;
@@ -38,6 +38,7 @@
     margin: var(--space-large) auto var(--space-larger);
 
     background-color: var(--color-grey1);
+    box-shadow: 0 0 8px 0 rgb(0 0 0 / 50%);
 
     scroll-margin-top: var(--space-large);
 }

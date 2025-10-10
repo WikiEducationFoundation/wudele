@@ -27,6 +27,25 @@ class PreferencesForm extends AbstractType
             },
         ]);
 
+        $builder->add('colorScheme', Type\ChoiceType::class, [
+            'choices' => ['auto', 'light', 'dark'],
+            'label' => new TranslatableMessage('forms.preferences.color_scheme.label'),
+            'choice_label' => function (string $choice): TranslatableMessage {
+                if ($choice === 'auto') {
+                    return new TranslatableMessage('forms.preferences.color_scheme.auto');
+                } elseif ($choice === 'light') {
+                    return new TranslatableMessage('forms.preferences.color_scheme.light');
+                } elseif ($choice === 'dark') {
+                    return new TranslatableMessage('forms.preferences.color_scheme.dark');
+                } else {
+                    throw new \LogicException("{$choice} is an invalid choice");
+                }
+            },
+            'attr' => [
+                'data-color-scheme-target' => 'select',
+            ],
+        ]);
+
         $builder->add('submit', Type\SubmitType::class, [
             'label' => new TranslatableMessage('forms.confirm'),
         ]);
@@ -37,6 +56,7 @@ class PreferencesForm extends AbstractType
         $resolver->setDefaults([
             'attr' => [
                 'class' => 'form--standard',
+                'data-action' => 'color-scheme#change',
             ],
         ]);
     }

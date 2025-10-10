@@ -3,6 +3,7 @@ import { Application } from '@hotwired/stimulus';
 
 import CalendarController from './controllers/calendar_controller.js';
 import CollectionController from './controllers/collection_controller.js';
+import ColorSchemeController from './controllers/color_scheme_controller.js';
 import CopyToClipboardController from './controllers/copy_to_clipboard_controller.js';
 import DatesFormController from './controllers/dates_form_controller.js';
 import FormLeaveConfirmationController from './controllers/form_leave_confirmation_controller.js';
@@ -22,6 +23,7 @@ import StorageController from './controllers/storage_controller.js';
 const application = Application.start();
 application.register('calendar', CalendarController);
 application.register('collection', CollectionController);
+application.register('color-scheme', ColorSchemeController);
 application.register('copy-to-clipboard', CopyToClipboardController);
 application.register('dates-form', DatesFormController);
 application.register('form-leave-confirmation', FormLeaveConfirmationController);

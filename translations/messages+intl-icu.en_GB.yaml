@@ -73,6 +73,10 @@ forms.poll_settings_form.slug.label: 'Enter the poll link'
 forms.poll_settings_form.vote_no_by_default.label: 'Vote “no” by default if no response is given'
 forms.poll_slots_form.add_slot: 'Add a time slot'
 forms.poll_slots_form.remove_slot: 'Remove the time slot'
+forms.preferences.color_scheme.auto: Auto
+forms.preferences.color_scheme.dark: Dark
+forms.preferences.color_scheme.label: 'Color scheme'
+forms.preferences.color_scheme.light: Light
 forms.preferences.locale.label: Language
 forms.previous: Previous
 forms.proposal_type.label.label_pattern: 'Proposal __number__'

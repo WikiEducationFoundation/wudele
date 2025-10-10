@@ -13,8 +13,8 @@ textarea,
     font-size: var(--font-size-normal);
     line-height: 1.5;
 
-    background-color: var(--color-grey1);
-    border: 1px solid var(--color-grey12);
+    background-color: var(--color-grey2);
+    border: 1px solid var(--color-grey11);
     border-radius: var(--border-radius);
 
     transition:

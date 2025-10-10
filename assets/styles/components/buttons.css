@@ -6,8 +6,8 @@ button,
 .button {
     --button-padding: var(--space-small) var(--space-large);
     --button-background-color: var(--color-primary1);
-    --button-border-color: var(--color-primary9);
-    --button-color: var(--color-primary9);
+    --button-border-color: var(--color-primary11);
+    --button-color: var(--color-primary11);
 
     display: inline-block;
     padding: var(--button-padding);
@@ -47,16 +47,16 @@ button[aria-expanded="true"],
 }
 
 .button--primary {
-    --button-background-color: var(--color-primary9);
-    --button-border-color: var(--color-primary9);
-    --button-color: var(--color-primary1);
+    --button-background-color: var(--color-iris9);
+    --button-border-color: var(--color-iris9);
+    --button-color: var(--color-iris1);
 }
 
 .button--primary:hover:not(:disabled),
 .button--primary[aria-expanded="true"] {
-    --button-background-color: var(--color-primary12);
-    --button-border-color: var(--color-primary12);
-    --button-color: var(--color-primary1);
+    --button-background-color: var(--color-iris12);
+    --button-border-color: var(--color-iris12);
+    --button-color: var(--color-iris1);
 }
 
 .button--danger {

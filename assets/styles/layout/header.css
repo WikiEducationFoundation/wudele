@@ -5,9 +5,9 @@
 .header {
     padding: var(--space-small) var(--space-medium);
 
-    color: var(--color-primary1);
+    color: var(--color-iris1);
 
-    background-color: var(--color-primary9);
+    background-color: var(--color-iris9);
     box-shadow: 0 0 8px 0 rgba(0 0 0 / 15%);
 }
 
@@ -37,7 +37,7 @@
 }
 
 .header__button {
-    --outline-color: var(--color-primary1);
+    --outline-color: var(--color-iris1);
     --button-color: currentcolor;
     --button-background-color: transparent;
     --button-border-color: currentcolor;
