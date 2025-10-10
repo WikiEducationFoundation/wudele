@@ -45,14 +45,13 @@ abstract class PollFlow extends Flow
     public function getPreviousStepUrl(string $stepName): string
     {
         if ($this->isStepOutOfFlow && $this->isAccessible('summary')) {
-            return $this->urlGenerator->generate('poll admin', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
+            return $this->getOutOfFlowPreviousStepUrl($stepName);
         }
 
         return parent::getPreviousStepUrl($stepName);
     }
+
+    abstract public function getOutOfFlowPreviousStepUrl(string $stepName): string;
 
     public function hasNextStep(string $stepName): bool
     {
@@ -66,12 +65,11 @@ abstract class PollFlow extends Flow
     public function getNextStepUrl(string $stepName): string
     {
         if ($this->isStepOutOfFlow && $this->isAccessible('summary')) {
-            return $this->urlGenerator->generate('poll admin', [
-                'id' => $this->poll->getId(),
-                'token' => $this->poll->getAdminToken(),
-            ]);
+            return $this->getOutOfFlowNextStepUrl($stepName);
         }
 
         return parent::getNextStepUrl($stepName);
     }
+
+    abstract public function getOutOfFlowNextStepUrl(string $stepName): string;
 }

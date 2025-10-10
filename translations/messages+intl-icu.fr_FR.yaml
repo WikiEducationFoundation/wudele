@@ -203,8 +203,6 @@ polls.summary.closed_at: 'Date de fin'
 polls.summary.closed_at.none: Aucune
 polls.summary.delete_poll: 'Supprimer le sondage'
 polls.summary.edit: Modifier
-polls.summary.edit_dates: 'Modifier les dates'
-polls.summary.edit_slots: 'Modifier les horaires'
 polls.summary.information.title: 'Informations générales'
 polls.summary.is_closed: '(sondage terminé)'
 polls.summary.proposals.title: 'Mes propositions'

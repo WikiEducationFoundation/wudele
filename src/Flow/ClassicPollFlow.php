@@ -48,4 +48,20 @@ class ClassicPollFlow extends PollFlow
             'flow' => 'on',
         ]);
     }
+
+    public function getOutOfFlowPreviousStepUrl(string $stepName): string
+    {
+        return $this->urlGenerator->generate('poll admin', [
+            'id' => $this->poll->getId(),
+            'token' => $this->poll->getAdminToken(),
+        ]);
+    }
+
+    public function getOutOfFlowNextStepUrl(string $stepName): string
+    {
+        return $this->urlGenerator->generate('poll admin', [
+            'id' => $this->poll->getId(),
+            'token' => $this->poll->getAdminToken(),
+        ]);
+    }
 }

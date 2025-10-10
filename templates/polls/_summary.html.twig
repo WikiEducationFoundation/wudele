@@ -165,12 +165,7 @@
 
             <a class="button button--menuitem" href="{{ path('edit poll dates', { id: poll.id, token: poll.adminToken }) }}">
                 {{ icon('pen-to-square') }}
-                {{ 'polls.summary.edit_dates' | trans }}
-            </a>
-
-            <a class="button button--menuitem" href="{{ path('edit poll slots', { id: poll.id, token: poll.adminToken }) }}">
-                {{ icon('pen-to-square') }}
-                {{ 'polls.summary.edit_slots' | trans }}
+                {{ 'polls.summary.edit' | trans }}
             </a>
         {% else %}
             <ul class="list--nostyle flow">

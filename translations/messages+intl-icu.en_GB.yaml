@@ -203,8 +203,6 @@ polls.summary.closed_at: 'Closing date'
 polls.summary.closed_at.none: None
 polls.summary.delete_poll: 'Delete the poll'
 polls.summary.edit: Edit
-polls.summary.edit_dates: 'Edit dates'
-polls.summary.edit_slots: 'Edit slots'
 polls.summary.information.title: 'General information'
 polls.summary.is_closed: '(poll closed)'
 polls.summary.proposals.title: 'My proposals'

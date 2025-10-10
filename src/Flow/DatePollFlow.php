@@ -52,4 +52,27 @@ class DatePollFlow extends PollFlow
             'flow' => 'on',
         ]);
     }
+
+    public function getOutOfFlowPreviousStepUrl(string $stepName): string
+    {
+        return $this->urlGenerator->generate('poll admin', [
+            'id' => $this->poll->getId(),
+            'token' => $this->poll->getAdminToken(),
+        ]);
+    }
+
+    public function getOutOfFlowNextStepUrl(string $stepName): string
+    {
+        if ($stepName === 'dates') {
+            return $this->urlGenerator->generate('edit poll slots', [
+                'id' => $this->poll->getId(),
+                'token' => $this->poll->getAdminToken(),
+            ]);
+        } else {
+            return $this->urlGenerator->generate('poll admin', [
+                'id' => $this->poll->getId(),
+                'token' => $this->poll->getAdminToken(),
+            ]);
+        }
+    }
 }
