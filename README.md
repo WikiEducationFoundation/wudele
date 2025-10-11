@@ -2,6 +2,8 @@
 
 **Pollaris is a polling tool to plan, organise and make decisions quickly, easily and without registration.**
 
+![Screenshot of a poll view in Pollaris.](public/screenshot.webp)
+
 Pollaris is licensed under [GNU Affero General Public License v3.0 or later](https://framagit.org/pollaris/pollaris/-/blob/main/LICENSE.txt).
 
 ## Documentation
