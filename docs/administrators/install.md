@@ -264,6 +264,13 @@ You also can create the following files:
 - `public/custom.js`: a custom JS script;
 - `templates/home/custom.html.twig`: allows to customise the home page (you can copy the [`templates/home/show.html.twig`](/templates/home/show.html.twig) template to get started).
 
+### Optional: Installing behind a reverse proxy
+
+If your instance of Pollaris is behind a reverse proxy, you may need to do additionnal work.
+In particular, if the URLs generated in Pollaris are in HTTP, you may need to tell your Web server that the service is served over HTTPS.
+
+[Read more in the Symfony documentation.](https://symfony.com/doc/current/deployment/proxies.html#overriding-configuration-behind-hidden-ssl-termination)
+
 ## Updating the production environment
 
 **Please always start by checking the migration notes in [the changelog](/CHANGELOG.md) before updating the application.**
