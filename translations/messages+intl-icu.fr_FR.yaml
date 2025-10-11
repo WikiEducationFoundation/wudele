@@ -27,6 +27,12 @@ emails.new_vote.subject: 'Nouveau vote sur un sondage'
 emails.new_vote.voted: "{voter_name} vient de voter au sondage «\_{poll_name}\_»."
 emails.polls_list.here_is_the_list: "Voici la liste des sondages que vous administrez sur {appName}\_:"
 emails.polls_list.subject: 'Liste de vos sondages'
+errors.404.description: 'La page demandée n’a pas été trouvée. Vérifiez qu’il n’y a pas de faute dans l’URL.'
+errors.404.title: "Page non trouvée\_!"
+errors.back_home: 'Retour à la page d’accueil'
+errors.generic.description: 'Veuillez indiquer à votre administrateur ce que vous faisiez lorsque l’erreur s’est produite. Le problème sera résolu dès que possible.'
+errors.generic.sorry: 'Désolé pour la gêne occasionnée.'
+errors.generic.title: "Une erreur est survenue\_!"
 forms.apply: Appliquer
 forms.cancel: Annuler
 forms.comment_form.author_name.label: 'Votre nom'
