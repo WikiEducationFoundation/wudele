@@ -6,6 +6,11 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
     print() {
+        const previousColorScheme = document.documentElement.dataset.colorScheme;
+
+        // Always print in "light" mode
+        document.documentElement.dataset.colorScheme = 'light';
         print();
+        document.documentElement.dataset.colorScheme = previousColorScheme;
     }
 }
