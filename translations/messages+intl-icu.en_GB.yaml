@@ -97,7 +97,8 @@ forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
-home.free_software: '{appName} is a free software licensed under AGPL 3.'
+home.free_software: 'Pollaris is a free software licensed under AGPL 3.'
+home.free_software.custom: '{appName} uses Pollaris, a free software licensed under AGPL 3.'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.my_polls_and_votes: 'My polls and votes'
 home.show.poll.deleted: 'Your poll has been successfully deleted.'

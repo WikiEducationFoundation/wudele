@@ -41,7 +41,11 @@
         </p>
 
         <p class="text--secondary">
-            {{ 'home.free_software' | trans({ appName: appName }) }}
+            {% if appName == 'Pollaris' %}
+                {{ 'home.free_software' | trans }}
+            {% else %}
+                {{ 'home.free_software.custom' | trans({ appName: appName }) }}
+            {% endif %}
 
             <a href="https://framagit.org/pollaris/pollaris">
                 {{ 'home.source_code' | trans }}
