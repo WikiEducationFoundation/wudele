@@ -294,3 +294,9 @@ Execute the migrations:
 ```console
 www-data$ php bin/console doctrine:migrations:migrate --no-interaction
 ```
+
+Restart the Systemd service:
+
+```console
+# systemctl restart pollaris-worker
+```
