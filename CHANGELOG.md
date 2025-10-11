@@ -1,5 +1,50 @@
 # Changelog
 
+## 2025-10-11 - 1.0.0
+
+### Features
+
+- Allow to disable the "maybe" votes ([b899dcb](https://framagit.org/pollaris/pollaris/-/commit/b899dcb))
+- Make default "no" vote optional ([cb94199](https://framagit.org/pollaris/pollaris/-/commit/cb94199))
+- Allow to select a period of dates in the calendar ([0aaa1dc](https://framagit.org/pollaris/pollaris/-/commit/0aaa1dc))
+- Redirect to admin/summary after editing previous poll form step ([8421070](https://framagit.org/pollaris/pollaris/-/commit/8421070), [51ac337](https://framagit.org/pollaris/pollaris/-/commit/51ac337))
+- Provide a dark theme ([fcddda9](https://framagit.org/pollaris/pollaris/-/commit/fcddda9), [7dee514](https://framagit.org/pollaris/pollaris/-/commit/7dee514))
+- Interpret poll description and comments as Markdown ([d6841b0](https://framagit.org/pollaris/pollaris/-/commit/d6841b0), [ef80202](https://framagit.org/pollaris/pollaris/-/commit/ef80202))
+
+### Improvements
+
+- Add a shadow over the proposals table scrollable sides ([8dc967f](https://framagit.org/pollaris/pollaris/-/commit/8dc967f))
+- Rename "maybe" votes in "if needed" ([3757ae3](https://framagit.org/pollaris/pollaris/-/commit/3757ae3))
+- Rename nickname in name ([e61b00f](https://framagit.org/pollaris/pollaris/-/commit/e61b00f))
+- Add explanations about time slots ([6424bc7](https://framagit.org/pollaris/pollaris/-/commit/6424bc7))
+- Add explanations about the poll types ([4ceb3d3](https://framagit.org/pollaris/pollaris/-/commit/4ceb3d3))
+- Increase the density of the admin page ([d6bdb8c](https://framagit.org/pollaris/pollaris/-/commit/d6bdb8c))
+- Move the language form in a preferences modal ([880b67a](https://framagit.org/pollaris/pollaris/-/commit/880b67a))
+- Focus calendar on the first selected date on loading ([3e917a1](https://framagit.org/pollaris/pollaris/-/commit/3e917a1))
+- Customise the error pages ([bc05da3](https://framagit.org/pollaris/pollaris/-/commit/bc05da3))
+
+### Bug fixes
+
+- Fix detection of preferred language ([d8193b6](https://framagit.org/pollaris/pollaris/-/commit/d8193b6))
+- Fix overflow of author names ([c24e1f6](https://framagit.org/pollaris/pollaris/-/commit/c24e1f6))
+
+### Maintenance
+
+- Add missing PHP extensions to the requirements ([13a0e1e](https://framagit.org/pollaris/pollaris/-/commit/13a0e1e))
+- Update the dependencies ([d8a5a45](https://framagit.org/pollaris/pollaris/-/commit/d8a5a45))
+
+### Documentation
+
+- Fix the deployment instructions ([a7553c5](https://framagit.org/pollaris/pollaris/-/commit/a7553c5), [ce69287](https://framagit.org/pollaris/pollaris/-/commit/ce69287))
+- Document Pollaris installed behind a reverse proxy ([0c78a75](https://framagit.org/pollaris/pollaris/-/commit/0c78a75))
+- Add a screenshot to the README ([caaa338](https://framagit.org/pollaris/pollaris/-/commit/caaa338))
+
+### Developers
+
+- Rename "Process" in "Flow" ([2a5e982](https://framagit.org/pollaris/pollaris/-/commit/2a5e982))
+- Refactor handling summary/admin pages ([ce66f65](https://framagit.org/pollaris/pollaris/-/commit/ce66f65))
+- Recommend to get code with SSH in development ([911aa9d](https://framagit.org/pollaris/pollaris/-/commit/911aa9d))
+
 ## 2025-09-28 - 0.7.0
 
 ### Features
