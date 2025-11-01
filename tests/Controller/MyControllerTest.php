@@ -98,7 +98,7 @@ class MyControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#search_polls_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#search_polls_error', 'please submit the form again');
         $this->assertEmailCount(0);
     }
 }

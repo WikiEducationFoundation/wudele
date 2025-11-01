@@ -138,7 +138,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#poll_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_error', 'please submit the form again');
         Factory\PollFactory::assert()->count(0);
     }
 
@@ -441,7 +441,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#vote_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#vote_error', 'please submit the form again');
         Factory\VoteFactory::assert()->count(0);
     }
 
@@ -537,7 +537,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#comment_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#comment_error', 'please submit the form again');
         $comments = Factory\CommentFactory::all();
         $this->assertSame(0, count($comments));
     }
@@ -713,7 +713,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#poll_authentication_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_authentication_error', 'please submit the form again');
         $session = $this->getSession($client);
         /** @var Security\PollSecurity */
         $pollSecurity = static::getContainer()->get(Security\PollSecurity::class);
@@ -807,7 +807,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#poll_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_error', 'please submit the form again');
         $this->refresh($poll);
         $this->assertSame($oldTitle, $poll->getTitle());
         $this->assertSame($oldDescription, $poll->getDescription());
@@ -959,7 +959,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#poll_proposals_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_proposals_error', 'please submit the form again');
         Factory\ProposalFactory::assert()->count(0);
     }
 
@@ -1035,7 +1035,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#poll_dates_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_dates_error', 'please submit the form again');
         Factory\DateFactory::assert()->count(0);
     }
 
@@ -1175,7 +1175,7 @@ class PollsControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#poll_slots_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_slots_error', 'please submit the form again');
         Factory\ProposalFactory::assert()->count(0);
     }
 
@@ -1312,7 +1312,7 @@ class PollsControllerTest extends WebTestCase
             ]
         ]);
 
-        $this->assertSelectorTextContains('#poll_settings_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_settings_error', 'please submit the form again');
         $this->refresh($poll);
         $this->assertSame($poll->getId(), $poll->getSlug());
     }
@@ -1385,7 +1385,7 @@ class PollsControllerTest extends WebTestCase
             ]
         ]);
 
-        $this->assertSelectorTextContains('#poll_summary_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#poll_summary_error', 'please submit the form again');
         $this->refresh($poll);
         $this->assertFalse($poll->isCompleted());
     }

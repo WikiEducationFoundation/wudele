@@ -188,7 +188,7 @@ class VotesControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorTextContains('#vote_error', 'The CSRF token is invalid');
+        $this->assertSelectorTextContains('#vote_error', 'please submit the form again');
         $this->refresh($vote);
         $this->assertSame($oldName, $vote->getAuthorName());
         $this->refresh($answer);

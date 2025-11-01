@@ -1,4 +1,5 @@
 Error: Error
+'The CSRF token is invalid. Please try to resubmit the form.': 'An error has occurred, please submit the form again (invalid CSRF token).'
 answer.value.invalid: 'Select a choice from the list.'
 comment.author_name.max_length: 'Enter a name of less than {limit} characters.'
 comment.author_name.required: 'Enter a name.'
