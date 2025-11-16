@@ -302,6 +302,12 @@ Execute the migrations:
 www-data$ php bin/console doctrine:migrations:migrate --no-interaction
 ```
 
+Clear the cache:
+
+```console
+www-data$ php bin/console cache:clear
+```
+
 Restart the Systemd service:
 
 ```console
