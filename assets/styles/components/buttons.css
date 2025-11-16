@@ -81,6 +81,14 @@ button[aria-expanded="true"],
     --button-padding: var(--space-smaller) var(--space-small);
 }
 
+.button--icon {
+    --button-padding: var(--space-smaller);
+
+    border-radius: 100%;
+
+    aspect-ratio: 1;
+}
+
 .button--block {
     display: block;
     width: 100%;

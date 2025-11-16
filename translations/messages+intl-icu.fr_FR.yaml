@@ -188,6 +188,7 @@ polls.show.is_closed: 'Ce sondage est terminé.'
 polls.show.my_votes.date: '(vote du __date__)'
 polls.show.my_votes.description: 'Vos votes sont mémorisés dans votre navigateur. Pour plus de confidentialité, retirez-les si vous partagez ce dernier avec d’autres personnes.'
 polls.show.my_votes.edit: Modifier
+polls.show.my_votes.information: Information
 polls.show.my_votes.remove: Retirer
 polls.show.my_votes.title: 'Mes votes'
 polls.show.no_vote: "Pour le moment aucun vote n’a été fait mais, pas de panique, ça ne va pas tarder. Pensez simplement à partager votre sondage avec les autres participantes et participants\_!"

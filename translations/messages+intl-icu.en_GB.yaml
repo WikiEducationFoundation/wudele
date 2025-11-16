@@ -188,6 +188,7 @@ polls.show.is_closed: 'This poll is closed.'
 polls.show.my_votes.date: '(vote of __date__)'
 polls.show.my_votes.description: 'Your votes are stored in your browser. For greater privacy, delete them if you share your browser with other people.'
 polls.show.my_votes.edit: Edit
+polls.show.my_votes.information: Information
 polls.show.my_votes.remove: Remove
 polls.show.my_votes.title: 'My votes'
 polls.show.no_vote: 'For the moment no votes have been cast, but don’t panic, it won’t be long now. Just remember to share your poll with the other participants!'

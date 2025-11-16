@@ -172,25 +172,47 @@
                     data-controller="my-votes"
                     data-my-votes-poll-id-value="{{ poll.id }}"
                 >
-                    <h2 class="text--primary">
-                        {{ 'polls.show.my_votes.title' | trans }}
-                        {{ icon('thumbtack') }}
-                    </h2>
+                    <div class="cols cols--always cols--center cols--gap">
+                        <h2 class="col--extend text--primary">
+                            {{ icon('thumbtack') }}
+                            {{ 'polls.show.my_votes.title' | trans }}
+                        </h2>
 
-                    <p>
-                        {{ 'polls.show.my_votes.description' | trans }}
-                    </p>
+                        <button
+                            type="button"
+                            class="button--icon"
+                            data-controller="modal-opener"
+                            data-action="modal-opener#copy"
+                            data-modal-opener-selector-value="#modal-my-votes-details"
+                        >
+                            {{ icon('question') }}
 
-                    <ul class="panel panel--primary panel--rounded list--nostyle flow" data-my-votes-target="list">
+                            <span class="sr-only">
+                                {{ 'polls.show.my_votes.information' | trans }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <template id="modal-my-votes-details">
+                        <div class="flow flow--large">
+                            <h1 id="modal-title">
+                                {{ 'polls.show.my_votes.title' | trans }}
+                            </h1>
+
+                            <p>
+                                {{ 'polls.show.my_votes.description' | trans }}
+                            </p>
+                        </div>
+                    </template>
+
+                    <ul class="list--nostyle flow" data-my-votes-target="list">
                     </ul>
 
                     <template data-my-votes-target="template">
-                        <li class="panel panel--white panel--rounded cols cols--center cols--always cols--gap-small">
+                        <li class="panel panel--primary panel--rounded cols cols--center cols--always cols--gap-small">
                             <span class="col--extend text--overflow">
                                 __author__
-                                <span class="text--small text--secondary">
-                                    {{ 'polls.show.my_votes.date' | trans }}
-                                </span>
+                                {{ 'polls.show.my_votes.date' | trans }}
                             </span>
 
                             {# Don't rely on the value stored in the localStorage
@@ -198,14 +220,14 @@
                              # value from the localStorage is only used on the
                              # /my page #}
                             {% if canEditVote(poll, ignoreAdminAccess: true) %}
-                                <a href="__vote_url__" class="button button--smaller">
+                                <a href="__vote_url__" class="button button--ghost button--smaller">
                                     {{ 'polls.show.my_votes.edit' | trans }}
                                 </a>
                             {% endif %}
 
                             <button
                                 type="button"
-                                class="button--smaller"
+                                class="button--ghost button--smaller"
                                 data-action="my-votes#removeVote"
                                 data-storage-key="__key__"
                                 title="{{ 'polls.show.my_votes.remove' | trans }}"
