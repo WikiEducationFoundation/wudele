@@ -1,5 +1,23 @@
 # Changelog
 
+## 2025-11-16 - 1.1.0
+
+### Improvements
+
+- Add a link to the poll's results ([a1303ef](https://framagit.org/pollaris/pollaris/-/commit/a1303ef))
+- Improve separation between comments and results ([f8d2170](https://framagit.org/pollaris/pollaris/-/commit/f8d2170))
+- Move explanations of "My votes" in a modal ([a0d8d46](https://framagit.org/pollaris/pollaris/-/commit/a0d8d46))
+- Humanise the CSRF error message ([2852eb0](https://framagit.org/pollaris/pollaris/-/commit/2852eb0))
+
+### Documentation
+
+- Add "clear cache" instruction when updating to the admin documentation ([2939335](https://framagit.org/pollaris/pollaris/-/commit/2939335))
+
+### Maintenance
+
+- Update the dependencies ([d6f4ec7](https://framagit.org/pollaris/pollaris/-/commit/d6f4ec7), [b572369](https://framagit.org/pollaris/pollaris/-/commit/b572369))
+- Update the license in composer.json ([ac8970b](https://framagit.org/pollaris/pollaris/-/commit/ac8970b))
+
 ## 2025-10-11 - 1.0.0
 
 ### Features
