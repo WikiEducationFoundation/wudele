@@ -11,7 +11,7 @@ class Locales
 {
     public const DEFAULT_LOCALE = 'en_GB';
 
-    public const SUPPORTED_LOCALES = ['en_GB', 'fr_FR'];
+    public const SUPPORTED_LOCALES = ['en_GB', 'fr_FR', 'oc'];
 
     /**
      * @return array<string, string>
@@ -21,6 +21,7 @@ class Locales
         return [
             'en_GB' => 'English',
             'fr_FR' => 'Français',
+            'oc' => 'Occitan',
         ];
     }
 
