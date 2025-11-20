@@ -1,5 +1,11 @@
 # Changelog
 
+## 2025-11-20 - 1.1.1
+
+### Features
+
+- Add support for the Occitan translation ([96d93c0](https://framagit.org/pollaris/pollaris/-/commit/96d93c0))
+
 ## 2025-11-16 - 1.1.0
 
 ### Improvements
