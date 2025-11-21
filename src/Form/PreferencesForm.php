@@ -20,11 +20,8 @@ class PreferencesForm extends AbstractType
         $languages = Utils\Locales::getSupportedLanguages();
 
         $builder->add('locale', Type\ChoiceType::class, [
-            'choices' => Utils\Locales::SUPPORTED_LOCALES,
+            'choices' => array_flip($languages),
             'label' => new TranslatableMessage('forms.preferences.locale.label'),
-            'choice_label' => function (string $choice) use ($languages): string {
-                return $languages[$choice];
-            },
         ]);
 
         $builder->add('colorScheme', Type\ChoiceType::class, [

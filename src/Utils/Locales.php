@@ -11,8 +11,6 @@ class Locales
 {
     public const DEFAULT_LOCALE = 'en_GB';
 
-    public const SUPPORTED_LOCALES = ['en_GB', 'fr_FR', 'oc'];
-
     /**
      * @return array<string, string>
      */
@@ -25,8 +23,16 @@ class Locales
         ];
     }
 
+    /**
+     * @return string[]
+     */
+    public static function getSupportedCodes(): array
+    {
+        return array_keys(self::getSupportedLanguages());
+    }
+
     public static function isAvailable(string $locale): bool
     {
-        return in_array($locale, self::SUPPORTED_LOCALES);
+        return in_array($locale, self::getSupportedCodes());
     }
 }
