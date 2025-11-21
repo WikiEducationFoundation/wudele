@@ -3,6 +3,7 @@
 - [Setup the development environment](/docs/developers/install.md)
 - [Update the development environment](/docs/developers/update.md)
 - [Executing tests and linters](/docs/developers/tests.md)
+- [Translate Pollaris](/docs/developers/translations.md)
 
 Dedicated to the maintainers:
 
