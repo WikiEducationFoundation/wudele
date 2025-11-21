@@ -4,11 +4,10 @@
 
 import { Controller } from '@hotwired/stimulus';
 import dayjs from 'dayjs';
-import dayjsLocaleFr from 'dayjs/locale/fr';
-import dayjsPluginLocalizedFormat from 'dayjs/plugin/localizedFormat';
 import dayjsPluginWeekOfYear from 'dayjs/plugin/weekOfYear';
 
-dayjs.extend(dayjsPluginLocalizedFormat);
+import { setDayjsLocale } from '../dayjs_locale.js';
+
 dayjs.extend(dayjsPluginWeekOfYear);
 
 export default class extends Controller {
@@ -22,13 +21,7 @@ export default class extends Controller {
     ]
 
     connect () {
-        this.lang = document.documentElement.lang;
-
-        if (this.lang.startsWith('fr')) {
-            dayjs.locale('fr');
-        } else {
-            dayjs.locale('en');
-        }
+        setDayjsLocale(dayjs);
 
         this.periodSelectionStart = null;
         const firstSelectedDate = this.getFirstSelectedDate();

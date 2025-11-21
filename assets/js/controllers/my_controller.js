@@ -4,13 +4,10 @@
 
 import { Controller } from '@hotwired/stimulus';
 import dayjs from 'dayjs';
-import dayjsLocaleFr from 'dayjs/locale/fr';
-import dayjsPluginLocalizedFormat from 'dayjs/plugin/localizedFormat';
 
+import { setDayjsLocale } from '../dayjs_locale.js';
 import * as Storage from '../storage.js';
 import htmlEscape from '../html_escape.js';
-
-dayjs.extend(dayjsPluginLocalizedFormat);
 
 export default class extends Controller {
     static targets = [
@@ -30,13 +27,7 @@ export default class extends Controller {
     }
 
     connect () {
-        const lang = document.documentElement.lang;
-
-        if (lang.startsWith('fr')) {
-            dayjs.locale('fr');
-        } else {
-            dayjs.locale('en');
-        }
+        setDayjsLocale(dayjs);
 
         this.refreshMyPolls();
         this.refreshMyVotes();
