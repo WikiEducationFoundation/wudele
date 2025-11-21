@@ -1,5 +1,19 @@
 # Changelog
 
+## 2025-11-21 - 1.1.2
+
+### Bug fixes
+
+- Enable Occitan translation in the calendar ([14b1a92](https://framagit.org/pollaris/pollaris/-/commit/14b1a92))
+
+### Documentation
+
+- Add documentation about translating Pollaris ([5d0aa72](https://framagit.org/pollaris/pollaris/-/commit/5d0aa72))
+
+### Maintenance
+
+- Refactor supported locales in `Locales.php` ([f82cf0f](https://framagit.org/pollaris/pollaris/-/commit/f82cf0f))
+
 ## 2025-11-20 - 1.1.1
 
 ### Features
