@@ -19,6 +19,7 @@ class Locales
         return [
             'en_GB' => 'English',
             'fr_FR' => 'Français',
+            'it' => 'Italiano',
             'oc' => 'Occitan',
         ];
     }
