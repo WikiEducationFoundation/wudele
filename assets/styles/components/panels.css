@@ -6,7 +6,6 @@
     --panel-padding: var(--space-medium);
 
     padding: var(--panel-padding);
-
     background-color: var(--color-grey3);
 }
 

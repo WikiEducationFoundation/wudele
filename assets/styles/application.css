@@ -36,6 +36,7 @@
 @import "./components/pagination.css";
 @import "./components/panels.css";
 @import "./components/scrollboxes.css";
+@import "./custom/polls.css";
 @import "./custom/proposals.css";
 @import "./custom/results.css";
 @import "./custom/votes.css";
@@ -49,8 +50,6 @@
 }
 
 html {
-    font-size: 110%;
-
     scroll-behavior: smooth;
 }
 

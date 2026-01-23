@@ -48,6 +48,7 @@ class VoteForm extends AbstractType
             'label' => new TranslatableMessage('forms.vote_form.submit.label'),
             'attr' => [
                 'class' => 'button--primary',
+                'data-form-vote-validation-target' => 'submitButton',
             ],
         ]);
 
@@ -91,17 +92,21 @@ class VoteForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $leaveConfirmation = $this->translator->trans('forms.vote_form.leave_confirmation');
+        $requiredChoice = $this->translator->trans('forms.vote_form.required_choice');
 
         $resolver->setDefaults([
             'data_class' => Entity\Vote::class,
             'attr' => [
-                'data-controller' => 'form-leave-confirmation',
+                'data-controller' => 'form-leave-confirmation form-vote-validation',
                 'data-action' => (
                     'form-leave-confirmation#disableCheck'
                     . ' beforeunload@window->form-leave-confirmation#check'
                     . ' turbo:before-visit@window->form-leave-confirmation#check'
+                    . ' submit->form-vote-validation#onSubmit'
+                    . ' change->form-vote-validation#onChange'
                 ),
                 'data-form-leave-confirmation-confirmation-value' => $leaveConfirmation,
+                'data-form-vote-validation-required-choice-value' => $requiredChoice,
             ],
         ]);
     }

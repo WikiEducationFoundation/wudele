@@ -1,5 +1,6 @@
 /* This file is part of Pollaris. */
 /* Copyright 2024-2026 Marien Fressinaud */
+/* Copyright 2026 Adrien Scholaert */
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 .panel--date {
@@ -24,18 +25,165 @@
 
 .proposals-table-container {
     position: relative;
-
-    overflow-x: auto;
 }
 
 .proposals-table {
-    --cell-width: 115px;
-
     margin-right: auto;
     margin-left: auto;
-
+    width: 100%;
     border-collapse: separate;
-    border-spacing: var(--space-small) var(--space-smaller);
+    border-spacing: 0;
+}
+
+.proposals-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    background-color: var(--color-primary1);
+    border-bottom: 1px solid var(--table-border-color, var(--color-grey3));
+    box-shadow: 0 10px 13px -17px rgba(0, 0, 0, 0), -4px 38px 15px 5px rgba(0, 0, 0, 0);
+    transition: box-shadow 0.2s;
+}
+
+.proposals-table thead .proposals-table__sticky-cell {
+    vertical-align: top;
+    text-align: center;
+    padding: 0;
+}
+
+.proposals-table .proposals-table-actions {
+    display: flex;
+    gap: var(--space-small);
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: var(--space-smaller) var(--space-smaller);
+}
+
+.proposals-table thead .proposals-table-actions__show-less,
+.proposals-table thead .proposals-table-actions__show-more {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 0.75em;
+    white-space: nowrap;
+}
+
+.proposals-table thead .proposals-table-actions__show-more::before,
+.proposals-table thead .proposals-table-actions__show-less::before {
+    content: '';
+    display: inline-flex;
+    align-items: center;
+
+    width: 1em;
+    height: auto;
+    margin-right: 0.4em;
+
+    aspect-ratio: 1;
+
+    background-color: currentColor;
+    border: none;
+    border-radius: 0;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: cover;
+    mask-image: url('../../icons/angle-down.svg');
+}
+
+.proposals-table thead .proposals-table-actions__show-less::before {
+    transform: rotate(-180deg);
+}
+
+.proposals-table thead[data-show-more="false"] .proposals-table-actions__show-more,
+.proposals-table thead[data-show-more="true"] .proposals-table-actions__show-less {
+    display: flex;
+}
+
+.proposals-table .proposals-table-actions__scroll {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.proposals-table .proposals-table-actions__scroll button:first-child svg {
+    transform: rotate(90deg);
+}
+
+.proposals-table .proposals-table-actions__scroll button:last-child svg {
+    transform: rotate(-90deg);
+}
+
+.proposals-table .proposals-table-actions__scroll.hidden,
+.proposals-table .proposals-table-actions__scroll button.hidden {
+    display: none;
+}
+
+.scrollbox[data-shadow-top="true"] .proposals-table thead {
+    border-radius: 0;
+    background-color: var(--color-primary2);
+}
+
+.proposals-table thead,
+.proposals-table tbody {
+    overflow-y: hidden;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.proposals-table thead::-webkit-scrollbar,
+.proposals-table tbody::-webkit-scrollbar {
+    display: none;
+}
+
+.proposals-table tfoot {
+    overflow-x: auto;
+    background-color: var(--color-primary3);
+}
+
+.proposals-table thead,
+.proposals-table tbody,
+.proposals-table tfoot {
+    display: block;
+    width: 100%;
+    max-width: calc(var(--poll-width) - (var(--poll-outer-border-size) * 2));
+}
+
+.proposals-table thead th {
+    padding: var(--space-small) var(--space-smaller);
+    vertical-align: top;
+}
+
+.proposals-table tbody th,
+.proposals-table tfoot th {
+    padding: 0;
+}
+
+.proposals-table thead td,
+.proposals-table td {
+    padding: var(--space-smaller);
+}
+
+.proposals-table tbody td {
+    border-bottom: 1px solid var(--table-border-color, var(--color-grey3));
+}
+
+.proposals-table tbody td:not(:nth-child(2)),
+.proposals-table tfoot td:not(:nth-child(2)),
+.proposals-table thead th:not(:nth-child(2)) {
+    border-inline-start: 1px solid var(--table-border-color, var(--color-grey3));
+}
+
+.proposals-table thead th,
+.proposals-table tbody td,
+.proposals-table tfoot td {
+    position: relative;
+    width: var(--cell-width);
+    min-width: var(--cell-width);
+    max-width: var(--cell-width);
 }
 
 @media print {
@@ -53,10 +201,7 @@
 .proposals-table .proposal__month,
 .proposals-table .proposal__label {
     display: block;
-    width: var(--cell-width);
-
-    font-size: var(--font-size-small);
-
+    font-size: var(--font-size-smaller);
     overflow-wrap: break-word;
 }
 
@@ -67,32 +212,50 @@
     font-weight: normal;
 }
 
-.proposals-table .proposal__label {
-    margin-top: var(--space-medium);
-    margin-bottom: var(--space-medium);
+.proposals-table thead .proposal__label {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.proposals-table thead .proposal__label:not(:first-child) {
+    margin-top: var(--space-small);
+}
+
+.proposals-table thead:not([data-show-more="true"]) .proposal__label {
+    display: -webkit-box;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
+.proposals-table thead:not([data-show-more="true"]) .proposal__label.proposal__label--classic {
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
 }
 
 .proposals-table .vote {
-    display: block;
-    width: var(--cell-width);
-    margin-bottom: 0;
-    padding: var(--space-small) var(--space-smaller);
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: var(--space-small);
     font-size: var(--font-size-normal);
-
     border: none;
+    margin: 0 auto;
 }
 
 .proposals-table .vote__choices {
+    margin-top: var(--space-medium);
     margin-bottom: var(--space-medium);
-
     flex-direction: column;
 }
 
 .proposals-table input.radio--vote + label {
-    width: var(--cell-width);
+    width: 100%;
     padding: var(--space-smaller);
-
     font-size: var(--font-size-smaller);
 }
 
@@ -100,17 +263,25 @@
     position: sticky;
     left: 0;
     z-index: 1;
-
+    width: calc(var(--cell-sticky-width) + var(--cell-author-border-size));
+    min-width: calc(var(--cell-sticky-width) + var(--cell-author-border-size));
+    max-width: calc(var(--cell-sticky-width) + var(--cell-author-border-size));
     background-color: var(--color-grey1);
+    border-inline-end: var(--cell-author-border-size) solid var(--color-grey6);
 }
 
-.proposals-table__sticky-cell:not(:empty) {
-    border-right: 2px solid var(--color-grey6);
+html[dir="rtl"] .proposals-table__sticky-cell {
+    left: auto;
+    right: 0;
+}
+
+.proposals-table tbody .proposals-table__sticky-cell {
+    border-bottom: 1px solid var(--table-border-color, var(--color-grey3));
 }
 
 @media print {
     .proposals-table__sticky-cell:not(:empty) {
-        border-right: none;
+        border-inline-end: none;
     }
 }
 
@@ -122,19 +293,12 @@
     gap: 0.5rem;
     justify-content: flex-end;
 
-    width: 150px;
-    padding: var(--space-small);
+    width: 100%;
 
     font-size: var(--font-size-small);
     font-weight: normal;
     text-align: right;
     text-overflow: ellipsis;
-}
-
-@media(max-width: 500px) {
-    .proposals-table__author {
-        width: 125px;
-    }
 }
 
 @media print {
@@ -148,20 +312,37 @@
 }
 
 .proposals-table__sum {
-    padding: var(--space-small);
-
     font-weight: normal;
     font-style: italic;
     text-align: right;
 }
 
-/* Make sure that the scrollbox shadow doesn't pass over the authors column. */
-.scrollbox:has(> .proposals-table-container)::before {
-    left: 152px;
+.proposals-table .proposals-table__sum-line th,
+.proposals-table .proposals-table__sum-line td {
+    --table-border-color: var(--color-grey5);
+
+    background-color: var(--color-primary4);
+    padding-top: var(--space-smaller);
+    padding-bottom: var(--space-smaller);
 }
 
-@media(max-width: 500px) {
-    .scrollbox:has(> .proposals-table-container)::before {
-        left: 127px;
+.proposals-table .proposals-table__yours-section {
+    --table-border-color: var(--color-primary5);
+}
+
+.proposals-table .proposals-table__yours-section th,
+.proposals-table .proposals-table__yours-section td {
+    background-color: var(--color-primary3);
+}
+
+.proposals-table .proposals-table__author,
+.proposals-table .proposals-table__sum {
+    padding: var(--space-small) var(--space-smaller);
+}
+
+@media screen and (min-width: 768px) {
+    .proposals-table .proposals-table__author,
+    .proposals-table .proposals-table__sum {
+        padding: var(--space-small) var(--space-small);
     }
 }

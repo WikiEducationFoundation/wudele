@@ -103,6 +103,14 @@ input.radio--vote[disabled]:not(:checked) + label {
     }
 }
 
+
+@media (hover: hover) {
+    input.radio--vote:not(:checked):focus + label,
+    input.radio--vote:not(:checked) + label:hover {
+        border-color: oklch(from var(--radio-vote-icon-color) l c h / 0.5);
+    }
+}
+
 input.radio--vote:checked + label {
     border-color: var(--radio-vote-border-color);
 }

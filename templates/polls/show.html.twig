@@ -18,7 +18,7 @@
 {% block body %}
     {% set preferredChoices = poll.preferredChoices %}
 
-    <div class="flow flow--larger">
+    <div id="mainFlow" class="flow flow--larger">
         <div class="wrapper wrapper--small wrapper--center flow flow--larger">
             {% for message in app.flashes('success') %}
                 {% if message == 'vote.created' %}
@@ -252,15 +252,16 @@
 
         <div
             id="poll"
-            class="flow"
+            class="poll flow"
             data-controller="poll-view"
+            data-action="resize@window->poll-view#setPollWidth"
             aria-live="polite"
         >
-            <div class="wrapper wrapper--small wrapper--center flow">
+            <div class="poll-toolbar flow">
                 <div class="cols cols--always cols--center cols--gap-small">
                     <h2 class="col--extend text--primary">{{ 'polls.show.poll' | trans }}</h2>
 
-                    <div class="no-print">
+                    <div class="poll-toolbar__actions  no-print">
                         <button
                             class="button button--small"
                             data-poll-view-target="listButton"
@@ -289,7 +290,7 @@
             </div>
 
             {% if voteForm %}
-                {{ form_start(voteForm, { attr: { class: 'flow' } }) }}
+                {{ form_start(voteForm) }}
                     {{ form_errors(voteForm) }}
 
                     <div hidden>
@@ -301,7 +302,7 @@
                         {% endfor %}
                     </div>
 
-                    <div class="wrapper wrapper--small wrapper--center" data-poll-view-target="listView">
+                    <div data-poll-view-target="listView">
                         {{ include('proposals/_list.html.twig') }}
                     </div>
 
@@ -309,8 +310,8 @@
                         {{ include('proposals/_table.html.twig') }}
                     </div>
 
-                    <div class="wrapper wrapper--small wrapper--center flow no-print">
-                        <div class="panel panel--primary panel--rounded flow">
+                    <div class="poll-submit-wrapper no-print">
+                        <div class="poll-submit-wrapper__inputs">
                             {{ form_row(voteForm.authorName) }}
 
                             {% if voteForm.password is defined %}
@@ -318,24 +319,31 @@
                             {% endif %}
                         </div>
 
-                        <div class="cols cols--always cols--gap cols--center">
+                        <div class="poll-submit-wrapper__actions">
                             {% if onEditPage %}
-                                <a
-                                    class="button"
-                                    href="{{ path('poll', { slug: poll.slug }) }}"
+                                <a class="button"
+                                   href="{{ path('poll', { slug: poll.slug }) }}"
                                 >
                                     {{ 'forms.cancel' | trans }}
                                 </a>
                             {% endif %}
 
-                            <div class="col--extend"></div>
+                            <div class="poll-submit-wrapper__actions__inner">
+                                <p
+                                    id="vote-help"
+                                    data-form-vote-validation-target="voteHelp"
+                                    class="poll-submit-indication"
+                                >
+                                    {{- 'forms.vote_form.required_choice' | trans -}}
+                                </p>
 
-                            {{ form_row(voteForm.submit) }}
+                                {{ form_row(voteForm.submit) }}
+                            </div>
                         </div>
                     </div>
                 {{ form_end(voteForm) }}
             {% else %}
-                <div class="wrapper wrapper--small wrapper--center" data-poll-view-target="listView">
+                <div data-poll-view-target="listView">
                     {{ include('proposals/_list.html.twig') }}
                 </div>
 

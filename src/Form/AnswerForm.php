@@ -77,6 +77,7 @@ class AnswerForm extends AbstractType
                     $attrs = [
                         'class' => "radio--vote radio--vote-{$choice}",
                         'data-form-leave-confirmation-target' => 'input',
+                        'data-form-vote-validation-target' => 'input',
                     ];
 
                     if ($choice === 'yes' && $yesDisabled) {
@@ -90,6 +91,8 @@ class AnswerForm extends AbstractType
                     'class' => 'vote__choices',
                     'data-proposal-id' => $proposal->getId(),
                     'data-date' => $proposalDate,
+                    'data-controller' => 'toggle-radio',
+                    'data-action' => 'click->toggle-radio#toggle'
                 ],
 
                 'label_attr' => [

@@ -96,6 +96,7 @@ forms.vote_form.author_name.label: 'Your name'
 forms.vote_form.leave_confirmation: 'You have not yet confirmed your vote. By continuing, you will lose your entry. Are you sure you want to continue?'
 forms.vote_form.password.help: 'A password is required to vote in this poll.'
 forms.vote_form.password.label: Password
+forms.vote_form.required_choice: 'Please select at least one option from the choices above.'
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
 home.free_software: 'Pollaris is a free software licensed under AGPL 3.'
@@ -244,6 +245,12 @@ polls.summary.settings.results.private: 'I’m the only who can see the poll res
 polls.summary.settings.results.public: 'Everyone can see the poll results.'
 polls.summary.settings.title: 'Poll options'
 polls.summary.title: 'Summary of your poll'
+polls.table.toolbar.scroll_to_left.title: 'Scroll to the left'
+polls.table.toolbar.scroll_to_right.title: 'Scroll to the right'
+polls.table.toolbar.show_less.label: 'Reduce the row'
+polls.table.toolbar.show_less.title: 'Reduce the row to limit the display of labels'
+polls.table.toolbar.show_more.label: 'Expand the row'
+polls.table.toolbar.show_more.title: 'Expand the row to display all labels'
 polls.votes.maybe: 'If needed'
 polls.votes.maybe.count: "{count}\_If needed"
 polls.votes.maybe.count_alt: '(+{count})'

@@ -13,7 +13,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    z-index: 10;
+    z-index: 11;
 
     display: block;
     width: 15px;
@@ -29,19 +29,31 @@
     }
 }
 
+.scrollbox[data-shadow-top="true"] .proposals-table thead {
+    box-shadow: 0 10px 13px -17px rgba(0, 0, 0, 1), -4px 38px 15px 5px rgba(0, 0, 0, 0);
+}
+
 .scrollbox[data-shadow-left="true"]::before,
 .scrollbox[data-shadow-right="true"]::after {
     opacity: 1;
 }
 
 .scrollbox::before {
-    left: 0;
+    inset-inline-start: calc(var(--cell-sticky-width) + var(--cell-author-border-size));
 
     background-image: radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.2), transparent);
 }
 
 .scrollbox::after {
-    right: 0;
+    inset-inline-end: 0;
 
     background-image: radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.2), transparent);
+}
+
+html[dir="rtl"] .scrollbox::before {
+    background-image: radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.2), transparent);
+}
+
+html[dir="rtl"] .scrollbox::after {
+    background-image: radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.2), transparent);
 }
