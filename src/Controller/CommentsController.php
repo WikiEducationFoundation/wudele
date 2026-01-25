@@ -15,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CommentsController extends BaseController
 {
+    public function __construct(
+        private readonly Repository\CommentRepository $commentRepository,
+    ) {
+    }
+
     #[Route(
         '/polls/{pollId:poll}/{token}/comments/{commentId:comment}/deletion',
         name: 'delete comment',
@@ -27,7 +32,6 @@ class CommentsController extends BaseController
         Entity\Comment $comment,
         string $token,
         Request $request,
-        Repository\CommentRepository $commentRepository,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -40,7 +44,7 @@ class CommentsController extends BaseController
         $csrfToken = $request->request->getString('_csrf_token', '');
 
         if ($this->isCsrfTokenValid('delete comment', $csrfToken)) {
-            $commentRepository->remove($comment, true);
+            $this->commentRepository->remove($comment, true);
         }
 
         return $this->redirectToRoute('poll admin', [

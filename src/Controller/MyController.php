@@ -14,8 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MyController extends BaseController
 {
+    public function __construct(
+        private readonly Service\PollsFinder $pollsFinder,
+    ) {
+    }
+
     #[Route('/my', name: 'my')]
-    public function index(Request $request, Service\PollsFinder $pollsFinder): Response
+    public function index(Request $request): Response
     {
         $searchForm = $this->createNamedForm('search_polls', Form\SearchPollsForm::class);
 
@@ -23,7 +28,7 @@ class MyController extends BaseController
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $email = $searchForm->get('email')->getData();
 
-            $pollsFinder->sendEmailLinks($email);
+            $this->pollsFinder->sendEmailLinks($email);
 
             return $this->redirectToRoute('my', [
                 'mailSent' => true,

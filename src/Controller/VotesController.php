@@ -17,16 +17,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VotesController extends BaseController
 {
+    public function __construct(
+        private readonly Repository\PollRepository $pollRepository,
+        private readonly Repository\VoteRepository $voteRepository,
+        private readonly Security\PollSecurity $pollSecurity,
+    ) {
+    }
+
     #[Route('/polls/{slug}/votes/{id:vote}/edit', name: 'edit vote')]
     public function edit(
         string $slug,
         Entity\Vote $vote,
         Request $request,
-        Repository\PollRepository $pollRepository,
-        Repository\VoteRepository $voteRepository,
-        Security\PollSecurity $pollSecurity,
     ): Response {
-        $poll = $pollRepository->loadBySlug($slug);
+        $poll = $this->pollRepository->loadBySlug($slug);
 
         if (!$poll) {
             throw $this->createNotFoundException('The poll doesn’t exist.');
@@ -36,13 +40,13 @@ class VotesController extends BaseController
             throw $this->createNotFoundException('Vote is not part of the poll');
         }
 
-        if (!$pollSecurity->isAuthenticated($poll)) {
+        if (!$this->pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('authenticate poll', [
                 'slug' => $poll->getSlug(),
             ]);
         }
 
-        if (!$pollSecurity->canEditVote($poll)) {
+        if (!$this->pollSecurity->canEditVote($poll)) {
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
             ]);
@@ -54,7 +58,7 @@ class VotesController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $vote = $form->getData();
 
-            $voteRepository->save($vote);
+            $this->voteRepository->save($vote);
 
             $session = $request->getSession();
             $session->set("vote-{$poll->getId()}", $vote->getId());
@@ -85,7 +89,6 @@ class VotesController extends BaseController
         Entity\Vote $vote,
         string $token,
         Request $request,
-        Repository\VoteRepository $voteRepository,
     ): Response {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
@@ -98,7 +101,7 @@ class VotesController extends BaseController
         $csrfToken = $request->request->getString('_csrf_token', '');
 
         if ($this->isCsrfTokenValid('delete vote', $csrfToken)) {
-            $voteRepository->remove($vote, true);
+            $this->voteRepository->remove($vote, true);
         }
 
         return $this->redirectToRoute('poll admin', [

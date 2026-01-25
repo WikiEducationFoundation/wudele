@@ -12,11 +12,15 @@ use Twig;
 
 class HomeController extends BaseController
 {
-    #[Route('/', name: 'home')]
-    public function show(Twig\Environment $twig): Response
-    {
-        $twigLoader = $twig->getLoader();
+    public function __construct(
+        private readonly Twig\Environment $twig
+    ) {
+    }
 
+    #[Route('/', name: 'home')]
+    public function show(): Response
+    {
+        $twigLoader = $this->twig->getLoader();
         if ($twigLoader->exists('home/custom.html.twig')) {
             return $this->render('home/custom.html.twig');
         } else {

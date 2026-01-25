@@ -15,15 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends BaseController
 {
+    public function __construct(
+        private readonly Repository\PollRepository $pollRepository
+    ) {
+    }
+
     #[Route('/admin', name: 'admin')]
-    public function show(
-        Request $request,
-        Repository\PollRepository $pollRepository,
-    ): Response {
+    public function show(Request $request): Response
+    {
         $page = $request->query->getInt('page', 1);
         $search = $request->query->getString('q', '');
 
-        $searchQuery = $pollRepository->getSearchQuery($search);
+        $searchQuery = $this->pollRepository->getSearchQuery($search);
         /** @var Utils\Pagination<Entity\Poll> */
         $pollsPagination = Utils\Pagination::paginate($searchQuery, $page);
 

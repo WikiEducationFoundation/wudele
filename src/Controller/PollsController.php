@@ -23,6 +23,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PollsController extends BaseController
 {
+    public function __construct(
+        private readonly Repository\PollRepository $pollRepository,
+        private readonly Repository\VoteRepository $voteRepository,
+        private readonly Repository\CommentRepository $commentRepository,
+        private readonly Flow\PollFlowBuilder $pollFlowBuilder,
+        private readonly Security\PollSecurity $pollSecurity,
+        private readonly TranslatorInterface $translator,
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {
+    }
+
     #[Route('/polls/choose', name: 'choose poll type')]
     public function choose(): Response
     {
@@ -30,11 +41,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/new', name: 'new poll')]
-    public function new(
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-    ): Response {
+    public function new(Request $request): Response
+    {
         $type = $request->query->getString('type');
 
         if (!in_array($type, Entity\Poll::TYPES)) {
@@ -45,7 +53,7 @@ class PollsController extends BaseController
         $poll->setLocale($request->getLocale());
         $poll->setType($type);
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
 
@@ -53,7 +61,7 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             return $this->redirect($flow->getNextStepUrl('init'));
         }
@@ -66,25 +74,21 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{slug}.csv', name: 'poll csv')]
-    public function showCsv(
-        string $slug,
-        Repository\PollRepository $pollRepository,
-        Security\PollSecurity $pollSecurity,
-        TranslatorInterface $translator,
-    ): Response {
-        $poll = $pollRepository->loadBySlug($slug);
+    public function showCsv(string $slug): Response
+    {
+        $poll = $this->pollRepository->loadBySlug($slug);
 
         if (!$poll || !$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
-        if (!$pollSecurity->isAuthenticated($poll)) {
+        if (!$this->pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('authenticate poll', [
                 'slug' => $poll->getSlug(),
             ]);
         }
 
-        if (!$pollSecurity->canViewResults($poll)) {
+        if (!$this->pollSecurity->canViewResults($poll)) {
             throw $this->createNotFoundException('You cannot see the results of this poll.');
         }
 
@@ -122,7 +126,7 @@ class PollsController extends BaseController
             foreach ($allProposals as $proposal) {
                 $answer = $vote->getAnswerForProposal($proposal);
                 if ($answer && $answer->getValue()) {
-                    $voteRow[] = $translator->trans($answer->getHumanValue());
+                    $voteRow[] = $this->translator->trans($answer->getHumanValue());
                 } else {
                     $voteRow[] = '';
                 }
@@ -158,22 +162,15 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{slug}', name: 'poll')]
-    public function show(
-        string $slug,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Repository\VoteRepository $voteRepository,
-        Repository\CommentRepository $commentRepository,
-        Security\PollSecurity $pollSecurity,
-        EventDispatcherInterface $eventDispatcher,
-    ): Response {
-        $poll = $pollRepository->loadBySlug($slug);
+    public function show(string $slug, Request $request): Response
+    {
+        $poll = $this->pollRepository->loadBySlug($slug);
 
         if (!$poll || !$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
-        if (!$pollSecurity->isAuthenticated($poll)) {
+        if (!$this->pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('authenticate poll', [
                 'slug' => $poll->getSlug(),
             ]);
@@ -188,7 +185,7 @@ class PollsController extends BaseController
             $voteId = $session->get("vote-{$poll->getId()}");
 
             if ($voteId) {
-                $myVote = $voteRepository->find($voteId);
+                $myVote = $this->voteRepository->find($voteId);
             }
 
             $vote = new Entity\Vote();
@@ -199,10 +196,10 @@ class PollsController extends BaseController
             if ($voteForm->isSubmitted() && $voteForm->isValid()) {
                 $vote = $voteForm->getData();
 
-                $voteRepository->save($vote);
+                $this->voteRepository->save($vote);
 
                 $voteEvent = new PollActivity\VoteEvent($vote);
-                $eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
+                $this->eventDispatcher->dispatch($voteEvent, PollActivity\VoteEvent::NEW);
 
                 $session = $request->getSession();
                 $session->set("vote-{$poll->getId()}", $vote->getId());
@@ -223,10 +220,10 @@ class PollsController extends BaseController
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 $comment = $commentForm->getData();
 
-                $commentRepository->save($comment);
+                $this->commentRepository->save($comment);
 
                 $commentEvent = new PollActivity\CommentEvent($comment);
-                $eventDispatcher->dispatch($commentEvent, PollActivity\CommentEvent::NEW);
+                $this->eventDispatcher->dispatch($commentEvent, PollActivity\CommentEvent::NEW);
 
                 $this->addFlash('success', 'comment.created');
 
@@ -246,16 +243,13 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{slug:poll}/authenticate', name: 'authenticate poll')]
-    public function authenticate(
-        Entity\Poll $poll,
-        Request $request,
-        Security\PollSecurity $pollSecurity,
-    ): Response {
+    public function authenticate(Entity\Poll $poll, Request $request): Response
+    {
         if (!$poll->isCompleted()) {
             throw $this->createNotFoundException('The poll doesn’t exist (yet).');
         }
 
-        if (!$poll->isFullPasswordProtected() || $pollSecurity->isAuthenticated($poll)) {
+        if (!$poll->isFullPasswordProtected() || $this->pollSecurity->isAuthenticated($poll)) {
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
             ]);
@@ -267,7 +261,7 @@ class PollsController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $pollSecurity->authenticate($poll);
+            $this->pollSecurity->authenticate($poll);
 
             $this->addFlash('success', 'poll.authenticated');
 
@@ -283,18 +277,13 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/edit', name: 'edit poll')]
-    public function edit(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-    ): Response {
+    public function edit(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         $form = $this->createNamedForm('poll', Form\PollForm::class, $poll);
 
@@ -302,7 +291,7 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             return $this->redirect($flow->getNextStepUrl('init'));
         }
@@ -315,19 +304,13 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/settings', name: 'edit poll settings')]
-    public function settings(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-        Security\PollSecurity $pollSecurity,
-    ): Response {
+    public function settings(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         if (!$flow->isAccessible('summary')) {
             return $this->redirect($flow->getPreviousStepUrl('summary'));
@@ -339,10 +322,10 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             if ($poll->isFullPasswordProtected()) {
-                $pollSecurity->authenticate($poll);
+                $this->pollSecurity->authenticate($poll);
             }
 
             return $this->redirect($flow->getStepUrl('summary'));
@@ -356,13 +339,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/proposals', name: 'edit poll proposals')]
-    public function proposals(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-    ): Response {
+    public function proposals(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
@@ -371,7 +349,7 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll must be of type classic');
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         if (!$flow->isAccessible('proposals')) {
             return $this->redirect($flow->getPreviousStepUrl('proposals'));
@@ -383,7 +361,7 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             return $this->redirect($flow->getNextStepUrl('proposals'));
         }
@@ -396,13 +374,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/dates', name: 'edit poll dates')]
-    public function dates(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-    ): Response {
+    public function dates(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
@@ -411,7 +384,7 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll must be of type date');
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         if (!$flow->isAccessible('dates')) {
             return $this->redirect($flow->getPreviousStepUrl('dates'));
@@ -423,7 +396,7 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             return $this->redirect($flow->getNextStepUrl('dates'));
         }
@@ -436,13 +409,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/slots', name: 'edit poll slots')]
-    public function slots(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-    ): Response {
+    public function slots(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
@@ -451,7 +419,7 @@ class PollsController extends BaseController
             throw $this->createNotFoundException('The poll must be of type date');
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         if (!$flow->isAccessible('slots')) {
             return $this->redirect($flow->getPreviousStepUrl('slots'));
@@ -463,7 +431,7 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll = $form->getData();
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             return $this->redirect($flow->getNextStepUrl('slots'));
         }
@@ -476,14 +444,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/summary', name: 'poll summary')]
-    public function summary(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-        EventDispatcherInterface $eventDispatcher,
-    ): Response {
+    public function summary(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
@@ -495,7 +457,7 @@ class PollsController extends BaseController
             ]);
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         if (!$flow->isAccessible('summary')) {
             return $this->redirect($flow->getPreviousStepUrl('summary'));
@@ -507,10 +469,10 @@ class PollsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $poll->setCompletedAt(Utils\Time::now());
 
-            $pollRepository->save($poll);
+            $this->pollRepository->save($poll);
 
             $pollEvent = new PollActivity\PollEvent($poll);
-            $eventDispatcher->dispatch($pollEvent, PollActivity\PollEvent::COMPLETED);
+            $this->eventDispatcher->dispatch($pollEvent, PollActivity\PollEvent::COMPLETED);
 
             $session = $request->getSession();
             $session->set("admin-{$poll->getId()}", true);
@@ -526,16 +488,13 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/complete', name: 'poll complete')]
-    public function complete(
-        Entity\Poll $poll,
-        string $token,
-        Flow\PollFlowBuilder $pollFlowBuilder,
-    ): Response {
+    public function complete(Entity\Poll $poll, string $token): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
 
-        $flow = $pollFlowBuilder->build($poll);
+        $flow = $this->pollFlowBuilder->build($poll);
 
         if (!$flow->isAccessible('end')) {
             return $this->redirect($flow->getPreviousStepUrl('end'));
@@ -548,11 +507,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/admin', name: 'poll admin')]
-    public function admin(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-    ): Response {
+    public function admin(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
@@ -574,12 +530,8 @@ class PollsController extends BaseController
     }
 
     #[Route('/polls/{id:poll}/{token}/deletion', name: 'delete poll')]
-    public function deletion(
-        Entity\Poll $poll,
-        string $token,
-        Request $request,
-        Repository\PollRepository $pollRepository,
-    ): Response {
+    public function deletion(Entity\Poll $poll, string $token, Request $request): Response
+    {
         if ($poll->getAdminToken() !== $token) {
             throw $this->createNotFoundException('The admin token doesn’t match.');
         }
@@ -588,7 +540,7 @@ class PollsController extends BaseController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $pollRepository->remove($poll, true);
+            $this->pollRepository->remove($poll, true);
 
             $this->addFlash('success', 'poll.deleted');
 

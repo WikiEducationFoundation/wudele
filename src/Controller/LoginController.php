@@ -12,17 +12,22 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends BaseController
 {
+    public function __construct(
+        private readonly AuthenticationUtils $authenticationUtils,
+    ) {
+    }
+
     #[Route(path: '/login', name: 'login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(): Response
     {
         $user = $this->getUser();
         if ($user) {
             return $this->redirectToRoute('admin');
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $this->authenticationUtils->getLastAuthenticationError();
 
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
 
         return $this->render('login/login.html.twig', [
             'last_username' => $lastUsername,
