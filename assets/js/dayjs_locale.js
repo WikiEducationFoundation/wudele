@@ -2,6 +2,7 @@
 // Copyright 2024-2025 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import dayjsLocaleDe from 'dayjs/locale/de';
 import dayjsLocaleFr from 'dayjs/locale/fr';
 import dayjsLocaleIt from 'dayjs/locale/it';
 import dayjsLocaleOc from 'dayjs/locale/oc-lnc';
@@ -12,7 +13,9 @@ export function setDayjsLocale (dayjs) {
 
     const lang = document.documentElement.lang;
 
-    if (lang.startsWith('fr')) {
+    if (lang.startsWith('de')) {
+        dayjs.locale('de');
+    } else if (lang.startsWith('fr')) {
         dayjs.locale('fr');
     } else if (lang.startsWith('it')) {
         dayjs.locale('it');
