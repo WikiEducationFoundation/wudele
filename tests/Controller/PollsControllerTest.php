@@ -67,6 +67,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($name, $poll->getAuthorName());
         $this->assertSame($email, $poll->getAuthorEmail());
         $this->assertSame('classic', $poll->getType());
+        $this->assertSame('en_GB', $poll->getLocale());
         $id = $poll->getId();
         $adminToken = $poll->getAdminToken();
         $this->assertSame(20, strlen($id ?? ''));

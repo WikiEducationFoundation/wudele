@@ -42,6 +42,7 @@ class PollsController extends BaseController
         }
 
         $poll = new Entity\Poll();
+        $poll->setLocale($request->getLocale());
         $poll->setType($type);
 
         $flow = $pollFlowBuilder->build($poll);

@@ -105,6 +105,9 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     )]
     private ?string $authorEmail = null;
 
+    #[ORM\Column(length: 10, options: ['default' => 'fr_FR'])]
+    private string $locale = '';
+
     /** @var Collections\Collection<int, Proposal> */
     #[ORM\OneToMany(
         targetEntity: Proposal::class,
@@ -352,6 +355,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setAuthorEmail(string $authorEmail): static
     {
         $this->authorEmail = $authorEmail;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }

@@ -33,7 +33,7 @@ class PollsFinder
         }
 
         $to = new Address($email);
-        $locale = 'fr_FR';
+        $locale = $polls[0]->getLocale();
 
         $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.polls_list.subject', locale: $locale);

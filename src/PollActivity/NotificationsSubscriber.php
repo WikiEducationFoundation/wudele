@@ -41,7 +41,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         }
 
         $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
-        $locale = 'fr_FR';
+        $locale = $poll->getLocale();
 
         $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.new_poll_admin.subject', locale: $locale);
@@ -68,7 +68,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         }
 
         $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
-        $locale = 'fr_FR';
+        $locale = $poll->getLocale();
 
         $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.new_vote.subject', locale: $locale);
@@ -98,7 +98,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         }
 
         $to = new Address($poll->getAuthorEmail(), $poll->getAuthorName());
-        $locale = 'fr_FR';
+        $locale = $poll->getLocale();
 
         $subject = "[{$this->appName}] ";
         $subject .= $this->translator->trans('emails.new_comment.subject', locale: $locale);
