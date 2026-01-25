@@ -1,7 +1,7 @@
 // This file is part of Pollaris.
 // Copyright 2020-2022 Marien Fressinaud (Flus)
 // Copyright 2022-2024 Probesys (Bileto)
-// Copyright 2024-2025 Marien Fressinaud
+// Copyright 2024-2026 Marien Fressinaud
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { Controller } from '@hotwired/stimulus';
