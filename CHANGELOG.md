@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-01-25 - 1.1.3
+
+### Features
+
+- Add Italian translation ([c0e3f5f](https://framagit.org/pollaris/pollaris/-/commit/c0e3f5f), [59313fc](https://framagit.org/pollaris/pollaris/-/commit/59313fc))
+- Add German translation ([abeaf40](https://framagit.org/pollaris/pollaris/-/commit/abeaf40), [567dbc3](https://framagit.org/pollaris/pollaris/-/commit/567dbc3))
+
+### Bug fixes
+
+- Send email notifications using user's locale ([4af100c](https://framagit.org/pollaris/pollaris/-/commit/4af100c))
+
+### Maintenance
+
+- Update the dependencies ([627427b](https://framagit.org/pollaris/pollaris/-/commit/627427b))
+- Update code to comply with Rector recommandations ([e02b91f](https://framagit.org/pollaris/pollaris/-/commit/e02b91f))
+- Update copyright year ([e93b256](https://framagit.org/pollaris/pollaris/-/commit/e93b256))
+
 ## 2025-11-21 - 1.1.2
 
 ### Bug fixes
