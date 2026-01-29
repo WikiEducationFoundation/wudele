@@ -7,6 +7,8 @@ parameters:
     app.public_directory: "%kernel.project_dir%/public"
     app.name: "%env(APP_NAME)%"
     app.require_emails: "%env(bool:APP_REQUIRE_EMAILS)%"
+    poll.expires.completed: "%env(string:POLL_EXPIRES_COMPLETED)%"
+    poll.expires.incomplete: "%env(string:POLL_EXPIRES_INCOMPLETE)%"
 
 services:
     # default configuration for services in *this* file

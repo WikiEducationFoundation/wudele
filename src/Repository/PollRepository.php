@@ -2,6 +2,7 @@
 
 // This file is part of Pollaris.
 // Copyright 2024-2026 Marien Fressinaud
+// Copyright 2026 Adrien Scholaert <adrien@framasoft.org>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 namespace App\Repository;
@@ -75,5 +76,42 @@ class PollRepository extends BaseRepository
         $queryBuilder->orderBy('p.createdAt', 'DESC');
 
         return $queryBuilder->getQuery();
+    }
+
+    public function deleteExpiredPolls(
+        \DateTimeImmutable $completedExpirationDate,
+        \DateTimeImmutable $incompleteExpirationDate,
+    ): int {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(<<<SQL
+            DELETE App\Entity\Poll p
+            WHERE (p.completedAt IS NOT NULL AND p.closedAt <= :completedExpirationDate)
+            OR (p.completedAt IS NULL AND p.closedAt <= :incompleteExpirationDate)
+        SQL);
+
+        $query->setParameter('completedExpirationDate', $completedExpirationDate);
+        $query->setParameter('incompleteExpirationDate', $incompleteExpirationDate);
+
+        return $query->execute();
+    }
+
+    public function countExpiredPolls(
+        \DateTimeImmutable $completedExpirationDate,
+        \DateTimeImmutable $incompleteExpirationDate,
+    ): int {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(<<<SQL
+            SELECT COUNT(p)
+            FROM App\Entity\Poll p
+            WHERE (p.completedAt IS NOT NULL AND p.closedAt <= :completedExpirationDate)
+            OR (p.completedAt IS NULL AND p.closedAt <= :incompleteExpirationDate)
+        SQL);
+
+        $query->setParameter('completedExpirationDate', $completedExpirationDate);
+        $query->setParameter('incompleteExpirationDate', $incompleteExpirationDate);
+
+        return (int) $query->getSingleScalarResult();
     }
 }

@@ -215,7 +215,7 @@ Create the file `/etc/systemd/system/pollaris-worker.service`:
 Description=The Messenger worker for Pollaris
 
 [Service]
-ExecStart=php /var/www/pollaris/bin/console messenger:consume async --time-limit=3600
+ExecStart=php /var/www/pollaris/bin/console messenger:consume async scheduler_default --time-limit=3600
 
 User=www-data
 Group=www-data

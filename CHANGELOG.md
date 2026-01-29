@@ -1,5 +1,17 @@
 # Changelog
 
+## unreleased
+
+### Migration notes
+
+The worker now runs scheduled messages.
+You must add `scheduler_default` to the list of consumed queues of the worker.
+See the `pollaris-worker.service` example in [the documentation](/docs/administrators/install.md).
+
+You now can set the `POLL_EXPIRES_COMPLETED` and `POLL_EXPIRES_INCOMPLETE` environment variable to automatically clean expired polls.
+See [`env.sample`](/env.sample) for more information.
+You'll need to restart the worker after setting these variables.
+
 ## 2026-01-25 - 1.1.3
 
 ### Features
