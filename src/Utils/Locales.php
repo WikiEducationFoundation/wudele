@@ -17,8 +17,8 @@ class Locales
     public static function getSupportedLanguages(): array
     {
         return [
-            'de' => 'Deutsch',
             'en_GB' => 'English',
+            'de' => 'Deutsch',
             'fr_FR' => 'Français',
             'it' => 'Italiano',
             'oc' => 'Occitan',

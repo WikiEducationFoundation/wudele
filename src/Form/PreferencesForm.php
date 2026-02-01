@@ -18,6 +18,7 @@ class PreferencesForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $languages = Utils\Locales::getSupportedLanguages();
+        asort($languages);
 
         $builder->add('locale', Type\ChoiceType::class, [
             'choices' => array_flip($languages),
