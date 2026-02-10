@@ -51,7 +51,7 @@ forms.next: Suivant
 forms.poll_authentication_form.password.label: 'Mot de passe'
 forms.poll_authentication_form.submit: S’authentifier
 forms.poll_dates_form.add_date: 'Ajouter une date'
-forms.poll_dates_form.enter_manually: 'Saisir les dates manuellement'
+forms.poll_dates_form.enter_manually: 'Saisir les dates au clavier'
 forms.poll_dates_form.remove_date: 'Retirer la date'
 forms.poll_dates_form.use_calendar: 'Sélectionner les dates depuis un calendrier'
 forms.poll_deletion_form.submit: 'Je veux supprimer ce sondage'
