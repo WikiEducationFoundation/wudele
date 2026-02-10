@@ -4,61 +4,65 @@
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
-<div class="panel panel--primary panel--rounded flow">
-    <p>
-        {{ 'polls.summary.admin_access' | trans | raw }}
-    </p>
+<div class="flow">
+    <h2 class="text--primary">{{ 'polls.summary.admin_access.title' | trans }}</h2>
 
-    <div class="flow flow--small">
-        <label for="poll-admin-link">
-            {{ 'polls.summary.admin_link' | trans }}
-        </label>
+    <div class="panel panel--primary panel--rounded flow">
+        <p>
+            {{ 'polls.summary.admin_access' | trans | raw }}
+        </p>
 
-        <div
-            class="cols cols--always cols--gap-small"
-            data-controller="copy-to-clipboard"
-            data-label-copied="{{ 'base.copied' | trans }}"
-        >
-            <input
-                id="poll-admin-link"
-                type="url"
-                value="{{ url('poll admin', { id: poll.id, token: poll.adminToken }) }}"
-                readonly
-                data-copy-to-clipboard-target="copyable"
-            />
+        <div class="flow flow--small">
+            <label for="poll-admin-link">
+                {{ 'polls.summary.admin_link' | trans }}
+            </label>
 
-            <button
-                type="button"
-                class="button--primary"
-                data-copy-to-clipboard-target="button"
-                data-action="copy-to-clipboard#copy"
+            <div
+                class="cols cols--always cols--gap-small"
+                data-controller="copy-to-clipboard"
+                data-label-copied="{{ 'base.copied' | trans }}"
             >
-                {{ 'base.copy' | trans }}
-            </button>
-        </div>
-    </div>
+                <input
+                    id="poll-admin-link"
+                    type="url"
+                    value="{{ url('poll admin', { id: poll.id, token: poll.adminToken }) }}"
+                    readonly
+                    data-copy-to-clipboard-target="copyable"
+                />
 
-    <div>
-        <input
-            type="checkbox"
-            id="remember_poll_admin"
-            data-controller="storage"
-            data-action="storage#sync"
-            data-storage-namespace-value="polls"
-            data-storage-key-value="{{ poll.id }}"
-            data-storage-entry-value="{{ {
-                title: poll.title,
-                type: poll.type,
-                date: poll.createdAt | dateIso,
-                author: poll.authorName,
-                pollUrl: url('poll', { slug: poll.slug }),
-                adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
-            } | json_encode }}"
-        >
-        <label for="remember_poll_admin">
-            {{ 'polls.summary.admin_link.remember' | trans }}
-            {{ icon('thumbtack') }}
-        </label>
+                <button
+                    type="button"
+                    class="button--primary"
+                    data-copy-to-clipboard-target="button"
+                    data-action="copy-to-clipboard#copy"
+                >
+                    {{ 'base.copy' | trans }}
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <input
+                type="checkbox"
+                id="remember_poll_admin"
+                data-controller="storage"
+                data-action="storage#sync"
+                data-storage-namespace-value="polls"
+                data-storage-key-value="{{ poll.id }}"
+                data-storage-entry-value="{{ {
+                    title: poll.title,
+                    type: poll.type,
+                    date: poll.createdAt | dateIso,
+                    author: poll.authorName,
+                    pollUrl: url('poll', { slug: poll.slug }),
+                    adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
+                } | json_encode }}"
+            >
+            <label for="remember_poll_admin">
+                {{ 'polls.summary.admin_link.remember' | trans }}
+                {{ icon('thumbtack') }}
+            </label>
+        </div>
     </div>
 </div>
 

@@ -207,6 +207,7 @@ polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes le
 polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
 polls.summary.admin_access: "Veuillez conserver le lien suivant pour pouvoir administrer votre sondage à tout moment. <strong>Gardez ce lien pour vous\_!</strong>"
+polls.summary.admin_access.title: 'Lien d’administration privé'
 polls.summary.admin_link: 'Lien d’administration privé'
 polls.summary.admin_link.remember: 'Mémoriser le sondage dans ce navigateur'
 polls.summary.author.email: 'Adresse email'
