@@ -122,21 +122,23 @@
 
         <div class="panel__separator"></div>
 
-        <a class="button button--menuitem" href="{{ path('edit poll', { id: poll.id, token: poll.adminToken }) }}">
-            {{ icon('pen-to-square') }}
-            {{ 'polls.summary.edit' | trans }}
-        </a>
+        <div class="cols cols--center cols--gap">
+            <a class="button button--menuitem col--size6" href="{{ path('edit poll', { id: poll.id, token: poll.adminToken }) }}">
+                {{ icon('pen-to-square') }}
+                {{ 'polls.summary.edit' | trans }}
+            </a>
 
-        <button
-            type="button"
-            class="button button--menuitem"
-            data-controller="modal-opener"
-            data-action="modal-opener#fetch"
-            data-modal-opener-selector-value="{{ path('delete poll', { id: poll.id, token: poll.adminToken }) }}"
-        >
-            {{ icon('trash') }}
-            {{ 'polls.summary.delete_poll' | trans }}
-        </button>
+            <button
+                type="button"
+                class="button button--danger col--size6"
+                data-controller="modal-opener"
+                data-action="modal-opener#fetch"
+                data-modal-opener-selector-value="{{ path('delete poll', { id: poll.id, token: poll.adminToken }) }}"
+            >
+                {{ icon('trash') }}
+                {{ 'polls.summary.delete_poll' | trans }}
+            </button>
+        </div>
     </div>
 </div>
 
