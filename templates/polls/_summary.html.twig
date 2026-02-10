@@ -12,6 +12,12 @@
             {{ 'polls.summary.admin_access' | trans | raw }}
         </p>
 
+        {% if poll.authorEmail and poll.isCompleted %}
+            <p>{{ 'polls.summary.admin_access.sent_by_email' | trans }}</p>
+        {% elseif poll.authorEmail %}
+            <p>{{ 'polls.summary.admin_access.will_send_by_email' | trans }}</p>
+        {% endif %}
+
         <div class="flow flow--small">
             <label for="poll-admin-link">
                 {{ 'polls.summary.admin_link' | trans }}

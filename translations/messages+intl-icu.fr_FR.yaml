@@ -207,7 +207,9 @@ polls.slots.same_slots.title: 'Choisissez les horaires à appliquer à toutes le
 polls.slots.title: 'Choisissez les horaires'
 polls.steps: 'Étape {step} sur {total}'
 polls.summary.admin_access: "Veuillez conserver le lien suivant pour pouvoir administrer votre sondage à tout moment. <strong>Gardez ce lien pour vous\_!</strong>"
+polls.summary.admin_access.sent_by_email: 'Ce lien vous a également été envoyé par email.'
 polls.summary.admin_access.title: 'Lien d’administration privé'
+polls.summary.admin_access.will_send_by_email: 'Ce lien vous sera également envoyé par email.'
 polls.summary.admin_link: 'Lien d’administration privé'
 polls.summary.admin_link.remember: 'Mémoriser le sondage dans ce navigateur'
 polls.summary.admin_link.remember.description: 'En cochant l’option « Mémoriser le sondage dans ce navigateur », ce sondage sera conservé sur cet appareil. Cela vous permettra de le retrouver ultérieurement depuis ce même navigateur afin de le consulter ou le modifier. Pour plus de confidentialité, ne cochez pas cette option si cet appareil est partagé avec d’autres personnes.'
