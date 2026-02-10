@@ -181,7 +181,7 @@ polls.show.comments.new: 'Nouveau commentaire'
 polls.show.comments.none: 'Aucun commentaire n’a été posté.'
 polls.show.comments.title: Commentaires
 polls.show.created_by: 'Sondage créé par {by}'
-polls.show.display_list: 'Affichage liste'
+polls.show.display_list: 'Affichage mobile'
 polls.show.display_table: 'Affichage tableau'
 polls.show.export_csv: 'Exporter (<abbr>CSV</abbr>)'
 polls.show.is_closed: 'Ce sondage est terminé.'
