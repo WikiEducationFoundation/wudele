@@ -210,6 +210,8 @@ polls.summary.admin_access: "Veuillez conserver le lien suivant pour pouvoir adm
 polls.summary.admin_access.title: 'Lien d’administration privé'
 polls.summary.admin_link: 'Lien d’administration privé'
 polls.summary.admin_link.remember: 'Mémoriser le sondage dans ce navigateur'
+polls.summary.admin_link.remember.description: 'En cochant l’option « Mémoriser le sondage dans ce navigateur », ce sondage sera conservé sur cet appareil. Cela vous permettra de le retrouver ultérieurement depuis ce même navigateur afin de le consulter ou le modifier. Pour plus de confidentialité, ne cochez pas cette option si cet appareil est partagé avec d’autres personnes.'
+polls.summary.admin_link.remember.information: Information
 polls.summary.author.email: 'Adresse email'
 polls.summary.author.name: Pseudonyme
 polls.summary.author.no_email: 'Aucune adresse renseignée'

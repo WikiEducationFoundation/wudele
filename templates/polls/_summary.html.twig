@@ -41,27 +41,55 @@
             </div>
         </div>
 
-        <div>
-            <input
-                type="checkbox"
-                id="remember_poll_admin"
-                data-controller="storage"
-                data-action="storage#sync"
-                data-storage-namespace-value="polls"
-                data-storage-key-value="{{ poll.id }}"
-                data-storage-entry-value="{{ {
-                    title: poll.title,
-                    type: poll.type,
-                    date: poll.createdAt | dateIso,
-                    author: poll.authorName,
-                    pollUrl: url('poll', { slug: poll.slug }),
-                    adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
-                } | json_encode }}"
+        <div class="cols cols--always cols--center cols--gap">
+            <div class="col--extend">
+                <input
+                    type="checkbox"
+                    id="remember_poll_admin"
+                    data-controller="storage"
+                    data-action="storage#sync"
+                    data-storage-namespace-value="polls"
+                    data-storage-key-value="{{ poll.id }}"
+                    data-storage-entry-value="{{ {
+                        title: poll.title,
+                        type: poll.type,
+                        date: poll.createdAt | dateIso,
+                        author: poll.authorName,
+                        pollUrl: url('poll', { slug: poll.slug }),
+                        adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
+                    } | json_encode }}"
+                >
+                <label for="remember_poll_admin">
+                    {{ 'polls.summary.admin_link.remember' | trans }}
+                    {{ icon('thumbtack') }}
+                </label>
+            </div>
+
+            <button
+                type="button"
+                class="button--icon"
+                data-controller="modal-opener"
+                data-action="modal-opener#copy"
+                data-modal-opener-selector-value="#modal-local-storage-details"
             >
-            <label for="remember_poll_admin">
-                {{ 'polls.summary.admin_link.remember' | trans }}
-                {{ icon('thumbtack') }}
-            </label>
+                {{ icon('question') }}
+
+                <span class="sr-only">
+                    {{ 'polls.summary.admin_link.remember.information' | trans }}
+                </span>
+            </button>
+
+            <template id="modal-local-storage-details">
+                <div class="flow flow--large">
+                    <h1 id="modal-title">
+                        {{ 'polls.summary.admin_link.remember' | trans }}
+                    </h1>
+
+                    <p>
+                        {{ 'polls.summary.admin_link.remember.description' | trans }}
+                    </p>
+                </div>
+            </template>
         </div>
     </div>
 </div>
