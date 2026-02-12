@@ -6,6 +6,8 @@
 
 {% extends 'base.html.twig' %}
 
+{% block robots_head_tags %}{% endblock %}
+
 {% block body %}
     <div class="wrapper flow flow--larger">
         {% for message in app.flashes('success') %}

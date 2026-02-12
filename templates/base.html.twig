@@ -32,6 +32,10 @@
             <script src="{{ asset('custom.js') }}" defer data-turbo-track="reload"></script>
         {% endif %}
 
+        {% block robots_head_tags %}
+            <meta name="robots" content="noindex, nofollow">
+        {% endblock %}
+
         {% block additional_head_tags %}
         {% endblock %}
     </head>
