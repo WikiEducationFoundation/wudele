@@ -235,7 +235,7 @@ polls.show.my_votes.date: (Stimme vom __date__)
 polls.show.my_votes.description: Ihre Stimmen werden in Ihrem Browser 
   gespeichert. Löschen Sie diese für mehr Privatsphäre, wenn Sie Ihren Browser 
   mit anderen Personen teilen.
-polls.show.my_votes.edit: Bearbeiten
+polls.show.my_votes.edit: '{authorName}’s Stimme bearbeiten'
 polls.show.my_votes.information: Informationen
 polls.show.my_votes.remove: Entfernen
 polls.show.my_votes.title: Meine Stimmen
@@ -318,3 +318,19 @@ polls.votes.yes.count: '{count} Ja'
 polls.votes.yours: Ihre Stimme
 preferences.edit.title: Ihre Einstellungen
 admin.polls.created_at: Erstellt am
+polls.summary.admin_access.sent_by_email: Dieser Link wurde Ihnen auch per 
+  E-Mail zugesandt.
+polls.summary.admin_access.title: Privater Administrations-Link
+polls.summary.admin_access.will_send_by_email: Dieser Link wird Ihnen auch per 
+  E-Mail zugesandt.
+polls.summary.admin_link.remember.description: Wenn Sie die Option „Den Link in 
+  diesem Browser merken“ aktivieren, wird diese Umfrage auf diesem Gerät 
+  gespeichert. So können Sie sie später über denselben Browser wiederfinden, um 
+  sie anzuzeigen oder zu ändern. Aus Gründen der Vertraulichkeit sollten Sie 
+  diese Option nicht aktivieren, wenn Sie dieses Gerät mit anderen Personen 
+  gemeinsam nutzen.
+polls.summary.admin_link.remember.information: Informationen
+base.edit: Bearbeiten
+polls.edit_vote_mode.any: Jeder Teilnehmende kann jede Stimme ändern
+polls.summary.settings.edit_vote_mode.any: Jeder Teilnehmende kann jede Stimme 
+  ändern.
