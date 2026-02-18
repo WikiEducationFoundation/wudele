@@ -1,5 +1,6 @@
 /* This file is part of Pollaris. */
 /* Copyright 2024-2026 Marien Fressinaud */
+/* Copyright 2026 Adrien Scholaert <adrien@framasoft.org> */
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 :root {
@@ -12,6 +13,7 @@
     --font-size-big: 1.2em;
     --font-size-bigger: 1.9em;
 
+    --space-extra-small: 0.15rem;
     --space-smaller: 0.3rem;
     --space-small: 0.6rem;
     --space-medium: 1rem;

@@ -268,6 +268,8 @@
             <li>
                 {% if poll.editVoteMode == 'own' %}
                     {{ 'polls.summary.settings.edit_vote_mode.own' | trans }}
+                {% elseif poll.editVoteMode == 'any' %}
+                    {{ 'polls.summary.settings.edit_vote_mode.any' | trans }}
                 {% else %}
                     {{ 'polls.summary.settings.edit_vote_mode.no' | trans }}
                 {% endif %}

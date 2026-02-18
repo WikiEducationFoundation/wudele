@@ -46,7 +46,7 @@ class VotesController extends BaseController
             ]);
         }
 
-        if (!$this->pollSecurity->canEditVote($poll)) {
+        if (!$this->pollSecurity->canEditVotes($poll)) {
             return $this->redirectToRoute('poll', [
                 'slug' => $poll->getSlug(),
             ]);

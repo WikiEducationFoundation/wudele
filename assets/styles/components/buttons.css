@@ -1,5 +1,6 @@
 /* This file is part of Pollaris. */
 /* Copyright 2024-2026 Marien Fressinaud */
+/* Copyright 2026 Adrien Scholaert <adrien@framasoft.org> */
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 
 button,
@@ -84,9 +85,19 @@ button[aria-expanded="true"],
 .button--icon {
     --button-padding: var(--space-smaller);
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border-radius: 100%;
 
     aspect-ratio: 1;
+}
+
+.button--icon.button--extra-small {
+    --button-padding: var(--space-extra-small);
+
+    font-size: 0.7em;
 }
 
 .button--block {

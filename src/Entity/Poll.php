@@ -34,7 +34,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public const TYPES = ['date', 'classic'];
     public const DEFAULT_TYPE = 'classic';
 
-    public const EDIT_VOTE_MODES = ['own', 'no'];
+    public const EDIT_VOTE_MODES = ['own', 'no', 'any'];
     public const DEFAULT_EDIT_VOTE_MODE = 'own';
 
     #[ORM\Id]
@@ -707,6 +707,8 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
             return new TranslatableMessage('polls.edit_vote_mode.own');
         } elseif ($value === 'no') {
             return new TranslatableMessage('polls.edit_vote_mode.no');
+        } elseif ($value === 'any') {
+            return new TranslatableMessage('polls.edit_vote_mode.any');
         } else {
             throw new \LogicException("Cannot translate edit vote mode {$value}");
         }

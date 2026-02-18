@@ -161,7 +161,7 @@
                         voteAuthor: myVote.authorName,
                         voteDate: myVote.createdAt | dateIso,
                         voteUrl: url('edit vote', { slug: poll.slug, id: myVote.id, _fragment: 'poll' }),
-                        canEditVote: canEditVote(poll, ignoreAdminAccess: true),
+                        canEditVote: canEditVotes(poll, ignoreAdminAccess: true),
                     } | json_encode }}"
                 ></div>
             {% endif %}
@@ -219,9 +219,9 @@
                              # as the admin can change the edit vote mode. The
                              # value from the localStorage is only used on the
                              # /my page #}
-                            {% if canEditVote(poll, ignoreAdminAccess: true) %}
+                            {% if canEditVotes(poll, ignoreAdminAccess: true) %}
                                 <a href="__vote_url__" class="button button--ghost button--smaller">
-                                    {{ 'polls.show.my_votes.edit' | trans }}
+                                    {{ 'base.edit' | trans }}
                                 </a>
                             {% endif %}
 

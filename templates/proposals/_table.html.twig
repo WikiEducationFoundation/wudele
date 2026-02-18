@@ -77,6 +77,16 @@
                     <th class="proposals-table__sticky-cell">
                         <div class="proposals-table__author">
                             {{ vote.authorName }}
+
+                            {% if canEditVote(vote) and onEditPage == false %}
+                                <a
+                                    class="button button--icon button--extra-small"
+                                    title="{{ 'polls.show.my_votes.edit' | trans({ authorName: vote.authorName }) }}"
+                                    href="{{ path('edit vote', { slug: poll.slug, id: vote.id, _fragment: 'poll' }) }}"
+                                >
+                                    {{ icon('pen-to-square') }}
+                                </a>
+                            {% endif %}
                         </div>
                     </th>
 

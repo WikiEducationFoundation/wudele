@@ -13,6 +13,7 @@ answers.value.yes: Oui
 base.copied: "Copié\_!"
 base.copy: Copier
 base.default_title: "Bienvenue sur {appName}\_!"
+base.edit: Modifier
 calendar.hints.dates_period: "Astuce\_: vous pouvez sélectionner une plage de dates en maintenant la touche <kbd>Maj</kbd> enfoncée."
 calendar.patterns.next_month: 'Mois suivant (__date__)'
 calendar.patterns.previous_month: 'Mois précédent (__date__)'
@@ -159,6 +160,7 @@ polls.dates.slots_at_next_step: 'Sélectionnez une ou plusieurs dates. Vous pour
 polls.dates.title: 'Choisissez les dates'
 polls.deletion.information: "Attention, vous êtes sur le point de supprimer le sondage «\_<strong>{title}</strong>\_» ainsi que les votes et commentaires associés."
 polls.deletion.title: 'Suppression d’un sondage'
+polls.edit_vote_mode.any: 'Chaque participant·e peut modifier n’importe quel vote'
 polls.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote'
 polls.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote'
 polls.new.title: 'Création de sondage'
@@ -187,7 +189,7 @@ polls.show.export_csv: 'Exporter (<abbr>CSV</abbr>)'
 polls.show.is_closed: 'Ce sondage est terminé.'
 polls.show.my_votes.date: '(vote du __date__)'
 polls.show.my_votes.description: 'Vos votes sont mémorisés dans votre navigateur. Pour plus de confidentialité, retirez-les si vous partagez ce dernier avec d’autres personnes.'
-polls.show.my_votes.edit: Modifier
+polls.show.my_votes.edit: "Modifier le vote de {authorName}"
 polls.show.my_votes.information: Information
 polls.show.my_votes.remove: Retirer
 polls.show.my_votes.title: 'Mes votes'
@@ -225,6 +227,7 @@ polls.summary.information.title: 'Informations générales'
 polls.summary.is_closed: '(sondage terminé)'
 polls.summary.proposals.title: 'Mes propositions'
 polls.summary.settings.customised_slug: 'Le lien du sondage est personnalisé.'
+polls.summary.settings.edit_vote_mode.any: 'Chaque participant·e peut modifier n’importe quel vote.'
 polls.summary.settings.edit_vote_mode.no: 'Les participant·es ne peuvent pas modifier leur vote.'
 polls.summary.settings.edit_vote_mode.own: 'Chaque participant·e peut modifier son propre vote.'
 polls.summary.settings.is_disable_maybe: "Les participant·es ne pourront pas voter «\_si besoin\_»."
