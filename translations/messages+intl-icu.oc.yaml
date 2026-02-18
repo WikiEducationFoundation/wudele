@@ -225,7 +225,7 @@ polls.show.my_votes.date: (vòte del __date__)
 polls.show.my_votes.description: Vòstres vòtes son gardats dins vòstre 
   navegador. Per mai de confidencialitat, suprimissètz-los se partejatz aqueste 
   amb d'autras personas.
-polls.show.my_votes.edit: Modificar
+polls.show.my_votes.edit: Modificar lo vòt de {authorName}
 polls.show.my_votes.information: Informacions
 polls.show.my_votes.remove: Levar
 polls.show.my_votes.title: Mos vòtes
@@ -305,3 +305,18 @@ polls.votes.yes: Òc
 polls.votes.yes.count: '{count} Òc'
 polls.votes.yours: Vòstre vòte
 preferences.edit.title: Vòstras preferéncias
+base.edit: Modificar
+polls.edit_vote_mode.any: Cada participant pòt modificar quin vòt que siá
+polls.summary.admin_access.sent_by_email: Aqueste ligam es tanben estat enviat 
+  per corrièl.
+polls.summary.admin_access.title: Ligam d’administracion privat
+polls.summary.admin_access.will_send_by_email: Aqueste ligam vos serà tanben 
+  mandat per corrièl.
+polls.summary.admin_link.remember.description: En marcant l'opcion « Memorizar 
+  lo sondatge dins aqueste navegador », aqueste sondatge serà enregistrat sus 
+  aqueste aparelh. Aquò vos permetrà de lo trobar mai tard dempuèi lo meteis 
+  navegidor per lo veire o lo modificar. Per mai de confidencialitat, marquetz 
+  pas aquesta opcion se aqueste aparelh es partejat amb d'autras personas.
+polls.summary.admin_link.remember.information: Informacions
+polls.summary.settings.edit_vote_mode.any: Cada participant pòt modificar quin 
+  vòt que siá.
