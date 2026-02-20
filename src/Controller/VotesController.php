@@ -10,6 +10,7 @@ use App\Entity;
 use App\Form;
 use App\Repository;
 use App\Security;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,7 @@ class VotesController extends BaseController
         string $slug,
         Entity\Vote $vote,
         Request $request,
+        EntityManagerInterface $entityManager,
     ): Response {
         $poll = $this->pollRepository->loadBySlug($slug);
 
@@ -55,20 +57,27 @@ class VotesController extends BaseController
         $form = $this->createNamedForm('vote', Form\VoteForm::class, $vote);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $vote = $form->getData();
 
-            $this->voteRepository->save($vote);
+            if ($form->isValid()) {
+                $this->voteRepository->save($vote);
 
-            $session = $request->getSession();
-            $session->set("vote-{$poll->getId()}", $vote->getId());
+                $session = $request->getSession();
+                $session->set("vote-{$poll->getId()}", $vote->getId());
 
-            $this->addFlash('success', 'vote.updated');
-            $this->addFlash('storeMyVote', true);
+                $this->addFlash('success', 'vote.updated');
+                $this->addFlash('storeMyVote', true);
 
-            return $this->redirectToRoute('poll', [
-                'slug' => $poll->getSlug(),
-            ]);
+                return $this->redirectToRoute('poll', [
+                    'slug' => $poll->getSlug(),
+                ]);
+            } else {
+                // Reset the vote so it doesn't display the changes in the
+                // interface.
+                $entityManager->refresh($vote);
+                $entityManager->clear();
+            }
         }
 
         return $this->render('polls/show.html.twig', [

@@ -153,9 +153,9 @@ class VotesControllerTest extends WebTestCase
         ]);
 
         $this->assertSelectorTextContains('#vote_password_error', 'The password is incorrect');
-        $this->refresh($vote);
+        $vote = Factory\VoteFactory::find($vote->getId());
         $this->assertSame($oldName, $vote->getAuthorName());
-        $this->refresh($answer);
+        $answer = Factory\AnswerFactory::find($answer->getId());
         $this->assertSame($oldValue, $answer->getValue());
     }
 
@@ -189,10 +189,51 @@ class VotesControllerTest extends WebTestCase
         ]);
 
         $this->assertSelectorTextContains('#vote_error', 'please submit the form again');
-        $this->refresh($vote);
+        $vote = Factory\VoteFactory::find($vote->getId());
         $this->assertSame($oldName, $vote->getAuthorName());
-        $this->refresh($answer);
+        $answer = Factory\AnswerFactory::find($answer->getId());
         $this->assertSame($oldValue, $answer->getValue());
+    }
+
+    public function testPostVoteFailsIfAuthorNameAlreadyUsed(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->completed()->create();
+        $proposal = $poll->getProposals()->first();
+        $vote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+            'authorName' => 'Alix',
+        ]);
+        $answer = Factory\AnswerFactory::createOne([
+            'vote' => $vote,
+            'proposal' => $proposal,
+            'value' => 'no',
+        ]);
+        $newVote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+            'authorName' => 'Kael',
+        ]);
+        $newAnswer = Factory\AnswerFactory::createOne([
+            'vote' => $newVote,
+            'proposal' => $proposal,
+            'value' => 'yes',
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getSlug()}/votes/{$newVote->getId()}/edit", [
+            'vote' => [
+                '_token' => $this->getCsrf($client, 'vote'),
+                'authorName' => ' ALiX ',
+                'answers' => [
+                    ['value' => 'no'],
+                ],
+            ],
+        ]);
+
+        $this->assertSelectorTextContains('#vote_authorName_error', 'Enter a different name');
+        $newVote = Factory\VoteFactory::find($newVote->getId());
+        $this->assertSame('Kael', $newVote->getAuthorName());
+        $newAnswer = Factory\AnswerFactory::find($newAnswer->getId());
+        $this->assertSame('yes', $newAnswer->getValue());
     }
 
     public function testPostDeletionDeletesTheVote(): void

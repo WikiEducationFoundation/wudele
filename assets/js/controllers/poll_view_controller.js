@@ -21,15 +21,15 @@ export default class extends Controller {
     }
 
     connect() {
-        const preferredView = this.getPreferredView();
+        this._onTurboRender = this.update.bind(this);
 
-        if (preferredView === 'list') {
-            this.displayList();
-        } else {
-            this.displayTable();
-        }
+        document.addEventListener('turbo:render', this._onTurboRender);
 
-        this.setPollWidth();
+        this.update();
+    }
+
+    disconnect() {
+        document.removeEventListener('turbo:render', this._onTurboRender);
     }
 
     getPreferredView() {
@@ -90,6 +90,18 @@ export default class extends Controller {
         if (e !== undefined) {
             this.listButtonTarget.focus();
         }
+    }
+
+    update() {
+        const preferredView = this.getPreferredView();
+
+        if (preferredView === 'list') {
+            this.displayList();
+        } else {
+            this.displayTable();
+        }
+
+        this.setPollWidth();
     }
 
     getVoteFormForProposal(proposal) {

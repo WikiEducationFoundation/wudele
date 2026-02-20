@@ -13,12 +13,18 @@ use App\Validator as AppAssert;
 use Doctrine\Common\Collections;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: Repository\VoteRepository::class)]
 #[AppAssert\MaxVotes(
     message: new TranslatableMessage('vote.max_votes.limited', domain: 'validators'),
+)]
+#[UniqueEntity(
+    fields: ['authorName', 'poll'],
+    repositoryMethod: 'findByPollAndAuthorName',
+    message: new TranslatableMessage('user.author_name.already_used', domain: 'validators'),
 )]
 class Vote implements ActivityMonitor\TrackableEntityInterface
 {
@@ -131,7 +137,7 @@ class Vote implements ActivityMonitor\TrackableEntityInterface
     public function getAnswerForProposal(Proposal $proposal): ?Answer
     {
         return $this->answers->findFirst(function ($key, $answer) use ($proposal): bool {
-            return $answer->getProposal() === $proposal;
+            return $answer->getProposal()?->getId() === $proposal->getId();
         });
     }
 
