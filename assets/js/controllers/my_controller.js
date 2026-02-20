@@ -1,5 +1,6 @@
 // This file is part of Pollaris.
 // Copyright 2024-2026 Marien Fressinaud
+// Copyright 2026 Adrien Scholaert
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { Controller } from '@hotwired/stimulus';
@@ -29,8 +30,82 @@ export default class extends Controller {
     connect () {
         setDayjsLocale(dayjs);
 
-        this.refreshMyPolls();
-        this.refreshMyVotes();
+        this.cleanup('votes').finally(() => {
+            this.refreshMyVotes();
+        });
+
+        this.cleanup('polls').finally(() => {
+            this.refreshMyPolls();
+        });
+    }
+
+    async cleanup(storageKey) {
+        const data = Storage.listEntries(storageKey);
+        const checks = data.map(async ([key, item]) => {
+            const pollUrl = item && typeof item.pollUrl === 'string' ? item.pollUrl : null;
+
+            if (!pollUrl) {
+                return;
+            }
+
+            // Only validate same-origin poll URLs to avoid leaking requests to external hosts
+            const url = this.safeParseUrl(pollUrl);
+
+            if (!url || url.origin !== window.location.origin) {
+                return;
+            }
+
+            // Only check poll pages
+            if (!url.pathname.startsWith('/polls/')) {
+                return;
+            }
+
+            const status = await this.fetchStatus(url.toString());
+
+            if (status === 404) {
+                Storage.unstoreEntry(storageKey, key);
+            }
+        });
+
+        await Promise.all(checks);
+    }
+
+    async fetchStatus (url) {
+        try {
+            const headResponse = await fetch(url, {
+                method: 'HEAD',
+                credentials: 'same-origin',
+                redirect: 'manual',
+                cache: 'no-store',
+            });
+
+            // Some servers/proxies may not support HEAD correctly; fallback to GET
+            if (headResponse.status === 405 || headResponse.status === 501) {
+                const getResponse = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    redirect: 'manual',
+                    cache: 'no-store',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+                return getResponse.status;
+            }
+
+            return headResponse.status;
+        } catch (e) {
+            // Network error
+            return null;
+        }
+    }
+
+    safeParseUrl (url) {
+        try {
+            return new URL(url, window.location.origin);
+        } catch (e) {
+            return null;
+        }
     }
 
     refreshMyPolls () {
