@@ -363,6 +363,10 @@ class PollsController extends BaseController
 
             $this->pollRepository->save($poll);
 
+            if ($request->request->get('step-action') === 'back') {
+                return $this->redirect($flow->getPreviousStepUrl('proposals'));
+            }
+
             return $this->redirect($flow->getNextStepUrl('proposals'));
         }
 
@@ -398,6 +402,10 @@ class PollsController extends BaseController
 
             $this->pollRepository->save($poll);
 
+            if ($request->request->get('step-action') === 'back') {
+                return $this->redirect($flow->getPreviousStepUrl('dates'));
+            }
+
             return $this->redirect($flow->getNextStepUrl('dates'));
         }
 
@@ -432,6 +440,10 @@ class PollsController extends BaseController
             $poll = $form->getData();
 
             $this->pollRepository->save($poll);
+
+            if ($request->request->get('step-action') === 'back') {
+                return $this->redirect($flow->getPreviousStepUrl('slots'));
+            }
 
             return $this->redirect($flow->getNextStepUrl('slots'));
         }
@@ -476,6 +488,10 @@ class PollsController extends BaseController
 
             $session = $request->getSession();
             $session->set("admin-{$poll->getId()}", true);
+
+            if ($request->request->get('step-action') === 'back') {
+                return $this->redirect($flow->getPreviousStepUrl('summary'));
+            }
 
             return $this->redirect($flow->getNextStepUrl('summary'));
         }

@@ -22,15 +22,36 @@
 
 {% if flow.hasPreviousStep(step) %}
     <div class="cols cols--always cols--gap">
-        <a class="button" href="{{ flow.previousStepUrl(step) }}">
-            {{ previousLabel }}
-        </a>
+        {% if flow.isStepOutOfFlow %}
+            <a class="button" href="{{ flow.previousStepUrl(step) }}">
+                {{ previousLabel }}
+            </a>
 
-        <div class="col--extend"></div>
+            <div class="col--extend"></div>
 
-        <button type="submit" class="button--primary">
-            {{ nextLabel }}
-        </button>
+            <button type="submit" class="button--primary">
+                {{ nextLabel }}
+            </button>
+        {% else %}
+            <button
+                type="submit"
+                name="step-action"
+                value="back"
+            >
+                {{ previousLabel }}
+            </button>
+
+            <div class="col--extend"></div>
+
+            <button
+                type="submit"
+                name="step-action"
+                value="next"
+                class="button--primary"
+            >
+                {{ nextLabel }}
+            </button>
+        {% endif %}
     </div>
 {% else %}
     <div class="text--right">
