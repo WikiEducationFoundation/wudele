@@ -17,6 +17,7 @@ button,
     font-family: inherit;
     font-size: var(--font-size-normal);
     line-height: 1.5;
+    text-align: center;
     text-decoration: none;
 
     background-color: var(--button-background-color);

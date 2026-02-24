@@ -13,6 +13,7 @@ answers.value.yes: 'Yes'
 base.copied: Copied!
 base.copy: Copy
 base.default_title: 'Welcome to {appName}!'
+base.download: Download
 base.edit: Edit
 calendar.hints.dates_period: 'Tip: you can select a range of dates by holding down the <kbd>Shift</kbd> key.'
 calendar.patterns.next_month: 'Next month (__date__)'
@@ -28,6 +29,8 @@ emails.new_vote.subject: 'New vote on a poll'
 emails.new_vote.voted: '{voter_name} has just voted in the “{poll_name}” poll.'
 emails.polls_list.here_is_the_list: 'Here is the list of the polls you administrate on {appName}:'
 emails.polls_list.subject: 'List of your polls'
+emails.share.body: "Hello,\n\nA poll is available to gather your feedback.\nParticipation is possible via the following link: {poll_url}\n\nThank you in advance.\n\nKind regards,"
+emails.share.subject: 'Feedback requested for the poll: {poll_name}'
 errors.404.description: 'The requested page couldn’t be located. Checkout for any URL misspelling.'
 errors.404.title: 'Page not found!'
 errors.back_home: 'Back to the homepage'
@@ -175,6 +178,9 @@ polls.settings.permissions.title: Permissions
 polls.settings.slug.title: 'Customise the poll link'
 polls.settings.title: 'Configure the poll'
 polls.sharing.public_link: 'Public sharing link'
+polls.sharing.send_by_email: 'Send by email'
+polls.sharing.share_by_email: 'Share by email'
+polls.sharing.share_with_qr_code: 'Share with a QR code'
 polls.sharing.title: 'Share the poll'
 polls.show.administer: Administer
 polls.show.authenticated: 'You have successfully authenticated.'
