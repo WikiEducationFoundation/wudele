@@ -20,6 +20,7 @@ class Locales
             'en_GB' => 'English',
             'de' => 'Deutsch',
             'fr_FR' => 'Français',
+            'hu' => 'Magyar',
             'it' => 'Italiano',
             'oc' => 'Occitan',
         ];
