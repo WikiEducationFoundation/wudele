@@ -334,3 +334,13 @@ base.edit: Bearbeiten
 polls.edit_vote_mode.any: Jeder Teilnehmende kann jede Stimme ändern
 polls.summary.settings.edit_vote_mode.any: Jeder Teilnehmende kann jede Stimme 
   ändern.
+forms.vote_form.required_choice: Bitte wählen Sie mindestens eine Option aus den
+  oben genannten Möglichkeiten aus.
+polls.table.toolbar.scroll_to_left.title: Nach links scrollen
+polls.table.toolbar.scroll_to_right.title: Nach rechts scrollen
+polls.table.toolbar.show_less.title: Die Zeile reduzieren, um die Anzeige von 
+  Beschriftungen zu begrenzen
+polls.table.toolbar.show_less.label: Die Zeile reduzieren
+polls.table.toolbar.show_more.title: Die Zeile erweitern, um alle Beschriftungen
+  anzuzeigen
+polls.table.toolbar.show_more.label: Die Zeile erweitern
