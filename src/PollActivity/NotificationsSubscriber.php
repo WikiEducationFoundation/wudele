@@ -44,7 +44,9 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $locale = $poll->getLocale();
 
         $subject = "[{$this->appName}] ";
-        $subject .= $this->translator->trans('emails.new_poll_admin.subject', locale: $locale);
+        $subject .= $this->translator->trans('emails.new_poll_admin.subject', [
+            'poll_name' => $poll->getTitle(),
+        ], locale: $locale);
 
         $email = (new TemplatedEmail())
             ->to($to)
@@ -71,7 +73,9 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $locale = $poll->getLocale();
 
         $subject = "[{$this->appName}] ";
-        $subject .= $this->translator->trans('emails.new_vote.subject', locale: $locale);
+        $subject .= $this->translator->trans('emails.new_vote.subject', [
+            'poll_name' => $poll->getTitle(),
+        ], locale: $locale);
 
         $email = (new TemplatedEmail())
             ->to($to)
@@ -101,7 +105,9 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $locale = $poll->getLocale();
 
         $subject = "[{$this->appName}] ";
-        $subject .= $this->translator->trans('emails.new_comment.subject', locale: $locale);
+        $subject .= $this->translator->trans('emails.new_comment.subject', [
+            'poll_name' => $poll->getTitle(),
+        ], locale: $locale);
 
         $email = (new TemplatedEmail())
             ->to($to)

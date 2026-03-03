@@ -20,12 +20,12 @@ calendar.patterns.previous_month: Mese precedente (__date__)
 emails.hello: Buongiorno {name},
 emails.link_to_poll: "Puoi trovare il tuo sondaggio all'indirizzo: {url}"
 emails.new_comment.posted: '{commenter_name} ha appena commentato il sondaggio “{poll_name}”.'
-emails.new_comment.subject: Nuovo commento a un sondaggio
+emails.new_comment.subject: 'Nuovo commento a un sondaggio: {poll_name}'
 emails.new_poll_admin.created: 'Hai appena creato il sondaggio “{poll_name}”. Puoi
   modificare il tuo sondaggio in qualsiasi momento cliccando sul seguente link:'
 emails.new_poll_admin.keep_it_secret: Assicurati di tenere questo link per te!
-emails.new_poll_admin.subject: Nuovo sondaggio
-emails.new_vote.subject: Nuovo voto in un sondaggio
+emails.new_poll_admin.subject: 'Nuovo sondaggio: {poll_name}'
+emails.new_vote.subject: 'Nuovo voto in un sondaggio: {poll_name}'
 emails.new_vote.voted: '{voter_name} ha appena votato nel sondaggio “{poll_name}”.'
 emails.polls_list.here_is_the_list: "Ecco l'elenco dei sondaggi che amministri su
   {appName}:"

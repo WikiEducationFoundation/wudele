@@ -20,12 +20,12 @@ calendar.patterns.previous_month: Mes anterior (__date__)
 emails.hello: Ola {name},
 emails.link_to_poll: 'Podes atopar a túa enquisa na ligazón: {url}'
 emails.new_comment.posted: '{commenter_name} comentou na enquisa “{poll_name}”.'
-emails.new_comment.subject: Novo comentario nunha enquisa
+emails.new_comment.subject: 'Novo comentario nunha enquisa: {poll_name}'
 emails.new_poll_admin.created: 'Creaches a enquisa "{poll_name}". Pódela editar cando
   queiras premendo na seguinte ligazón:'
 emails.new_poll_admin.keep_it_secret: Garda esta ligazón só para ti!
-emails.new_poll_admin.subject: Nova enquisa
-emails.new_vote.subject: Novo voto nunha enquisa
+emails.new_poll_admin.subject: 'Nova enquisa: {poll_name}'
+emails.new_vote.subject: 'Novo voto nunha enquisa: {poll_name}'
 emails.new_vote.voted: '{voter_name} votou na enquisa “{poll_name}”.'
 emails.polls_list.here_is_the_list: 'Esta é a lista das enquisas que administras en
   {appName}:'

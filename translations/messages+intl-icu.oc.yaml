@@ -20,13 +20,13 @@ calendar.patterns.previous_month: Mes precedent (__date__)
 emails.hello: Bonjorn {name},
 emails.link_to_poll: 'Podètz retrobar vòstre sondatge a l’adreça : {url}'
 emails.new_comment.posted: '{commenter_name} sortís de comentar sul sondatge « {poll_name} ».'
-emails.new_comment.subject: Comentari novèl sul sondatge
+emails.new_comment.subject: 'Comentari novèl sul sondatge: {poll_name}'
 emails.new_poll_admin.created: 'Sortissètz de crear lo sondatge « {poll_name} ». Podètz
   modificar vòstre sondatge a tot moment en anant a l’adreça seguenta :'
 emails.new_poll_admin.keep_it_secret: Asseguratz de gardar aqueste ligam sonca 
   per vos !
-emails.new_poll_admin.subject: Sondatge novèl
-emails.new_vote.subject: Vòte novèl sus un sondatge
+emails.new_poll_admin.subject: 'Sondatge novèl: {poll_name}'
+emails.new_vote.subject: 'Vòte novèl sus un sondatge: {poll_name}'
 emails.new_vote.voted: '{voter_name} sortís de votar dins lo sondatge « {poll_name} ».'
 emails.polls_list.here_is_the_list: 'Vaquí la lista dels sondatges qu’administratz
   sus {appName} :'

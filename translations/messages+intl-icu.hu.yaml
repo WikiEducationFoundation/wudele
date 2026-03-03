@@ -22,13 +22,13 @@ emails.hello: Üdv {name},
 emails.link_to_poll: 'A szavazást a következő hivatkozáson találja: {url}'
 emails.new_comment.posted: '{commenter_name} éppen most fűzött megjegyzést a „{poll_name}”
   szavazáshoz.'
-emails.new_comment.subject: Új hozzászólás szavazáshoz
+emails.new_comment.subject: 'Új hozzászólás szavazáshoz: {poll_name}'
 emails.new_poll_admin.created: 'Most hozta létre a „{poll_name}” nevű szavazást. A
   szavazást bármikor szerkesztheti, ha rákattint a következő hivatkozásra:'
 emails.new_poll_admin.keep_it_secret: Ügyelj rá, hogy ezt a hivatkozást ne oszd 
   meg másokkal!
-emails.new_poll_admin.subject: Új szavazás
-emails.new_vote.subject: Új szavazás egy kérdőívben
+emails.new_poll_admin.subject: 'Új szavazás: {poll_name}'
+emails.new_vote.subject: 'Új szavazás egy kérdőívben: {poll_name}'
 emails.new_vote.voted: '{voter_name} épp most szavazott a „{poll_name}” szavazáson.'
 emails.polls_list.here_is_the_list: 'Az {appName} alkalmazásban általad kezelt szavazások
   listája:'

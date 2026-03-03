@@ -20,12 +20,12 @@ emails.hello: Hallo {name},
 emails.link_to_poll: 'Sie finden Ihre Umfrage unter folgendem Link: {url}'
 emails.new_comment.posted: '{commenter_name} hat gerade einen Kommentar zur Umfrage
   „{poll_name}“ abgegeben.'
-emails.new_comment.subject: Neuer Kommentar zu einer Umfrage
+emails.new_comment.subject: 'Neuer Kommentar zu einer Umfrage: {poll_name}'
 emails.new_poll_admin.created: 'Sie haben soeben die Umfrage „{poll_name}“ erstellt.
   Sie können Ihre Umfrage jederzeit bearbeiten, indem Sie auf den folgenden Link klicken:'
 emails.new_poll_admin.keep_it_secret: Behalte diesen Link für dich!
-emails.new_poll_admin.subject: Neue Umfrage
-emails.new_vote.subject: Neue Stimme zu einer Umfrage
+emails.new_poll_admin.subject: 'Neue Umfrage: {poll_name}'
+emails.new_vote.subject: 'Neue Stimme zu einer Umfrage: {poll_name}'
 emails.new_vote.voted: '{voter_name} hat gerade an der Umfrage „{poll_name}“ teilgenommen.'
 emails.polls_list.here_is_the_list: 'Hier ist die Liste der Umfragen, die Sie auf
   {appName} verwalten:'

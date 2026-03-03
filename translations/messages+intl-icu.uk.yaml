@@ -23,13 +23,13 @@ emails.hello: Привіт {name},
 emails.link_to_poll: 'Ви можете знайти своє опитування за посиланням: {url}'
 emails.new_comment.posted: '{commenter_name} тільки що прокоментував(ла) опитування
   «{poll_name}».'
-emails.new_comment.subject: Новий коментар до опитування
+emails.new_comment.subject: 'Новий коментар до опитування: {poll_name}'
 emails.new_poll_admin.created: 'Ви тільки що створили «{poll_name}». Ви можете в будь-який
   момент відредагувати своє опитування перейшовши за посиланням:'
 emails.new_poll_admin.keep_it_secret: Переконайтесь що це посилання є тільки у 
   вас!
-emails.new_poll_admin.subject: Нове опитування
-emails.new_vote.subject: Новий голос в опитуванні
+emails.new_poll_admin.subject: 'Нове опитування: {poll_name}'
+emails.new_vote.subject: 'Новий голос в опитуванні: {poll_name}'
 emails.new_vote.voted: '{voter_name} тільки що проголосував(ла) в опитуванні «{poll_name}».'
 emails.polls_list.here_is_the_list: 'Ось список опитувань, якими ви керуєте у {appName}:'
 emails.polls_list.subject: Список ваших опитувань
