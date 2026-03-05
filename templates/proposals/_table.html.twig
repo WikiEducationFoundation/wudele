@@ -34,9 +34,10 @@
                         <div class="proposals-table-actions">
                             <div class="proposals-table-actions__scroll" data-scrollbox-target="scrollBtns">
                                 <button
+                                    type="button"
                                     class="button button--block button--smaller"
                                     data-scrollbox-target="scrollLeftBtn"
-                                    data-action="click->scrollbox#scrollLeft:prevent"
+                                    data-action="click->scrollbox#scrollLeft"
                                     aria-hidden="true"
                                     id="scroll-left"
                                     title="{{- 'polls.table.toolbar.scroll_to_left.title' | trans -}}"
@@ -45,9 +46,10 @@
                                 </button>
 
                                 <button
+                                    type="button"
                                     class="button button--block button--smaller"
                                     data-scrollbox-target="scrollRightBtn"
-                                    data-action="click->scrollbox#scrollRight:prevent"
+                                    data-action="click->scrollbox#scrollRight"
                                     aria-hidden="true"
                                     id="scroll-right"
                                     title="{{- 'polls.table.toolbar.scroll_to_right.title' | trans -}}"
@@ -57,8 +59,9 @@
                             </div>
 
                             <button
+                                type="button"
                                 class="proposals-table-actions__show-more button button--primary button--smaller"
-                                data-action="click->poll-table-head-view#showMore:prevent:stop"
+                                data-action="click->poll-table-head-view#showMore"
                                 data-poll-table-head-view-target="showMore"
                                 aria-label="{{- 'polls.table.toolbar.show_more.title' | trans -}}"
                                 title="{{- 'polls.table.toolbar.show_more.title' | trans -}}"
@@ -67,9 +70,10 @@
                             </button>
 
                             <button
+                                type="button"
                                 class="proposals-table-actions__show-less button button--primary button--smaller"
                                 data-poll-table-head-view-target="showLess"
-                                data-action="click->poll-table-head-view#showLess:prevent:stop"
+                                data-action="click->poll-table-head-view#showLess"
                                 aria-hidden="true"
                                 aria-label="{{- 'polls.table.toolbar.show_less.title' | trans -}}"
                                 title="{{- 'polls.table.toolbar.show_less.title' | trans -}}"
