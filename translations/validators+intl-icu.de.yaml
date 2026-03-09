@@ -39,3 +39,5 @@ vote.author_name.max_length: Geben Sie einen Namen mit weniger als {limit}
 vote.author_name.required: Geben Sie einen Namen ein.
 vote.max_votes.limited: Es gab bereits {max} Stimme(n) für diesen Vorschlag, Sie
   können nicht mehr dafür stimmen.
+user.author_name.already_used: Geben Sie einen anderen Namen ein, dieser wird 
+  bereits verwendet.
