@@ -318,3 +318,13 @@ polls.votes.yes: Igen
 polls.votes.yes.count: '{count} Igen'
 polls.votes.yours: Az Ön válasza
 preferences.edit.title: Preferenciák
+forms.vote_form.required_choice: Kérjük, válasszon ki legalább egy lehetőséget a
+  fenti javaslatok közül.
+polls.table.toolbar.scroll_to_left.title: Görgetés balra
+polls.table.toolbar.scroll_to_right.title: Görgetés jobbra
+polls.table.toolbar.show_less.label: Sor összecsukása
+polls.table.toolbar.show_less.title: Sor összecsukása a címkék rövidebb 
+  megjelenítéséhez
+polls.table.toolbar.show_more.label: Sor kibontása
+polls.table.toolbar.show_more.title: Sor kibontása az összes címke 
+  megjelenítéséhez
