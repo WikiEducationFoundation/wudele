@@ -31,3 +31,5 @@ vote.author_name.max_length: Escribe un nome menor de {limit} caracteres.
 vote.author_name.required: Escribe un nome.
 vote.max_votes.limited: Xa hai {max} voto(s) para esta proposta, non podes votar
   por ela.
+user.author_name.already_used: Escribe un nome diferente, este xa se está a 
+  usar.
