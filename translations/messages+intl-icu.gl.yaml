@@ -1,2 +1,138 @@
 admin.polls.admin_link: Ligazón de admin
 admin.polls.author: Autoría
+admin.polls.created_at: Creada o
+admin.polls.none: A busca non atopou ningunha enquisa que concorde.
+admin.polls.public_link: Ligazón pública
+admin.polls.search: Buscar
+admin.polls.title: Lista de enquisas
+admin.title: Administración
+answers.value.maybe: Se fose preciso
+answers.value.no: Non
+answers.value.yes: Si
+base.copied: Copiado!
+base.copy: Copiar
+base.default_title: Benvida a {appName}!
+base.edit: Editar
+calendar.hints.dates_period: 'Consello: podes seleccionar o rango de datas mantendo
+  premida a tecla <kbd>Maiús</kbd>.'
+calendar.patterns.next_month: Próximo mes (__date__)
+calendar.patterns.previous_month: Mes anterior (__date__)
+emails.hello: Ola {name},
+emails.link_to_poll: 'Podes atopar a túa enquisa na ligazón: {url}'
+emails.new_comment.posted: '{commenter_name} comentou na enquisa “{poll_name}”.'
+emails.new_comment.subject: Novo comentario nunha enquisa
+emails.new_poll_admin.created: 'Creaches a enquisa "{poll_name}". Pódela editar cando
+  queiras premendo na seguinte ligazón:'
+emails.new_poll_admin.keep_it_secret: Garda esta ligazón só para ti!
+emails.new_poll_admin.subject: Nova enquisa
+emails.new_vote.subject: Novo voto nunha enquisa
+emails.new_vote.voted: '{voter_name} votou na enquisa “{poll_name}”.'
+emails.polls_list.here_is_the_list: 'Esta é a lista das enquisas que administras en
+  {appName}:'
+emails.polls_list.subject: As túas enquisas
+errors.404.description: Non atopamos a páxina solicitada. Comproba se hai erros 
+  no URL.
+errors.404.title: Páxina non atopada!
+errors.back_home: Volver ao inicio
+errors.generic.description: Dille á administración o que estabas a facer cando 
+  aconteceu o fallo. Arranxarémolo o máis axiña posible.
+errors.generic.sorry: Lamentamos as molestias causadas.
+errors.generic.title: Houbo un erro!
+forms.apply: Aplicar
+forms.cancel: Cancelar
+forms.comment_form.author_name.label: O teu nome
+forms.comment_form.content.label: A túa mensaxe
+forms.comment_form.submit: Publicar
+forms.complete: Completar
+forms.confirm: Confirmar
+forms.date_type.label.label_pattern: Data __number__
+forms.error: Erro
+forms.labels.max_length: (Máx. {length} caracteres)
+forms.labels.optional: (optativo)
+forms.labels.optional_and_max_length: (optativo, máx. {length} caracteres)
+forms.login.password: Contrasinal
+forms.login.username: Identificador
+forms.next: Seguinte
+forms.poll_authentication_form.password.label: Contrasinal
+forms.poll_authentication_form.submit: Autenticar
+forms.poll_dates_form.add_date: Engade unha data
+forms.poll_dates_form.enter_manually: Engade as datas manualmente
+forms.poll_dates_form.remove_date: Retirar a data
+forms.poll_dates_form.use_calendar: Selecciona as datas no calendario
+forms.poll_deletion_form.submit: Quero eliminar esta enquisa
+forms.poll_form.author_email.help: Non se vai compartir o teu enderezo coas 
+  outras persoas que participen na enquisa. Só se usa para que poidas atopar a 
+  túa enquisa se perdes o seu enderezo e para notificarche cando haxa novos 
+  votos.
+forms.poll_form.author_email.label: O teu enderezo de correo
+forms.poll_form.author_name.label: O teu nome
+forms.poll_form.closed_at.help: As persoas participantes poderán votar ata esta 
+  data.
+forms.poll_form.closed_at.label: Data de finalización
+forms.poll_form.description.label: Descrición
+forms.poll_form.title.label: Nome da túa enquisa
+forms.poll_proposals_form.add_proposal: Engadir unha proposta
+forms.poll_proposals_form.remove_proposal: Retirar a proposta
+forms.poll_settings_form.are_results_public.label: Todas as participantes poden 
+  ver os resultados
+forms.poll_settings_form.disable_maybe.label: Desactivar votos «se fose preciso»
+forms.poll_settings_form.max_votes.label: Número máximo de votos «si» por 
+  proposta
+forms.poll_settings_form.notify_on_comments.label: Recibir un correo por cada 
+  comentario
+forms.poll_settings_form.notify_on_votes.label: Recibir un correo por cada voto
+forms.poll_settings_form.password.label: Contrasinal
+forms.poll_settings_form.password.leave_empty_to_keep: Deixar baleiro para 
+  manter o contrasinal actual.
+forms.poll_settings_form.password.protect: Protexe a enquisa cun contrasinal
+forms.poll_settings_form.password_for_votes_only.label: Os resultados son 
+  visibles sen contrasinal
+forms.poll_settings_form.repeat_password.label: Repetir o contrasinal
+forms.poll_settings_form.slug.help: Ten en conta que ao cambiar a ligazón á túa 
+  enquisa fas que sexa máis accesible para calquera. É recomendable protexela 
+  cun contrasinal.
+forms.poll_settings_form.slug.label: Escribir a ligazón á enquisa
+forms.poll_settings_form.vote_no_by_default.label: Votar «non» por defecto se 
+  non se da ningunha resposta
+forms.poll_slots_form.add_slot: Engadir un rango horario
+forms.poll_slots_form.remove_slot: Retirar o rango horario
+forms.preferences.color_scheme.auto: Auto
+forms.preferences.color_scheme.dark: Escuro
+forms.preferences.color_scheme.label: Abano de cores
+forms.preferences.color_scheme.light: Claro
+forms.preferences.locale.label: Idioma
+forms.previous: Anterior
+forms.proposal_type.label.label_pattern: Proposta __number__
+forms.search_polls_form.email.help: Enviarémosche a ligazón ás enquisas que ti 
+  creaches.
+forms.search_polls_form.email.label: O teu enderezo de correo
+forms.search_polls_form.submit: Enviar
+forms.slot_type.label.label_pattern: Rango horario __number__
+forms.slots_form.day: Día
+forms.vote_form.author_name.label: O teu nome
+forms.vote_form.leave_confirmation: Aínda non confirmaches o teu voto. Se 
+  continúas vas perder a túa entrada. Tes certeza de querer continuar?
+forms.vote_form.password.help: Tes que ter o contrasinal para poder votar nesta 
+  enquisa.
+forms.vote_form.password.label: Contrasinal
+forms.vote_form.required_choice: Por favor selecciona polo menos unha opción 
+  entre as dispoñibles.
+forms.vote_form.submit.label: Votar
+home.create_poll: Crear nova enquisa
+home.free_software: Pollaris é software libre baixo licenza AGPL 3.
+home.free_software.custom: '{appName} usa Pollaris, software libre baixo licenza AGPL
+  3.'
+home.intro: Utiliza a esta ferramenta para planificar, organizar e tomar 
+  decisións de xeito áxil, simple e sen precisar crear unha conta.
+home.my_polls_and_votes: As miñas enquisas e votos
+home.show.poll.deleted: Eliminouse correctamente a túa enquisa.
+home.source_code: Accede ao código fonte.
+home.title: Organiza eventos e consulta opinións das amizades e familia, de 
+  xeito fácil e libre.
+layout.header.my: As miñas enquisas e votos
+layout.header.preferences: Preferencias
+layout.logout: Fechar sesión
+layout.modal.close: Fechar
+login.log_in: Acceder
+login.title: Acceso á administración
+my.index.admin_link: Ligazón de administración
