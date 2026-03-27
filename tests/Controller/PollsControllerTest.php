@@ -1114,7 +1114,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($date, $proposals[0]->getDate());
         $this->assertSame($slot2, $proposals[1]->getLabel());
         $this->assertSame($date, $proposals[1]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary?flow=on", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
     }
 
     public function testPostSlotsCreatesADefaultProposalIfNoneArePosted(): void
@@ -1141,7 +1141,7 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame(1, count($proposals));
         $this->assertSame('Day', $proposals[0]->getLabel());
         $this->assertSame($date, $proposals[0]->getDate());
-        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/summary?flow=on", 302);
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
     }
 
     public function testPostSlotsFailsIfCsrfTokenIsInvalid(): void
@@ -1156,6 +1156,8 @@ class PollsControllerTest extends WebTestCase
         ]);
         $slot1 = '19h';
         $slot2 = '20h';
+
+        Factory\ProposalFactory::assert()->count(2);
 
         $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", [
             'poll_slots' => [
@@ -1177,7 +1179,7 @@ class PollsControllerTest extends WebTestCase
         ]);
 
         $this->assertSelectorTextContains('#poll_slots_error', 'please submit the form again');
-        Factory\ProposalFactory::assert()->count(0);
+        Factory\ProposalFactory::assert()->count(2);
     }
 
     public function testGetSettingsRendersCorrectly(): void

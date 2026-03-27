@@ -163,6 +163,44 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
         return count($this->answers->matching($criteria));
     }
 
+    /**
+     * Return a list of (missing) answers for the votes on this proposal.
+     *
+     * This can happen when an admin adds new proposals to a poll that already
+     * has votes.
+     *
+     * @return Answer[]
+     */
+    public function buildMissingAnswers(): array
+    {
+        $poll = $this->getPoll();
+
+        if (!$poll) {
+            return [];
+        }
+
+        $answers = [];
+        $votes = $poll->getVotes();
+
+        foreach ($votes as $vote) {
+            $hasAnswer = $vote->hasAnswerForProposal($this);
+
+            if ($hasAnswer) {
+                continue;
+            }
+
+            $answer = new Answer();
+            $answer->setValue('');
+
+            $vote->addAnswer($answer);
+            $this->addAnswer($answer);
+
+            $answers[] = $answer;
+        }
+
+        return $answers;
+    }
+
     public function getDate(): ?Date
     {
         return $this->date;

@@ -40,29 +40,9 @@ class PollListener
             }
 
             $proposal = $entity;
-            $poll = $proposal->getPoll();
+            $answers = $proposal->buildMissingAnswers();
 
-            if (!$poll) {
-                continue;
-            }
-
-            $votes = $poll->getVotes();
-
-            foreach ($votes as $vote) {
-                $hasAnswer = $vote->hasAnswerForProposal($proposal);
-
-                if ($hasAnswer) {
-                    // This check should be useless as the proposal is new, and
-                    // that there should be no answer for it yet. However, we
-                    // are never too sure!
-                    continue;
-                }
-
-                $answer = new Entity\Answer();
-                $answer->setValue('');
-                $vote->addAnswer($answer);
-                $proposal->addAnswer($answer);
-
+            foreach ($answers as $answer) {
                 $entityManager->persist($answer);
 
                 // This is required by Doctrine in the onFlush event. It likely
