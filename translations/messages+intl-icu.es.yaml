@@ -1,0 +1,5 @@
+admin.polls.admin_link: Enlace de administración
+admin.polls.author: Autor
+admin.polls.created_at: Creado en
+admin.polls.none: La búsqueda no obtuvo ninguna encuesta coincidente.
+admin.polls.not_completed: Encuesta no completada

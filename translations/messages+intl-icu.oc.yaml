@@ -320,3 +320,13 @@ polls.summary.admin_link.remember.description: En marcant l'opcion « Memorizar
 polls.summary.admin_link.remember.information: Informacions
 polls.summary.settings.edit_vote_mode.any: Cada participant pòt modificar quin 
   vòt que siá.
+forms.vote_form.required_choice: Mercés de seleccionar almens una opcion dins 
+  las proposicions çaijós.
+polls.table.toolbar.scroll_to_left.title: Far defilar a esquèrra
+polls.table.toolbar.scroll_to_right.title: Far defilar a drecha
+polls.table.toolbar.show_less.label: Reduire la linha
+polls.table.toolbar.show_less.title: Reduire la linha per limitar l’afichatge 
+  dels labèls
+polls.table.toolbar.show_more.label: Espandir la linha
+polls.table.toolbar.show_more.title: Espandir la linha per afichar totes los 
+  labèls
