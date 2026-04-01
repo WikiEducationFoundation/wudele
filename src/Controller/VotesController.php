@@ -22,6 +22,7 @@ class VotesController extends BaseController
         private readonly Repository\PollRepository $pollRepository,
         private readonly Repository\VoteRepository $voteRepository,
         private readonly Security\PollSecurity $pollSecurity,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -30,7 +31,6 @@ class VotesController extends BaseController
         string $slug,
         Entity\Vote $vote,
         Request $request,
-        EntityManagerInterface $entityManager,
     ): Response {
         $poll = $this->pollRepository->loadBySlug($slug);
 
@@ -75,8 +75,8 @@ class VotesController extends BaseController
             } else {
                 // Reset the vote so it doesn't display the changes in the
                 // interface.
-                $entityManager->refresh($vote);
-                $entityManager->clear();
+                $this->entityManager->refresh($vote);
+                $this->entityManager->clear();
             }
         }
 
