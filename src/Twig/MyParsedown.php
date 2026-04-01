@@ -42,7 +42,7 @@ class MyParsedown extends \Parsedown
     {
         $name = $element['name'] ?? '';
         $text = $element['text'] ?? '';
-        if (in_array($name, self::ALLOWED_ELEMENTS)) {
+        if ($name === '' || in_array($name, self::ALLOWED_ELEMENTS)) {
             return parent::element($element);
         } elseif (is_array($text)) {
             return self::element($text);
