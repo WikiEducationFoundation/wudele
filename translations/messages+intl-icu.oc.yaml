@@ -330,3 +330,17 @@ polls.table.toolbar.show_less.title: Reduire la linha per limitar l’afichatge
 polls.table.toolbar.show_more.label: Espandir la linha
 polls.table.toolbar.show_more.title: Espandir la linha per afichar totes los 
   labèls
+base.download: Telecargar
+emails.share.body: |-
+  Bonjorn,
+
+  Un sondatge es disponible per reculhir vòstre vejaire.
+  La participacion es possibla via lo ligam seguent : {poll_url}
+
+  Mercé en avança.
+
+  Coralament,
+emails.share.subject: 'Participacion demandada pel sondatge : {poll_name}'
+polls.sharing.send_by_email: Enviar per corrièl
+polls.sharing.share_by_email: Partejar per corrièl
+polls.sharing.share_with_qr_code: Partejar amb un còdi QR
