@@ -137,7 +137,22 @@ class Vote implements ActivityMonitor\TrackableEntityInterface
     public function getAnswerForProposal(Proposal $proposal): ?Answer
     {
         return $this->answers->findFirst(function ($key, $answer) use ($proposal): bool {
-            return $answer->getProposal()?->getId() === $proposal->getId();
+            $answerProposal = $answer->getProposal();
+
+            if (!$answerProposal) {
+                return false;
+            }
+
+            if ($proposal->getId() !== null && $answerProposal->getId() !== null) {
+                // The proposals are persisted in database so we compare the
+                // ids of the two entities as it's more reliable.
+                return $answerProposal->getId() === $proposal->getId();
+            } else {
+                // The proposals are not persisted yet in the database and are
+                // only in memory. Hopefully in this case, if the two proposals
+                // must match, there are the same PHP objects so it's fine.
+                return $answerProposal === $proposal;
+            }
         });
     }
 

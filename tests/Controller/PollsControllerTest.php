@@ -896,21 +896,25 @@ class PollsControllerTest extends WebTestCase
                 'proposals' => [
                     ['label' => 'Foo'],
                     ['label' => 'Bar'],
+                    ['label' => 'Baz'],
                 ],
             ],
         ]);
 
         $proposals = Factory\ProposalFactory::all();
-        $this->assertSame(2, count($proposals));
+        $this->assertSame(3, count($proposals));
         $this->assertSame('Foo', $proposals[0]->getLabel());
         $this->assertSame('Bar', $proposals[1]->getLabel());
+        $this->assertSame('Baz', $proposals[2]->getLabel());
         $this->refresh($existingVote);
         $voteAnswers = $existingVote->getAnswers()->toArray();
-        $this->assertSame(2, count($voteAnswers));
+        $this->assertSame(3, count($voteAnswers));
         $this->assertSame($proposals[0], $voteAnswers[0]->getProposal());
         $this->assertSame('yes', $voteAnswers[0]->getValue());
         $this->assertSame($proposals[1], $voteAnswers[1]->getProposal());
         $this->assertSame('', $voteAnswers[1]->getValue());
+        $this->assertSame($proposals[2], $voteAnswers[2]->getProposal());
+        $this->assertSame('', $voteAnswers[2]->getValue());
     }
 
     public function testPostProposalsReplacesExistingProposals(): void
@@ -1019,6 +1023,58 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame('2024-11-02', $dates[1]->getValue()?->format('Y-m-d'));
         $this->assertSame($poll, $dates[1]->getPoll());
         $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots?flow=on", 302);
+    }
+
+    public function testPostDatesSynchronizesExistingVotesWithNewDateSlots(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::createOne([
+            'type' => 'date',
+        ]);
+        $existingDate = Factory\DateFactory::createOne([
+            'poll' => $poll,
+            'value' => new \DateTimeImmutable('2024-11-01'),
+        ]);
+        $existingSlot = $existingDate->getProposals()[0];
+        $existingVote = Factory\VoteFactory::createOne([
+            'poll' => $poll,
+        ]);
+        $existingAnswer = Factory\AnswerFactory::createOne([
+            'vote' => $existingVote,
+            'proposal' => $existingSlot,
+            'value' => 'yes',
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/dates", [
+            'poll_dates' => [
+                '_token' => $this->getCsrf($client, 'poll_dates'),
+                'dates' => [
+                    ['value' => '2024-11-01'],
+                    ['value' => '2024-11-02'],
+                    ['value' => '2024-11-03'],
+                ],
+            ],
+        ]);
+
+        $dates = Factory\DateFactory::all();
+        $this->assertSame(3, count($dates));
+        $slots = Factory\ProposalFactory::all();
+        $this->assertSame(3, count($slots));
+        $this->assertSame('Day', $slots[0]->getLabel());
+        $this->assertSame($dates[0], $slots[0]->getDate());
+        $this->assertSame('Day', $slots[1]->getLabel());
+        $this->assertSame($dates[1], $slots[1]->getDate());
+        $this->assertSame('Day', $slots[2]->getLabel());
+        $this->assertSame($dates[2], $slots[2]->getDate());
+        $this->refresh($existingVote);
+        $voteAnswers = $existingVote->getAnswers()->toArray();
+        $this->assertSame(3, count($voteAnswers));
+        $this->assertSame($slots[0], $voteAnswers[0]->getProposal());
+        $this->assertSame('yes', $voteAnswers[0]->getValue());
+        $this->assertSame($slots[1], $voteAnswers[1]->getProposal());
+        $this->assertSame('', $voteAnswers[1]->getValue());
+        $this->assertSame($slots[2], $voteAnswers[2]->getProposal());
+        $this->assertSame('', $voteAnswers[2]->getValue());
     }
 
     public function testPostDatesFailsIfCsrfIsInvalid(): void
