@@ -24,6 +24,7 @@ import StorageController from './controllers/storage_controller.js';
 import ToggleRadioController from './controllers/toggle_radio_controller.js';
 import PollTableHeadView from './controllers/poll_table_head_view.js';
 import FormVoteValidation from './controllers/form_vote_validation.js';
+import RelativeTime from "./controllers/relative_time.js";
 
 const application = Application.start();
 application.register('calendar', CalendarController);
@@ -49,6 +50,7 @@ application.register('storage', StorageController);
 application.register('toggle-radio', ToggleRadioController);
 application.register('poll-table-head-view', PollTableHeadView);
 application.register('form-vote-validation', FormVoteValidation);
+application.register('relative-time', RelativeTime);
 
 // Make sure to visit the response when receiving the `turbo:frame-missing` event.
 // This happens most of the time on redirection after submitting a form in a modal.
