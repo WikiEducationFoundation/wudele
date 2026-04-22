@@ -344,3 +344,17 @@ polls.table.toolbar.show_less.label: Die Zeile reduzieren
 polls.table.toolbar.show_more.title: Die Zeile erweitern, um alle Beschriftungen
   anzuzeigen
 polls.table.toolbar.show_more.label: Die Zeile erweitern
+base.download: Herunterladen
+emails.share.body: |-
+  Hallo,
+
+  Es steht eine Umfrage zur Verfügung, um Ihr Feedback einzuholen.
+  Die Teilnahme ist über den folgenden Link möglich: {poll_url}
+
+  Vielen Dank im Voraus.
+
+  Mit freundlichen Grüßen
+emails.share.subject: 'Bitte um Feedback zur Umfrage: {poll_name}'
+polls.sharing.send_by_email: Per E-Mail senden
+polls.sharing.share_by_email: Per E-Mail teilen
+polls.sharing.share_with_qr_code: Mit einem QR-Code teilen

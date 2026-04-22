@@ -72,3 +72,14 @@ my.index.remove_all: Kkes-iten akk
 admin.polls.admin_link: Aseɣwen n tedbelt
 pagination.next: Asebter uḍfiṛ
 pagination.previous: Asebter uzwir
+base.download: Sader
+forms.comment_form.submit: Suffeɣ
+forms.complete: Fakk
+forms.labels.optional: (d axetṛan)
+polls.summary.admin_link.remember.information: Talɣut
+polls.show.results: Igmaḍ
+polls.show.results.title: Igmaḍ
+polls.summary.closed_at.none: Ula yiwen
+polls.votes.maybe.count_alt: (+{count})
+polls.sharing.send_by_email: Azen s yimayl
+polls.sharing.share_by_email: Bḍu s yimayl
