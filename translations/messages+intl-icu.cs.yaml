@@ -1,1 +1,19 @@
-{}
+admin.polls.admin_link: Admin odkaz
+admin.polls.author: Autor
+admin.polls.created_at: Vytvořeno dne
+admin.polls.not_completed: Průzkum nebyl dokončen
+admin.polls.public_link: Veřejný odkaz
+admin.polls.search: Vyhledat
+admin.polls.title: Seznam průzkumů
+admin.title: Administrace
+answers.value.maybe: Pokud je potřeba
+answers.value.no: Ne
+answers.value.yes: Ano
+base.copied: Zkopírováno!
+base.copy: Kopírovat
+base.default_title: Vítejte v {appName}!
+base.download: Stáhnout
+base.edit: Upravit
+calendar.patterns.next_month: Příští měsíc (__date__)
+calendar.patterns.previous_month: Předchozí měsíc (__date__)
+emails.hello: Ahoj {name},
