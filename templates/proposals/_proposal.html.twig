@@ -6,7 +6,7 @@
 
 <fieldset class="panel panel--white panel--rounded panel--proposal flow">
     <div>
-        <legend class="text--nobold">{{ proposal.label }}</legend>
+        <legend class="text--nobold">{% include 'proposals/_label.html.twig' %}</legend>
     </div>
 
     {% if voteForm %}

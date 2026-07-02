@@ -93,7 +93,7 @@
                                     class="proposal__label proposal__label--classic"
                                     data-poll-table-head-view-target="label"
                                 >
-                                    {{ proposal.label }}
+                                    {% include 'proposals/_label.html.twig' %}
                                 </span>
                             </th>
                         {% endfor %}
@@ -116,7 +116,7 @@
                                         class="proposal__label"
                                         data-poll-table-head-view-target="label"
                                     >
-                                        {{ proposal.label }}
+                                        {% include 'proposals/_label.html.twig' %}
                                     </span>
                                 </th>
                             {% endfor %}

@@ -333,6 +333,16 @@
             {% set proposals = poll.proposals %}
         {% endif %}
 
+        {% if poll.timezone and proposals|filter(proposal => proposal.startAt)|length > 0 %}
+            <p
+                class="text--secondary text--center"
+                data-controller="timezone-notice"
+                data-timezone-notice-template-value="{{ 'polls.show.timezone_notice.local' | trans({ timezone: '__timezone__' }) }}"
+            >
+                {{ 'polls.show.timezone_notice.poll' | trans({ timezone: poll.timezone }) }}
+            </p>
+        {% endif %}
+
         <div
             id="poll"
             class="poll flow"
@@ -459,9 +469,9 @@
                                     {% set date = firstChoice.date %}
                                     {% if date %}
                                         <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
-                                        <span class="text--block">{{ firstChoice.label }}</span>
+                                        <span class="text--block">{% include 'proposals/_label.html.twig' with { proposal: firstChoice } %}</span>
                                     {% else %}
-                                        <span class="text--bold">{{ firstChoice.label }}</span>
+                                        <span class="text--bold">{% include 'proposals/_label.html.twig' with { proposal: firstChoice } %}</span>
                                     {% endif %}
                                 </p>
                             {% elseif poll.isClassicPoll %}
@@ -482,11 +492,11 @@
                                             <span class="text--block text--bold">{{ date.value | dateTrans('EEEE d MMMM yyyy') }}</span>
 
                                             {% if choices|length == 1 %}
-                                                <span class="text--block">{{ choices[0].label }}</span>
+                                                <span class="text--block">{% include 'proposals/_label.html.twig' with { proposal: choices[0] } %}</span>
                                             {% else %}
                                                 <ul class="list--nostyle flow flow--small">
                                                     {% for choice in choices %}
-                                                        <li>{{ choice.label }}</li>
+                                                        <li>{% include 'proposals/_label.html.twig' with { proposal: choice } %}</li>
                                                     {% endfor %}
                                                 </ul>
                                             {% endif %}

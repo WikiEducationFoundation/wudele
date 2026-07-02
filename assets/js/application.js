@@ -3,6 +3,8 @@ import { Application } from '@hotwired/stimulus';
 
 import BrowserTimezone from './controllers/browser_timezone.js';
 import CalendarController from './controllers/calendar_controller.js';
+import LocalTime from './controllers/local_time.js';
+import TimezoneNotice from './controllers/timezone_notice.js';
 import CollectionController from './controllers/collection_controller.js';
 import ColorSchemeController from './controllers/color_scheme_controller.js';
 import CopyToClipboardController from './controllers/copy_to_clipboard_controller.js';
@@ -30,6 +32,8 @@ import RelativeTime from "./controllers/relative_time.js";
 const application = Application.start();
 application.register('browser-timezone', BrowserTimezone);
 application.register('calendar', CalendarController);
+application.register('local-time', LocalTime);
+application.register('timezone-notice', TimezoneNotice);
 application.register('collection', CollectionController);
 application.register('color-scheme', ColorSchemeController);
 application.register('copy-to-clipboard', CopyToClipboardController);

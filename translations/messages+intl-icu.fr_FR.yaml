@@ -213,6 +213,8 @@ polls.show.results.info: "{ countChoices, plural, one {Le choix préféré avec 
 polls.show.results.results_graph: 'Graphique des résultats'
 polls.show.results.title: Résultats
 polls.show.share: Partager
+polls.show.timezone_notice.local: 'Les horaires sont affichés dans votre fuseau horaire ({timezone}).'
+polls.show.timezone_notice.poll: 'Les horaires de ce sondage ont été saisis dans le fuseau {timezone}.'
 polls.show.vote.created: 'Votre vote est confirmé.'
 polls.show.vote.updated: 'Votre vote a bien été modifié.'
 polls.slots.help: "Les horaires peuvent être saisis librement (par exemple\_: 8h ou matin). Si vous n’en indiquez pas, la journée entière sera prise en compte."

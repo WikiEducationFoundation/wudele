@@ -1,0 +1,18 @@
+{#
+ # This file is part of Wudele, a fork of Pollaris.
+ # Copyright 2026 Wiki Education Foundation
+ # SPDX-License-Identifier: AGPL-3.0-or-later
+ #}
+
+{# Renders the label of a proposal. A proposal with a startAt timestamp is
+ # rendered as a <time> element that displays in the time zone of the
+ # browser; the poll wall-clock label serves as the no-JS fallback. #}
+{% if proposal.startAt %}
+    <time
+        datetime="{{ proposal.startAt | dateIso }}"
+        data-controller="local-time"
+        {% if proposal.date %}data-poll-date="{{ proposal.date.value | date('Y-m-d') }}"{% endif %}
+    >{{- proposal.label -}}</time>
+{% else %}
+    {{- proposal.label -}}
+{% endif %}

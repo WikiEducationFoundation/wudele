@@ -16,9 +16,9 @@
             <span class="result__label-date text--secondary">
                 {{ date.value | dateTrans('EEE d MMM y') }}
             </span>
-            <span class="text--bold">{{ proposal.label }}</span>
+            <span class="text--bold">{% include 'proposals/_label.html.twig' %}</span>
         {% else %}
-            <span class="text--bold">{{ proposal.label }}</span>
+            <span class="text--bold">{% include 'proposals/_label.html.twig' %}</span>
         {% endif %}
     </span>
 

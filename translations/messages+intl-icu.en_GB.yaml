@@ -213,6 +213,8 @@ polls.show.results.info: '{ countChoices, plural, one {The preferred choice with
 polls.show.results.results_graph: 'Results graph'
 polls.show.results.title: Results
 polls.show.share: Share
+polls.show.timezone_notice.local: 'Times are shown in your time zone ({timezone}).'
+polls.show.timezone_notice.poll: 'This poll’s times were entered in {timezone}.'
 polls.show.vote.created: 'Your vote is confirmed.'
 polls.show.vote.updated: 'Your vote has been changed.'
 polls.slots.help: 'Time slots can be entered freely (for example: 8 a.m. or morning). If you do not specify a time slot, the entire day will be taken into account.'

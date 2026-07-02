@@ -194,7 +194,7 @@
 
                         <ul class="list--nostyle flow flow--smaller">
                             {% for proposal in date.proposals %}
-                                <li>{{ proposal.label }}</li>
+                                <li>{% include 'proposals/_label.html.twig' %}</li>
                             {% endfor %}
                         </ul>
                     </li>
