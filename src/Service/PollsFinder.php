@@ -21,11 +21,17 @@ class PollsFinder
         private TranslatorInterface $translator,
         #[Autowire('%app.name%')]
         private string $appName,
+        #[Autowire('%app.emails_enabled%')]
+        private bool $emailsEnabled,
     ) {
     }
 
     public function sendEmailLinks(string $email): void
     {
+        if (!$this->emailsEnabled) {
+            return;
+        }
+
         $polls = $this->pollRepository->findBy(['authorEmail' => $email]);
 
         if (!$polls) {

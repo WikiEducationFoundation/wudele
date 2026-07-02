@@ -32,7 +32,9 @@
 
                 <div class="flow flow--large">
                     {{ form_row(form.authorName) }}
-                    {{ form_row(form.authorEmail) }}
+                    {% if form.authorEmail is defined %}
+                        {{ form_row(form.authorEmail) }}
+                    {% endif %}
                 </div>
             </fieldset>
 

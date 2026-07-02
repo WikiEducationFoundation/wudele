@@ -8,6 +8,7 @@ namespace App\Form;
 
 use App\Entity;
 use App\Service;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +24,8 @@ class PollSettingsForm extends AbstractType
     public function __construct(
         private Service\PollPassword $pollPassword,
         private UrlGeneratorInterface $urlGenerator,
+        #[Autowire('%app.emails_enabled%')]
+        private bool $emailsEnabled,
     ) {
     }
 
@@ -96,15 +99,19 @@ class PollSettingsForm extends AbstractType
             'required' => false,
         ]);
 
-        $builder->add('notifyOnVotes', Type\CheckboxType::class, [
-            'label' => new TranslatableMessage('forms.poll_settings_form.notify_on_votes.label'),
-            'required' => false,
-        ]);
+        // Email notifications are pointless when the instance collects no
+        // email addresses.
+        if ($this->emailsEnabled) {
+            $builder->add('notifyOnVotes', Type\CheckboxType::class, [
+                'label' => new TranslatableMessage('forms.poll_settings_form.notify_on_votes.label'),
+                'required' => false,
+            ]);
 
-        $builder->add('notifyOnComments', Type\CheckboxType::class, [
-            'label' => new TranslatableMessage('forms.poll_settings_form.notify_on_comments.label'),
-            'required' => false,
-        ]);
+            $builder->add('notifyOnComments', Type\CheckboxType::class, [
+                'label' => new TranslatableMessage('forms.poll_settings_form.notify_on_comments.label'),
+                'required' => false,
+            ]);
+        }
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $form = $event->getForm();

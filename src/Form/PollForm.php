@@ -20,6 +20,8 @@ class PollForm extends AbstractType
     public function __construct(
         #[Autowire('%app.require_emails%')]
         private bool $requireEmails,
+        #[Autowire('%app.emails_enabled%')]
+        private bool $emailsEnabled,
     ) {
     }
 
@@ -58,6 +60,12 @@ class PollForm extends AbstractType
                 'maxlength' => Entity\Poll::MAX_AUTHOR_NAME_LENGTH,
             ],
         ]);
+
+        // When emails are disabled instance-wide, no email address is
+        // collected at all.
+        if (!$this->emailsEnabled) {
+            return;
+        }
 
         $authorEmailOptions = [
             'required' => false,

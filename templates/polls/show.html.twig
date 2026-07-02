@@ -138,6 +138,7 @@
                         </div>
 
                         <div class="cols cols--gap-large">
+                            {% if emailsEnabled %}
                             <div
                                 class="col--size7 panel panel--primary panel--rounded flow flow--small"
                                 data-controller="copy-to-clipboard mailto"
@@ -179,6 +180,7 @@
                                     </a>
                                 </div>
                             </div>
+                            {% endif %}
 
                             <div
                                 class="col--size5 panel panel--primary panel--rounded flow"

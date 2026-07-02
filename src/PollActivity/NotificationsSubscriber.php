@@ -29,6 +29,8 @@ class NotificationsSubscriber implements EventSubscriberInterface
         private TranslatorInterface $translator,
         #[Autowire('%app.name%')]
         private string $appName,
+        #[Autowire('%app.emails_enabled%')]
+        private bool $emailsEnabled,
     ) {
     }
 
@@ -36,7 +38,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
     {
         $poll = $event->getPoll();
 
-        if (!$poll->getAuthorEmail() || !$poll->isCompleted()) {
+        if (!$this->emailsEnabled || !$poll->getAuthorEmail() || !$poll->isCompleted()) {
             return;
         }
 
@@ -65,7 +67,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $vote = $event->getVote();
         $poll = $vote->getPoll();
 
-        if (!$poll->getAuthorEmail() || !$poll->isNotifyOnVotes()) {
+        if (!$this->emailsEnabled || !$poll->getAuthorEmail() || !$poll->isNotifyOnVotes()) {
             return;
         }
 
@@ -97,7 +99,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
         $comment = $event->getComment();
         $poll = $comment->getPoll();
 
-        if (!$poll->getAuthorEmail() || !$poll->isNotifyOnComments()) {
+        if (!$this->emailsEnabled || !$poll->getAuthorEmail() || !$poll->isNotifyOnComments()) {
             return;
         }
 

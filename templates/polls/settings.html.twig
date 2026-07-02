@@ -65,15 +65,17 @@
                 {{ form_row(form.areResultsPublic) }}
             </div>
 
-            <div class="panel panel--rounded panel--primary flow">
-                <h2 class="text--primary">
-                    {{ 'polls.settings.notifications.title' | trans }}
-                </h2>
+            {% if form.notifyOnVotes is defined %}
+                <div class="panel panel--rounded panel--primary flow">
+                    <h2 class="text--primary">
+                        {{ 'polls.settings.notifications.title' | trans }}
+                    </h2>
 
-                {{ form_row(form.notifyOnVotes) }}
+                    {{ form_row(form.notifyOnVotes) }}
 
-                {{ form_row(form.notifyOnComments) }}
-            </div>
+                    {{ form_row(form.notifyOnComments) }}
+                </div>
+            {% endif %}
 
             {{ include('polls/_flow_actions.html.twig', { step: 'summary' }) }}
         {{ form_end(form) }}

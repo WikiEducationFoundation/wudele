@@ -7,8 +7,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    # Default for instances whose .env predates this fork's flag.
+    env(APP_EMAILS_ENABLED): "true"
     app.public_directory: "%kernel.project_dir%/public"
     app.name: "%env(APP_NAME)%"
+    app.emails_enabled: "%env(bool:APP_EMAILS_ENABLED)%"
     app.require_emails: "%env(bool:APP_REQUIRE_EMAILS)%"
     app.timezone: "%env(string:APP_TIMEZONE)%"
     poll.expires.completed: "%env(string:POLL_EXPIRES_COMPLETED)%"

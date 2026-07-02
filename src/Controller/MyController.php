@@ -8,6 +8,7 @@ namespace App\Controller;
 
 use App\Form;
 use App\Service;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,8 @@ class MyController extends BaseController
 {
     public function __construct(
         private readonly Service\PollsFinder $pollsFinder,
+        #[Autowire('%app.emails_enabled%')]
+        private readonly bool $emailsEnabled,
     ) {
     }
 
@@ -25,7 +28,7 @@ class MyController extends BaseController
         $searchForm = $this->createNamedForm('search_polls', Form\SearchPollsForm::class);
 
         $searchForm->handleRequest($request);
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+        if ($this->emailsEnabled && $searchForm->isSubmitted() && $searchForm->isValid()) {
             $email = $searchForm->get('email')->getData();
 
             $this->pollsFinder->sendEmailLinks($email);

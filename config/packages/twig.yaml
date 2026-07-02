@@ -3,6 +3,7 @@ twig:
     form_themes: ['form/pollaris_theme.html.twig']
     globals:
         appName: '%app.name%'
+        emailsEnabled: '%app.emails_enabled%'
 
 when@test:
     twig:
