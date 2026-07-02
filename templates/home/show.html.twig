@@ -1,6 +1,7 @@
 {#
- # This file is part of Pollaris.
+ # This file is part of Wudele, a fork of Pollaris.
  # Copyright 2024-2026 Marien Fressinaud
+ # Copyright 2026 Wiki Education Foundation
  # SPDX-License-Identifier: AGPL-3.0-or-later
  #}
 
@@ -16,29 +17,45 @@
             {% endif %}
         {% endfor %}
 
-        <div class="cols cols--gap-large">
-            <div class="col--extend flow flow--large">
-                <h1>
-                    {{ 'home.title' | trans }}
-                </h1>
+        <div class="flow text--center">
+            <h1>
+                {% if asset_exists('logo.png') %}
+                    <img class="home__logo" src="{{ asset('logo.png') }}" alt="{{ appName }}">
+                {% else %}
+                    {{ appName }}
+                {% endif %}
+            </h1>
 
-                <p class="text--primary text--big">
-                    {{ 'home.intro' | trans }}
+            <p class="text--primary text--big">
+                {{ 'home.tagline' | trans }}
+            </p>
+        </div>
+
+        <div class="cols cols--gap-large">
+            <div class="col--extend flow text--center">
+                <p>
+                    <a class="button button--primary" href="{{ path('new poll', { type: 'date', flow: 'on' }) }}">
+                        {{ 'home.schedule_event' | trans }}
+                    </a>
                 </p>
+
+                <img class="home__example" src="{{ asset('example-date.png') }}" alt="{{ 'home.schedule_event.example' | trans }}">
             </div>
 
-            <div>
-                <img alt="" src="{{ asset('calendar.png') }}">
+            <div class="col--extend flow text--center">
+                <p>
+                    <a class="button button--primary" href="{{ path('new poll', { type: 'classic', flow: 'on' }) }}">
+                        {{ 'home.standard_poll' | trans }}
+                    </a>
+                </p>
+
+                <img class="home__example" src="{{ asset('example-classic.png') }}" alt="{{ 'home.standard_poll.example' | trans }}">
             </div>
         </div>
 
-        <p class="cols cols--center cols--gap">
-            <a class="button button--primary" href="{{ path('choose poll type') }}">
-                {{ 'home.create_poll' | trans }}
-            </a>
-
-            <a class="button" href="{{ path('my') }}">
-                {{ 'home.my_polls_and_votes' | trans }}
+        <p class="text--center">
+            <a href="{{ path('my') }}">
+                {{ 'home.find_polls' | trans }}
             </a>
         </p>
 

@@ -6,6 +6,23 @@
  * exists (see templates/base.html.twig).
  */
 
+/* Home page: big logo and the example poll screenshots. */
+.home__logo {
+    max-width: min(20rem, 80%);
+    height: auto;
+    background-color: rgb(255 255 255 / 90%);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.home__example {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgb(0 0 0 / 15%);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 10%);
+}
+
 /* The logo wordmark is dark green; give it a light backdrop so that it
  * reads well on the coloured header in both colour schemes. */
 .header__logo {

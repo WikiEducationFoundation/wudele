@@ -18,6 +18,9 @@ class HomeControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Organise events or gather opinions from friends and family');
+        $this->assertSelectorExists('h1');
+        $this->assertSelectorTextContains('.text--big', 'Make your polls');
+        $this->assertSelectorExists('a[href*="type=date"]');
+        $this->assertSelectorExists('a[href*="type=classic"]');
     }
 }

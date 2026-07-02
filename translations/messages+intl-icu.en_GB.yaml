@@ -107,12 +107,18 @@ forms.vote_form.password.label: Password
 forms.vote_form.required_choice: 'Please select at least one option from the choices above.'
 forms.vote_form.submit.label: Vote
 home.create_poll: 'Create a new poll'
+home.find_polls: 'Where are my polls?'
 home.free_software: 'Pollaris is a free software licensed under AGPL 3.'
 home.free_software.custom: '{appName} uses Pollaris, a free software licensed under AGPL 3.'
 home.intro: 'Use our polling tool to plan, organise and make decisions quickly, easily and without registration.'
 home.my_polls_and_votes: 'My polls and votes'
+home.schedule_event: 'Schedule an event'
+home.schedule_event.example: 'Example of a date poll: participants pick the times that work for them.'
 home.show.poll.deleted: 'Your poll has been successfully deleted.'
 home.source_code: 'Access the source code.'
+home.standard_poll: 'Make a standard poll'
+home.standard_poll.example: 'Example of a standard poll: participants vote on a list of choices.'
+home.tagline: 'Make your polls'
 home.title: 'Organise events or gather opinions from friends and family, simply and freely.'
 layout.header.my: 'My polls and votes'
 layout.header.preferences: Preferences
