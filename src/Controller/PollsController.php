@@ -115,7 +115,13 @@ class PollsController extends BaseController
         $rowProposals = [''];
 
         foreach ($allProposals as $proposal) {
-            $rowProposals[] = $proposal->getLabel();
+            $startAt = $proposal->getStartAt();
+
+            if ($startAt !== null) {
+                $rowProposals[] = $startAt->format(\DateTimeInterface::ATOM);
+            } else {
+                $rowProposals[] = $proposal->getLabel();
+            }
         }
 
         $data[] = $rowProposals;
