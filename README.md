@@ -1,3 +1,22 @@
+# Wudele
+
+**Wudele is a fork of [Pollaris](https://framagit.org/pollaris/pollaris) that adds
+timezone-aware time slots: poll times are entered in the organiser's time zone and
+shown to each participant in their own.** It is run by the
+[Wiki Education Foundation](https://wikiedu.org) for the Wikimedia community at
+[wudele.wmcloud.org](https://wudele.wmcloud.org), succeeding the Framadate-based
+[wudele.toolforge.org](https://wudele.toolforge.org).
+
+Like Pollaris, Wudele is licensed under
+[GNU Affero General Public License v3.0 or later](LICENSE.txt); this repository is
+the complete corresponding source of the hosted service. The `main` branch tracks
+upstream Pollaris; the `wudele` branch carries our changes as a small rebaseable
+commit series.
+
+The original Pollaris README follows.
+
+---
+
 # Pollaris
 
 **Pollaris is a polling tool to plan, organise and make decisions quickly, easily and without registration.**
