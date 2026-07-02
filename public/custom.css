@@ -1,0 +1,19 @@
+/* This file is part of Wudele, a fork of Pollaris.
+ * Copyright 2026 Wiki Education Foundation
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ *
+ * Wudele instance styling. Pollaris loads this file automatically when it
+ * exists (see templates/base.html.twig).
+ */
+
+/* The logo wordmark is dark green; give it a light backdrop so that it
+ * reads well on the coloured header in both colour schemes. */
+.header__logo {
+    display: inline-block;
+    height: 2.25rem;
+    width: auto;
+    vertical-align: middle;
+    background-color: rgb(255 255 255 / 90%);
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+}

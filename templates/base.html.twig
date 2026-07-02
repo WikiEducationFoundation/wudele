@@ -24,6 +24,18 @@
             <link rel="stylesheet" href="{{ asset('custom.css') }}">
         {% endif %}
 
+        {% if asset_exists('favicon.ico') %}
+            <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
+        {% endif %}
+
+        {% if asset_exists('favicon-192.png') %}
+            <link rel="icon" type="image/png" href="{{ asset('favicon-192.png') }}" sizes="192x192">
+        {% endif %}
+
+        {% if asset_exists('apple-touch-icon.png') %}
+            <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+        {% endif %}
+
         {% block javascripts %}
             <script src="{{ esbuild_asset('js/application.js') }}" defer data-turbo-track="reload"></script>
         {% endblock %}
@@ -46,7 +58,11 @@
                 <header class="layout__header header cols cols--always cols--center cols--gap-small no-print" role="banner">
                     <div class="col--extend">
                         <a class="header__title" href="{{ path('home') }}">
-                            {{ appName }}
+                            {% if asset_exists('logo.png') %}
+                                <img class="header__logo" src="{{ asset('logo.png') }}" alt="{{ appName }}">
+                            {% else %}
+                                {{ appName }}
+                            {% endif %}
                         </a>
 
                         <a class="header__link" href="{{ path('my') }}">
