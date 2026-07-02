@@ -83,6 +83,9 @@ forms.poll_settings_form.slug.label: 'Enter the poll link'
 forms.poll_settings_form.vote_no_by_default.label: 'Vote “no” by default if no response is given'
 forms.poll_slots_form.add_slot: 'Add a time slot'
 forms.poll_slots_form.remove_slot: 'Remove the time slot'
+forms.poll_slots_form.timezone.help: 'Enter the times below in this time zone. Participants will see them converted to their own time zone.'
+forms.poll_slots_form.timezone.label: 'Time zone'
+forms.poll_slots_form.timezone.placeholder: 'No specific time zone (show times as entered)'
 forms.preferences.color_scheme.auto: Auto
 forms.preferences.color_scheme.dark: Dark
 forms.preferences.color_scheme.label: 'Color scheme'
@@ -94,6 +97,8 @@ forms.search_polls_form.email.help: 'We will send you the links to the polls tha
 forms.search_polls_form.email.label: 'Your email address'
 forms.search_polls_form.submit: Send
 forms.slot_type.label.label_pattern: 'Time slot __number__'
+forms.slot_type.or_label: 'or'
+forms.slot_type.start_time.label: 'Time'
 forms.slots_form.day: Day
 forms.vote_form.author_name.label: 'Your name'
 forms.vote_form.leave_confirmation: 'You have not yet confirmed your vote. By continuing, you will lose your entry. Are you sure you want to continue?'

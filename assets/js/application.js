@@ -1,6 +1,7 @@
 import * as Turbo from '@hotwired/turbo';
 import { Application } from '@hotwired/stimulus';
 
+import BrowserTimezone from './controllers/browser_timezone.js';
 import CalendarController from './controllers/calendar_controller.js';
 import CollectionController from './controllers/collection_controller.js';
 import ColorSchemeController from './controllers/color_scheme_controller.js';
@@ -27,6 +28,7 @@ import FormVoteValidation from './controllers/form_vote_validation.js';
 import RelativeTime from "./controllers/relative_time.js";
 
 const application = Application.start();
+application.register('browser-timezone', BrowserTimezone);
 application.register('calendar', CalendarController);
 application.register('collection', CollectionController);
 application.register('color-scheme', ColorSchemeController);

@@ -1173,6 +1173,86 @@ class PollsControllerTest extends WebTestCase
         $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
     }
 
+    public function testPostSlotsWithTimezoneCreatesTimestampedProposals(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+        $date = Factory\DateFactory::createOne([
+            'poll' => $poll,
+            'value' => new \DateTimeImmutable('2026-07-20'),
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", [
+            'poll_slots' => [
+                '_token' => $this->getCsrf($client, 'poll_slots'),
+                'timezone' => 'Europe/Paris',
+                'dates' => [
+                    [
+                        'proposals' => [
+                            ['startTime' => '18:00', 'label' => ''],
+                            ['startTime' => '23:30', 'label' => ''],
+                            ['startTime' => '', 'label' => 'after lunch'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->refresh($poll);
+        $this->assertSame('Europe/Paris', $poll->getTimezone());
+        $proposals = $poll->getProposals()->toArray();
+        $this->assertSame(3, count($proposals));
+        $this->assertSame('18:00', $proposals[0]->getLabel());
+        $startAt = $proposals[0]->getStartAt();
+        $this->assertNotNull($startAt);
+        // 18:00 in Paris during summer time is 16:00 UTC.
+        $this->assertSame(
+            '2026-07-20 16:00 +00:00',
+            $startAt->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i P'),
+        );
+        $this->assertSame('23:30', $proposals[1]->getLabel());
+        $startAt = $proposals[1]->getStartAt();
+        $this->assertNotNull($startAt);
+        $this->assertSame(
+            '2026-07-20 21:30 +00:00',
+            $startAt->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i P'),
+        );
+        $this->assertSame('after lunch', $proposals[2]->getLabel());
+        $this->assertNull($proposals[2]->getStartAt());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
+    }
+
+    public function testPostSlotsWithoutTimezoneKeepsTimesAsLabels(): void
+    {
+        $client = static::createClient();
+        $poll = Factory\PollFactory::new()->date()->create();
+        $date = Factory\DateFactory::createOne([
+            'poll' => $poll,
+        ]);
+
+        $client->request(Request::METHOD_POST, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/slots", [
+            'poll_slots' => [
+                '_token' => $this->getCsrf($client, 'poll_slots'),
+                'timezone' => '',
+                'dates' => [
+                    [
+                        'proposals' => [
+                            ['startTime' => '18:00', 'label' => ''],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->refresh($poll);
+        $this->assertNull($poll->getTimezone());
+        $proposals = $poll->getProposals()->toArray();
+        $this->assertSame(1, count($proposals));
+        $this->assertSame('18:00', $proposals[0]->getLabel());
+        $this->assertNull($proposals[0]->getStartAt());
+        $this->assertResponseRedirects("/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin", 302);
+    }
+
     public function testPostSlotsCreatesADefaultProposalIfNoneArePosted(): void
     {
         $client = static::createClient();

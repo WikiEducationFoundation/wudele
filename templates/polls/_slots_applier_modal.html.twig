@@ -19,16 +19,26 @@
                 data-collection-index-value="1"
             >
                 <div data-collection-target="container" class="flow">
-                    <div class="flow flow--small" data-item="element">
+                    <div class="flow flow--small" data-item="element" data-slots-applier-target="row">
                         <label for="slots-applier_element_0_label">
                             {{ 'forms.slot_type.label.label_pattern' | trans }}
                         </label>
 
-                        <input
-                            id="slots-applier_element_0_label"
-                            type="text"
-                            data-slots-applier-target="element"
-                        />
+                        <div class="cols cols--always cols--gap">
+                            <input
+                                id="slots-applier_element_0_start_time"
+                                type="time"
+                                data-slots-applier-target="time"
+                            />
+
+                            <span aria-hidden="true">{{ 'forms.slot_type.or_label' | trans }}</span>
+
+                            <input
+                                id="slots-applier_element_0_label"
+                                type="text"
+                                data-slots-applier-target="text"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -43,16 +53,24 @@
                 </button>
 
                 <template data-collection-target="prototype">
-                    <div class="flow flow--small" data-item="element">
+                    <div class="flow flow--small" data-item="element" data-slots-applier-target="row">
                         <label for="slots-applier_element___name___label">
                             {{ 'forms.slot_type.label.label_pattern' | trans }}
                         </label>
 
                         <div class="cols cols--always cols--gap">
                             <input
+                                id="slots-applier_element___name___start_time"
+                                type="time"
+                                data-slots-applier-target="time"
+                            />
+
+                            <span aria-hidden="true">{{ 'forms.slot_type.or_label' | trans }}</span>
+
+                            <input
                                 id="slots-applier_element___name___label"
                                 type="text"
-                                data-slots-applier-target="element"
+                                data-slots-applier-target="text"
                             />
 
                             <button

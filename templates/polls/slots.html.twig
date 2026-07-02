@@ -25,6 +25,16 @@
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
+            <div class="flow flow--small">
+                {{ form_label(form.timezone) }}
+
+                {{ form_errors(form.timezone) }}
+
+                {{ form_widget(form.timezone) }}
+
+                {{ form_help(form.timezone) }}
+            </div>
+
             <div class="text--center">
                 <button
                     type="button"
@@ -52,9 +62,15 @@
                                 <div class="flow flow--small" data-item="element">
                                     {{ form_label(proposal.label) }}
 
+                                    {{ form_errors(proposal.startTime) }}
+
                                     {{ form_errors(proposal.label) }}
 
                                     <div class="cols cols--always cols--gap">
+                                        {{ form_widget(proposal.startTime) }}
+
+                                        <span aria-hidden="true">{{ 'forms.slot_type.or_label' | trans }}</span>
+
                                         {{ form_widget(proposal.label) }}
 
                                         <button
@@ -90,6 +106,10 @@
                                 {{ form_errors(date.proposals.vars.prototype.label) }}
 
                                 <div class="cols cols--always cols--gap">
+                                    {{ form_widget(date.proposals.vars.prototype.startTime) }}
+
+                                    <span aria-hidden="true">{{ 'forms.slot_type.or_label' | trans }}</span>
+
                                     {{ form_widget(date.proposals.vars.prototype.label) }}
 
                                     <button

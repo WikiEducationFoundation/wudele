@@ -83,6 +83,9 @@ forms.poll_settings_form.slug.label: 'Saisissez le lien de votre sondage'
 forms.poll_settings_form.vote_no_by_default.label: "Voter «\_non\_» par défaut en absence de réponse"
 forms.poll_slots_form.add_slot: 'Ajouter un horaire'
 forms.poll_slots_form.remove_slot: 'Retirer l’horaire'
+forms.poll_slots_form.timezone.help: 'Saisissez les horaires ci-dessous dans ce fuseau horaire. Les participant·es les verront convertis dans leur propre fuseau.'
+forms.poll_slots_form.timezone.label: 'Fuseau horaire'
+forms.poll_slots_form.timezone.placeholder: 'Aucun fuseau horaire (afficher les horaires tels que saisis)'
 forms.preferences.color_scheme.auto: Auto
 forms.preferences.color_scheme.dark: Sombre
 forms.preferences.color_scheme.label: Thème
@@ -94,6 +97,8 @@ forms.search_polls_form.email.help: 'Nous vous enverrons les liens vers les sond
 forms.search_polls_form.email.label: 'Votre adresse email'
 forms.search_polls_form.submit: Envoyer
 forms.slot_type.label.label_pattern: 'Horaire __number__'
+forms.slot_type.or_label: 'ou'
+forms.slot_type.start_time.label: 'Heure'
 forms.slots_form.day: Journée
 forms.vote_form.author_name.label: 'Votre nom'
 forms.vote_form.leave_confirmation: "Vous n’avez pas encore confirmé votre vote. En continuant, vous allez perdre votre saisie. Êtes-vous sur·e de vouloir continuer\_?"

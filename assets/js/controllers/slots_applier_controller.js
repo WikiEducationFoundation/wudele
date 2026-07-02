@@ -5,52 +5,66 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ['element']
+    static targets = ['row', 'time', 'text']
 
     apply (event) {
         event.preventDefault();
 
         // Load all the slots collections in dates
         const dateCollections = document.querySelectorAll('[data-item="date-collection"]');
-        const slotsInputsSelector = '[data-item="element"] input[type="text"]';
+        const slotsRowsSelector = '[data-item="element"]';
 
         dateCollections.forEach((dateCollection) => {
             // Load the Stimulus "collection" controller of this element
             const collectionController = this.application.getControllerForElementAndIdentifier(dateCollection, 'collection');
 
-            // Then, iterate over the different element to add to the different
-            // collections.
-            this.elementTargets.forEach((element) => {
-                if (!element.value) {
+            // Then, iterate over the different rows to add to the different
+            // collections. A row is a (time, label) pair; either can be empty.
+            this.rowTargets.forEach((row) => {
+                const time = row.querySelector('input[type="time"]')?.value || '';
+                const text = row.querySelector('input[type="text"]')?.value || '';
+
+                if (!time && !text) {
                     return;
                 }
 
-                // Load the existing inputs and check that the value doesn't
+                // Load the existing rows and check that the values don't
                 // already exist.
-                let slotsInputs = dateCollection.querySelectorAll(slotsInputsSelector);
+                let slotsRows = dateCollection.querySelectorAll(slotsRowsSelector);
 
-                const valueExists = Array.from(slotsInputs).some((input) => {
-                    return input.value === element.value;
+                const valueExists = Array.from(slotsRows).some((slotsRow) => {
+                    const rowTime = slotsRow.querySelector('input[type="time"]')?.value || '';
+                    const rowText = slotsRow.querySelector('input[type="text"]')?.value || '';
+
+                    return rowTime === time && rowText === text;
                 });
 
                 if (valueExists) {
                     return;
                 }
 
-                // Then, add a new element and set its value to the element
-                // value.
+                // Then, add a new row and set its inputs to the row values.
                 collectionController.addElement();
 
-                slotsInputs = dateCollection.querySelectorAll(slotsInputsSelector);
+                slotsRows = dateCollection.querySelectorAll(slotsRowsSelector);
 
-                if (slotsInputs.length === 0) {
-                    // There is no input, but it should never happen since we
+                if (slotsRows.length === 0) {
+                    // There is no row, but it should never happen since we
                     // added an element just above.
                     return;
                 }
 
-                const lastInput = slotsInputs[slotsInputs.length - 1];
-                lastInput.value = element.value;
+                const lastRow = slotsRows[slotsRows.length - 1];
+                const lastTime = lastRow.querySelector('input[type="time"]');
+                const lastText = lastRow.querySelector('input[type="text"]');
+
+                if (lastTime) {
+                    lastTime.value = time;
+                }
+
+                if (lastText) {
+                    lastText.value = text;
+                }
             });
         });
     }
