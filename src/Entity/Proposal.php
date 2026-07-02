@@ -44,6 +44,9 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     )]
     private ?string $label = null;
 
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $startAt = null;
+
     /** @var Collections\Collection<int, Answer> */
     #[ORM\OneToMany(
         targetEntity: Answer::class,
@@ -107,6 +110,18 @@ class Proposal implements ActivityMonitor\TrackableEntityInterface
     public function getLabel(): ?string
     {
         return $this->label;
+    }
+
+    public function getStartAt(): ?\DateTimeImmutable
+    {
+        return $this->startAt;
+    }
+
+    public function setStartAt(?\DateTimeImmutable $startAt): static
+    {
+        $this->startAt = $startAt;
+
+        return $this;
     }
 
     public function setLabel(string $label): static

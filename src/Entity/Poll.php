@@ -108,6 +108,10 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     #[ORM\Column(length: 10, options: ['default' => 'fr_FR'])]
     private string $locale = '';
 
+    #[ORM\Column(length: 64, nullable: true)]
+    #[Assert\Timezone]
+    private ?string $timezone = null;
+
     /** @var Collections\Collection<int, Proposal> */
     #[ORM\OneToMany(
         targetEntity: Proposal::class,
@@ -367,6 +371,18 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
     public function setLocale(string $locale): static
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?string $timezone): static
+    {
+        $this->timezone = $timezone;
 
         return $this;
     }
