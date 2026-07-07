@@ -71,6 +71,33 @@ class CleanupCommandTest extends KernelTestCase
         Factory\PollFactory::assert()->count(1);
     }
 
+    public function testPollsWithNoClosingDateAreNeverDeleted(): void
+    {
+        // Polls without a closing date stay functional indefinitely and must
+        // never be picked up by the cleanup, whether completed or not, and no
+        // matter how old they are.
+        $completed = Factory\PollFactory::new()
+            ->completed()
+            ->create([
+                'closedAt' => null,
+                'createdAt' => new \DateTimeImmutable('-10 years'),
+            ]);
+
+        $incomplete = Factory\PollFactory::new()
+            ->create([
+                'completedAt' => null,
+                'closedAt' => null,
+                'createdAt' => new \DateTimeImmutable('-10 years'),
+            ]);
+
+        $tester = self::executeCommand('app:poll:cleanup');
+
+        $this->assertSame(Command::SUCCESS, $tester->getStatusCode(), $tester->getDisplay());
+        Factory\PollFactory::assert()->exists(['id' => $completed->getId()]);
+        Factory\PollFactory::assert()->exists(['id' => $incomplete->getId()]);
+        Factory\PollFactory::assert()->count(2);
+    }
+
     public function testWithNoExpiredPolls(): void
     {
         Factory\PollFactory::createMany(2, [

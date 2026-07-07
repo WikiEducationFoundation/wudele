@@ -68,11 +68,36 @@ class PollsControllerTest extends WebTestCase
         $this->assertSame($email, $poll->getAuthorEmail());
         $this->assertSame('classic', $poll->getType());
         $this->assertSame('en_GB', $poll->getLocale());
+        // The closing date is optional: when it is not submitted, the poll
+        // stays open indefinitely.
+        $this->assertNull($poll->getClosedAt());
+        $this->assertFalse($poll->isClosed());
         $id = $poll->getId();
         $adminToken = $poll->getAdminToken();
         $this->assertSame(20, strlen($id ?? ''));
         $this->assertSame(20, strlen($adminToken ?? ''));
         $this->assertResponseRedirects("/polls/{$id}/{$adminToken}/proposals?flow=on", 302);
+    }
+
+    public function testPostNewCreatesAPollWithAClosingDate(): void
+    {
+        $client = static::createClient();
+
+        $closedAt = Utils\Time::fromNow(1, 'year');
+
+        $client->request(Request::METHOD_POST, '/polls/new', [
+            'poll' => [
+                '_token' => $this->getCsrf($client, 'poll'),
+                'title' => 'My poll',
+                'authorName' => 'Alix',
+                'authorEmail' => 'alix@example.org',
+                'closedAt' => $closedAt->format('Y-m-d'),
+            ],
+        ]);
+
+        $poll = Factory\PollFactory::last();
+        $this->assertSame($closedAt->format('Y-m-d'), $poll->getClosedAt()?->format('Y-m-d'));
+        $this->assertFalse($poll->isClosed());
     }
 
     public function testPostNewDatePollRedirectsToPollDates(): void

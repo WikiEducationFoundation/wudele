@@ -48,6 +48,7 @@ class PollForm extends AbstractType
 
         $builder->add('closedAt', Type\DateType::class, [
             'input' => 'datetime_immutable',
+            'required' => false,
             'label' => new TranslatableMessage('forms.poll_form.closed_at.label'),
             'help' => new TranslatableMessage('forms.poll_form.closed_at.help'),
         ]);

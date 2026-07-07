@@ -188,7 +188,7 @@ class Poll implements ActivityMonitor\TrackableEntityInterface
         $this->type = self::DEFAULT_TYPE;
         $this->title = '';
         $this->description = '';
-        $this->closedAt = Utils\Time::fromNow(1, 'month');
+        $this->closedAt = null;
         $this->password = '';
         $this->isPasswordForVotesOnly = false;
         $this->authorName = '';
