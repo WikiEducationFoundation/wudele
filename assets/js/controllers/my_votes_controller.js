@@ -32,7 +32,7 @@ export default class extends Controller {
 
         myVotes.forEach(([key, myVote]) => {
             const voteNode = voteTemplate.cloneNode(true);
-            const voteDate = dayjs(myVote.date);
+            const voteDate = dayjs(myVote.voteDate);
             const formattedDate = voteDate.format('DD MMM YYYY');
 
             voteNode.innerHTML = voteNode.innerHTML.replace(/__key__/g, htmlEscape(key));
