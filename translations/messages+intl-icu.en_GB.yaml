@@ -236,6 +236,7 @@ polls.summary.admin_link: 'Private administration link'
 polls.summary.admin_link.remember: 'Remember the link in this browser'
 polls.summary.admin_link.remember.description: 'By checking the “Remember the link in this browser” option, this poll will be saved on this device. This will allow you to find it later from the same browser in order to view or modify it. For greater confidentiality, do not check this option if this device is shared with other people.'
 polls.summary.admin_link.remember.information: Information
+polls.summary.admin_link.saved: 'This poll is saved in this browser, so you can find it again from “My polls and votes”. Keep the administration link above as well, in case you use another browser or device. On a shared computer, you can remove it later from “My polls and votes”.'
 polls.summary.author.email: 'Email address'
 polls.summary.author.name: Nickname
 polls.summary.author.no_email: 'No address given'

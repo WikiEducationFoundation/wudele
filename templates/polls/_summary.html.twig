@@ -12,10 +12,12 @@
             {{ 'polls.summary.admin_access' | trans | raw }}
         </p>
 
-        {% if poll.authorEmail and poll.isCompleted %}
-            <p>{{ 'polls.summary.admin_access.sent_by_email' | trans }}</p>
-        {% elseif poll.authorEmail %}
-            <p>{{ 'polls.summary.admin_access.will_send_by_email' | trans }}</p>
+        {% if emailsEnabled %}
+            {% if poll.authorEmail and poll.isCompleted %}
+                <p>{{ 'polls.summary.admin_access.sent_by_email' | trans }}</p>
+            {% elseif poll.authorEmail %}
+                <p>{{ 'polls.summary.admin_access.will_send_by_email' | trans }}</p>
+            {% endif %}
         {% endif %}
 
         <div class="flow flow--small">
@@ -47,56 +49,81 @@
             </div>
         </div>
 
-        <div class="cols cols--always cols--center cols--gap">
-            <div class="col--extend">
-                <input
-                    type="checkbox"
-                    id="remember_poll_admin"
-                    data-controller="storage"
-                    data-action="storage#sync"
-                    data-storage-namespace-value="polls"
-                    data-storage-key-value="{{ poll.id }}"
-                    data-storage-entry-value="{{ {
-                        title: poll.title,
-                        type: poll.type,
-                        date: poll.createdAt | dateIso,
-                        author: poll.authorName,
-                        pollUrl: url('poll', { slug: poll.slug }),
-                        adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
-                    } | json_encode }}"
-                >
-                <label for="remember_poll_admin">
-                    {{ 'polls.summary.admin_link.remember' | trans }}
-                    {{ icon('thumbtack') }}
-                </label>
-            </div>
-
-            <button
-                type="button"
-                class="button--icon"
-                data-controller="modal-opener"
-                data-action="modal-opener#copy"
-                data-modal-opener-selector-value="#modal-local-storage-details"
-            >
-                {{ icon('question') }}
-
-                <span class="sr-only">
-                    {{ 'polls.summary.admin_link.remember.information' | trans }}
-                </span>
-            </button>
-
-            <template id="modal-local-storage-details">
-                <div class="flow flow--large">
-                    <h1 id="modal-title">
+        {% if emailsEnabled %}
+            <div class="cols cols--always cols--center cols--gap">
+                <div class="col--extend">
+                    <input
+                        type="checkbox"
+                        id="remember_poll_admin"
+                        data-controller="storage"
+                        data-action="storage#sync"
+                        data-storage-namespace-value="polls"
+                        data-storage-key-value="{{ poll.id }}"
+                        data-storage-entry-value="{{ {
+                            title: poll.title,
+                            type: poll.type,
+                            date: poll.createdAt | dateIso,
+                            author: poll.authorName,
+                            pollUrl: url('poll', { slug: poll.slug }),
+                            adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
+                        } | json_encode }}"
+                    >
+                    <label for="remember_poll_admin">
                         {{ 'polls.summary.admin_link.remember' | trans }}
-                    </h1>
-
-                    <p>
-                        {{ 'polls.summary.admin_link.remember.description' | trans }}
-                    </p>
+                        {{ icon('thumbtack') }}
+                    </label>
                 </div>
-            </template>
-        </div>
+
+                <button
+                    type="button"
+                    class="button--icon"
+                    data-controller="modal-opener"
+                    data-action="modal-opener#copy"
+                    data-modal-opener-selector-value="#modal-local-storage-details"
+                >
+                    {{ icon('question') }}
+
+                    <span class="sr-only">
+                        {{ 'polls.summary.admin_link.remember.information' | trans }}
+                    </span>
+                </button>
+
+                <template id="modal-local-storage-details">
+                    <div class="flow flow--large">
+                        <h1 id="modal-title">
+                            {{ 'polls.summary.admin_link.remember' | trans }}
+                        </h1>
+
+                        <p>
+                            {{ 'polls.summary.admin_link.remember.description' | trans }}
+                        </p>
+                    </div>
+                </template>
+            </div>
+        {% else %}
+            {# Emails are disabled, so there is no email fallback to recover the
+             # admin link. Save the poll to this browser automatically (like
+             # votes are) so the author can always find it again from
+             # “My polls and votes”. #}
+            <div
+                data-controller="storage"
+                data-storage-namespace-value="polls"
+                data-storage-key-value="{{ poll.id }}"
+                data-storage-entry-value="{{ {
+                    title: poll.title,
+                    type: poll.type,
+                    date: poll.createdAt | dateIso,
+                    author: poll.authorName,
+                    pollUrl: url('poll', { slug: poll.slug }),
+                    adminUrl: url('poll admin', { id: poll.id, token: poll.adminToken }),
+                } | json_encode }}"
+            ></div>
+
+            <p class="text--secondary">
+                {{ icon('thumbtack') }}
+                {{ 'polls.summary.admin_link.saved' | trans }}
+            </p>
+        {% endif %}
     </div>
 </div>
 
@@ -124,17 +151,19 @@
                     {{ poll.authorName }}
                 </dd>
 
-                <dt class="flow flow--small text--bold">
-                    {{ 'polls.summary.author.email' | trans }}
-                </dt>
+                {% if emailsEnabled %}
+                    <dt class="flow flow--small text--bold">
+                        {{ 'polls.summary.author.email' | trans }}
+                    </dt>
 
-                <dd>
-                    {% if poll.authorEmail %}
-                        {{ poll.authorEmail }}
-                    {% else %}
-                        {{ 'polls.summary.author.no_email' | trans }}
-                    {% endif %}
-                </dd>
+                    <dd>
+                        {% if poll.authorEmail %}
+                            {{ poll.authorEmail }}
+                        {% else %}
+                            {{ 'polls.summary.author.no_email' | trans }}
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
                 <dt class="flow flow--small text--bold">
                     {{ 'polls.summary.closed_at' | trans }}
@@ -283,21 +312,23 @@
                 {% endif %}
             </li>
 
-            <li>
-                {% if poll.notifyOnVotes %}
-                    {{ 'polls.summary.settings.notify_on_votes.do' | trans }}
-                {% else %}
-                    {{ 'polls.summary.settings.notify_on_votes.dont' | trans }}
-                {% endif %}
-            </li>
+            {% if emailsEnabled %}
+                <li>
+                    {% if poll.notifyOnVotes %}
+                        {{ 'polls.summary.settings.notify_on_votes.do' | trans }}
+                    {% else %}
+                        {{ 'polls.summary.settings.notify_on_votes.dont' | trans }}
+                    {% endif %}
+                </li>
 
-            <li>
-                {% if poll.notifyOnComments %}
-                    {{ 'polls.summary.settings.notify_on_comments.do' | trans }}
-                {% else %}
-                    {{ 'polls.summary.settings.notify_on_comments.dont' | trans }}
-                {% endif %}
-            </li>
+                <li>
+                    {% if poll.notifyOnComments %}
+                        {{ 'polls.summary.settings.notify_on_comments.do' | trans }}
+                    {% else %}
+                        {{ 'polls.summary.settings.notify_on_comments.dont' | trans }}
+                    {% endif %}
+                </li>
+            {% endif %}
         </ul>
 
         <div class="panel__separator"></div>

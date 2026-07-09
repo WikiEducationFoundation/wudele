@@ -1597,6 +1597,47 @@ class PollsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Administration of the poll');
     }
 
+    public function testGetAdminHidesEmailFeaturesWhenEmailsAreDisabled(): void
+    {
+        $originalEnv = $_ENV['APP_EMAILS_ENABLED'] ?? null;
+        $originalServer = $_SERVER['APP_EMAILS_ENABLED'] ?? null;
+        $_ENV['APP_EMAILS_ENABLED'] = $_SERVER['APP_EMAILS_ENABLED'] = 'false';
+
+        try {
+            $client = static::createClient();
+            $poll = Factory\PollFactory::new()->completed()->create();
+
+            $client->request(Request::METHOD_GET, "/polls/{$poll->getId()}/{$poll->getAdminToken()}/admin");
+
+            $this->assertResponseIsSuccessful();
+
+            $content = (string) $client->getResponse()->getContent();
+
+            // The summary must not promise emails that the instance never sends
+            // (poll notifications default to enabled on the entity).
+            $this->assertStringNotContainsString('receive an email', $content);
+
+            // The opt-in "remember" checkbox is replaced by an automatic save to
+            // the browser, since there is no email fallback to recover the poll.
+            $this->assertStringNotContainsString('remember_poll_admin', $content);
+            $this->assertStringContainsString('saved in this browser', $content);
+        } finally {
+            if ($originalEnv === null) {
+                unset($_ENV['APP_EMAILS_ENABLED']);
+            } else {
+                $_ENV['APP_EMAILS_ENABLED'] = $originalEnv;
+            }
+
+            if ($originalServer === null) {
+                unset($_SERVER['APP_EMAILS_ENABLED']);
+            } else {
+                $_SERVER['APP_EMAILS_ENABLED'] = $originalServer;
+            }
+
+            static::ensureKernelShutdown();
+        }
+    }
+
     public function testGetAdminRedirectsIfNotCompleted(): void
     {
         $client = static::createClient();
